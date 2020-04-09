@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mate 10</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/extrasCss.css">
+    <link rel="stylesheet" href="css/mathquillSINBORDE.css" />
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    min-width: 100px;
+    min-height: 60px;
+    border: 1px #005ca4 solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    width: auto;
+
+}
+
+.cajas1 {
+
+    border: 1px #005ca4 solid;
+}
+
+.encierra {
+    background: rgba(153, 204, 255, 0.8);
+    color: #fff;
+
+}
+
+.actividad17 {
+    background: #fff;
+}
+
+.rec_txt {
+    min-width: 60px;
+    min-height: 60px;
+    border: 1px dotted #444;
+    border-radius: 8px;
+    margin: 3px;
+    clear: inherit;
+}
+
+@media (max-width: 770px) {
+    .cajas {
+        clear: left;
+    }
+}
+
+tbody .numerador {
+    border-bottom: 1px solid;
+}
+
+#activity label {
+    font-size: 17px
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+}
+
+.correctoi {
+    text-decoration: underline;
+    background-color: #8FB435;
+
+}
+
+.incorrectoi {
+    text-decoration: underline;
+    background-color: #E76E80;
+}
+
+.periodo {
+    border-top: 2px solid;
+}
+
+input {
+    text-align: center;
+}
+
+.subrayar {
+    text-decoration: underline;
+    text-decoration-color: rgb(87, 53, 180) 10px solid;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: auto;
+    max-width: 100%;
+    text-align: center;
+    font-size: 15px;
+}
+
+.bg_palabra {
+
+    border-radius: 10px;
+    background: #4EB399;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 50px;
+    min-width: 60px;
+    width: auto;
+    font-size: 20px;
+}
+
+.encierra1 {
+    border: 3px solid #94851C;
+    border-radius: 40%;
+}
+
+.c_destino {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 50px;
+    width: auto;
+    min-width: 130px;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>1.</b> Escribe un ejemplo de cada tipo de enunciado.<br>
+        <b>2.</b> Seleccione el respectivo conector lógico.<br>
+        <b>3.</b> Da click sobre las opciones para seleccionar la respuesta.<br>
+        <b>4.</b> Seleccione el lenguaje simbólico las siguientes proposiciones compuestas.<br>
+        <b>5.</b> Simboliza las siguientes proposiciones compuestas y determina su valor de verdad.<br>
+        <b>6.</b> Seleccione el valor de verdad de las proposiciones compuestas.<br>
+        <b>7.</b> Seleccione si son tautología, contradicción o contingencia.<br>
+        <b>8.</b> Da click sobre las opciones para seleccionar la respuesta.<br>
+        <b>9.</b> Da click sobre las opciones para seleccionar la respuesta.<br>
+        <b>10.</b> Da click sobre las opciones para seleccionar la respuesta.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button>
+                <br>
+                <br>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a1" style="background: white;" >&nbsp;
+                                    <b>Pregunta 1</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="col-md-12" style="padding-top: 20px">
+                                        <div class="text-question">
+                                            <span><b style="color: #005CA4;">1.</b> <b>Escribe</b> un ejemplo de cada tipo de enunciado.</span></div><br>
+                                        <div class="row text-question">
+                                            <div class="table-responsive col-sm-12">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td style="background: #986FA6; color: white; border:2px solid #986FA6;"><b>Tipo</b></td>
+                                                        <td style="background: #3DA2D8; color: white; border:2px solid #3DA2D8;"><b>Ejemplo</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #986FA6; vertical-align: middle;">Imperativo</td>
+                                                        <td style="border: 2px solid #986FA6;">
+                                                            <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #986FA6; vertical-align: middle;">Exclamativo</td>
+                                                        <td style="border: 2px solid #986FA6;">
+                                                            <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #986FA6; vertical-align: middle;">Interrogativo</td>
+                                                        <td style="border: 2px solid #986FA6;">
+                                                            <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #986FA6; vertical-align: middle;">Aseverativo</td>
+                                                        <td style="border: 2px solid #986FA6;">
+                                                            <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a2" readonly>&nbsp;
+                                    <b>Pregunta 2</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12" style="padding-top: 20px">
+                                    <div class="text-question">
+                                        <span><b style="color: #005CA4;">2. </b> Frente a cada operación lógica, <b>escribe</b> el respectivo conector lógico.</span></div><br>
+                                    <div class="row text-question" align="center">
+                                        <div class="table-responsive col-sm-12">
+                                            <table>
+                                                <tr align="center">
+                                                    <td><b style="color: #C75773;">Operación lógica</b></td>
+                                                    <td></td>
+                                                    <td><b style="color: #009BDB;">Conector lógico</b></td>
+                                                </tr>
+                                                <tr id="p2im1">
+                                                </tr>
+                                                <tr id="p2im2">
+                                                </tr>
+                                                <tr id="p2im3">
+                                                    
+                                                </tr>
+                                                <tr id="p2im4">
+                                                    
+                                                </tr>
+                                                <tr id="p2im5">
+                                                    
+                                                </tr>
+                                                <tr id="p2im6">
+                                                    
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a3" readonly>&nbsp;
+                                    <b>Pregunta 3</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="col-md-12" style="padding-top: 20px">
+                                    <div class="text-question"><span><b style="color: #005CA4;">3. </b> ¿Cuál de los siguientes enunciados es una proposición?</div><br>
+                                    <div class="col-sm-12 text-question" id="p3rs1">
+                                        <div class="col-sm-6">
+                                            <span class="1 p3en1"><b style="color: #005CA4">a)</b> <span id="p3im1"></span></span><br>
+                                            <span class="1 p3en2"><b style="color: #005CA4">b)</b> <span id="p3im2"></span></span>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <span class="1 p3en3"><b style="color: #005CA4">c)</b> <span id="p3im3"></span></span><br>
+                                            <span class="1 p3en4"><b style="color: #005CA4">d)</b> <span id="p3im4"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingFour">
+                        <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+                                    aria-controls="collapseFour">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a4" readonly>&nbsp;
+                                    <b>Pregunta 4 </b> <span class="sobre">(1 pts)</span>
+                                        </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                        <div class="panel-body">
+                                            <div class="col-md-12" style="padding-top: 20px">
+                                                <div class="text-question">
+                                                    <span><b style="color: #005CA4;">4.</b> <b>Determina</b> las proposiciones simples y <b>expresa</b> en el lenguaje simbólico las siguientes proposiciones compuestas.</span></div><br>
+                                                <div class="col-sm-12 text-question">
+                                                    <ol type="a" style="color: #005CA4;" id="p4im1">
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingFive">
+                                        <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false"
+                                    aria-controls="collapseFive">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a5">&nbsp;
+                                    <b>Pregunta 5</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                                    </div>
+                                    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                        <div class="panel-body">
+                                            <div class="col-md-12" style="padding-top: 20px">
+                                                <div class="text-question">
+                                                    <span><b style="color: #005CA4;">5.</b> <b>Simboliza</b> las siguientes proposiciones compuestas y <b>determina</b> su valor de verdad.</span></div><br>
+                                                <div class="col-sm-12 text-question">
+                                                    <div class="col-sm-6">
+                                                        <p><b style="color: #005CA4;">a)</b> Es falso que, Antonio Valencia no es jugador del Barcelona.</p>
+                                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                        <p><b style="color: #005CA4;">b)</b> 20 es múltiplo de 4, pero, 7 es menor o igual que 10.</p>
+                                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                        <p><b style="color: #005CA4;">c)</b> O 9 es mayor que 5 o es menor que 5.</p>
+                                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p><b style="color: #005CA4;">d)</b> 24 es múltiplo de 8 puesto que 24 es un número impar.</p>
+                                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                        <p><b style="color: #005CA4;">e)</b> Lenín Moreno no ganó las elecciones presidenciales de Ecuador con un 52 %.</p>
+                                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingSix">
+                                        <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false"
+                                    aria-controls="collapseSix">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a6" readonly>&nbsp;
+                                    <b>Pregunta 6</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                                    </div>
+                                    <div id="collapseSix" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingSix">
+                                        <div class="panel-body">
+                                            <div class="col-md-12" style="padding-top: 20px">
+                                                <div class="text-question">
+                                                    <span><b style="color: #005CA4;">6.</b> Dados las proposiciones simples con sus valores de verdad, <b>determina</b> el valor de verdad de las proposiciones compuestas.</span><br>
+                                                </div>
+                                                <div class=" text-question">
+                                                    <ol type="a" style="color: #005CA4;" id="p6im1">
+                                                        
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingSeven">
+                                        <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false"
+                                        aria-controls="collapseSeven">
+                                        <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a7" readonly>&nbsp;
+                                        <b>Pregunta 7</b> <span class="sobre">(1 pts)</span>
+                                    </a>
+                                </h4>
+                                    </div>
+                                    <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                                        <div class="panel-body">
+                                            <div class="col-md-12" style="padding-top: 20px">
+                                                <div class="text-question">
+                                                    <span><b style="color: #005CA4;">7. </b> <b>Escribe</b> la tabla de verdad para las siguientes proposiciones compuestas e <b>indica</b> si son tautología, contradicción o contingencia.</span></div><br>
+                                                <div class=" text-question">
+                                                    <ol type="a" style="color: #005CA4;" id="p7im1">
+                                                        
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingEigth">
+                                        <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEigth" aria-expanded="false"
+                                        aria-controls="collapseEigth">
+                                        <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a8">&nbsp;
+                                        <b>Pregunta 8</b> <span class="sobre">(1 pts)</span>
+                                    </a>
+                                </h4>
+                                    </div>
+                                    <div id="collapseEigth" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEigth">
+                                        <div class="panel-body">
+                                            <div class="col-md-12" style="padding-top: 20px">
+                                                <div class="text-question">
+                                                    <span><b style="color: #005CA4">8.</b> <b>Indica</b> la proposición que es lógicamente equivalente a ∼(p∨∼q).</span></div><br>
+                                                <div class="col-sm-12 text-question" id="p8rs1">
+                                                    <div class="col-sm-6">
+                                                        <span class="2 p8en1"><b style="color: #005CA4">a)</b> <span id="p8im1"></span></span><br>
+                                                        <span class="2 p8en2"><b style="color: #005CA4">b)</b> <span id="p8im2"></span></span>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <span class="2 p8en3"><b style="color: #005CA4">c)</b> <span id="p8im3"></span></span><br>
+                                                        <span class="2 p8en4"><b style="color: #005CA4">d)</b> <span id="p8im4"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingNine">
+                                        <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false"
+                                        aria-controls="collapseNine">
+                                        <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a9" readonly>&nbsp;
+                                        <b>Pregunta 9</b> <span class="sobre">(1 pts)</span>
+                                    </a>
+                                </h4>
+                                    </div>
+                                    <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
+                                        <div class="panel-body">
+                                            <div class="col-md-12" style="padding-top: 20px">
+                                                <div class="text-question">
+                                                    <span><b style="color: #005CA4;">9.</b> <b>Simplifica</b> la proposición ∼p∨(p∧∼q) y <b>señala</b> su equivalente.</span></div><br>
+                                                <div class="col-sm-12 text-question" id="p9rs1">
+                                                    <div class="col-sm-6">
+                                                        <span class="3 p9en1"><b style="color: #005CA4">a)</b> <span id="p9im1"></span></span><br>
+                                                        <span class="3 p9en2"><b style="color: #005CA4">b)</b> <span id="p9im2"></span></span>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <span class="3 p9en3"><b style="color: #005CA4">c)</b> <span id="p9im3"></span></span><br>
+                                                        <span class="3 p9en4"><b style="color: #005CA4">d)</b> <span id="p9im4"></span></span>
+                                                    </div>
+                                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingTen">
+                                        <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="false"
+                                        aria-controls="collapseTen">
+                                        <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a10">&nbsp;
+                                        <b>Pregunta 10</b> <span class="sobre">(1 pts)</span>
+                                    </a>
+                                </h4>
+                                    </div>
+                                    <div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">
+                                        <div class="panel-body">
+                                            <div class="col-md-12" style="padding-top: 20px">
+                                                <div class="text-question">
+                                                    <span><b style="color: #005CA4;">10.</b> <b>Simplifica</b> la proposición (p ⇒ ∼q)∧∼ (∼q ⇒ p) y <b>señala</b> su equivalente.</span></div><br>
+                                                <div class="col-sm-12 text-question" id="p10rs1">
+                                                    <div class="col-sm-6">
+                                                        <span class="4 p10en1"><b style="color: #005CA4">a)</b> <span id="p10im1"></span></span><br>
+                                                        <span class="4 p10en2"><b style="color: #005CA4">b)</b> <span id="p10im2"></span></span>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <span class="4 p10en3"><b style="color: #005CA4">c)</b> <span id="p10im3"></span></span><br>
+                                                        <span class="4 p10en4"><b style="color: #005CA4">d)</b> <span id="p10im4"></span></span>
+                                                    </div>
+                                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Guardar PDF-->
+                <div class="modal fade animated pulse" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                                <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="modal_form" class="form-horizontal">
+                                    <div class="form-group ">
+                                        <div class="col-sm-2">
+                                            <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                            <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                            <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                                <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                                aria-hidden="true">&times;</span></button>
+                                                <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                                Debes ingresar tu nombre</div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <script src="js/jquery.min.js"></script>
+                <script src="js/jquery-ui.js"></script>
+                <!-- Include all compiled plugins (below), or include individual files as needed -->
+                <script src="js/bootstrap.min.js"></script>
+                <!--generador de pdf-->
+                <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+                <script src="js/screenfull.js"></script>
+                <script src="js/helper.js"></script>
+                <script src="js/activities.js"></script>
+                <script src="js/Utilitario.js"></script>
+                <script src="js/numPaginas.js"></script>
+                <script src="js/validacionesExtras.js"></script>
+                <script src="js/math.min.js" type="text/javascript"></script>
+                <script src="js/fraction.min.js" type="text/javascript"></script>
+                <script src="js/rational.js"></script>
+                <script src="js/initElementos.js"></script>
+                <script src="js/select_dselect_elements.js"></script>
+                <script src="js/dragNdrop.js"></script>
+                <script src="js/calcularNotas.js"></script>
+                <script src="js/mathquillNOTEDITABLE.js"></script>
+                <script src="js/mathCalc.js"></script>
+                <script src="js/validacionesExtras.js"></script>
+                <script src="js/u4a4.js"></script>
+                <script>
+                function soloLetras(e) {
+                    key = e.keyCode || e.which;
+                    tecla = String.fromCharCode(key).toUpperCase();
+                    letras = " ÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+                    especiales = "8-37-39-46";
+
+                    tecla_especial = false
+                    for (var i in especiales) {
+                        if (key == especiales[i]) {
+                            tecla_especial = true;
+                            break;
+                        }
+                    }
+
+                    if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+                        return false;
+                    }
+                }
+                </script>
+</body>
+
+</html>

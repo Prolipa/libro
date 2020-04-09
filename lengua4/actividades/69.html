@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+</head>
+<style type="text/css" media="screen">
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+
+.pintar {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+.pintar1 {
+    background: #CEC8A1;
+}
+.correcto{
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee las coplas y contesta las preguntas.<br>
+        <b>Pregunta 3:</b> Para colorear las palabras da click sobre cada una de ellas. <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span>/ 10
+                    </span>
+                    <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-aplico" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico">
+                <span class="titulo"><img src="img/icoA.png" alt="">Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <br>
+                    <p><b style="color: #005CA4;">1. </b> ¿Qué características tienen las coplas que leíste?</p>
+                </div>
+                <div class="actividad117 text-question">
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <br>
+                    <p><b style="color: #005CA4;">2. </b> <b>Lee</b> las coplas populares y <b>observa</b> su estructura.</p>
+                </div>
+                <div class="actividad117 text-question">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-10">
+                        <img src="img/i1_p126_act69.jpg" class="img-responsive" alt="">
+                        <img src="img/i2_p126_act69.jpg" class="img-responsive" alt="">
+                    </div>
+                        <div class="col-sm-1">
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                    <br>
+                    <img src="img/literal.png" class="img-responsive">
+                    <!--pregunats de la actividad-->
+                    <div class="text-question">
+                        <br>
+                        <p><input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="nota1_1">&nbsp; <b style="color: #005CA4;">3. </b> <b>Pinta</b> del mismo color las palabras que riman en las coplas anteriores. <b>(2pts.)</b></p>
+                    </div>
+                    <div class="actividad117 text-question">
+                        <div class="col-sm-12" align="center">
+                            <div class="pint1" style="border: 2px solid #0097C1; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;llegar&nbsp;&nbsp;
+                            </div>
+                            <div class="pint2" style="border: 2px solid #6FA43A; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;ninguna&nbsp;&nbsp;
+                            </div>
+                            <div class="pint3" style="border: 2px solid #F1CF00; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;luna&nbsp;&nbsp;
+                            </div>
+                            <div class="pint4" style="border: 2px solid #D07400; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;limón&nbsp;&nbsp;
+                            </div>
+                            <div class="pint5" style="border: 2px solid #824F94; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;amar&nbsp;&nbsp;
+                            </div>
+                            <div class="pint6" style="border: 2px solid #0077BB; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;corazón&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                    <br>
+                    <img src="img/inferencial.png" class="img-responsive">
+                    <!--pregunats de la actividad-->
+                    <div class="text-question">
+                        <br>
+                        <p><b style="color: #005CA4;">4. </b> <b>Coloca</b> las palabras que se encuentran en los recuadros, de modo que rimen. <b>Recrea</b> las coplas. <b>(6pts.)</b></p>
+                    </div>
+                    <div class="actividad117 text-question">
+                        <div class="col-sm-12" align="center">
+                            <div style="background: #CAE2EF; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;soñar&nbsp;&nbsp;
+                            </div>
+                            <div style="background: #F8E89A; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;limón&nbsp;&nbsp;
+                            </div>
+                            <div style="background: #E6E0EF; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;pensar&nbsp;&nbsp;
+                            </div>
+                            <div style="background: #E6EFDA; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;ellas&nbsp;&nbsp;
+                            </div>
+                            <div style="background: #F1D8B9; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;chichón&nbsp;&nbsp;
+                            </div>
+                            <div style="background: #D4E8F1; border-radius: 10px 10px 10px 0px; display: inline-block; font-size: 30px;">
+                                &nbsp;&nbsp;estrellas&nbsp;&nbsp;
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>
+                                <div style="display:inline-block">Qué triste es</div>
+                                <div style="display:inline-block;"><input type="text" class="form-control" style="min-width: 50px; text-align: center;" onkeyup="mayus(this)" id="p4dcon1"></div>
+                            </p>
+                            <p>
+                                <div style="display:inline-block">en una noche sin</div>
+                                <div style="display:inline-block;"><input type="text" class="form-control" style="min-width: 50px; text-align: center;" onkeyup="mayus(this)" id="p4dcon2"></div>,
+                            </p>
+                            <p>
+                                <div style="display:inline-block">contigo quiero</div>
+                                <div style="display:inline-block;"><input type="text" class="form-control" style="min-width: 50px; text-align: center;" onkeyup="mayus(this)" id="p4dcon3"> </div>
+                            </p>
+                            <p>
+                                <div style="display:inline-block">y mirarte siempre en</div>
+                                <div style="display:inline-block;"><input type="text" class="form-control" style="min-width: 50px; text-align: center;" onkeyup="mayus(this)" id="p4dcon4"></div>.
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>
+                                <div style="display:inline-block">Al pasar por tu ventana</div>
+                            </p>
+                            <p>
+                                <div style="display:inline-block">me tiraste un</div>
+                                <div style="display:inline-block;"><input type="text" class="form-control" style="min-width: 50px; text-align: center;" onkeyup="mayus(this)" id="p4dcon5"></div>,
+                            </p>
+                            <p>
+                                <div style="display:inline-block">ya no me tires otro</div>
+                            </p>
+                            <p>
+                                <div style="display:inline-block">que me hiciste un</div>
+                                <div style="display:inline-block;"><input type="text" class="form-control" style="min-width: 50px; text-align: center;" onkeyup="mayus(this)" id="p4dcon6"></div>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                    <br>
+                    <img src="img/critico.png" class="img-responsive">
+                    <!--pregunats de la actividad-->
+                    <div class="text-question">
+                        <br>
+                        <p><input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="nota1_2">&nbsp; <b style="color: #005CA4;">5. </b> <b>Responde.</b> ¿Por qué las coplas son parte de la tradición popular? <b>(2pts.)</b></p>
+                    </div>
+                    <div class="actividad117 text-question">
+                        <textarea class="form-control text-question no-redimensionar" cols="60" rows="3"></textarea>
+                    </div>
+                    <div class="row"></div>
+                    <br>
+                    <!--<p id="trace" class="alert alert-warning display-none"></p>-->
+                </div>
+                <!-- Modal Guardar PDF-->
+                <div class="modal fade animated pulse" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                                <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="modal_form" class="form-horizontal">
+                                    <div class="form-group ">
+                                        <div class="col-sm-2">
+                                            <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                            <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                            <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                                <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <script src="js/jquery.min.js"></script>
+                <script src="js/jquery-ui.js"></script>
+                <!-- Include all compiled plugins (below), or include individual files as needed -->
+                <script src="js/bootstrap.min.js"></script>
+                <!--generador de pdf-->
+                <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+                <script src="js/screenfull.js"></script>
+                <script src="js/helper.js"></script>
+                <script src="js/activities.js"></script>
+                <script src="js/animate.css.min.js"></script>
+                <script src="js/jquery.animate.css.js"></script>
+                <script src="js/Utilitario.js"></script>
+                <script src="js/validacionesExtras.js"></script>
+                <script src="js/actividad69.js"></script>
+                <script type="text/javascript">
+                var titulos = "reflexiono";
+                $("#txtNota").html("0");
+                $("#n_pagina").html("126"); //impresion de pagina
+                </script>
+</body>
+
+</html>

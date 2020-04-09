@@ -1,0 +1,261 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Matemática 9</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br> Selecciona <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> , en el cuadro de dialogo escribir el nombre del alumno o alumnos que realizaron actividad,
+        <br> para descargar un pdf para que el profesor evalue sus respuestas.
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onclick="comprobar()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 16
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-reflexiono" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-reflexiono">
+                <span class="titulo"><img src="img/icoR.png" alt="">Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-md-12 space text-question">
+                    <div style="margin: 25px;padding:10px; background-color: #ccccff; border-radius: 6px;">
+                        <strong>Exploro para recordar</strong>
+                        <p>Dentro del valor calculado en el gasto de la canasta básica consta el pago de servicios y atención médica.</p>
+                        <p>Mercedes llevó un billete de $ 10 y gastó $ 9 en el pago del agua potable, y de un billete de $ 100, gastó $ 73 en el pago de exámenes médicos.
+                        </p>
+                        <p>¿Cómo expresas en forma de fracción y en forma decimal lo que gastó?</p>
+                    </div>
+                </div>
+                <div class="col-md-12 space text-question">
+                    <p>1. A partir de la situación planteada en Exploro para recordar, <strong>responde.</strong></p>
+                    <div style="padding: 20px">
+                        • ¿Cuánto tomó Mercedes para el pago del agua potable?
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="1">Tomo:</label>
+                                <input type="number" class="input1 respuestas" id="1">
+                                <input type="hidden" class="solucion" value="9">
+                            </div>
+                            <div class="form-group">
+                                <label for="2"> De:</label>
+                                <input type="number" class="input1 respuestas" id="2">
+                                <input type="hidden" class="solucion" value="10">
+                            </div>
+                        </form>
+                        <br> • ¿Cuánto tomó Mercedes para el pago de los exámenes médicos?
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="3">Tomo:</label>
+                                <input type="number" class=" respuestas input1" id="3">
+                                <input type="hidden" class="solucion" value="73">
+                            </div>
+                            <div class="form-group">
+                                <label for="4"> De:</label>
+                                <input type="number" class=" respuestas input1" id="4">
+                                <input type="hidden" class="solucion" value="100">
+                            </div>
+                        </form>
+                        <br> • Con la información anterior podemos realizar la siguiente tabla.
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Tomó</th>
+                                <th>Fracción decimal</th>
+                                <th>Expresión decimal</th>
+                                <th>Se lee</th>
+                            </tr>
+                            <tr>
+                                <td>9 de 10</td>
+                                <td>
+                                    <Sup class="top">9</sup><span class="barra">/</span><sub class="fondo">10</sub>
+                                </td>
+                                <td>0,9</td>
+                                <td>Nueve décimos</td>
+                            </tr>
+                            <tr>
+                                <td>73 de 100</td>
+                                <td>
+                                    <Sup class="top">73</sup><span class="barra">/</span><sub class="fondo">100</sub>
+                                </td>
+                                <td>0,73</td>
+                                <td>Setenta y tres centésimos</td>
+                            </tr>
+                        </table>
+                        <br>
+                        <div class="col-md-4 ">
+                            <img src="img/i1_p16_act6.png" class="img-center img-responsive" alt="">
+                            <p>
+                                La unidad se dividió
+                                <input type="number" class="respuestas input1" id="5">
+                                <input type="hidden" class="solucion" value="10"> en partes iguales, cada parte es un décimo.
+                            </p>
+                            <Sup class="top">1</sup><span class="barra">/</span><sub class="fondo">10</sub> = 0,1
+                            <br>
+                            <br>
+                            <strong>Se lee:</strong> un décimo
+                        </div>
+                        <div class="col-md-4 ">
+                            <img src="img/i2_p16_act6.png" class="img-center img-responsive" alt="">
+                            <p>
+                                La unidad se dividió
+                                <input type="number" class="respuestas input1" id="6">
+                                <input type="hidden" class="solucion" value="100">en partes iguales, cada parte es un centésimo.
+                            </p>
+                            <Sup class="top">1</sup><span class="barra">/</span><sub class="fondo">100</sub> =0,01
+                            <br>
+                            <br>
+                            <strong>Se lee:</strong>
+                            <input type="text" class="respuestas input1  double-extend">
+                            <input type="hidden" class="solucion" value="un centésimo">
+                        </div>
+                        <div class="col-md-4 ">
+                            <img src="img/i3_p16_act6.png" class="img-center img-responsive" alt="">
+                            <p>
+                                La unidad se dividió
+                                <input type="number" class="respuestas input1" id="7">
+                                <input type="hidden" class="solucion" value="1000">en partes iguales, cada parte es un milésimo.
+                            </p>
+                            <Sup class="top">1</sup><span class="barra">/</span><sub class="fondo">1000</sub> = 0,001
+                            <br>
+                            <br>
+                            <strong>Se lee:</strong>
+                            <input type="text" class="respuestas input1 double-extend">
+                            <input type="hidden" class="solucion" value="un milésimo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/fraccion.js"></script>
+    <script>
+    function comprobar() {
+        comprobar_calificar_txt()
+        $('.btnGuardar').removeClass('disabled')
+    };
+    </script>
+    <script type="text/javascript">
+    var titulos = "reflexiono"
+    </script>
+</body>
+
+</html>

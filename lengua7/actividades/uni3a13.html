@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LENGUA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.cajas1 {
+
+    border: 1px #009277 solid;
+}
+
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+.imagen3 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #FFF0CA;
+}
+.imagen4 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #F5F0F7;
+}
+.underline{
+        text-decoration: underline;
+        text-decoration-color: rgb(59, 114, 37);
+        
+    }
+    .encierra{
+            border: 3px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra1{
+            border: 3px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+.cajas2 {
+    min-width: 100px;
+        min-height: 60px;
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 5px;
+        width: auto;
+}
+.bg_palabra{
+            
+            border-radius: 10px 0px 10px 0px;
+            border: 2px solid #FBD2D5;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        
+        Lee las preguntas y responde. <br>
+        <b>Pregunta 1</b> Selecciona la respuesta. Para seleccionar dar click sobre las opciones.<br>
+        
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" class="btn btn-warning" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                      Literatura <img src="img/literatura.jpg" class="img-responsive" style="display: inline-block; mix-blend-mode: multiply;" alt="">
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_1" disabled="true" style="display: none;" ><strong style="color: #EF7D2D;">1.</strong><strong> Lee </strong> el siguiente texto y <strong>subraya</strong> la respuesta correcta.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <div align="center" class="table-responsive">
+                                                <img src="img/i1_p124_uni3a13.jpg" class="img-responsive" style="min-width: 500px;" alt="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p>Este texto es:</p>
+                                                <p><span class="enc1"><b style="color: #005CAA;">a. </b> <span id="p1im1"></span></span></p>
+                                                <p><span class="enc2"><b style="color: #005CAA;">b. </b> <span id="p1im2"></span></span></p>
+                                                <p><span class="enc3"><b style="color: #005CAA;">c. </b> <span id="p1im3"></span></span></p>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p>El tema que trata es:</p>
+                                                <p><span class="enc4"><b style="color: #005CAA;">a. </b> <span id="p1im4"></span></span></p>
+                                                <p><span class="enc5"><b style="color: #005CAA;">b. </b> <span id="p1im5"></span></span></p>
+                                                <p><span class="enc6"><b style="color: #005CAA;">c. </b> <span id="p1im6"></span></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_2"  ><strong style="color: #EF7D2D;">2.</strong><strong> Explica </strong> con tus propias palabras cuál es el origen de este tipo de composiciones.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        
+
+                        <div class="panel panel-default" >
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed btn btn-default"  style="color: black;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                      Comunicación oral <img src="img/comunicacion.jpg" class="img-responsive" style="display: inline-block; mix-blend-mode: multiply;" alt="">
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_3"  > <strong style="color: #805C97"> 3.</strong>¿Qué debe hacer el moderador de un coloquio durante la introducción?</span>
+                                        </div>
+                                        <div  class="col-sm-12 ">
+                                            <textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea>
+                                        </div>                                
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_4" > <strong style="color: #805C97">4.</strong>¿Qué contiene el desarrollo del coloquio?</span>
+                                        </div>
+                                    
+                                        <div class="col-sm-12">
+                                            <textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea>
+                                        </div>                                
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_5" > <strong style="color: #805C97">5.</strong> <strong>Escribe</strong> dos recomendaciones para los participantes en un coloquio.</span>
+                                        </div>
+                                    
+                                        <div class="col-sm-12">
+                                            <textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea>
+                                        </div>                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-danger">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a class="collapsed btn btn-danger" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" style="color: black;" aria-controls="collapseThree">
+                                        Lectura <img src="img/lectura.jpg" class="img-responsive" style="display: inline-block; mix-blend-mode: multiply;" alt="">
+
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_6" > <strong style="color: #E94F6C">6.</strong><strong> Lee </strong> el resumen de un experimento ficticio que aparece en una historia de ciencia ficción. Aunque se trata de un hecho imaginario y no es un experimento apegado a la realidad, <strong>imagina</strong> cómo quedó el reporte y <strong>completa</strong> la información.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <div style="border-radius: 15px; background: #E8D9D5;">
+                                                <p align="center"><b style="color: #00A2DB;">Jurassic Park</b></p>
+                                                <p align="justify">El Dr. John Hammond, gerente de la corporación InGen, financia una investigación para obtener ADN de dinosaurios y clonarlos. Para esto, busca la sangre de los dinosaurios en mosquitos prehistóricos (que habían picado a los dinosaurios). Estos mosquitos habían quedado preservados en resinas de ámbar.</p>
+                                                <p align="justify">Luego de extraer la sangre de dinosaurios del interior de los mosquitos, InGen pudo descifrar la cadena de ADN de los dinosaurios. Como estaba incompleta, utilizaron ADN de rana para terminarla. De esta manera, lograron clonar varias especies de dinosaurios.</p>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr style="border:2px solid #C663A4;">
+                                                        <td colspan="3">
+                                                            <p><b style="color: #005CAA;">1.</b> <b>Datos informativos</b></p>
+                                                            <p>Nombre: <input type="text" class="form-control" style="min-width: 200px;"></p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:2px solid #C663A4;">
+                                                        <td colspan="3">
+                                                            <p><b style="color: #005CAA;">2.</b> <b>Título</b></p>
+                                                            <p><input type="text" class="form-control" style="min-width: 200px;"></p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:2px solid #C663A4;">
+                                                        <td colspan="3">
+                                                            <p><b style="color: #005CAA;">3.</b> <b>Introducción</b></p>
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:2px solid #C663A4;">
+                                                        <td style="border-right: 2px solid #C663A4;">
+                                                            <p><b>Objetivo del experimento</b></p>
+                                                            <p><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></p>
+                                                        </td>
+                                                        <td style="border-right: 2px solid #C663A4;">
+                                                            <p><b>Pregunta de investigación</b></p>
+                                                            <p><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></p>
+                                                        </td>
+                                                        <td>
+                                                            <p><b>Hipótesis</b></p>
+                                                            <p><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:2px solid #C663A4;">
+                                                        <td colspan="3">
+                                                            <p><b style="color: #005CAA;">4.</b> <b>Materiales (ficticios)</b></p>
+                                                            <ul style="color: #005CAA;">
+                                                                <li><span style="color: black;">Mosquitos en ámbar alimentados con sangre de dinosaurio</span></li>
+                                                                <li><span style="color: black;">ADN de rana</span></li>
+                                                                <li><span style="color: black;">Varios analizadores genéticos</span></li>
+                                                                <li><span style="color: black;">Secuenciador personal de genoma</span></li>
+                                                                <li><span style="color: black;">Sistema Ion Protón</span></li>
+                                                                <li><span style="color: black;">Laboratorio de análisis genético con todos sus equipos</span></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:2px solid #C663A4;">
+                                                        <td colspan="3">
+                                                            <p><b style="color: #005CAA;">5.</b> <b>Procedimiento (ficticio)</b></p>
+                                                            <ul style="color: #005CAA;">
+                                                                <li><span style="color: black;">Extrajimos la sangre de dinosaurio que había en el mosquito.</span></li>
+                                                                <li><span style="color: black;">Secuenciamos el ADN.</span></li>
+                                                                <li><span style="color: black;">Reprodujimos la cadena de ADN.</span></li>
+                                                                <li><span style="color: black;">Completamos con el ADN de rana.</span></li>
+                                                                <li><span style="color: black;">Manipulamos la cadena de ADN para que todos los especímenes sean hembras.</span></li>
+                                                                <li><span style="color: black;">Implantamos el ADN en varios huevos de avestruz.</span></li>
+                                                                <li><span style="color: black;">Incubamos los huevos.</span></li>
+                                                                <li><span style="color: black;">Desechamos los huevos que no prosperaron.</span></li>
+                                                                <li><span style="color: black;">Cuidamos los que tenían embriones viables.</span></li>
+                                                                <li><span style="color: black;">Esperamos a que los huevos eclosionaran.</span></li>
+                                                                <li><span style="color: black;">Preparamos alimento para las crías.</span></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:2px solid #C663A4;">
+                                                        <td colspan="3">
+                                                            <p><b style="color: #005CAA;">6.</b> <b>Resultados (ficticios)</b></p>
+                                                            <p align="justify">De 800 huevos implantados, tuvimos éxito en 40; sin embargo, no todos los embriones llegaron a término. De estos 40 solamente nacieron 3, implantados con ADN de velocirraptor.</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:2px solid #C663A4;">
+                                                        <td colspan="3">
+                                                            <p><b style="color: #005CAA;">7.</b> <b>Conclusión</b></p>
+                                                            <p><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></p>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading" role="tab" id="headingFour">
+                                <h4 class="panel-title">
+                                    <a class="collapsed btn btn-info" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false"  aria-controls="collapseFour">
+                                        Escritura <img src="img/escritura.jpg" class="img-responsive" style="display: inline-block; mix-blend-mode: multiply;" alt="">
+
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_7"> <strong style="color: #3599BA">7.</strong> En las siguientes frases del reporte, <strong> identifica </strong>  qué tipo de modificador del núcleo del predicado tienen. </span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <div class="table-responsive">
+                                                <table class="table-responsive">
+                                                    <tr align="left">
+                                                        <td>
+                                                            <ul style="color: #005CAA;"><li><span style="color: black;">Incubamos los huevos.</span></li></ul>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" style="min-width: 200px; text-align: center;">
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </table>
+                                            </div>
+                                            <br>
+                                            <div class="table-responsive">
+                                                <table class="table-responsive">
+                                                    
+                                                    <tr align="left">
+                                                        <td>
+                                                            <ul style="color: #005CAA;"><li><span style="color: black;">Implantamos el ADN en varios huevos de avestruz.</span></li></ul>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" style="min-width: 300px; text-align: center;">
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </table>
+                                            </div>
+                                            <br>
+                                            <div class="table-responsive">
+                                                <table class="table-responsive">
+                                                    
+                                                    <tr align="left">
+                                                        <td>
+                                                            <ul style="color: #005CAA;"><li><span style="color: black;">Preparamos alimento para las crías.</span></li></ul>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" style="min-width: 200px; text-align: center;">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                         <div class="panel panel-primary">
+                            <div class="panel-heading" role="tab" id="headingFive">
+                                <h4 class="panel-title">
+                                    <a class="collapsed btn btn-primary" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false"  aria-controls="collapseFive">
+                                        Lengua y Cultura <img src="img/lengua.jpg" class="img-responsive" style="display: inline-block; mix-blend-mode: multiply;" alt="">
+
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_8"> <strong style="color: #3599BA">8.</strong><strong> Explica </strong> con tus propias palabras y <strong>ejemplifica</strong> tu respuesta.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <p>¿Qué son los saberes ancestrales?</p>
+                                            <p><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_9"> <strong style="color: #3599BA">9.</strong><strong> Anota </strong> dos actividades o tradiciones que realizan las personas de cada una de estas nacionalidades en su vida cotidiana.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <br>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td style="border: 2px solid #C663A4;"></td>
+                                                        <td style="border: 2px solid #C663A4; background: #76B828;"><b style="color: white;">Actividad 1</b></td>
+                                                        <td style="border: 2px solid #C663A4; background: #00A2DB;"><b style="color: white;">Actividad 2</b></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td style="border: 2px solid #C663A4; vertical-align: middle;"><b>Waorani</b></td>
+                                                        <td style="border: 2px solid #C663A4; "><p><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></p></td>
+                                                        <td style="border: 2px solid #C663A4; "><p><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></p></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td style="border: 2px solid #C663A4; vertical-align: middle;"><b>Tsáchila</b></td>
+                                                        <td style="border: 2px solid #C663A4; "><p><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></p></td>
+                                                        <td style="border: 2px solid #C663A4; "><p><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></p></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni3a14.js"></script>
+    <script type="text/javascript">
+    var titulos = "evaluacion";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("124");
+    //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+
+
+    
+    </script>
+</body>
+
+</html>

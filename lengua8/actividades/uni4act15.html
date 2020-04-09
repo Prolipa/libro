@@ -1,0 +1,559 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 8</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <style>
+        table td{
+                padding: 5px;
+            }
+            .question{
+                padding: 15px;
+                border-radius: 20px;
+            }
+            .answer{
+                margin-left: 25px;
+                margin-right: 25px;
+                padding-top: 5px;
+                padding-bottom: 18px;
+            }
+            .circleBase {
+                border-radius: 50%;
+                behavior: url(PIE.htc); 
+            }
+            .type3 {
+            width: 400px;
+            height: 250px;
+            border: 2px solid rgba(55, 155, 8, 0.836);
+            }
+            .subrayar {
+    background-color: #ffffff;
+
+        width: auto;
+        height: auto;
+        border: 4px rgb(34, 197, 29) solid;
+        border-radius: 50px;
+        margin: 1px;
+}
+            .subrayarc {
+    background-color: #ffffff;
+
+        width: auto;
+        height: auto;
+        border: 4px #8FB435 solid;
+        border-radius: 50px;
+        margin: 1px;
+}
+.subrayari {
+    background-color: #ffffff;
+
+        width: auto;
+        height: auto;
+        border: 4px #E76E80 solid;
+        border-radius: 50px;
+        margin: 1px;
+}
+        </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        2. Seleccione la respuesta correcta.<br>
+        3. Escribe la respuesta correcta en los respectivos recuadros.<br>
+        4. Escribe la respuesta correcta en los respectivos recuadros.<br>
+        5. Escribe la respuesta correcta en los respectivos recuadros.<br>
+        6. Escribe la respuesta correcta en los respectivos recuadros.<br>
+        7. Escribe la respuesta correcta en los respectivos recuadros.<br>
+        8. Escribe la respuesta correcta en los respectivos recuadros.<br>
+        9. Escribe la respuesta correcta en los respectivos recuadros.<br>
+        10. Escribe la respuesta correcta en los respectivos recuadros.<br>
+        Selecciona <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+        , en el cuadro de dialogo escribir el nombre del alumno o alumnos que realizaron actividad,<br>
+        para descargar un pdf para que el profesor evalue sus respuestas.
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip " data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onclick="NotaFinal()" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> /
+                    <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button>
+                <br>
+                <br>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    &nbsp;
+                                     <b>Pregunta 1. Lee</b>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <p class="text-question">
+                                    <b>Lee</b> el texto con atención.
+                                </p>
+                                <div class="col-sm-12 text-question table-responsive">
+                                    <img src="img/i1_p1174_act1.jpg" >
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a" readonly>&nbsp;
+                                     <b>Pregunta 2. Subraya <b>(1pt)</b></b>
+                                </a>
+                            </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <p class="text-question">
+                                        <b>Subraya</b> la frase correcta que responde al sentido de la afirmación.
+                                    </p>
+                                    <div class="col-sm-12 text-question">
+                                        <table class="table" border="1">
+                                            <tr>
+                                                <td bgcolor="#FEEDDB">El enigma que se quiere resolver es:
+                                                </td>
+                                                <td bgcolor="#FEEDDB">Los personajes de la novela policial poseen:
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <ol type="a" class="text-question" id="li1">
+                                                    </ol>
+                                                </td>
+                                                <td>
+                                                    <ol type="a" class="text-question" id="li2">
+                                                    </ol>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td bgcolor="#FEEDDB">El texto pertenece al género:
+                                                </td>
+                                                <td bgcolor="#FEEDDB">El narrador de una novela policial puede ser:
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <ol type="a" class="text-question" id="li3">
+                                                    </ol>
+                                                </td>
+                                                <td>
+                                                    <ol type="a" class="text-question" id="li4">
+                                                    </ol>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td bgcolor="#FEEDDB">Un texto policial requiere de un personaje:
+                                                </td>
+                                                <td bgcolor="#FEEDDB">El recurso temporal llamado flashback consiste en:
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <ol type="a" class="text-question" id="li5">
+                                                    </ol>
+                                                </td>
+                                                <td>
+                                                    <ol type="a" class="text-question" id="li6">
+                                                    </ol>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="html2pdf__page-break"></div>
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a">&nbsp;
+                                     <b>Pregunta 3. Define <b>(1pt)</b></b>
+                                </a>
+                            </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    <p class="text-question">
+                                        <b>Define</b> cada uno de los siguientes tipos de preguntas de una encuesta.
+                                    </p>
+                                    <div class="col-md-12 text-question">
+                                        <p>
+                                            <font color="purple">Pregunta de respuesta abierta:</font>
+                                        </p>
+                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea><br>
+                                        <p>
+                                            <font color="purple">Pregunta de respuesta cerrada:</font>
+                                        </p>
+                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingcuatro">
+                                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsecuatro" aria-expanded="false"
+                                    aria-controls="collapsecuatro">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a">&nbsp;
+                                     <b>Pregunta 4. Escribe <b>(1pt)</b></b> 
+                                </a>
+                            </h4>
+                            </div>
+                            <div id="collapsecuatro" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingcuatro">
+                                <div class="panel-body">
+                                    <p class="text-question">
+                                        <b>Escribe</b> las pautas que deben tomar en cuenta el encuestador y el encuestado.
+                                    </p><br>
+                                    <div class="col-md-12 text-question" style="text-align: center">
+                                        <div class="col-sm-6 ">
+                                            <p style=" color:#35AF15"><b>Para el encuestador</b></p><br>
+                                            <textarea class="form-control text-question no-redimensionar " cols="60" rows="7" placeholder="Texto"></textarea>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p style=" color:#35AF15"><b>Para el encuestado</b></p><br>
+                                            <textarea class="form-control text-question no-redimensionar " cols="60" rows="7" placeholder="Texto"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingFive">
+                                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false"
+                                    aria-controls="collapseFive">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre5a">&nbsp;
+                                     <b>Pregunta 5. Escribe <b>(1pt)</b></b> 
+                                </a>
+                            </h4>
+                            </div>
+                            <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                <div class="panel-body">
+                                    <p class="text-question">
+                                        <b>Escribe</b> cuatro características del artículo de opinión y <b>define</b> cada una de ellas.
+                                    </p><br>
+                                    <div class="col-md-12">
+                                        <div class="col-sm-3 table-responsive" style="border:#61BF89 solid 1px"><br>
+                                            <div> <textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea><br>
+                                                <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea><br> </div>
+                                        </div>
+                                        <div class="col-sm-3 table-responsive" style="border:#DEAE87 solid 1px"><br>
+                                            <div> <textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea><br>
+                                                <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea><br></div>
+                                        </div>
+                                        <div class="col-sm-3 table-responsive" style="border:#A978B4 solid 1px"><br>
+                                            <div> <textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea><br>
+                                                <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea><br> </div>
+                                        </div>
+                                        <div class="col-sm-3 table-responsive" style="border:#719DC7 solid 1px"><br>
+                                            <div> <textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea><br>
+                                                <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea><br> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingSix">
+                                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false"
+                                    aria-controls="collapseSix">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre6a">&nbsp;
+                                     <b>Pregunta 6. Expresa <b>(1pt)</b></b> 
+                                </a>
+                            </h4>
+                            </div>
+                            <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                                <div class="panel-body">
+                                    <p class="text-question">
+                                        <b>Expresa</b> tu opinión acerca del siguiente párrafo tomado del artículo de opinión "Pegados del celular".
+                                    </p>
+                                    <div class="col-sm-12 text-question table-responsive">
+                                        <br><img src="img/i1_p1174_act6.jpg"><br><br>
+                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingSeven">
+                                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false"
+                                    aria-controls="collapseSeven">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre7a">&nbsp;
+                                     <b>Pregunta 7. Define <b>(1pt)</b></b> 
+                                </a>
+                            </h4>
+                            </div>
+                            <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                                <div class="panel-body">
+                                    <p class="text-question">
+                                        <b>Define</b> en qué consiste cada tipo de párrafo.
+                                    </p>
+                                    <div class="col-sm-12 text-question">
+                                        <center><img src="img/i1_p1174_act7.jpg" class="table-responsive"></center>
+                                            <div class="col-sm-6" style="border: #2BBB9D solid 2px">
+                                                <p style="text-align: center">
+                                                    <font color="#2BBB9D">Párrafo deductivo</font>
+                                                </p>
+                                                <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea><br>
+                                            </div>
+                                            <div class="col-sm-6" style="border: #2BBB9D solid 2px">
+                                                <p style="text-align: center">
+                                                    <font color="#2BBB9D">Párrafo inductivo</font>
+                                                </p>
+                                                <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea><br>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingocho">
+                                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseocho" aria-expanded="false"
+                                    aria-controls="collapseocho">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre8a">&nbsp;
+                                     <b>Pregunta 8. Escribe <b>(1pt)</b></b> 
+                                </a>
+                            </h4>
+                            </div>
+                            <div id="collapseocho" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingocho">
+                                <div class="panel-body">
+                                    <p class="text-question">
+                                        <b>Escribe</b> una oración de cada uno de los siguientes tipos de verbos pronominales.
+                                    </p>
+                                    <div class="col-sm-12 text-question">
+                                        <table class="table" border="1px">
+                                            <tr>
+                                                <td width="50%" bgcolor="#D8C9E3">Verbos reflexivos o reflejos</td>
+                                                <td width="50%"><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td bgcolor="#FCDCDD">Verbos cuasirreflejos</td>
+                                                <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td bgcolor="#D8C9E3">Verbos recíprocos</td>
+                                                <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingNueve">
+                                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNueve" aria-expanded="false"
+                                    aria-controls="collapseNueve">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre9a">&nbsp;
+                                     <b>Pregunta 9. Escribe <b>(1pt)</b></b> 
+                                </a>
+                            </h4>
+                            </div>
+                            <div id="collapseNueve" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNueve">
+                                <div class="panel-body">
+                                    <p class="text-question">
+                                        <b>Escribe</b> un párrafo corto para un artículo de opinión en el que utilices las comillas
+                                    </p>
+                                    <div class="col-sm-12 text-question">
+                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingDiez">
+                                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseDiez" aria-expanded="false"
+                                    aria-controls="collapseDiez">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre10a">&nbsp;
+                                     <b>Pregunta 10. Define <b>(2pts)</b></b> 
+                                </a>
+                            </h4>
+                            </div>
+                            <div id="collapseDiez" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingDiez">
+                                <div class="panel-body">
+                                    <p class="text-question">
+                                        <b>Define</b> cada uno de los tipos de variedades lingüísticas. <b>Pon</b> un ejemplo de cada una.
+                                    </p>
+                                    <div class="col-sm-12 text-question table-responsive">
+                                        <div class="col-sm-6" style="border: #0F76BC solid 2px;text-align: center;">
+                                            <p>
+                                                <font color="#0F76BC">Por situación geográfica</font>
+                                            </p>
+                                            <textarea class="form-control text-question no-redimensionar " cols="60" rows="3" placeholder="Texto"></textarea><br>
+                                        </div>
+                                        <div class="col-sm-6" style="border: #0F76BC solid 2px;text-align: center;">
+                                            <p>
+                                                <font color="#0F76BC">Por grupo etario o de edad</font>
+                                            </p>
+                                            <textarea class="form-control text-question no-redimensionar " cols="60" rows="3" placeholder="Texto"></textarea><br>
+                                        </div>
+                                        <center><img src="img/i1_p1174_act10.jpg"></center>
+                                            <div class="col-sm-6" style="border: #0F76BC solid 2px;text-align: center;">
+                                                <p>
+                                                    <font color="#0F76BC">Por situación sociocultural</font>
+                                                </p>
+                                                <textarea class="form-control text-question no-redimensionar " cols="60" rows="3" placeholder="Texto"></textarea><br>
+                                            </div>
+                                            <div class="col-sm-6" style="border: #0F76BC solid 2px;text-align: center;">
+                                                <p>
+                                                    <font color="#0F76BC">Por situaciones circunstanciales</font>
+                                                </p>
+                                                <textarea class="form-control text-question no-redimensionar " cols="60" rows="3" placeholder="Texto"></textarea><br>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="guardar()">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/colorPick.min.js"></script>
+        <script src="js/paint.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper1.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/numPaginas.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/uni4act15.js"></script>
+</body>
+
+</html>

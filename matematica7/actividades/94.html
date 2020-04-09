@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMÁTICA 7</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/highcharts.js"></script>
+    	<script src="js/data.js"></script>
+    	<script src="js/react-with-addons.js"></script>
+    	<script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+</head>
+
+<style type="text/css">
+       #draggable { width: 150px; height: 150px; padding: 0.5em; }
+	   * {
+                margin:0; padding:0;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            .wrap {
+                padding: 2em 1em;
+                width: 400px;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            @media(min-width: 30em){
+                .wrap{
+                    width: 490px;
+                }
+                .sudoku-board input {
+                    font-size: 24px;
+                    font-size: 1.5rem;
+                }
+                .sudoku-board .candidates {
+                    font-size: .8em;
+                }
+            }
+
+    .fondo_preg{
+        background-color: #D6F2F8;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+
+    .textTab{
+        color: #3D4C78;
+        font-size: 20px;
+    }
+
+    .textTab1{
+        color: #35A877;
+        font-size: 20px;
+    }
+
+    .n0{
+        color: #15816F;
+        font-size: 23px;
+    }
+
+    .np0{
+        color: #EB3959;
+        font-size: 23px;
+    }
+
+    .np1{
+        color: #0D9C73;
+        font-size: 23px;
+    }
+
+    .np2{
+        color: #9A983B;
+        font-size: 23px;
+    }
+
+    .n1{
+        color: white;
+        font-size: 23px;
+        background-color: #309794;
+        border-radius: 5px;
+    }
+
+    .n2{
+       color: white;
+        font-size: 23px;
+        background-color: #B4AD67;
+        border-radius: 5px;
+    }
+
+    .num1{
+        background-color: #B3EEC9;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+        padding: 5px;
+    }
+
+    .num2{
+        background-color: #E1B3EE;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+        padding: 5px;
+    }
+    .num3{
+        background-color: #EEEAB3;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+        padding: 5px;
+    }
+
+
+    .suc1{
+        border-top-left-radius:15px;
+        border-bottom-right-radius:15px;
+        border-color: #419486;
+        text-align: center;
+    }
+
+    .suc2{
+        border-top-left-radius:15px;
+        border-bottom-right-radius:15px;
+        border-color: #E1B3EE;
+        text-align: center;
+    }
+
+    .suc3{
+        border-top-left-radius:15px;
+        border-bottom-right-radius:15px;
+        border-color: #DED226;
+        text-align: center;
+    }
+
+    .encabezado_pregunta{
+        background-color: #E5ECBD;
+        font-size: 19px;        
+        border-radius: 5px;
+    }
+   
+    .encabezados{
+        color: white;
+        font-size: 20px;
+    }
+
+    .r1{
+        border-top: none;
+        border-right: none;
+        border-left: none; 
+        border-bottom-width: 1px;
+        border-bottom-color: black;
+    }
+
+    .actividad1{
+        background: #fff;       
+    }
+
+    .t_images img{
+        padding: 8px;
+        max-width: 80%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+        margin-bottom: 15px;
+        padding: 3px;
+    }
+    
+@media (max-width: 770px) {
+	.cajas {
+	    clear: left;
+	  }
+   .t_images img{
+        padding: 8px;
+        max-width: 20%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+    }
+    .r_images img{
+        max-height: 100%;
+    }    
+}
+
+
+    .fraction {
+        display: inline-block;
+        vertical-align: middle; 
+        margin: 0 0.2em 0.4ex;
+        text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid black;}
+    .fraction span.bar {display: none;}
+
+
+
+    .recta{
+        border-right: 4px solid; 
+        border-right-color: #23346E;
+        cursor: pointer;
+        padding-left: 25px;
+    }
+    .recta1{   
+        border-bottom: 4px solid; 
+        border-bottom-color: #23346E; 
+    }
+
+    .recta3{
+        border-right: 4px solid; 
+        border-right-color: #23346E;
+        cursor: pointer;
+        padding-left: 40px;
+    }
+    .recta2{   
+        border-bottom: 4px solid; 
+        border-bottom-color: #23346E; 
+    }
+
+    .pintaRecta{
+        border-right: 4px solid; 
+        border-right-color: #CFA91E;
+    }
+
+
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button><br>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>
+            Actividad 1: Ingresa tus respuestas en los cuadros de texto correspondientes.<br>
+            Actividad 2,3: En la recta debes dar click sobre la línea vertical que quieras pintar. Puedes dar click nuevamente para despintar. NO pintes líneas que no sean correctas ya que se restarán de tu calificación.<br>
+
+        </b>
+
+        <br>
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-aplico" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-aplico">
+                    <span class="titulo"><img src="img/icoA.png"> Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+	 <div class="panel-body"> 
+            <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                            
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                            1. <b>Compara</b> las fracciones. <b>Convierte</b> las fracciones heterogéneas a homogéneas y <b>simplifica</b>.<br><br>
+
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-11 form-group form-inline">
+                                <div class="eq-c">
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nCFC1"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nCFC2"></span>
+                                    </div>
+                                    &nbsp;&nbsp;y&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nCFC3"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nCFC4"></span>
+                                    </div>
+                                    ; &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                                <!--------------------------------->
+                               
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rCFC1" class="form-control respuestas" style="width: 70px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rCFC2" class="form-control respuestas" style="width: 70px;"></span>
+                                    </div>
+                                    &nbsp;&nbsp;
+                                    <select id="rCFMN1" class="form-control respuestas" style="width: 60px; display: inline-block;">
+                                        <option></option>
+                                        <option>></option>
+                                        <option><</option>
+                                        <option>=</option>
+                                    </select>&nbsp;&nbsp;
+
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rCFC3" class="form-control respuestas" style="width: 70px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rCFC4" class="form-control respuestas" style="width: 70px;"></span>
+                                    </div>
+                                   
+                                    ;
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group">
+                            2. <b>Convierte</b> las fracciones a homogéneas, <b>ubícalas</b> en la semirrecta numérica y <b>ordénalas</b> de menor a mayor.<br><br>
+                            
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-11 form-group form-inline">
+                                <div class="eq-c">
+                                    A &nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nCFH1">5</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nCFH2">2</span>
+                                    </div>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    B &nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nCFH3">4</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nCFH4">8</span>
+                                    </div>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    D &nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nCFH5">2</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nCFH6">2</span>
+                                    </div>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    A &nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rCFH1" class="form-control respuestas" style="width: 60px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rCFH2" class="form-control respuestas" style="width: 60px;"></span>
+                                    </div>;&nbsp;&nbsp;&nbsp;
+                                    <select id="rCFHMN1" class="form-control respuestas" style="width: 60px;">
+                                        <option></option>
+                                        <option>></option>
+                                        <option><</option>
+                                        <option>=</option>
+                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    B &nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rCFH3" class="form-control respuestas" style="width: 60px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rCFH4" class="form-control respuestas" style="width: 60px;"></span>
+                                    </div>;
+                                    &nbsp;&nbsp;&nbsp;
+                                    <select id="rCFHMN2" class="form-control respuestas" style="width: 60px;">
+                                        <option></option>
+                                        <option>></option>
+                                        <option><</option>
+                                        <option>=</option>
+                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    C &nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rCFH5" class="form-control respuestas" style="width: 60px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rCFH6" class="form-control respuestas" style="width: 60px;"></span>
+                                    </div>;<br><br><br>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 table-responsive">                                
+                                <table>
+                                    <tbody align="right" style="font-size: 18px;">
+                                        <tr class="recta1">
+                                            <td class="recta" id="rUSN1" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta" id="rUSN2">&nbsp;</td>
+                                            <td class="recta" id="rUSN3">&nbsp;</td>
+                                            <td class="recta" id="rUSN4">&nbsp;</td>
+                                            <td class="recta" id="rUSN5">&nbsp;</td>
+                                            <td class="recta" id="rUSN6">&nbsp;</td>
+                                            <td class="recta" id="rUSN7" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta" id="rUSN8">&nbsp;</td>
+                                            <td class="recta" id="rUSN9">&nbsp;</td>
+                                            <td class="recta" id="rUSN10">&nbsp;</td>
+                                            <td class="recta" id="rUSN11">&nbsp;</td>
+                                            <td class="recta" id="rUSN12">&nbsp;</td>
+                                            <td class="recta" id="rUSN13" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta" id="rUSN14">&nbsp;</td>
+                                            <td class="recta" id="rUSN15">&nbsp;</td>
+                                            <td class="recta" id="rUSN16">&nbsp;</td>
+                                            <td class="recta" id="rUSN17">&nbsp;</td>
+                                            <td class="recta" id="rUSN18">&nbsp;</td>
+                                            <td class="recta" id="rUSN19" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta" id="rUSN20">&nbsp;</td>
+                                            <td class="recta" id="rUSN21">&nbsp;</td>
+                                            <td class="recta" id="rUSN22">&nbsp;</td>
+                                            <td class="recta" id="rUSN23">&nbsp;</td>
+                                            <td class="recta" id="rUSN24">&nbsp;</td>
+                                            <td class="recta" id="rUSN25" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta" id="rUSN26">&nbsp;</td>
+                                            <td class="recta" id="rUSN27">&nbsp;</td>
+                                            <td class="recta" id="rUSN28">&nbsp;</td>
+                                            <td class="recta" id="rUSN29">&nbsp;</td>
+                                            <td class="recta" id="rUSN30">&nbsp;</td>
+                                        </tr>
+                                        <tr style="cursor: pointer">
+                                            <td class="recta" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>
+                                            <td class="recta">&nbsp;</td>                                            
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #6881BD;">0</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td style="color: #6881BD;">6/12</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td style="color: #6881BD;">12/12</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td style="color: #6881BD;">18/12</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td style="color: #6881BD;">24/12</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                            
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+                        </h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                            3. Dada las siguientes fracciones, <b>ubícalas</b> en la semirrecta numérica y <b>ordénalas</b> de menor a mayor. Si es necesario convierte a fracción impropia.<br><br>
+
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-11 form-group form-inline">
+                                <div class="eq-c"><span class="np1">1</span>
+                                    <div class="fraction np1">
+                                        <span class="fup">2</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn">3</span>
+                                    </div>;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="np1">2</span>
+                                    <div class="fraction np1">
+                                        <span class="fup">1</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn">3</span>
+                                    </div>
+                                    ; &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup">4</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn">3</span>
+                                    </div>
+                                    ; &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup">10</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn">3</span>
+                                    </div>
+                                    ; &nbsp;&nbsp;&nbsp;&nbsp;<span class="np1">2</span>
+                                    <div class="fraction np1">
+                                        <span class="fup">2</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn">3</span>
+                                    </div>
+                                    ; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                                <!--------------------------------->
+                               
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rOMN1" class="form-control respuestas" style="width: 70px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rOMN2" class="form-control respuestas" style="width: 70px;"></span>
+                                    </div>
+
+                                    &nbsp;&nbsp;<b><</b>&nbsp;&nbsp;
+
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rOMN3" class="form-control respuestas" style="width: 70px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rOMN4" class="form-control respuestas" style="width: 70px;"></span>
+                                    </div>
+
+                                    &nbsp;&nbsp;<b><</b>&nbsp;&nbsp;
+
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rOMN5" class="form-control respuestas" style="width: 70px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rOMN6" class="form-control respuestas" style="width: 70px;"></span>
+                                    </div>
+
+                                    &nbsp;&nbsp;<b><</b>&nbsp;&nbsp;
+
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rOMN7" class="form-control respuestas" style="width: 70px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rOMN8" class="form-control respuestas" style="width: 70px;"></span>
+                                    </div>
+
+                                    &nbsp;&nbsp;<b><</b>&nbsp;&nbsp;
+
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rOMN9" class="form-control respuestas" style="width: 70px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rOMN10" class="form-control respuestas" style="width: 70px;"></span>
+                                    </div>
+                                </div>
+                                <br><br>
+                            </div>
+
+                            <div class="col-sm-12 table-responsive" align="center">
+                                <table>
+                                    <tbody align="right" style="font-size: 18px;">
+                                        <tr class="recta2">
+                                            <td class="recta3" id="rRMN1" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta3" id="rRMN2">&nbsp;</td>
+                                            <td class="recta3" id="rRMN3">&nbsp;</td>
+                                            <td class="recta3" id="rRMN4" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta3" id="rRMN5">&nbsp;</td>
+                                            <td class="recta3" id="rRMN6">&nbsp;</td>
+                                            <td class="recta3" id="rRMN7" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta3" id="rRMN8">&nbsp;</td>
+                                            <td class="recta3" id="rRMN9">&nbsp;</td>
+                                            <td class="recta3" id="rRMN10" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta3" id="rRMN11">&nbsp;</td>
+                                        </tr>
+                                        <tr style="cursor: pointer">
+                                            <td class="recta3" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta3">&nbsp;</td>
+                                            <td class="recta3">&nbsp;</td>
+                                            <td class="recta3" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta3">&nbsp;</td>
+                                            <td class="recta3">&nbsp;</td>
+                                            <td class="recta3" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta3">&nbsp;</td>
+                                            <td class="recta3">&nbsp;</td>
+                                            <td class="recta3" style="border-right-color: #6881BD;">&nbsp;</td>
+                                            <td class="recta3">&nbsp;</td>                                        
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #6881BD;">0</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td style="color: #6881BD;">3/3</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td style="color: #6881BD;">6/6</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td style="color: #6881BD;">9/3</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div>
+                    <img src="img/problema.jpg" class="img-responsive">
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Problema</a>
+                        </h4>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-inline form-group" align="justify">
+
+                            Tres compañeros elaboran una maqueta sobre el centro de salud de su localidad. María hizo <span class="np1" id="nTCP1"></span>/<span class="np1" id="nTCP2"></span> de la maqueta; Elena, <span class="np1" id="nTCP3"></span>/<span class="np1" id="nTCP4"></span>; y Juan, <span class="np1" id="nTCP5"></span>/<span class="np1" id="nTCP6"></span>. ¿Quién trabajó más?<br><br>
+
+                            <div align="center">
+                                <span class="np0">R. &nbsp;&nbsp;</span>
+                                <select id="rTCP1" class="form-control respuestas">
+                                    <option></option>
+                                    <option value="0">María</option>
+                                    <option value="1">Elena</option>
+                                    <option value="2">Juan</option>
+                                </select>&nbsp;&nbsp;trabajó más
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog"d>
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+       
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad94.js"></script>
+        <script type="text/javascript">
+            var titulos="aplico";
+            f_titulos();         
+            $("#n_pagina").html('141');
+        </script>
+</body>
+</html>

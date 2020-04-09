@@ -1,0 +1,643 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Matemática 3</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/estilo_canvas.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <style type="text/css">
+    .mi_canvas {
+        min-width: 320px;
+    }
+
+    #prueba {
+        margin-top: 2rem;
+        display: block;
+        box-sizing: border-box;
+        padding: 0px;
+        transition: all .3s linear 0s;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #e5e5e5;
+        /*background-color:rgba(212,185,186,0.2); */
+        background-image: url(img/i1_p74_act83.jpg);
+        /* SI SE NECESITA UNA IMAGEN DE FONDO */
+        background-size: 100% 100%;
+    }
+
+    #logo {
+        display: block;
+        margin-top: 1rem;
+        margin-left: 1rem;
+        z-index: 1;
+        width: 30%;
+        height: auto;
+        max-width: 350px;
+        min-width: 100px;
+    }
+
+    #contenedoropciones {
+        margin-top: 2rem;
+        padding: 2px;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #contenedoropciones table {
+        background-color: rgba(220, 220, 220, 1.00);
+        border: .25rem solid rgba(188, 185, 185, 1.00);
+        margin-bottom: .5rem;
+        border-spacing: 5px;
+        border-collapse: separate;
+    }
+
+    #contenedoropciones table:nth-of-type(2) {
+        border-spacing: 5px;
+    }
+
+    #contenedoropciones table:nth-of-type(2) td {
+        width: 1px;
+        white-space: nowrap;
+    }
+
+    #contenedoropciones table:nth-of-type(1) td {
+        cursor: pointer;
+    }
+
+    #contenedoropciones .titulotabla {
+        text-align: center;
+        font-weight: bold;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: white;
+        background-color: rgba(103, 103, 103, 1.00)
+    }
+
+    #contenedoropciones table {
+        display: inline-table;
+    }
+
+    .celdascoloresdefondo {
+        width: 20px;
+        height: 10px;
+        border: solid 1px transparent;
+    }
+
+    @media (max-width: 890px) {
+
+        /*.mi_canvas {
+      font-size: .750rem;
+    }*/
+        #contenedoropciones,
+        #prueba {
+            width: 98%
+        }
+
+        #contenedoropciones {
+            margin-left: 1%;
+        }
+    }
+
+    @media (max-width: 450px) {
+        /*.mi_canvas {
+      font-size: .75rem;
+    }*/
+    }
+
+    @media (max-width: 1px) {
+        #contenedoropciones #opcionesdedibujo {
+            display: table;
+            width: 100%;
+        }
+
+        #contenedoropciones #opcionesdedibujo td {
+            display: block;
+            width: auto;
+            text-align: left;
+            margin-top: 5px;
+        }
+    }
+    </style>
+    <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 5px;
+            width: auto;
+            height: 100px
+    
+        }
+        #caja_res, #caja_res1,#caja_res2{
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+        .respuestas{
+                width: 80%;
+                border: none;
+                border-bottom: 1px solid #005ca4;
+            }
+        .c_imagenes{
+            padding: 10px;
+        }
+        .mark1 {
+            min-width: 40px;
+            width: 70px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent;
+            padding: 15px 10px 10px 5px;
+        }
+
+        .mark2 {
+            width: 140px;
+            height: 30px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 140px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+        .correcto{
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+        
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+        .encierra{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+        .respuesta {
+    text-align: center;
+    border: 0;
+    border-top: 2px solid #393939;
+    border-bottom: 1px solid #85BCEB;
+    width: 50px;
+}
+.bordeT {
+    border: 1px #76B82A solid;
+}
+
+
+
+.bordeT2 {
+    border: 1px #76B82A solid;
+    text-align: center;
+}
+
+.paso {
+    background-color: #F9B000;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+}
+.pinta{
+            background-color: #E5E1D7;
+            
+        }
+.pinta1{
+            background: #E5E1D7;
+            
+        }
+        .bordes {
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 8px;
+    border: 1px solid #D68617;
+    padding: 8px;
+    margin: 2px;
+}
+        </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1: </b> Pinta los elementos de las figuras geométricas. <br>
+        <b>Pregunta 2: </b> Calcula el perímetro.<br>
+        <b>Pregunta 3: </b> Interpretamos los datos y respondemos las preguntas. Para la parte de conteo utilizar la letra <b>L minúscula</b> según el número de elementos.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                         <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container space" style="margin-top: 30px;">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-preparo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-reflexiono">
+                <span class="titulo"><img src="img/icoR.png" alt="Reflexiono para avanzar"> Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                      Geometría y medida (click aqui)
+                                    </a>
+                                  </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 text-question">
+                                    <p><input type="text" class="nota-abierta calif" id="nota1_1"><strong style="color: #0067AA">1.</strong><strong> Observa y pinta</strong> los elementos de las figuras geométricas con los colores indicados: <br>Azul ángulos, verde lados, anaranjado los vértices</p>
+                                    <div class="col-sm-12">
+                                        <div class="my-drawing"></div>
+                                    </div>
+                                </div>
+                                <div class="row"></div>
+                                <p></p>
+                                <div class="col-md-12 text-question">
+                                    <p><strong style="color: #0067AA">2.</strong><strong> Mide </strong> los lados de las siguientes figuras y <strong>calcula</strong> el perímetro.</p>
+                                    <div class="row">
+                                        <div class="col-sm-6" align="center">
+                                            <img id="p2im1" src="" class="img-responsive" alt="">
+                                            <br>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td><b>Suma:</b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon1" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #B1C904;"></td>
+                                                        <td><b> + </b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon2" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #B1C904;"></td>
+                                                        <td><b> + </b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon3" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #B1C904;"></td>
+                                                        <td><b> + </b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon4" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #B1C904;"></td>
+                                                        <td><b> = </b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon5" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #B1C904;"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td colspan="2"></td>
+                                                        <td colspan="2"><b>Perímetro:</b></td>
+                                                        <td colspan="2"><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon6" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #B1C904;"></td>
+                                                        <td colspan="2"><b>cm</b></td>
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6" align="center">
+                                            <img id="p2im2" src="" class="img-responsive" alt="">
+                                            <br>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td><b>Suma:</b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon7" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #32B5D5;"></td>
+                                                        <td><b> + </b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon8" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #32B5D5;"></td>
+                                                        <td><b> + </b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon9" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #32B5D5;"></td>
+                                                        <td><b> + </b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon10" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #32B5D5;"></td>
+                                                        <td><b> = </b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon11" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #32B5D5;"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td colspan="2"></td>
+                                                        <td colspan="2"><b>Perímetro:</b></td>
+                                                        <td colspan="2"><input onkeypress="return soloNumeros1(event)" type="text" id="p2dcon12" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #32B5D5;"></td>
+                                                        <td colspan="2"><b>cm</b></td>
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Estadística y probabilidad
+                                    </a>
+                                  </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="col-sm-12">
+                                    <div class="text-question">
+                                        <span ><strong style="color: #916EA4">3.</strong> Con un compañero <strong> completamos </strong>  la tabla de frecuencia, <strong>interpretamos</strong> los datos y <strong>respondemos</strong> las preguntas.</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table text-question">
+                                                <tr align="center">
+                                                    <td style="border: 1px solid black; color: white; background: #21B3E7">
+                                                        <b>Sabores preferidos</b>
+                                                    </td>
+                                                    <td style="border: 1px solid black; color: white; background: #B78AB9">
+                                                        <b>Conteo</b>
+                                                    </td>
+                                                    <td style="border: 1px solid black; color: white; background: #21B3E7">
+                                                        <b>Frecuencia</b>
+                                                    </td>
+                                                </tr>
+                                                <tr align="center">
+                                                    <td style="border: 1px solid black; background: #E4EFFA">
+                                                        <b>vainilla</b>
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <input onkeypress="return soloNumeros2(event)" type="text" id="p3dcon1" style=" text-align:center; width:  120px; border-radius: 5px; border:2px solid #B78AB9;">
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <input onkeypress="return soloNumeros1(event)" type="text" id="p3dcon11" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #21B3E7;" disabled="true" value="4">
+                                                    </td>
+                                                </tr>
+                                                <tr align="center">
+                                                    <td style="border: 1px solid black;background: #E4EFFA">
+                                                        <b>chocolate</b>
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <input onkeypress="return soloNumeros2(event)" type="text" id="p3dcon2" style=" text-align:center; width:  120px; border-radius: 5px; border:2px solid #B78AB9;">
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <input onkeypress="return soloNumeros1(event)" type="text" id="p3dcon12" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #21B3E7;" disabled="true" value="8">
+                                                    </td>
+                                                </tr>
+                                                <tr align="center">
+                                                    <td style="border: 1px solid black;background: #E4EFFA">
+                                                        <b>mora</b>
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <input onkeypress="return soloNumeros2(event)" type="text" id="p3dcon3" style=" text-align:center; width:  120px; border-radius: 5px; border:2px solid #B78AB9;">
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <input onkeypress="return soloNumeros1(event)" type="text" id="p3dcon13" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #21B3E7;" disabled="true" value="2">
+                                                    </td>
+                                                </tr>
+                                                <tr align="center">
+                                                    <td style="border: 1px solid black; background: #E4EFFA">
+                                                        <b>fresa</b>
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <input onkeypress="return soloNumeros2(event)" type="text" id="p3dcon4" style=" text-align:center; width:  120px; border-radius: 5px; border:2px solid #B78AB9;">
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <input onkeypress="return soloNumeros1(event)" type="text" id="p3dcon14" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #21B3E7;" disabled="true" value="10">
+                                                    </td>
+                                                </tr>
+                                                <tr align="center">
+                                                    <td style="border: 1px solid black; background: #E4EFFA">
+                                                        <b>chicle</b>
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <input onkeypress="return soloNumeros2(event)" type="text" id="p3dcon5" style=" text-align:center; width:  120px; border-radius: 5px; border:2px solid #B78AB9;">
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <input onkeypress="return soloNumeros1(event)" type="text" id="p3dcon15" maxlength="2" style=" text-align:center; width:  40px; border-radius: 5px; border:2px solid #21B3E7;" disabled="true" value="15">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <p class="text-question" align="justify"><b style="color: #916EA4">a) </b>¿Cuántos sabores de helados participaron en la encuesta? <input type="text" id="p3dcon6" onkeypress="return soloNumeros1(event)" style=" text-align:center; width:  100px; border-radius: 5px; border:2px solid #8B3E8E;"></p>
+                                            <p class="text-question" align="justify"><b style="color: #916EA4">b) </b> ¿Cuál es el sabor preferido? <input type="text" id="p3dcon7" onkeyup="mayus(this)" style=" text-align:center; width:  100px; border-radius: 5px; border:2px solid #8B3E8E;"></p>
+                                            <p class="text-question" align="justify"><b style="color: #916EA4">c) </b>¿Qué sabor obtuvo menos votos? <input onkeyup="mayus(this)" type="text" id="p3dcon8" style=" text-align:center; width:  100px; border-radius: 5px; border:2px solid #8B3E8E;"></p>
+                                            <p class="text-question" align="justify"><b style="color: #916EA4">d) </b> ¿Cuánta personas eligieron chocolate, vainilla y mora? <input onkeypress="return soloNumeros1(event)" type="text" id="p3dcon9" style=" text-align:center; width:  100px; border-radius: 5px; border:2px solid #8B3E8E;"></p>
+                                            <p class="text-question" align="justify"><b style="color: #916EA4"> e) </b> ¿A cuántas personas realizaron la encuesta? <input onkeypress="return soloNumeros1(event)" type="text" id="p3dcon10" style=" text-align:center; width:  100px; border-radius: 5px; border:2px solid #8B3E8E;"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/actividad94.js"></script>
+    <script type="text/javascript">
+    var titulos = "refuerzo";
+    f_titulos();
+    $("#n_pagina").html('82');
+
+    //Solo permite introducir numeros.
+    function soloNumeros1(e) {
+        var key = window.event ? e.which : e.keyCode;
+        if (key < 48 || key > 57) {
+            e.preventDefault();
+        }
+    }
+    //Solo permite introducir numeros.
+    function soloNumeros2(e) {
+        var key = window.event ? e.which : e.keyCode;
+        if (key < 108 || key > 108) {
+            e.preventDefault();
+        }
+    }
+    </script>
+    <script>
+    scale = 1
+    var winWidth = $(window).width();
+    window.backgroundImage = new Image();
+    window.backgroundImage.src = 'img/i4_p82_act94.jpg';
+
+    var lc = LC.init(
+        document.getElementsByClassName('my-drawing')[0], {
+            imageURLPrefix: 'imgcanvas',
+            backgroundShapes: [LC.createShape('Image', { x: 0, y: 100, image: window.backgroundImage, scale: (1 * (winWidth / 2000).toFixed(3)) })]
+        });
+
+
+    lc.respondToSizeChange();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMÁTICA 7</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link rel="stylesheet" media="all" type="text/css" href="css/sudokuJS.css">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/sudokuJS.js"></script>
+
+</head>
+<style type="text/css">
+#draggable { width: 150px; height: 150px; padding: 0.5em; }
+	   * {
+                margin:0; padding:0;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            .wrap {
+                padding: 2em 1em;
+                width: 400px;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            @media(min-width: 30em){
+                .wrap{
+                    width: 490px;
+                }
+                .sudoku-board input {
+                    font-size: 24px;
+                    font-size: 1.5rem;
+                }
+                .sudoku-board .candidates {
+                    font-size: .8em;
+                }
+            }
+
+    .fondo_preg{
+        background-color: #D6F2F8;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+
+    .textTab{
+        color: #3D4C78;
+        font-size: 20px;
+    }
+
+    .textTab1{
+        color: #35A877;
+        font-size: 20px;
+    }
+
+    .n0{
+        color: #3D4C78;
+        font-size: 23px;
+    }
+
+    .np0{
+        color: #2E42EA;
+        font-size: 23px;
+    }
+
+    .np1{
+        color: #0D9C73;
+        font-size: 23px;
+    }
+
+    .np2{
+        color: #9A983B;
+        font-size: 23px;
+    }
+
+    .n1{
+        color: white;
+        font-size: 23px;
+        background-color: #309794;
+        border-radius: 5px;
+    }
+
+    .n2{
+       color: white;
+        font-size: 23px;
+        background-color: #B4AD67;
+        border-radius: 5px;
+    }
+
+    .num{
+        background-color: #F9C797;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+
+    .num1{
+        background-color: #6DAB61;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+
+    .encabezado_pregunta{
+        background-color: #E5ECBD;
+        font-size: 19px;        
+        border-radius: 5px;
+    }
+   
+    .encabezados{
+        color: white;
+        font-size: 20px;
+    }
+
+    .r1{
+        border-top: none;
+        border-right: none;
+        border-left: none; 
+        border-bottom-width: 1px;
+        border-bottom-color: black;
+    }
+
+    .actividad1{
+        background: #fff;       
+    }
+
+    .t_images img{
+        padding: 8px;
+        max-width: 80%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+        margin-bottom: 15px;
+        padding: 3px;
+    }
+    
+@media (max-width: 770px) {
+	.cajas {
+	    clear: left;
+	  }
+   .t_images img{
+        padding: 8px;
+        max-width: 20%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+    }
+    .r_images img{
+        max-height: 100%;
+    }    
+}
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Actividad 1: En base a las sucesiones planteadas, determina el patrón y su respectiva operación matemática (+, -, x, ÷).<br>
+        Actividad 2: A partir del número planteado en color azul crea sucesiones definiendo el patrón y la operación matemática (+, -, x, ÷). <br>
+        Actividad 3: Especifica los criterios de divisibilidad de los números planteados, guíate en el ejemplo de la primera fila.<br>
+        Actividad 4: Selecciona si los números planteados en la primera columna son divisibles para los valores de la primera fila (2, 3, 4, 5, 7, 10, 11, 25, 100) SI o NO. <br>
+        Actividad 5: Clasifica a los números planteados por PRIMOS o COMPUESTOS según correspondan.<br>
+        Actividad 6: Realiza el proceso de descomposición en factores primos en los cuadros de texto correspondientes.<br>
+        Actividad 7: Realiza el proceso de descomposición en factores primos de la Raiz planteada en los cuadros de texto correspondientes.<br>
+        Actividad 8: Resuelve el problema, ingresa los datos de tu respuesta en los cuadros de texto correspondientes.<br>
+        Actividad 9: Expresa matemáticamente las expresiones planteadas en los cuadros de texto correspondientes.<br>
+        Actividad 10: Calcula las raíces planteadas con la ayuda de una calculadora, escribe la respuesta en los cuadros de texto correspondientes.<br>
+        Actividad 11: Resuelve el problema, ingresa los datos de tu respuesta en los cuadros de texto correspondientes.<br>
+        Actividad 12: Resuelve el problema, realiza el procedimiento en el cuadro de texto.<br>
+
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-refuerzo" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-refuerzo">
+                    <span class="titulo"><img src="img/icoD.png" alt="Aplico para Aprender"> Refuerzo mis destrezas</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+	 <div class="panel-body"> 
+            <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+        <div class="row">
+            <div class="col-sm-8"><img src="img/practica_individual.jpg"></div>
+         </div> 
+                <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"> 
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                          <div class="panel-body preguntas">
+                           <span>1. <b>Calcula</b> el patrón en las siguientes sucesiones:</span>
+                            <br><br>
+							<div class="form-inline form-group">
+                                <ol type="a" class="lista1"></ol>                     
+                            </div>
+
+                            
+                          </div>
+                   
+                     </div>
+                    </div>
+
+
+                 <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                             
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                           <div class="panel-body preguntas">                            
+                            <span>2. <b>Genera</b> sucesiones crecientes a partir de los siguientes números.</span>
+                            <br><br>            
+                            <div class="form-inline form-group">
+                                <div id="pregunta1_0"></div>
+                                <div id="pregunta1_1"></div>
+                                <div id="pregunta1_2"></div>
+                                <div id="pregunta1_3"></div>
+                            </div>
+                        	</div>
+                    	</div>
+                </div>
+
+
+        <div class="panel panel-info">
+                 <div class="panel-heading">
+                            <h4 class="panel-title">   
+                            <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                               <input type="number" id="calificacion0" placeholder="Puntaje/0.75" style="width: 120px;" class="form-control">
+                           </div>                          
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse5" style="margin-left: 70px;">Actividad 3</a>
+                            </h4>
+                  </div>
+                  <div id="collapse5" class="panel-collapse collapse">
+                     <div class="panel-body preguntas">                         
+                            <span>3. <b>Analiza</b> el número y <b>completa</b> la información.</span><br>
+
+                        <div class="col-sm-12">                            
+                            <table id="tablePreview" class="table table-sm table-striped table-bordered">
+                              <thead>
+                                <tr>
+                                  <th style="background-color: #3EAACA; font-size: 20px; color: white;" >Números</th>
+                                  <th style="background-color: #C43490; font-size: 20px; color: white;">Criterios de divisibilidad</th>
+                                </tr>
+                              </thead>
+                              <tbody id="tabDivs">
+                                <tr>
+                                    <td class="textTab1" align="center">54388</td>
+                                    <td><span class="textTab">Es divisible por 2 porque termina en número par</span></td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+                        </div>                          
+
+                    </div>
+                 </div>
+        </div>
+
+
+
+        <div class="panel panel-info">
+                 <div class="panel-heading">
+                            <h4 class="panel-title">                      
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Actividad 4</a>
+                            </h4>
+                  </div>
+                  <div id="collapse6" class="panel-collapse collapse">
+                    <div class="panel-body preguntas">
+                        <span>4. <b>Aplica</b> los criterios de divisibilidad para cada número y <b>selecciona</b>, según corresponda.</span>
+                            <div class="table-responsive">
+                                <table id="tablaDivisibles" class="table-responsive table table-bordered table-sm">
+                                <tbody align="center"></tbody>
+                            </table>
+                            </div>                                  
+                       
+                    </div>
+                 </div>
+        </div>
+
+
+        <div class="panel panel-info">
+                 <div class="panel-heading">
+                            <h4 class="panel-title">                      
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">Actividad 5</a>
+                            </h4>
+                  </div>
+                  <div id="collapse7" class="panel-collapse collapse">
+                    <div class="panel-body preguntas">
+                        <span>5. <b>Clasifica</b> cada número como primo o compuesto.</span>
+                                  
+                            <br><br>
+                            <div class="form-inline form-group">
+                            <div class="col-sm-3" id="primos0"></div>
+                            <div class="col-sm-3" id="primos1"></div>
+                            <div class="col-sm-3" id="primos2"></div>
+                            <div class="col-sm-3" id="primos3"></div>                            
+                            <br><br><br>
+                            <div class="col-sm-3" id="primos4"></div>
+                            <div class="col-sm-3" id="primos5"></div>
+                            <div class="col-sm-3" id="primos6"></div>
+                            <div class="col-sm-3" id="primos7"></div>
+                            <br><br><br>
+                            <div class="col-sm-3" id="primos8"></div>
+                            <br><br>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+
+
+        <div class="panel panel-info">
+                 <div class="panel-heading">
+                    <h4 class="panel-title">                      
+                     <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                          <input type="number" id="calificacion1" placeholder="Puntaje/0.75" style="width: 120px;" class="form-control">      
+                    </div>                                                       
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse8" style="margin-left: 70px;">Actividad 6</a>
+                    </h4>
+                  </div>
+                  <div id="collapse8" class="panel-collapse collapse">
+                    <div class="panel-body preguntas">
+                        <span><b>Realiza</b> la descomposición de los números en sus factores primos.</span>
+                                  
+                    <br><br>
+                    <div class="col-sm-3" id="descompisicion0">
+                    <textarea class="form-control respuestas" id="txtDesc0" rows="7" style="background-image: url('img/fondo_cuadros2.jpg')"></textarea>
+                    </div>
+                    <div class="col-sm-3" id="descompisicion1">
+                     <textarea class="form-control respuestas" id="txtDesc1" rows="7" style="background-image: url('img/fondo_cuadros2.jpg')"></textarea>   
+                    </div>
+                    <div class="col-sm-3" id="descompisicion2">
+                     <textarea class="form-control respuestas" id="txtDesc2" rows="7" style="background-image: url('img/fondo_cuadros2.jpg')"></textarea>   
+                    </div>
+                    <div class="col-sm-3" id="descompisicion3">
+                     <textarea class="form-control respuestas" id="txtDesc3" rows="7" style="background-image: url('img/fondo_cuadros2.jpg')"></textarea>   
+                    </div>                                                        
+                    <br><br>
+                 </div>
+            </div>
+        </div>
+
+
+
+        <div class="panel panel-info">
+                 <div class="panel-heading">
+                    <h4 class="panel-title">                      
+                     <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                          <input type="number" id="calificacion2" placeholder="Puntaje/0.75" style="width: 120px;" class="form-control">      
+                    </div>                                                       
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse9" style="margin-left: 70px;">Actividad 7</a>
+                    </h4>
+                  </div>
+                  <div id="collapse9" class="panel-collapse collapse">
+                    <div class="panel-body preguntas">
+                        <span>7. <b>Encuentra</b> la raíz por descomposición de sus factores primos.</span>
+                                  
+                    <br><br>
+                    <div class="col-sm-6" id="descRaiz0">
+                    <textarea class="form-control respuestas" id="txtDescRaiz0" rows="9" style="background-image: url('img/fondo_cuadros3.jpg')"></textarea>
+                    </div>
+                    <div class="col-sm-6" id="descRaiz1">
+                     <textarea class="form-control respuestas" id="txtDescRaiz1" rows="9" style="background-image: url('img/fondo_cuadros3.jpg')"></textarea>   
+                    </div>                                                       
+                    <br><br>
+                 </div>
+            </div>
+        </div>
+
+
+
+        <div class="panel panel-info">
+                 <div class="panel-heading">
+                    <h4 class="panel-title">                                                                         
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">Actividad 8</a>
+                    </h4>
+                  </div>
+                  <div id="collapse10" class="panel-collapse collapse">
+                    <div class="panel-body preguntas">
+                        <span>8. <b>Resuelve</b> el problema.</span>
+                                  
+                    <br><br>
+                    <span>Francisca tiene un espejo cuadrado que tiene un área de <span id="p8Num0" class="n0"></span> cm<sup id="p8Rad0" class="n0"></sup>. ¿Cuánto mide cada lado del espejo? Expresa tu respuesta en forma de raíz.</span>
+                    <br><br>
+                    <div class="form-inline form-group" align="center">
+                        <sup><input type="number" id="rP8Sup0" class="form-control respuestas" style="width: 60px;"></sup>
+                        √<input type="number" id="rP8Num0" class="form-control respuestas" style="width: 120px;"> = Cada lado del espejo de Francisca mide
+                        <input type="number" id="rP8" class="form-control respuestas" style="width: 100px;"> cm.
+                    </div>                    
+                 </div>
+            </div>
+        </div>
+
+
+
+        <div class="panel panel-info">
+                 <div class="panel-heading">
+                    <h4 class="panel-title">                                                                         
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">Actividad 9</a>
+                    </h4>
+                  </div>
+                  <div id="collapse11" class="panel-collapse collapse">
+                    <div class="panel-body preguntas">
+                        <span>9. <b>Expresa</b> matemáticamente las siguientes expresiones.</span>
+                                  
+                    <br><br>
+                    <span>Francisca tiene un espejo cuadrado que tiene un área de <span id="p8Num0" class="n0"></span> cm<sup id="p8Rad0" class="n0"></sup>. ¿Cuánto mide cada lado del espejo? Expresa tu respuesta en forma de raíz.</span>
+                    <br><br>
+                    <div class="col-sm-1"></div>
+
+                        <div class="col-sm-11 row-border form-inline form-group">
+                                <ol type="a" class="listaP9"></ol>                     
+                        </div>                  
+                 </div>
+            </div>
+        </div>
+
+
+
+        <div class="panel panel-info">
+                 <div class="panel-heading">
+                    <h4 class="panel-title">                                                                         
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse12">Actividad 10</a>
+                    </h4>
+                  </div>
+                  <div id="collapse12" class="panel-collapse collapse">
+                    <div class="panel-body preguntas">
+                        <span>10. Con la ayuda de la calculadora, <b>encuentra</b> la raíz.</span>
+                                  
+                    <br><br>
+                    <div class="form-inline form-group" align="center">
+                        <div class="col-sm-4">
+                         a)   <sup id="rP10Sup0" class="n0"></sup>
+                        √<span id="rP10Num0" class="n0"></span> = 
+                        <input type="number" id="rP10_0" class="form-control respuestas" style="width: 100px;">
+                        </div>
+                        <div class="col-sm-4">
+                         b)   <sup id="rP10Sup1" class="np1"></sup>
+                        √<span id="rP10Num1" class="np1"></span> = 
+                        <input type="number" id="rP10_1" class="form-control respuestas" style="width: 100px;">
+                        </div>
+                        <div class="col-sm-4">
+                         c)   <sup id="rP10Sup2" class="np2"></sup>
+                        √<span id="rP10Num2" class="np2"></span> = 
+                        <input type="number" id="rP10_2" class="form-control respuestas" style="width: 100px;">
+                        </div>
+                        <br><br><br>
+                        <div class="col-sm-4">
+                         d)   <sup id="rP10Sup3" class="n0"></sup>
+                        √<span id="rP10Num3" class="n0"></span> = 
+                        <input type="number" id="rP10_3" class="form-control respuestas" style="width: 100px;">
+                        </div>
+                        <div class="col-sm-4">
+                         e)   <sup id="rP10Sup4" class="np1"></sup>
+                        √<span id="rP10Num4" class="np1"></span> = 
+                        <input type="number" id="rP10_4" class="form-control respuestas" style="width: 100px;">
+                        </div>
+                        <div class="col-sm-4">
+                         f)   <sup id="rP10Sup5" class="np2"></sup>
+                        √<span id="rP10Num5" class="np2"></span> = 
+                        <input type="number" id="rP10_5" class="form-control respuestas" style="width: 100px;">
+                        </div>
+                        
+                    </div> 
+            </div>
+        </div>
+
+    </div>
+
+        <div class="panel panel-info">
+                 <div class="panel-heading">
+                    <h4 class="panel-title">                                                                         
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse13">Actividad 11</a>
+                    </h4>
+                  </div>
+                  <div id="collapse13" class="panel-collapse collapse">
+                    <div class="panel-body preguntas">
+                        <span>11. <b>Resuelve</b> el problema.</span>
+                                  
+                    <br><br>
+                    <span>En una fábrica de productos de aseo se construye una cisterna de forma cúbica con capacidad de <span id="p11Num0" class="n0"></span> metros<sup id="p11Rad0" class="n0"></sup> de agua. ¿Cuánto mide cada lado de la cisterna?</span>
+                    <br><br>
+
+                    <div class="form-inline form-group" align="center">
+                        <sup><input type="number" id="rP11Sup0" class="form-control respuestas" style="width: 60px;"></sup>
+                        √<input type="number" id="rP11Num0" class="form-control respuestas" style="width: 120px;">  = Cada lado de la cisterna mide <input type="number" id="rP11" class="form-control respuestas" style="width: 100px;"> metros.
+                    </div>                    
+                 </div>
+            </div>
+        </div>
+
+
+
+        <div class="panel panel-info">
+                 <div class="panel-heading">
+                    <h4 class="panel-title"> 
+                    <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                        <input type="number" id="calificacion3" placeholder="Puntaje/0.75" style="width: 120px;" class="form-control">
+                     </div>                                                                                                  
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse14" style="margin-left: 70px;">Actividad 12</a>
+                    </h4>
+                  </div>
+                  <div id="collapse14" class="panel-collapse collapse">
+                    <div class="panel-body preguntas">
+                        <span>12. <b>Resuelve</b> el problema.</span>
+                                  
+                    <br><br>
+                    <span>Medardo quiere colocar parqué en el piso de la sala de su casa, que tiene <span id="p12Num0" class="n0"></span> dm2. ¿Cuántas piezas de parqué necesita si cada pieza es de forma cuadrada y mide <span id="p12Rad0" class="n0"></span> centímetros de lado?</span>
+
+                    <br><br>
+
+                    <textarea class="form-control respuestas" rows="5"></textarea>
+                 </div>
+            </div>
+        </div>
+
+
+
+ 
+</div>  
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+       
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad63.js"></script>
+        <script type="text/javascript">
+            var titulos="refuerzo";
+            f_titulos();         
+            $("#n_pagina").html('76');
+        </script>
+</body>
+</html>

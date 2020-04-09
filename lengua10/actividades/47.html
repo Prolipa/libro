@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lengua y Literatura 10</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <script src="js/evaluacion.js"></script>
+    <style>
+        hr {
+            border-color: black;
+            border-width: 2px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin: 3px;
+        }
+
+        .txt5 {
+            font-size: 16px;
+        }
+
+        .subrayar {
+            text-decoration: underline;
+        }
+
+        .pintarcorrecto {
+            background-color: #32a75b;
+        }
+
+        .pintarincorrecto {
+            background-color: #F97591;
+            text-decoration: line-through;
+        }
+
+        .correcto {
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+
+        .incorrecto {
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+        }
+
+
+        .calif {
+            position: relative;
+            font-size: 15px;
+        }
+
+        .textarea {
+            resize: none;
+            width: 350px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Da clic sobre la opcion que quieres subrayar.<br>
+        2. Da clic sobre la opcion que quieres subrayar.<br>
+        3. Da clic sobre la opcion que quieres subrayar.<br>
+        4. Da clic sobre la opcion que quieres subrayar.<br>
+        5. Da clic sobre la opcion que quieres subrayar.<br>
+        6. Lee cuidadosamente la pregunta y contesta.<br>
+        7. Lee cuidadosamente la pregunta y contesta.<br>
+        8. Da clic sobre la opcion que quieres subrayar.<br>
+        9. Da clic sobre la opcion que quieres subrayar.<br>
+        10. Lee cuidadosamente la pregunta y contesta.<br>
+        11. Lee cuidadosamente la pregunta y contesta.<br>
+        12. Lee cuidadosamente la pregunta y contesta.<br>
+        13. Lee cuidadosamente la pregunta y contesta.<br>
+        14. Lee cuidadosamente la pregunta y contesta.<br>
+        15. Lee cuidadosamente la pregunta y contesta.<br>
+        16. Lee cuidadosamente la pregunta y contesta.<br>
+        17. Lee cuidadosamente la pregunta y contesta.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled
+                        data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar"
+                        onClick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="act_actual">1</span> /
+                        <span id="act_total">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Evaluación Sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                    aria-expanded="true" aria-controls="collapseOne">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0"
+                                        max="10" id="pre1a" readonly>&nbsp;
+                                    Literatura: <b>Pregunta 1.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div>
+                                        <div class="text-question">
+                                            <span><b>1. </b>¿Qué elemento representa la idea general o el tema macro de
+                                                la
+                                                realidad de la obra?</span></div><br>
+                                        <table class="table">
+                                            <tr>
+                                                <td width="5%"><span><b>a)</b></span></td>
+                                                <td>
+                                                    <div class="col-lg-12  imagen1  " id="ranuno1"></div>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="5%"><span><b>b)</b></span></td>
+                                                <td>
+                                                    <div class="col-lg-12  imagen1  " id="ranuno2"></div>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="5%"><span><b>c)</b></span></td>
+                                                <td>
+
+                                                    <div class="col-lg-12  imagen1  " id="ranuno3"></div>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="5%"><span><b>d)</b></span></td>
+                                                <td>
+
+                                                    <div class="col-lg-12  imagen1  " id="ranuno4"></div>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0"
+                                        max="10" id="pre2a" readonly>&nbsp;
+                                    Literatura: <b>Pregunta 2.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <span><b>2. </b> La tensión dramática está dada por:</span></div><br>
+                                    <table class="table">
+                                        <tr>
+                                            <td width="5%"><span><b>a)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen2  " id="randos1"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><span><b>b)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen2  " id="randos2"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><span><b>c)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen2  " id="randos3"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><span><b>d)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen2  " id="randos4"></div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+                                    aria-expanded="false" aria-controls="collapseThree">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0"
+                                        max="10" id="pre3a" readonly>&nbsp;
+                                    Literatura: <b>Pregunta 3.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="col-md-12" style="padding-top: 20px">
+                                    <div class="text-question">
+                                        <span><b>3. </b> Es el que se desarrolla para los personajes en la realización
+                                            de
+                                            sus acciones. No necesariamente es contabilizado de forma cronológica.</div><br>
+                                    <table class="table">
+                                        <tr>
+                                            <td width="5%"><span><b>a)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen3  " id="rantres1"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><span><b>b)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen3  " id="rantres2"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><span><b>c)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen3  " id="rantres3"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><span><b>d)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen3  " id="rantres4"></div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour"
+                                    aria-expanded="false" aria-controls="collapseFour">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0"
+                                        max="10" id="pre4a" readonly>&nbsp;
+                                    Literatura: <b>Pregunta 4.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>4. </b> La relación de acontecimientos que se desarrollan en la obra
+                                            dramática
+                                            pertenece al:</span></div><br>
+                                    <table class="table">
+                                        <tr>
+                                            <td width="5%"><span><b>a)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen4  " id="rancuatro1"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><span><b>b)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen4  " id="rancuatro2"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><span><b>c)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen4  " id="rancuatro3"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><span><b>d)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen4  " id="rancuatro4"></div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive"
+                                    aria-expanded="false" aria-controls="collapseFive">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre5a" readonly>&nbsp;
+                                    Literatura: <b>Pregunta 5.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>5. </b>¿Cuál de las siguientes secuencias pertenece a la estructura
+                                            externa?</div><br>
+                                    <table class="table">
+                                        <tr>
+                                            <td><span><b>a)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen5  " id="rancinco1"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>b)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen5  " id="rancinco2"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>c)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen5  " id="rancinco3"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>d)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen5  " id="rancinco4"></div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingSix">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix"
+                                    aria-expanded="false" aria-controls="collapseSix">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre6a">&nbsp;
+                                    Literatura: <b>Pregunta 6.</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>6. Explica. </b> ¿Qué elementos podrían variarse para transformar este
+                                            contenido
+                                            en una pequeña obra dramática?</span></div><br>
+                                    <div class="text-question">
+                                        <span>Un emprendedor tiene una idea que considera brillante: hace unos estudios
+                                            de
+                                            mercado, consigue un préstamo en el banco y monta una empresa. Lentamente,
+                                            la
+                                            empresa se abre camino y, en dos años, logra un desarrollo que le permite
+                                            colocar
+                                            acciones en el mercado. El emprendedor hace una alianza estratégica que
+                                            cree
+                                            favorable y que permite que la empresa se consolide en cinco años. Durante
+                                            todo
+                                            ese tiempo, el emprendedor y su empresa tuvieron varios problemas, que se
+                                            solucionaron
+                                            sin mayores contratiempos. En definitiva, ha sido un período exitoso.</span></div><br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="5"
+                                        placeholder="Texto"></textarea><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingSeven">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven"
+                                    aria-expanded="false" aria-controls="collapseSeven">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre7a">&nbsp;
+                                    Comunicación oral: <b>Pregunta 7.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>7. Menciona </b> tres características de la oralidad.</div><br>
+                                    <table class="table">
+                                        <td>
+                                            <table class="table" border="3" bordercolor="#8C58C6" style="text-align: center">
+
+                                                <tr>
+                                                    <td><textarea class="form-control text-question no-redimensionar "
+                                                            cols="60" rows="1" placeholder="Texto"></textarea></td><br>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table class="table" border="3" bordercolor="#2A6EA7" style="text-align: center">
+
+                                                <tr>
+                                                    <td><textarea class="form-control text-question no-redimensionar "
+                                                            cols="60" rows="1" placeholder="Texto"></textarea></td><br>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table class="table" border="3" bordercolor="#58CF2F  " style="text-align: center">
+
+                                                <tr>
+                                                    <td><textarea class="form-control text-question no-redimensionar "
+                                                            cols="60" rows="1" placeholder="Texto"></textarea></td><br>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingEight">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight"
+                                    aria-expanded="false" aria-controls="collapseEight">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre8a" readonly>&nbsp;
+                                    Comunicación oral: <b>Pregunta 8.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>8. </b>¿En cuál de las siguientes opciones no se evidencia la
+                                            importancia
+                                            de la oralidad?</div><br>
+                                    <table class="table">
+                                        <tr>
+                                            <td><span><b>a)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen8  " id="ranocho1"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>b)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen8  " id="ranocho2"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>c)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen8  " id="ranocho3"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>d)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen8  " id="ranocho4"></div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingNine">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine"
+                                    aria-expanded="false" aria-controls="collapseNine">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre9a" readonly>&nbsp;
+                                    Lectura: <b>Pregunta 9.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>9.</b> ¿Cuáles de las siguientes preguntas ayudan a identificar un
+                                            texto
+                                            expositivo?</div><br>
+                                    <table class="table">
+                                        <tr>
+                                            <td><span><b>a)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen9  " id="rannueve1"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>b)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen9  " id="rannueve2"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>c)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen9  " id="rannueve3"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>d)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen9  " id="rannueve4"></div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTen">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen"
+                                    aria-expanded="false" aria-controls="collapseTen">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre10a">&nbsp;
+                                    Lectura: <b>Pregunta 10.</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>10. Escribe </b> un párrafo que contenga una idea principal y tres
+                                            ideas
+                                            secundarias.</div><br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="6"
+                                        placeholder="Texto"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingEleven">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven"
+                                    aria-expanded="false" aria-controls="collapseEleven">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre11a">&nbsp;
+                                    Escritura: <b>Pregunta 11.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEleven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEleven">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>11. </b>¿Qué elemento formal del texto nos permite reconocer una cita
+                                            corta
+                                            de una larga, sea en APA o en Chicago?</div><br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="1"
+                                        placeholder="Texto"></textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwelve">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve"
+                                    aria-expanded="false" aria-controls="collapseTwelve">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre12a">&nbsp;
+                                    Escritura: <b>Pregunta 12.</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwelve" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwelve">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>12. Indica </b> cuatro características que un texto expositivo debe
+                                            tener
+                                            en su escritura.</div><br>
+                                    <table class="table">
+                                        <td>
+                                            <table class="table" border="3" bordercolor="#8C58C6" style="text-align: center">
+
+                                                <tr>
+                                                    <td><textarea class="form-control text-question no-redimensionar "
+                                                            cols="60" rows="5" placeholder="Texto"></textarea></td><br>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table class="table" border="3" bordercolor="#2A6EA7" style="text-align: center">
+
+                                                <tr>
+                                                    <td><textarea class="form-control text-question no-redimensionar "
+                                                            cols="60" rows="5" placeholder="Texto"></textarea></td><br>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table class="table" border="3" bordercolor="#58CF2F  " style="text-align: center">
+
+                                                <tr>
+                                                    <td><textarea class="form-control text-question no-redimensionar "
+                                                            cols="60" rows="5" placeholder="Texto"></textarea></td><br>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table class="table" border="3" bordercolor="#E3A347" style="text-align: center">
+
+                                                <tr>
+                                                    <td><textarea class="form-control text-question no-redimensionar "
+                                                            cols="60" rows="5" placeholder="Texto"></textarea></td><br>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThirteen">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThirteen"
+                                    aria-expanded="false" aria-controls="collapseThirteen">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre13a">&nbsp;
+                                    Escritura: <b>Pregunta 13.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThirteen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThirteen">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>13. Redacta </b> un texto que utilice un diálogo directo.</div><br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"
+                                        placeholder="Texto"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFourteen">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFourteen"
+                                    aria-expanded="false" aria-controls="collapseFourteen">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre14a">&nbsp;
+                                    Escritura: <b>Pregunta 14.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFourteen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFourteen">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>14. Redacta </b> un texto que utilice un diálogo en estilo indirecto.</div><br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="4"
+                                        placeholder="Texto"></textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFifteen">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFifteen"
+                                    aria-expanded="false" aria-controls="collapseFifteen">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre15a">&nbsp;
+                                    Escritura: <b>Pregunta 15.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFifteen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFifteen">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>15. </b>¿Qué clase de locución conjuntiva se encuentra en la siguiente
+                                            oración?
+                                            <b>Subráyala</b> y <b>explica</b> a continua ción la función que cumple.</div><br>
+
+                                    <div class="text-question">
+                                        <span><i><span class="enc15" id="29">El banco</span> <span class="enc15" id="30">ya
+                                                    nos hizo</span> <span class="enc15" id="31">el préstamo</span>,
+                                                <span class="enc15" id="32">es decir</span>, <span class="enc15" id="33">ya
+                                                    podemos</span>
+                                                <span class="enc15" id="34">pagar la nómina</span>.</i></span></div><br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="1"
+                                        placeholder="Texto"></textarea>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingSixteen">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSixteen"
+                                    aria-expanded="false" aria-controls="collapseSixteen">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre16a">&nbsp;
+                                    Lengua y Cultura: <b>Pregunta 16.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSixteen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSixteen">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>16. Lee </b> la siguiente expresión y transfórmala a un registro
+                                            formal.</div><br>
+                                    <table class="table">
+                                        <td width="50%">
+                                            <table class="table" border="3" bordercolor="#8C58C6" style="text-align: center">
+
+                                                <tr>
+                                                    <td>No caché nada en la hora de mate.</td><br>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="50%">
+                                            <table class="table" border="3" bordercolor="#2A6EA7" style="text-align: center">
+
+                                                <tr>
+                                                    <td><textarea class="form-control text-question no-redimensionar "
+                                                            cols="60" rows="1" placeholder="Texto"></textarea></td><br>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingSeventeen">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeventeen"
+                                    aria-expanded="false" aria-controls="collapseSeventeen">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre17a">&nbsp;
+                                    Lengua y Cultura: <b>Pregunta 17.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSeventeen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeventeen">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>17. </b>¿Cuál es la razón por la que utilizamos distintos tipos de
+                                            registro?</div><br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="1"
+                                        placeholder="Texto"></textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" class="lblnombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre" id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')"
+                                        aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper1.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/actividad47.js"></script>
+
+
+    <script>
+        $("#n_pagina").html("88"); //impresion de pagina            
+
+    </script>
+
+</body>
+
+</html>

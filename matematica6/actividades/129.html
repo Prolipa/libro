@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Matemática 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <script src="js/116.js"></script>
+    <!-- copy these lines to your document head: -->
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <!-- end copy -->
+    <style>
+        .fraction {
+    display: inline-block;
+    vertical-align: middle; 
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid black;}
+    .fraction span.bar {display: none;}
+    .paso{
+        width: 80px;
+        background: #f0c22a;
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso2{
+        width: 150px;
+        background: #a8e6b6;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso3{
+        width: 150px;
+        background: #88d7f7;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso4{
+        width: 150px;
+        background: #eeda81;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso5{
+        width: 150px;
+        background: #eaacec;
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso6{
+        width: 150px;
+        background: #81cbee;
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .caja1{
+        width: 20%;
+        text-align: center;
+    }
+    .caja{
+        width: 100%;
+        text-align: center;
+    }
+
+    .correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+
+        }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        
+        }
+    .imagenes1 img{
+        padding: 5px;
+        max-width: 200px;
+        display: inline-table;
+    }
+    .respuestas{
+        width: 60px;
+        display: inline-table;
+
+    }
+    .respuestas1{
+        width: 60px;
+        display: inline-table;
+
+    }
+    .recta{
+        padding: 5px;
+        display: inline-table;
+        max-width: 200px;
+    }
+    .fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Escriba la respuesta correcta en los espacios respectivos. <br>
+        2. Escriba la respuesta correcta en los espacios respectivos. <br>
+        3. Escriba la respuesta correcta en los espacios respectivos. <br>
+        4. Escriba la respuesta correcta en los espacios respectivos. <br>
+        5. Escriba la respuesta correcta en los espacios respectivos. <br>
+        <br><span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload(true);">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> /
+                    <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"> / 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag 172
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoE.png" alt="">Prueba Diagnóstica</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-12">
+                    <p class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a" readonly>&nbsp;<b>1. Completa </b> con los signos >, < o=según corresponda. <b>(2 pts.)</b></p>
+                    <div class="col-sm-12 text-question">
+                    </div>
+                    <div class="col-sm-12 table-responsive">
+                        <ol type="a" class="text-question" id="ol">
+                        </ol>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <p class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a">&nbsp;<b>2. Escribe</b> la resta representada. <b>Resuelve</b> y <b>simplifica</b>, si es posible. <b>(2 pts.)</b></p>
+                    <div class="col-sm-12 table-responsive">
+                        <ol type="a" class="text-question" id="ol1">
+                        </ol>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <p class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a">&nbsp;<b>3. Resuelve</b> y <b>escribe</b> la respuesta en su mínima expresión. <b>(2 pts.)</b></p>
+                </div>
+                <div class="col-sm-12 table-responsive">
+                    <ol type="a" class="text-question" id="ol2">
+                    </ol>
+                </div>
+                <div class="col-sm-12">
+                    <p class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a">&nbsp;<b>4. Realiza </b> una tabla de doble entrada y <b>escribe</b> las combinaciones posibles entre los tres vestidos y los cuatro pares de zapatos. <b>(2 pts.)</b></p><br>
+                    <center><img src="img/i1_p172_act4.jpg"></center><br>
+                        <div class="col-sm-12 table-responsive text-question">
+                            <div class="table-responsive" align="center">
+                                <table>
+                                    <tr align="center">
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <img src="img/i2_p172_act4.jpg">
+                                                            </td>
+                                        <td style="border: 2px solid #8B79AF;">Café</td>
+                                        <td style="border: 2px solid #8B79AF;">Celeste</td>
+                                        <td style="border: 2px solid #8B79AF;">Amarillo</td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border: 2px solid #8B79AF;">Lilas</td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon1" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon2" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon3" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon4" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon5" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon6" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border: 2px solid #8B79AF;">Rojos</td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon7" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon8" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon9" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon10" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon11" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon12" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border: 2px solid #8B79AF;">Verdes</td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon13" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon14" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon15" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon16" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon17" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon18" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border: 2px solid #8B79AF;">Azules</td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon19" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon20" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon21" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon22" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="border: 2px solid #8B79AF;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon23" onkeyup="mayus(this)">
+                                                    </td>
+                                                    <td><b>,</b></td>
+                                                    <td>
+                                                        <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p5dcon24" onkeyup="mayus(this)">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-sm-12"><p><br></p></div>
+                <div class="col-sm-12">
+                    <p class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre5a">&nbsp;<b>5. Lee </b>, <b>cuenta</b> y luego <b>contesta</b>. <b>(2 pts.)</b></p>
+                    <div class="col-sm-12 text-question table-responsive">
+                        <ol type="a">
+                            <li>
+                                <div class="table-responsive">
+                                    <center><img src="img/i1_p172_act5.jpg"></center><br>
+                                        <div class="col-sm-8">
+                                            Un día los familiares de Melisa llegan por la noche a visitarla.<br>
+                                            Ella, como buena anfitriona, va al gallinero y toma al azar un ave.<br>
+                                            ¿Cuál es la probabilidad de que saque un gallo?<br>
+                                            ¿Cuál es la probabilidad de que saque una gallina?<br>
+                                            ¿Cuál es la probabilidad de que saque un pollo?<br><br>
+                                        </div>
+                                        <div class="col-sm-4 " style="background: #BFE4EE;text-align :center">
+                                            Casos favorables:<br>
+                                            Gallos <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="5"><br><br>
+                                            Gallinas <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="7"><br><br>
+                                            Pollos <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="3"><br><br>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <p><br></p>
+                                        </div>
+                                        <div class="col-sm-12 table-responsive" style="text-align:center;background: #FAD7D9">
+                                            Casos posibles: <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="15">&nbsp;&nbsp;&nbsp;&nbsp;
+                                            P<sub>gallos</sub>
+                                            <div class="fraction">
+                                                <span class="fup"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="5"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="15"></span>
+                                            </div>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;P<sub>gallinas</sub>
+                                            <div class="fraction">
+                                                <span class="fup"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="7"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="15"></span>
+                                            </div>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;P<sub>pollos</sub>
+                                            <div class="fraction">
+                                                <span class="fup"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="3"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="15"></span>
+                                            </div>
+                                        </div>
+                                </div><br>
+                            </li>
+                            <li>
+                                Ana Paula estima el tiempo (en minutos) que tarda en llegar a casa desde su colegio. Los datos son
+                                los siguientes: 42, 44, 45, 46, 47, 48, 48, 49, 49, 49 y 50.<br><br>
+                                <p>Con los datos, <b>calcula:</b></p>
+                                • El promedio del tiempo =<input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="47"><br><br>
+                                • La mediana del tiempo =<input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="48"><br><br>
+                                • El tiempo más frecuente, la moda =<input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: 1px solid #64BCF7;" class="border-blue respuestas5"> <input type="hidden" style="color:blue;" class="solucion5" value="49"><br><br>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/export-data.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/129.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>MATEMÁTICA 9</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 100%;
+    max-height: 100%;
+    border: 1px #005ca4 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    width: auto;
+    display: grid;
+}
+
+.encierra {
+    border: 5px solid #FF9D29;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.sobre {
+    padding: 4px;
+    border-style: none;
+    border-width: 2px;
+    border-radius: 15%;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-color: #1a75ff;
+    color: #1a75ff;
+}
+
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+
+.inputPequeño {
+    text-align: center;
+    border: 0;
+    border-bottom: 1px dotted #328AF7;
+    width: 40px;
+    color: blue;
+}
+
+.cajas1 {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #ed8700 dotted;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    width: auto;
+}
+
+
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+
+.periodicos {
+    border-top: 2px solid #000000;
+    border-radius: 15px;
+}
+
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+
+.subrayar {
+
+    border-bottom: 3px solid #FF8A00;
+}
+
+.pintar1 {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.grafico1 {
+    border: 2px solid #000000;
+}
+
+.grafico2 {
+    border: 2px solid #000000;
+    background: #008FFF;
+}
+
+.grafico3 {
+    border: 2px solid #000000;
+}
+
+.grafico4 {
+    border: 2px solid #000000;
+    background: #008FFF;
+}
+
+.grafico5 {
+    border: 2px solid #000000;
+}
+
+.grafico6 {
+    border: 2px solid #000000;
+    background: #008FFF;
+}
+
+.radical {
+    position: relative;
+    font-size: 1.6em;
+    vertical-align: middle;
+}
+
+.n-root {
+    position: absolute;
+    top: -0.333em;
+    left: 0.333em;
+    font-size: 45%;
+}
+
+.radicand {
+    padding: 0.25em 0.25em;
+    border-top: thin black solid;
+}
+
+.lineasobre {
+    border-top: 1px solid #000000;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="calificar_abierta()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <img src="img/practica_guiada.png"></img>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <input type="text" maxlength="4" size="" style="text-align:center;background: white;" class="nota-abierta" min="0" max="1" id="nota1" >
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    &nbsp; <b>1. Demuestra</b> <span class="sobre">10 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question" align="justify">
+                                        <b>1. Demuestra</b> que los triángulos son semejantes.
+                                        <img src="img/i1_p173_uni4tema10_1.jpg" class="img-responsive"></img>
+                                        <img src="img/paso1.jpg" alt="" class="img-responsive"></img>
+                                        <b>Verifica</b> que sus tres ángulos son respectivamente iguales.
+                                        <br>
+                                        &ang;A' = &ang;A = 94º y &ang;B = &ang;B' = 61º
+                                        <br>
+                                        &ang;C = <input class="inputfraccciones sinEspacios"></input>º - (<input class="inputfraccciones sinEspacios"></input>º + <input class="inputfraccciones sinEspacios"></input>º) = <input class="inputfraccciones sinEspacios" id="act1num0"></input>º = &ang;C'
+                                        <img src="img/paso2.jpg" alt="" class="img-responsive"></img>
+                                        <b>Aplica</b> el teorema de Tales y <b>verifica</b> que los lados correspondientes son proporcionales.
+                                        <div class="eq-c">
+                                            <div class="fraction">
+                                                <span class="fup"><span class="lineasobre">AC</span></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><span class="lineasobre">A'C'</span></span>
+                                            </div>
+                                            =
+                                            <div class="fraction">
+                                                <span class="fup"><input class="inputfraccciones sinEspacios" id="act1num1"></input></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input class="inputfraccciones sinEspacios" id="act1num2"></input></span>
+                                            </div>
+                                            =
+                                            <input class="inputfraccciones sinEspacios" id="act1num3"></input>
+                                        </div>
+                                        <span class="lineasobre">AB</span> = <span class="lineasobre">A'B'</span> . <input class="inputfraccciones sinEspacios" id="act1num4"></input> → <input class="inputfraccciones sinEspacios" id="act1num5"></input> = <span class="lineasobre">A'B'</span> . <input class="inputfraccciones sinEspacios" id="act1num6"></input>
+                                        <div class="eq-c">
+                                            <div class="fraction">
+                                                <span class="fup"><input class="inputfraccciones sinEspacios" id="act1num7"></input></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input class="inputfraccciones sinEspacios" id="act1num8"></input></span>
+                                            </div>
+                                            =
+                                            <span class="lineasobre">A'B'</span> = <input class="inputfraccciones sinEspacios" id="act1num9"></input>cm
+                                            <br>
+                                            <span class="lineasobre">BC</span> <span class="lineasobre">B'C'</span> . <input class="inputfraccciones sinEspacios" id="act1num10"></input> → <span class="lineasobre">BC</span> = <input class="inputfraccciones sinEspacios" id="act1num11"></input> . <input class="inputfraccciones sinEspacios" id="act1num12"></input> = <input class="inputfraccciones sinEspacios" id="act1num13"></input>cm
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal conLevent-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/dragNdrop.js"></script>
+        <script type="text/javascript">
+        var titulos = "aplico";
+        $("#txtNota").html("0");
+        $("#n_pagina").html("173");
+
+        /*$(document).ready(function() {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            //var imageSize = { width: winHeight , height: winHeight };
+            var watermarkImage = new Image();
+            watermarkImage.src = 'img/i1_p169_uni4tema8.jpg';
+            var watermarkImage2 = new Image();
+            watermarkImage2.src = 'img/i1_p165_uni4tema6.jpg';
+            LC.init(
+                document.getElementsByClassName('my-drawing')[0], {
+                    imageURLPrefix: 'imgcanvas',
+                    watermarkImage: watermarkImage,
+                    watermarkScale: 0.5, // you can scale it
+                    //imageSize: imageSize
+                    backgroundColor: 'white'
+                });
+            LC.init(
+                document.getElementsByClassName('my-drawing')[1], {
+                    imageURLPrefix: 'imgcanvas',
+                    watermarkImage: watermarkImage2,
+                    watermarkScale: 0.5, // you can scale it
+                    //imageSize: imageSize
+                    backgroundColor: 'white'
+                });
+        });*/
+
+
+        function sinEspacios(inputs) {
+            $(inputs).on('keypress', function(e) {
+                if (e.which == 32)
+                    return false;
+            });
+        }
+        sinEspacios(".sinEspacios");
+
+        document.getElementById('nota1').addEventListener('keypress', () => {
+            validNumero(0, 10, 1);
+        });
+        document.getElementById('nota1').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota1'), 10)
+        });
+        /*document.getElementById('nota2').addEventListener('keypress', () => {
+            validNumero(0, 3, 1);
+        });
+        document.getElementById('nota2').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota2'), 3)
+        });
+*/
+        /* var random2 = [
+             ['<td><b>•</b> Si dos segmentos rectos tienen la misma longitud, son congruentes.</td> <td><input class="inputfraccciones sinEspacios text-uppercase" maxlength="1" id="act2num0"></input></td>'],
+             ['<td><b>•</b> Si un triángulo tiene dos lados iguales, entonces no tiene dos ángulos iguales.</td> <td><input class="inputfraccciones sinEspacios text-uppercase" maxlength="1" id="act2num1"></input></td>'],
+             ['<td><b>•</b> Dos triángulos son congruentes si tienen la misma forma pero la longitud de sus lados y la medida de sus ángulos son distintas.</td> <td><input class="inputfraccciones sinEspacios text-uppercase" maxlength="1" id="act2num2"></input></td>'],
+         ];
+         var act02Txt = document.getElementsByClassName('act2class');
+
+         random2.sort(f_randomico);
+         for (i = 0; i < act02Txt.length; i++) {
+             $('#' + act02Txt[i].id).html(random2[i]);
+         }*/
+
+        function pregunta1() {
+            var respact2 = ['79', '1.75', '2.91', '0.6', '0.6', '1.2', '0.64', '1.2', '0.6', '2', '0.6', '3.33', '0.6', '2', ];
+            var cont = 0;
+            for (var i = 0; i < 14; i++) {
+                var res = $('#act1num' + [i] + '').val().toUpperCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act1num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act1num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 10) / 14;
+            //$('#nota2').val(parseFloat(total).toFixed(2));
+            $('#txtNota').html(parseFloat(total).toFixed(2));
+            document.getElementById('bt_comprobar').disabled = true;
+            $('input').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+
+
+        }
+
+        function pregunta3() {
+            var respact2 = ['x', '2', '6', '5', 'x', '12', '5', '2.4', ];
+            var cont = 0;
+            for (var i = 0; i < 8; i++) {
+                var res = $('#act3num' + [i] + '').val().toLowerCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act3num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act3num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 5) / 8;
+            $('#nota3').val(parseFloat(total).toFixed(2));
+
+
+        }
+
+        function NotaFinal() {
+
+            pregunta2();
+            pregunta3();
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+
+
+            var total = parseFloat(nota2) + parseFloat(nota3);
+            $('#txtNota').html(parseFloat(total).toFixed(2));
+            document.getElementById('bt_comprobar').disabled = true;
+            $('input').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+
+
+
+
+
+
+        }
+        </script>
+</body>
+
+</html>

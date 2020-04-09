@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Matemática 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <script src="js/actividad51.js"></script>
+    <style>
+        hr {
+            border-color: black;
+            border-width: 2px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin: 3px;
+        }
+
+        .select {
+            background-color: green;
+        }
+
+        p {
+            font-size: 17px;
+
+        }
+
+        li {
+            font-size: 20px;
+        }
+
+        .caja {
+            height: 100%;
+            width: 100%;
+        }
+
+        .ptitulo {
+            font-size: 20px;
+
+        }
+
+        .row {
+            padding: 3%;
+        }
+
+        .td {
+            text-align: center;
+            width: 100%;
+        }
+
+        li {
+            color: royalblue;
+        }
+
+        p {
+            color: rgb(0, 0, 0);
+        }
+
+        .li2 {
+            width: 20%;
+            height: 20%;
+            text-align: center;
+            font-size: 15px;
+            border: #fcfcfc;
+        }
+
+        .li3 {
+            width: 100%;
+        }
+
+        .li4 {
+            width: 70%;
+        }
+
+        .guia {
+            width: 150px;
+            height: 30px;
+            padding: 5px;
+            color: white;
+            font-size: 100%;
+            text-align: center;
+            border-radius: 0px 0px 10px 0px;
+            -moz-border-radius: 0px 0px 10px 0px;
+            -webkit-border-radius: 0px 0px 10px 0px;
+            border: 0px solid #000000;
+
+        }
+
+        .paso {
+            width: 80px;
+            background: #f0c22a;
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 10px 0px 10px 0px;
+            -moz-border-radius: 10px 0px 10px 0px;
+            -webkit-border-radius: 10px 0px 10px 0px;
+            border: 0px solid #000000;
+        }
+
+        .div1 {
+            padding: 3%;
+            border: 1px solid #aaaaaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload(true);">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span
+                            id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"> / 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag 22
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-reflexiono" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-reflexiono">
+                <span class="titulo"><img src="img/icoR.png" alt="">Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="col col-md-12 space"><span class="text-question"></span>
+                    <p style="background: #54a430;" class="guia">Práctica individual</p>
+                    <ol type="1">
+                        <li>
+                            <p>Ubica el nombre que corresponde en cada espacio según el comentario de cada estudiante y dibuja
+                                el cuerpo descrito.</p>
+                        </li>
+                    </ol>
+                    <ol type="a">
+
+                        <div class="col col-md-4">
+                            <li></li>
+                            <td class="bg-info"><img src="img/i1_p45_act51.png" style="height:50%; width:50%"></td>
+                            <p><input type="text" style="width:50%;"></p>
+                        </div>
+                        <div class="col col-md-4">
+                            <li></li>
+                            <img src="img/i2_p45_act51.png" style="height:50%; width:50%" alt="">
+                            <p><input type="text" style="width:50%;"></p>
+                        </div>
+                        <div class="col col-md-4">
+                            <li></li>
+                            <img src="img/i3_p45_act51.png" style="height:50%; width:50%" alt="">
+                            <p><input type="text" style="width:50%;"></p>
+                        </div>
+                        <div class="col col-md-2"></div>
+                        <div class="col col-md-4">
+                            <li></li>
+                            <img src="img/i4_p45_act51.png" style="height:40%; width:40%" alt="">
+                            <p><input type="text" style="width:50%;"></p>
+                        </div>
+                        <div class="col col-md-4">
+                            <li></li>
+                            <img src="img/i5_p45_act51.png" style="height:40%; width:40%" alt="">
+                            <p><input type="text" style="width:50%;"></p>
+                        </div>
+                    </ol>
+                    <div class="row">
+                        <div class="col col-md-12 space">
+                            <div class="col col-md-1"></div>
+                            <div class="col col-md-2"><img src="img/i6_p45_act51.png" id="drag1" class="img-responsive" draggable="true"
+                                    ondragstart="drag(event)"></div>
+                            <div class="col col-md-2"><img src="img/i7_p45_act51.png" id="drag2" class="img-responsive" draggable="true"
+                                    ondragstart="drag(event)"></div>
+                            <div class="col col-md-2"><img src="img/i8_p45_act51.png" id="drag3" class="img-responsive" draggable="true"
+                                    ondragstart="drag(event)"></div>
+                            <div class="col col-md-2"><img src="img/i9_p45_act51.png" id="drag4" class="img-responsive" draggable="true"
+                                    ondragstart="drag(event)"></div>
+                            <div class="col col-md-2"><img src="img/i10_p45_act51.png" id="drag5" class="img-responsive"
+                                    draggable="true" ondragstart="drag(event)"></div>
+                            <div class="col col-md-1"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-md-12 space">
+                            <ol type="a">
+                                <div class="col col-md-3 div1" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <li></li>
+                                </div>
+                                <div class="col col-md-1"></div>
+                                <div class="col col-md-3 div1" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <li></li>
+                                </div>
+                                <div class="col col-md-1"></div>
+                                <div class="col col-md-3 div1" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <li></li>
+                                </div>
+                                <div class="col col-md-1"></div>
+                                <div class="row">
+                                    <div class="col col-md-12 space">
+                                        <div class="col col-md-2"></div>
+                                        <div class="col col-md-3 div1" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                            <li></li>
+                                        </div>
+                                        <div class="col col-md-1"></div>
+                                        <div class="col col-md-3 div1" id="div5" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                            <li></li>
+                                        </div>
+                                        <div class="col col-md-1"></div>
+                                    </div>
+                                </div>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes
+                                    ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/export-data.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+<style type="text/css">
+    th,
+    td {
+        width: 70px;
+        text-align: center;
+        font-style: normal;
+    }
+
+    .respueta {
+        height: 20px;
+        width: 30px;
+    }
+</style>
+
+</html>

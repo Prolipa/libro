@@ -1,0 +1,546 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Matemática 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #0047a4 solid;
+            border-radius: 30px;
+            width: auto;
+            height: auto;
+            text-align: center;
+
+        }
+
+        #caja_res,
+        #caja_res1,
+        #caja_res2 {
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+
+        .respuestas {
+            width: 80%;
+            border: none;
+            border-bottom: 1px solid #005ca4;
+        }
+
+        .c_imagenes {
+            padding: 10px;
+        }
+
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 140px;
+            height: 30px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 140px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .correcto {
+            color: #ffffff;
+            background-color: #8FB435;
+
+        }
+
+        .incorrecto {
+            color: #ffffff;
+            background-color: #E76E80;
+
+
+        }
+
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+
+        .encierra {
+            border: 2px solid blue;
+            border-radius: 40%;
+
+        }
+
+        .respuesta {
+            text-align: center;
+            border: 0;
+            border-top: 2px solid #393939;
+            border-bottom: 1px solid #85BCEB;
+            width: 50px;
+        }
+
+        .bordeT {
+            border: 1px #76B82A solid;
+        }
+
+
+
+        .bordeT2 {
+            border: 1px #76B82A solid;
+            text-align: center;
+        }
+
+        .paso {
+            background-color: #F9B000;
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 5px;
+        }
+
+        .pintar {
+            background-color: rgb(211, 178, 68);
+        }
+
+        .subrayar {
+            text-decoration: underline;
+            background-color: #8FB435;
+        }
+
+        .correctoi {
+            text-decoration: underline;
+            background-color: #8FB435;
+
+        }
+
+        .incorrectoi {
+            text-decoration: underline;
+            background-color: #E76E80;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Escriba la respuesta correcta en los recuadros.<br>
+        2. Escriba la respuesta correcta en los recuadros.<br>
+        3. Escriba la respuesta correcta en los recuadros.<br>
+        4. Escriba la respuesta correcta en los recuadros.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> /
+                    <span id='act_total'>1</span>
+                    </span>
+                    <span class="btn notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container space" style="margin-top: 30px;">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-preparo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-preparo">
+                <span class="titulo"><img src="img/icoPRE.png" alt="">Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/practica_guiada.png" class="img-responsive"><br>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a" readonly>&nbsp;
+                    <span><b>1. Completa </b> las equivalencias en decímetros, centímetros y milímetros. <b>(3 pts.)</b></span></div><br>
+                <ol class="text-question" type="a">
+                </ol>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <img src="img/i1_p157_act1.jpg" class="img-responsive"><br>
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="img/i3_p157_act1.jpg" class="img-responsive"><br>
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="img/i2_p157_act1.jpg" class="img-responsive"><br>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-7" align="center" style="background: #F1B768; border: 1px #F1B768 solid; border-radius: 10px 0px 10px 0px">
+                            <b style="color: white;">Paso 4</b>
+                        </div>
+                        <table class="table" style="border: 2px dotted green;">
+                            <tr>
+                                <td colspan="2">
+                                    <div class="text-question">
+                                        <p align="justify"> <b>Escribimos </b> la respuesta</p>
+                                    </div>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <ol class="text-question" type="a">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-12">
+                                                <li style="color: #005DA8">
+                                                    <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p1aux0"></span> m a dm = <input type="text" id="p1res0" style="width: 58px"> dm</span>
+                                                </li><br>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <li style="color: #005DA8">
+                                                    <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p1aux1"></span> m a cm = <input type="text" id="p1res1" style="width: 58px"> cm</span>
+                                                </li><br>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <li style="color: #005DA8">
+                                                    <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p1aux2"></span> m a mm = <input type="text" id="p1res2" style="width: 58px"> mm</span>
+                                                </li><br>
+                                            </div>
+                                        </div>
+                                    </ol>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <img src="img/practica_individual.png" class="img-responsive+" ><br>
+                <br>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a" readonly>&nbsp;
+                    <span><b>2. Observa </b> los valores de la tabla de conversiones y <b>resuelve</b> los siguientes ejercicios, luego <b>completa</b>
+                                con ceros la tabla. <b>(3 pts.)</b></span></div><br>
+                <div class="col-sm-12">
+                    <div class="col-sm-6 table-responsive text-question">
+                        <table class="table" border="1" bordercolor="#FAA662" style="text-align: center">
+                            <tr>
+                                <td colspan="4" style="color:white" bgcolor="#FAA662">Tabla de conversión</td>
+                            </tr>
+                            <tr>
+                                <td bgcolor="#FFE7D3">
+                                    <font color="#FDB67E">m</font>
+                                </td>
+                                <td bgcolor="#FFE7D3">
+                                    <font color="#ADC9B3">dm</font>
+                                </td>
+                                <td bgcolor="#FFE7D3">
+                                    <font color="#C75C9E">cm</font>
+                                </td>
+                                <td bgcolor="#FFE7D3">
+                                    <font color="#006CB6">mm</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span id="p2auxtab0"></span></td>
+                                <td><input type="text" maxlength="5" style="width: 50px" id="p2tab1"></td>
+                                <td><input type="text" maxlength="5" style="width: 50px" id="p2tab2"></td>
+                                <td><input type="text" maxlength="5" style="width: 50px" id="p2tab3"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><span id="p2auxtab1"></span></td>
+                                <td><input type="text" maxlength="5" style="width: 50px" id="p2tab4"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><span id="p2auxtab2"></span></td>
+                                <td><input type="text" maxlength="5" style="width: 50px" id="p2tab5"></td>
+                                <td><input type="text" maxlength="5" style="width: 50px" id="p2tab6"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" maxlength="5" style="width: 50px" id="p2tab7"></td>
+                                <td><input type="text" maxlength="5" style="width: 50px" id="p2tab8"></td>
+                                <td><input type="text" maxlength="5" style="width: 50px" id="p2tab9"></td>
+                                <td><input type="text" maxlength="5" style="width: 50px" id="p2tab10"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-12 text-question">
+                            <div class="col-sm-12">
+                                <li style="color: #005DA8">
+                                    <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p2aux0"></span> m a cm = <input type="text" id="p2res0" style="width: 58px"> dm</span>
+                                </li><br>
+                            </div>
+                            <div class="col-sm-12">
+                                <li style="color: #005DA8">
+                                    <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p2aux1"></span> cm a mm = <input type="text" id="p2res1" style="width: 58px"> cm</span>
+                                </li><br>
+                            </div>
+                            <div class="col-sm-12">
+                                <li style="color: #005DA8">
+                                    <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p2aux2"></span> dm a mm = <input type="text" id="p2res2" style="width: 58px"> mm</span>
+                                </li><br>
+                            </div>
+                            <div class="col-sm-12">
+                                <li style="color: #005DA8">
+                                    <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p2aux3"></span> m a dm = <input type="text" id="p2res3" style="width: 58px"> mm</span>
+                                </li><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a" readonly>&nbsp;
+                    <span><b>3. Resuelve </b>las siguientes conversiones: <b>(3 pts.)</b></span></div><br>
+                <div class="col-sm-12 text-question">
+                    <ol type="a">
+                        <div class="col-sm-12">
+                            <li style="color: #005DA8">
+                                <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p3aux0"></span> dm a cm = <input type="text" id="p3res0" style="width: 58px"> dm</span>
+                            </li><br>
+                        </div>
+                        <div class="col-sm-12">
+                            <li style="color: #005DA8">
+                                <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p3aux1"></span> dm a mm = <input type="text" id="p3res1" style="width: 58px"> cm</span>
+                            </li><br>
+                        </div>
+                        <div class="col-sm-12">
+                            <li style="color: #005DA8">
+                                <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p3aux2"></span> cm a mm = <input type="text" id="p3res2" style="width: 58px"> mm</span>
+                            </li><br>
+                        </div>
+                        <div class="col-sm-12">
+                            <li style="color: #005DA8">
+                                <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p3aux3"></span> m a dm = <input type="text" id="p3res3" style="width: 58px"> mm</span>
+                            </li><br>
+                        </div>
+                        <div class="col-sm-12">
+                            <li style="color: #005DA8">
+                                <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p3aux4"></span> m a mm = <input type="text" id="p3res4" style="width: 58px"> mm</span>
+                            </li><br>
+                        </div>
+                        <div class="col-sm-12">
+                            <li style="color: #005DA8">
+                                <span style="color: rgb(0, 0, 0)"><span style="color: rgb(0, 0, 0)" id="p3aux5"></span> dm a cm = <input type="text" id="p3res5" style="width: 58px"> mm</span>
+                            </li><br>
+                        </div>
+                    </ol>
+                </div>
+                <br><img src="img/problema.png" class="img-responsive" ><br>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a" readonly>&nbsp;
+                    <span><b>4.</b> Lucrecia ha vendido <span id="p4n1"></span> centímetros de tela de un rollo de <span id="p4n2"></span> metros. ¿Cuántos centímetros de tela
+                    le sobran? <b>(1 pts.)</b></span></div><br>
+                <div class="col-sm-12 text-question table-responsive">
+                    <table class="table" style="text-align: center">
+                        <tr>
+                            <td width="33%">
+                                <p style="color: #005DA8"><b>Datos</b></p>
+                            </td>
+                            <td width="33%">
+                                <p style="color: #005DA8"><b>Conversiones</b></p>
+                            </td>
+                            <td width="33%">
+                                <p style="color: #005DA8"><b>Resta</b></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tela vendida <input type="text" maxlength="5" style="width: 50px" id="p4aux1"> cm<br><br>
+                                La tela mide <input type="text" maxlength="5" style="width: 50px" id="p4aux2"> metros<br></td>
+                            <td>
+                                <input type="text" maxlength="5" style="width: 50px" id="p4aux3"> cm =
+                                <input type="text" maxlength="5" style="width: 50px" id="p4aux4"> m con
+                                <input type="text" maxlength="5" style="width: 50px" id="p4aux5"> cm <br><br>
+                                <input type="text" maxlength="5" style="width: 50px" id="p4aux6"> m a cm =
+                                <input type="text" maxlength="5" style="width: 50px" id="p4aux7"> cm
+                            </td>
+                            <td>
+                                <input type="text" maxlength="5" style="width: 50px" id="p4aux8"> cm - <input type="text" maxlength="5" style="width: 50px" id="p4aux9">
+                                cm = <input type="text" maxlength="5" style="width: 50px" id="p4aux10"> cm
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style="color: #005DA8"><b>R.</b></p>
+                                Le sobraron <input type="text" maxlength="5" style="width: 50px" id="p4aux11">cm de tela
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/export-data.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/numPaginas.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni4_actividad1.js"></script>
+</body>
+
+</html>

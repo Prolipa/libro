@@ -1,0 +1,909 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 2</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.bordes_p6 {
+    width: 1.5cm;
+    height: 8mm;
+    border: 2px solid #5d0b82;
+    border-radius: 8px;
+    margin-right: 10px;
+    font-size: 20px;
+    margin: 5px;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--  PREGUNTA 1-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta1">Pregunta 1</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-2">
+                                <span style="color: #ec6608; font-size: 15pt">1.</span>
+                                <b>Escucho</b> la lectura de mi docente y <b>bailo</b> la canción de acuerdo con lo que me indique su letra.
+                            </section>
+                            <div class="contenido">
+                                <div  class="col-md-12 space" align="center">
+                                    <button  class="btn btn-warning" onclick="play('uno')">
+                                        <input type="hidden" id="optuno" value="play">
+                                        <i id="icouno" class="glyphicon glyphicon-headphones ico"></i>
+                                    </button>
+                                </div>
+						
+                                <audio id="uno">
+                                    <source src="audio/a1_p50_act25.mp3" type="audio/mpeg">
+                                    Su navegador no soporta el atributo <code>audio</code>.
+                                </audio>
+                                
+                                
+                                
+                                
+                                <div align="center">
+                                    <div style="background-color: #feeddd; border-radius: 20px; max-width: 500px">
+                                        <p class="fuente2"><span class="fuentecolorlista">La canción del hokey pokey</span></p>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="fuente2">
+                                                            <p>Sacude una mano,
+                                                                <br>y sacude un pie,
+                                                                <br>sacude la otra mano,
+                                                                <br>y ahora el otro pie,
+                                                                <br>harás el hokey pokey,
+                                                                <br>girando en tu lugar,
+                                                                <br>y volvemos a empezar.</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <img class="img-responsive" src="img/i1_p50_act25.jpg" alt="">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="fuente2">
+                                                            <p>Sacude la cabeza,
+                                                                <br>mueve la cintura,
+                                                                <br>sacude las rodillas,
+                                                                <br>y movamos la nariz,
+                                                                <br>harás el hokey pokey,
+                                                                <br>girando en tu lugar,
+                                                                <br>y volvemos a empezar.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 2-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#pregunta2">Pregunta 2</a>
+                      </h4>
+                    </div>
+                    <div id="pregunta2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-question"> <span style="color: #a863a5; font-size: 15pt">2.</span>
+                            <b>Dibujo</b> una pauta para tener una buena conversación.
+                            </span>
+                            <div align="center">
+                                    <canvas id="canvas" style="background: url('img/i2_p50_act25.jpg'); background-repeat: no-repeat;">Su navegador no soporta canvas :( </canvas>
+                                    <button class="btn btn-danger" id="limpiar">Borrar Todo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 3-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta3">Pregunta 3</a>
+                            </h4>
+                    </div>
+                    <div id="pregunta3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question"><span style="color: #e5005b; font-size: 15pt">3.</span>
+                                <b>Explico</b> en voz alta qué significan estas señales.</div>
+                            <div align="center">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="img-responsive" src="img/i2_p23_act6.jpg" alt="" style="max-width: 180px">
+                                            </td>
+                                            <td style="width: 30px"></td>
+                                            <td>
+                                                <img class="img-responsive" src="img/i4_p50_act25.jpg" alt="" style="max-width: 180px">
+                                            </td>
+                                            <td style="width: 30px"></td>
+                                            <td>
+                                                <img class="img-responsive" src="img/i2_p23_act8.jpg" alt="" style="max-width: 180px">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- INICIO PREGUNTA 6 -->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta4">Pregunta 4</a>
+                            </h4>
+                    </div>
+                    <div id="pregunta4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span style="color: #009dc5; font-size: 15pt">4.</span>
+                                <b>Pronuncio</b> el nombre de cada imagen y <b>escribo</b> en las casillas las letras que ya conozco. <b>Dibujo</b> un punto en las que aún no conozco.
+                            </div>
+                            <div align="center">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="img-responsive" src="img/i1_p51_act25.jpg" alt="" style="max-width: 200px">
+                                            </td>
+                                            <td style="width: 30px"></td>
+                                            <td>
+                                                <img class="img-responsive" src="img/i7_p42_act22.jpg" alt="" style="max-width: 120px">
+                                            </td>
+                                            <td style="width: 30px"></td>
+                                            <td align="center">
+                                                <img class="img-responsive" src="img/i3_p51_act25.jpg" alt="" style="max-width: 120px">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td class="a0" style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td class="a0" style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td class="a0" style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img class="img-responsive" src="img/i3_p42_act23.jpg" alt="" style="max-width: 130px">
+                                            </td>
+                                            <td style="width: 30px"></td>
+                                            <td>
+                                                <img class="img-responsive" src="img/i5_p51_act25.jpg" alt="" style="max-width: 120px">
+                                            </td>
+                                            <td style="width: 30px"></td>
+                                            <td align="center">
+                                                <img class="img-responsive" src="img/i6_p51_act25.jpg" alt="" style="max-width: 120px">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td class="a0" style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td class="a0" style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td class="a0" style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 2px solid #009fe3">
+                                                                    <div style="width: 1cm; height: 1cm">
+                                                                        <input type="text" style="width: 1cm; height: 1cm; text-align: center" maxlength="1">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 7-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta5">Pregunta 5</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span style="color: #005ca9; font-size: 15pt">5.</span>
+                                <b>Me dibujo</b> junto a un niño de algún pueblo o nacionalidad de mi país.
+                            </div>
+                            <div>
+                                <main>
+                                    <canvas id="prueba1">Este navegador no soporta canvas, visualice la web con un navegador actualizado.</canvas>
+                                    <div id="paleta1" class="mi_canvas">
+                                        <div id="contenedoropciones1">
+                                            <table width="auto">
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="9" class="titulotabla">Color</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="celdascoloresdefondo" data-color="red">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="pink">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="orange">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="yellow">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="magenta">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="MEDIUMSEAGREEN">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="green">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="DARKCYAN">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="cyan">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="celdascoloresdefondo" data-color="blue">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="wheat">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="brown">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="white">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="LIGHTGRAY">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="gray">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="LIGHTSLATEGRAY">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="DARKSLATEGRAY">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="black">&nbsp;</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <table width="auto" id="opcionesdedibujo">
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="5" class="titulotabla">Opciones de dibujo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Grosor pincel:
+                                                            <input onChange="cambiagrosor(this)" name="grosor" type="number" id="grosor" max="100" min="3" step="1" title="Grosor del cursor" value="5">
+                                                        </td>
+                                                        <td onClick="cambiapincel(this)" id="celdapincelcuadrado" style="cursor:pointer;border:solid 1px black;background-color: white;">Pincel cuadrado</td>
+                                                        <td onClick="cambiaaccion(this)" id="xpintar" class="celdaaccion" style="cursor:pointer;border:solid 1px black;background-color: white;">Pintar</td>
+                                                        <td rowspan="2" class="" onClick="borrartodo()" style="cursor:pointer;border:solid 1px transparent"><span class="btn btn-danger">Borrar todo</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Grosor borrar:
+                                                            <input onChange="cambiagrosorborrador(this)" name="grosorborrar" type="number" id="grosorborrar" max="100" min="3" step="1" title="Grosor del borrardor" value="10">
+                                                        </td>
+                                                        <td onClick="cambiapincel(this)" id="celdapincelredondo" style="cursor:pointer;border:solid 1px transparent">Pincel redondo</td>
+                                                        <td onClick="cambiaaccion(this)" id="xborrar" class="celdaaccion" style="cursor:pointer;border:solid 1px transparent">Borrar</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </main>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/dibujarCANVAS1.js"></script>
+    <script>
+            function play(idSound) {
+                sounds = document.getElementsByTagName('audio');
+                console.log($('input'))
+				$('.ico').addClass("glyphicon-headphones")
+                    $('.ico').removeClass("glyphicon-stop")
+
+                for (var i = 0; i < sounds.length; i++) {
+                    sounds[i].pause();
+                    sounds[i].currentTime = 0;
+//                    $('input').val('play')
+					
+                }
+                if ($('#opt' + idSound).val() == 'play') {
+                    $('#opt' + idSound).val('stop')
+                    $('#ico' + idSound).removeClass("glyphicon-headphones")
+                    $('#ico' + idSound).addClass("glyphicon-stop")
+                    document.getElementById(idSound).play();
+                } else {
+                    $('#opt' + idSound).val('play')
+					$('#ico' + idSound).addClass("glyphicon-stop")
+                    $('#ico' + idSound).removeClass("glyphicon-stop")
+                }
+                $.each($('input'), function (index, value) {
+                    if ($(value).attr('id') != 'opt' + idSound) {
+                        $(value).val('play')
+						
+                    }
+                })
+            }
+        </script>
+    <script>
+    $("#n_pagina").html("26"); //impresion de pagina  
+    var titulos = "evaluacion";
+    f_titulos();
+    </script>
+    <script type="text/javascript">
+    var titulos = 'preparo';
+    $("#txtNota").html("0");
+    $("#n_pagina").html("86");
+
+    var limpiar = document.getElementById("limpiar");
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var cw = canvas.width = 900,
+        cx = cw / 2;
+    var ch = canvas.height = 350,
+        cy = ch / 2;
+
+    var dibujar = false;
+    var factorDeAlisamiento = 5;
+    var Trazados = [];
+    var puntos = [];
+    ctx.lineJoin = "round";
+
+    limpiar.addEventListener('click', function(evt) {
+        dibujar = false;
+        ctx.clearRect(0, 0, cw, ch);
+        Trazados.length = 0;
+        puntos.length = 0;
+    }, false);
+
+
+    canvas.addEventListener('mousedown', function(evt) {
+        dibujar = true;
+        //ctx.clearRect(0, 0, cw, ch);
+        puntos.length = 0;
+        ctx.beginPath();
+
+    }, false);
+
+    canvas.addEventListener('mouseup', function(evt) {
+        redibujarTrazados();
+    }, false);
+
+    canvas.addEventListener("mouseout", function(evt) {
+        redibujarTrazados();
+    }, false);
+
+    canvas.addEventListener("mousemove", function(evt) {
+        if (dibujar) {
+            var m = oMousePos(canvas, evt);
+            puntos.push(m);
+            ctx.lineTo(m.x, m.y);
+            ctx.stroke();
+        }
+    }, false);
+
+
+
+
+
+    function reducirArray(n, elArray) {
+        var nuevoArray = [];
+        nuevoArray[0] = elArray[0];
+        for (var i = 0; i < elArray.length; i++) {
+            if (i % n == 0) {
+                nuevoArray[nuevoArray.length] = elArray[i];
+            }
+        }
+        nuevoArray[nuevoArray.length - 1] = elArray[elArray.length - 1];
+        Trazados.push(nuevoArray);
+    }
+
+    function calcularPuntoDeControl(ry, a, b) {
+        var pc = {}
+        pc.x = (ry[a].x + ry[b].x) / 2;
+        pc.y = (ry[a].y + ry[b].y) / 2;
+        return pc;
+    }
+
+    function alisarTrazado(ry) {
+        if (ry.length > 1) {
+            var ultimoPunto = ry.length - 1;
+            ctx.beginPath();
+            ctx.moveTo(ry[0].x, ry[0].y);
+            for (i = 1; i < ry.length - 2; i++) {
+                var pc = calcularPuntoDeControl(ry, i, i + 1);
+                ctx.quadraticCurveTo(ry[i].x, ry[i].y, pc.x, pc.y);
+            }
+            ctx.quadraticCurveTo(ry[ultimoPunto - 1].x, ry[ultimoPunto - 1].y, ry[ultimoPunto].x, ry[ultimoPunto].y);
+            ctx.stroke();
+        }
+    }
+
+
+    function redibujarTrazados() {
+        dibujar = false;
+        ctx.clearRect(0, 0, cw, ch);
+        reducirArray(factorDeAlisamiento, puntos);
+        for (var i = 0; i < Trazados.length; i++)
+            alisarTrazado(Trazados[i]);
+    }
+
+    function oMousePos(canvas, evt) {
+        var ClientRect = canvas.getBoundingClientRect();
+        return { //objeto
+            x: Math.round(evt.clientX - ClientRect.left),
+            y: Math.round(evt.clientY - ClientRect.top)
+        }
+    }
+    </script>
+</body>
+<style type="text/css">
+canvas {
+    display: block;
+    margin: 0 auto; //*margin: calc(50vh - 150px) auto 0;*/
+    background-image: url('img/i2_p50_act25.jpg');
+    border-radius: 3px;
+    box-shadow: 0px 0px 15px 3px #ccc;
+    cursor: pointer;
+    background-repeat: no-repeat;
+}
+.mi_canvas {
+    min-width: 320px;
+}
+
+#pruebaDOS {
+    margin-top: 2rem;
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    transition: all .3s linear 0s;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e5e5e5;
+    /*background-color:rgba(212,185,186,0.2); 
+    background-image: url(imagenes/fondo.jpg);*/
+    /* SI SE NECESITA UNA IMAGEN DE FONDO */
+    background-size: 100% 100%;
+}
+
+#prueba1 {
+    margin-top: 2rem;
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    transition: all .3s linear 0s;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e5e5e5;
+    background-color: rgba(212, 185, 186, 0.2);
+    background-image: url(img/i7_p51_act25.jpg);
+    /* SI SE NECESITA UNA IMAGEN DE FONDO */
+    background-size: 100% 100%;
+}
+
+#logo {
+    display: block;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    z-index: 1;
+    width: 30%;
+    height: auto;
+    max-width: 350px;
+    min-width: 100px;
+}
+
+#contenedoropcionesDOS,
+#contenedoropciones1 {
+    margin-top: 2rem;
+    padding: 2px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#contenedoropcionesDOS table,
+#contenedoropciones1 table {
+    background-color: rgba(220, 220, 220, 1.00);
+    border: .25rem solid rgba(188, 185, 185, 1.00);
+    margin-bottom: .5rem;
+    border-spacing: 5px;
+    border-collapse: separate;
+}
+
+#contenedoropcionesDOS table:nth-of-type(2),
+#contenedoropciones1 table:nth-of-type(2) {
+    border-spacing: 5px;
+}
+
+#contenedoropcionesDOS table:nth-of-type(2) td,
+#contenedoropciones1 table:nth-of-type(2) td {
+    width: 1px;
+    white-space: nowrap;
+}
+
+#contenedoropcionesDOS table:nth-of-type(1) td,
+#contenedoropciones1 table:nth-of-type(1) td {
+    cursor: pointer;
+}
+
+#contenedoropcionesDOS .titulotabla,
+#contenedoropciones1 .titulotabla {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color: rgba(103, 103, 103, 1.00)
+}
+
+#contenedoropcionesDOS table,
+#contenedoropciones table {
+    display: inline-table;
+}
+
+.celdascoloresdefondo {
+    width: 20px;
+    height: 10px;
+    border: solid 1px transparent;
+}
+
+@media (max-width: 890px) {
+    /*.mi_canvas {
+      font-size: .750rem;
+    }*/
+    #contenedoropcionesDOS,
+    #pruebaDOS,
+    #prueba1,
+    #contenedoropciones1 {
+        width: 98%
+    }
+    #contenedoropcionesDOS,
+    #contenedoropciones1 {
+        margin-left: 1%;
+    }
+}
+
+@media (max-width: 450px) {
+    /*.mi_canvas {
+      font-size: .75rem;
+    }*/
+}
+
+@media (max-width: 1px) {
+    #contenedoropcionesDOS #opcionesdedibujoDOS,
+    #contenedoropciones1 #opcionesdedibujo {
+        display: table;
+        width: 100%;
+    }
+    #contenedoropcionesDOS #opcionesdedibujoDOS td,
+    #contenedoropciones1 #opcionesdedibujo td {
+        display: block;
+        width: auto;
+        text-align: left;
+        margin-top: 5px;
+    }
+}
+</style>
+
+</html>

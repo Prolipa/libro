@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MATEMÁTICA 3</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/estilo_canvas.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+</head>
+<style type="text/css">
+    .checkmark {
+        height: 25px;
+        width: 25px;
+    }
+
+    .preguntas {
+        font-size: 17px;
+        padding-top: 20px;
+
+    }
+
+    .respuestas {
+        font-size: 17px;
+        color: #8444DC;
+    }
+
+    .n0 {
+        color: #D70D22;
+        font-size: 23px;
+    }
+
+    .n1 {
+        color: #D44B0B;
+        font-size: 23px;
+    }
+
+    .n2 {
+        color: #3768F7;
+        font-size: 23px;
+    }
+
+    .np0 {
+        color: #25B48B;
+        font-size: 23px;
+    }
+
+    .np1 {
+        color: #EF435B;
+        font-size: 23px;
+    }
+
+    .np2 {
+        color: #1C2E85;
+        font-size: 23px;
+    }
+
+    .nr0 {
+        color: #25B48B;
+        font-size: 30px;
+    }
+
+    .np3 {
+        color: #7E7E7E;
+        font-size: 25px;
+    }
+
+    .linea {
+        text-decoration: overline;
+        text-decoration-color: #D44B0B;
+        border: none;
+    }
+
+    .linea1 {
+        text-decoration: overline;
+        text-decoration-color: #3768F7;
+        border: none;
+    }
+
+    .literal {
+        color: #485699;
+        font-size: 23px;
+    }
+
+    .num {
+        background-color: #F9C797;
+        font-size: 21px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 0;
+    }
+
+    .num1 {
+        background-color: #E2C2F3;
+        font-size: 21px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 0;
+    }
+
+    .num2 {
+        background-color: #C2F3CB;
+        font-size: 21px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 0;
+    }
+
+    .encabezados {
+        color: white;
+        font-size: 23px;
+    }
+
+    .actividad1 {
+        background: #fff;
+    }
+
+    .correcto {
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+
+    .incorrecto {
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+
+    @media (max-width: 770px) {
+        .cajas {
+            clear: left;
+        }
+
+    }
+
+    .fraction {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0.2em 0.4ex;
+        text-align: center;
+    }
+
+    .fraction>span {
+        display: block;
+        padding-top: 0.15em;
+    }
+
+    .fraction span.fdn {
+        border-top: thin solid #636363;
+    }
+
+    .fraction span.bar {
+        display: none;
+    }
+
+    .radical {
+        position: relative;
+        font-size: 1.6em;
+        vertical-align: middle;
+    }
+
+    .n-root {
+        position: absolute;
+        top: -0.333em;
+        left: 0.333em;
+        font-size: 45%;
+    }
+
+    .radicand {
+        padding: 0.25em 0.25em;
+        border-top: thin black solid;
+        border-color: #EF435B;
+    }
+
+    .radicand1 {
+        padding: 0.25em 0.25em;
+        border-top: thin black solid;
+        border-color: #1C2E85;
+    }
+
+    .radicand2 {
+        padding: 0.25em 0.25em;
+        border-top: thin black solid;
+        border-color: #D70D22;
+    }
+
+    .radicand3 {
+        padding: 0.25em 0.25em;
+        border-top: thin black solid;
+        border-color: #25B48B;
+    }
+
+
+    .input_xs {
+        height: 22px;
+        padding: 2px 5px;
+        font-size: 12px;
+        line-height: 1.5;
+        /* If Placeholder of the input is moved up, rem/modify this. */
+        border-radius: 3px;
+        text-align: center;
+    }
+
+    .expoR {
+        top: -20px;
+        position: relative;
+    }
+
+    .eR {
+        top: -10px;
+        position: relative;
+        font-size: 15px;
+    }
+
+
+    .respuestas1 {
+        font-size: 20px;
+        border: 2px solid;
+        border-color: rgb(212, 164, 7);
+        border-radius: 50px;
+        text-align: center;
+    }
+
+    .respuestas2 {
+        font-size: 40px;
+        border: 2px solid;
+        border-color: #9BD45E;
+        border-radius: 25px;
+        text-align: center;
+    }
+
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Responde en los espacios en blanco según se solicita.<br>
+        <span id="ayudas"></span>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa"
+                        onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> <span id="txtNota1"
+                            style="display: none;"></span>/ 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+
+            </ul>
+        </div>
+
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-refuerzo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-refuerzo">
+                <span class="titulo"><img src="img/icoR.png"> Refuerzo mis destrezas</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+
+            </div>
+
+            <div class="panel-body">
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-group form-inline">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a">&nbsp;
+                            1. <b>Observa</b> los conjuntos y escríbelos por comprensión. <b>(1 pts.)</b><br><br>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <img src="img/i1_p159_act1.jpg" class="img-responsive"><br><br><br>
+                                    <h3>D ={<input type="text" style="text-align: center;width:280px" class="form-control">}</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <img src="img/i2_p159_act1.jpg" class="img-responsive"><br><br><br>
+                                    <h3>E ={<input type="text" style="text-align: center;width:280px" class="form-control">}</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <img src="img/i3_p159_act1.jpg" class="img-responsive"><br>
+                                    <h3>F ={<input type="text" style="text-align: center;width:280px" class="form-control">}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-group form-inline">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a" readonly>&nbsp;
+                            2. <b>Escribe</b> los pares ordenados en los que se encuentran los siguientes elementos: <b>(1
+                                pts.)
+                            </b><br><br>
+                            <div class="row">
+                                <div class="col-sm-6" align="center">
+                                    <div class="row" style="width: 200px; border: 1px solid; border-color: rgb(32, 217, 241); border-style:groove;">
+                                        <div class="col-lg-12  imagen2" id="randos1"></div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row" style="width: 200px; border: 1px solid; border-color: rgb(32, 217, 241); border-style:groove;">
+                                        <div class="col-lg-12  imagen2" id="randos2"></div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row" style="width: 200px; border: 1px solid; border-color: rgb(32, 217, 241); border-style:groove;">
+                                        <div class="col-lg-12  imagen2" id="randos3"></div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row" style="width: 200px; border: 1px solid; border-color: rgb(32, 217, 241); border-style:groove;">
+                                        <div class="col-lg-12  imagen2" id="randos4s"></div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="img/i1_p159_act2.jpg" class="img-responsive">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+                        </h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-group form-inline">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a" readonly>&nbsp;
+                            3. <b>Aplica </b> el operador aditivo o sustractivo según corresponda. <b>(2 pts.)</b><br><br>
+
+                            <div class="col-sm-12" class="text-question">
+                                <ol type="a">
+                                    <div class="table-responsive col-sm-3">
+                                        <li>
+                                            <table>
+                                                <tr>
+                                                    <td align="right">
+                                                        <img src="img/i2_p159_act3.jpg">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="respuestas1" id="nm41" style="width: 50px">
+                                                    </td>
+                                                    <td>
+                                                        <img src="img/i1_p159_act3.jpg">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border: 1px solid;text-align: center;border-color: darkviolet">
+                                                        <input type="text" class="cajas" id="nm0" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm1" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm2" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm3" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm4" style="width: 50px"></td>
+                                                    <td></td>
+                                                    <td style="border: 1px solid;text-align: center;border-color: darkviolet">
+                                                        <input type="text" class="cajas" id="nr0" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr1" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr2" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr3" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr4" style="width: 50px"></td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </div>
+                                    <div class="table-responsive col-sm-3">
+                                        <li>
+                                            <table>
+                                                <tr>
+                                                    <td align="right">
+                                                        <img src="img/i2_p159_act3.jpg">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="respuestas1" id="nm42" style="width: 50px">
+                                                    </td>
+                                                    <td>
+                                                        <img src="img/i1_p159_act3.jpg">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border: 1px solid;text-align: center;border-color: darkviolet">
+                                                        <input type="text" class="cajas" id="nm5" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm6" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm7" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm8" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm9" style="width: 50px"></td>
+                                                    <td></td>
+                                                    <td style="border: 1px solid;text-align: center;border-color: darkviolet">
+                                                        <input type="text" class="cajas" id="nr5" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr6" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr7" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr8" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr9" style="width: 50px"></td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </div>
+                                    <div class="table-responsive col-sm-3">
+                                        <li>
+                                            <table>
+                                                <tr>
+                                                    <td align="right">
+                                                        <img src="img/i2_p159_act3.jpg">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="respuestas1" id="nm43" style="width: 50px">
+                                                    </td>
+                                                    <td>
+                                                        <img src="img/i1_p159_act3.jpg">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border: 1px solid;text-align: center;border-color: darkviolet">
+                                                        <input type="text" class="cajas" id="nm10" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm11" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm12" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm13" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm14" style="width: 50px"></td>
+                                                    <td></td>
+                                                    <td style="border: 1px solid;text-align: center;border-color: darkviolet">
+                                                        <input type="text" class="cajas" id="nr10" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr11" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr12" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr13" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr14" style="width: 50px"></td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </div>
+                                    <div class="table-responsive col-sm-3">
+                                        <li>
+                                            <table>
+                                                <tr>
+                                                    <td align="right">
+                                                        <img src="img/i2_p159_act3.jpg">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="respuestas1" id="nm44" style="width: 50px">
+                                                    </td>
+                                                    <td>
+                                                        <img src="img/i1_p159_act3.jpg">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border: 1px solid;text-align: center;border-color: darkviolet">
+                                                        <input type="text" class="cajas" id="nm15" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm16" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm17" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm18" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nm19" style="width: 50px"></td>
+                                                    <td></td>
+                                                    <td style="border: 1px solid;text-align: center;border-color: darkviolet">
+                                                        <input type="text" class="cajas" id="nr15" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr16" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr17" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr18" style="width: 50px"><br>
+                                                        <input type="text" class="cajas" id="nr19" style="width: 50px"></td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </div>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Actividad 4</a>
+                        </h4>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-group form-inline">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a">&nbsp;
+                            4. <b>Plantea</b> y <b>resuelve</b> 4 adiciones con reagrupación utilizando los siguientes sumandos:
+                            <b>(1 pts.)</b><br><br>
+
+                            <div class="row">
+                                <div class="table-responsive col-sm-3">
+                                    <center><input type="text" class="respuestas" id="r0" style="width: 50px"></center><br>
+                                    <table border="1" bordercolor="orange">
+                                        <tbody align="center">
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <font color="green">C</font>
+                                                </td>
+                                                <td>
+                                                    <font color="#D81B60">D</font>
+                                                </td>
+                                                <td>
+                                                    <font color="#2E86C1">U</font>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="number" id="nTP1" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP2" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP3" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>+</td>
+                                                <td><input type="number" id="nTP4" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP5" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP6" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                        </tbody>
+
+                                        <tbody align="center">
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="number" id="nTP7" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP8" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP9" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="table-responsive col-sm-3">
+                                    <center><input type="text" class="respuestas" id="r1" style="width: 50px"></center><br>
+                                    <table border="1" bordercolor="orange">
+                                        <tbody align="center">
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <font color="green">C</font>
+                                                </td>
+                                                <td>
+                                                    <font color="#D81B60">D</font>
+                                                </td>
+                                                <td>
+                                                    <font color="#2E86C1">U</font>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="number" id="nTP1" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP2" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP3" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>+</td>
+                                                <td><input type="number" id="nTP4" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP5" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP6" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                        </tbody>
+
+                                        <tbody align="center">
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="number" id="nTP7" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP8" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP9" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="table-responsive col-sm-3">
+                                    <center><input type="text" class="respuestas" id="r2" style="width: 50px"></center><br>
+                                    <table border="1" bordercolor="orange">
+                                        <tbody align="center">
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <font color="green">C</font>
+                                                </td>
+                                                <td>
+                                                    <font color="#D81B60">D</font>
+                                                </td>
+                                                <td>
+                                                    <font color="#2E86C1">U</font>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="number" id="nTP1" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP2" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP3" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>+</td>
+                                                <td><input type="number" id="nTP4" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP5" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP6" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                        </tbody>
+
+                                        <tbody align="center">
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="number" id="nTP7" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP8" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP9" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="table-responsive col-sm-3">
+                                    <center><input type="text" class="respuestas" id="r3" style="width: 50px"></center><br>
+                                    <table border="1" bordercolor="orange">
+                                        <tbody align="center">
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <font color="green">C</font>
+                                                </td>
+                                                <td>
+                                                    <font color="#D81B60">D</font>
+                                                </td>
+                                                <td>
+                                                    <font color="#2E86C1">U</font>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="number" id="nTP1" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP2" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP3" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>+</td>
+                                                <td><input type="number" id="nTP4" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP5" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP6" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                        </tbody>
+
+                                        <tbody align="center">
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="number" id="nTP7" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP8" class="form-control respuestas" style="width: 60px;"></td>
+                                                <td><input type="number" id="nTP9" class="form-control respuestas" style="width: 60px;"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Actividad 5</a>
+                        </h4>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-group form-inline">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre5a" readonly>&nbsp;
+                            5. <b>Resuelve</b> las siguientes restas: <b>(2 pts.)</b><br><br>
+                            <div class="col-lg-12">
+                                <ol type="a">
+                                    <div class="col-sm-3">
+                                        <li>
+                                            <table border="1" bordercolor="orange">
+                                                <tbody align="center">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            <font color="green">C</font>
+                                                        </td>
+                                                        <td>
+                                                            <font color="#D81B60">D</font>
+                                                        </td>
+                                                        <td>
+                                                            <font color="#2E86C1">U</font>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input type="number" id="nla0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nla1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nla2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td><input type="number" id="nlsa0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlsa1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlsa2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                </tbody>
+
+                                                <tbody align="center">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input type="number" id="nlra0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlra1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlra2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <li>
+                                            <table border="1" bordercolor="orange">
+                                                <tbody align="center">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            <font color="green">C</font>
+                                                        </td>
+                                                        <td>
+                                                            <font color="#D81B60">D</font>
+                                                        </td>
+                                                        <td>
+                                                            <font color="#2E86C1">U</font>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input type="number" id="nlb0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlb1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlb2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td><input type="number" id="nlsb0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlsb1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlsb2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                </tbody>
+
+                                                <tbody align="center">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input type="number" id="nlrb0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlrb1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlrb2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <li>
+                                            <table border="1" bordercolor="orange">
+                                                <tbody align="center">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            <font color="green">C</font>
+                                                        </td>
+                                                        <td>
+                                                            <font color="#D81B60">D</font>
+                                                        </td>
+                                                        <td>
+                                                            <font color="#2E86C1">U</font>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input type="number" id="nlc0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlc1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlc2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td><input type="number" id="nlsc0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlsc1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlsc2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                </tbody>
+
+                                                <tbody align="center">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input type="number" id="nlrc0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlrc1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlrc2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <li>
+                                            <table border="1" bordercolor="orange">
+                                                <tbody align="center">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            <font color="green">C</font>
+                                                        </td>
+                                                        <td>
+                                                            <font color="#D81B60">D</font>
+                                                        </td>
+                                                        <td>
+                                                            <font color="#2E86C1">U</font>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input type="number" id="nld0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nld1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nld2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td><input type="number" id="nlsd0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlsd1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlsd2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                </tbody>
+
+                                                <tbody align="center">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input type="number" id="nlrd0" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlrd1" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                        <td><input type="number" id="nlrd2" class="form-control respuestas"
+                                                                style="width: 60px;"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </li>
+                                    </div>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Actividad 6</a>
+                        </h4>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-group form-inline">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre6a" readonly>&nbsp;
+                            6. <b>Lee</b> y <b>resuelve</b> los siguientes problemas: <b>(2 pts.)</b><br><br>
+                            <div class="col-sm-12">
+                                <ol type="a" class="text-question">
+                                    <div class="col-sm-6">
+                                        <li>
+                                            <h4>En una ferretería hay 375 tornillos y venden 198. ¿Cuántos tornillos quedan
+                                                en la ferretería?</h4>
+                                            <h4>
+                                                <ol>
+                                                    <li>
+                                                        <b>Comprendo</b> el problema.
+                                                        <h4>En la ferretería hay <input type="text" size="1" style="width:40px"
+                                                                class="border-blue respuestas6 cajas1"><input type="hidden" style="color:blue"
+                                                                class="solucion6" value="375"><br> tornillos y venden <input
+                                                                type="text" size="1" style="width:40px" class="border-blue respuestas6 cajas1"><input
+                                                                type="hidden" style="color:blue" class="solucion6" value="198"></h4>
+                                                    </li>
+
+                                                    <li>
+                                                        <b>Hago</b> un plan.
+                                                        <h4>Debo realizar una <input type="text" size="1" style="width:70px"
+                                                                class="border-blue respuestas6 cajas1"><input type="hidden" style="color:blue"
+                                                                class="solucion6" value="resta"></h4>
+                                                        <h4><input type="text" size="1" style="width:40px" class="border-blue respuestas6 cajas1"><input
+                                                                type="hidden" style="color:blue" class="solucion6" value="375">                                                            -
+                                                            <input type="text" size="1" style="width:40px" class="border-blue respuestas6 cajas1"><input
+                                                                type="hidden" style="color:blue" class="solucion6" value="198"></h4>
+                                                    </li>
+
+
+                                                    <li>
+                                                        <b>Ejecuto</b> el plan.<br><br>
+                                                        <table border="1" bordercolor="orange">
+                                                            <tbody align="center">
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <font color="green">C</font>
+                                                                    </td>
+                                                                    <td>
+                                                                        <font color="#D81B60">D</font>
+                                                                    </td>
+                                                                    <td>
+                                                                        <font color="#2E86C1">U</font>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                            class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                            style="color:blue" class="solucion6" value="3"></td>
+                                                                    <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                            class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                            style="color:blue" class="solucion6" value="7"></td>
+                                                                    <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                            class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                            style="color:blue" class="solucion6" value="5"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>-</td>
+                                                                    <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                            class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                            style="color:blue" class="solucion6" value="1"></td>
+                                                                    <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                            class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                            style="color:blue" class="solucion6" value="9"></td>
+                                                                    <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                            class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                            style="color:blue" class="solucion6" value="8"></td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                            <tbody align="center">
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                            class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                            style="color:blue" class="solucion6" value="1"></td>
+                                                                    <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                            class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                            style="color:blue" class="solucion6" value="7"></td>
+                                                                    <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                            class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                            style="color:blue" class="solucion6" value="7"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <br>
+                                                    </li>
+
+
+                                                    <li>
+                                                        <b>Compruebo</b> la respuesta. Comparo mi respuesta con otros compañeros.
+                                                    </li>
+
+                                                </ol>
+                                            </h4>
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-6">
+                                            <li>
+                                                <h4>En la escuela hay 489 estudiantes e
+                                                        ingresan 143 estudiantes nuevos.
+                                                        ¿Cuántos estudiantes hay en la escuela?</h4>
+                                                <h4>
+                                                    <ol>
+                                                        <li>
+                                                            <b>Comprendo</b> el problema.
+                                                            <h4>En la escuela hay <input type="text" size="1" style="width:40px"
+                                                                    class="border-blue respuestas6 cajas1"><input type="hidden" style="color:blue"
+                                                                    class="solucion6" value="489"><br> estudiantes e ingresan <input
+                                                                    type="text" size="1" style="width:40px" class="border-blue respuestas6 cajas1"><input
+                                                                    type="hidden" style="color:blue" class="solucion6" value="177"></h4>
+                                                        </li>
+    
+                                                        <li>
+                                                            <b>Hago</b> un plan.
+                                                            <h4>Debo realizar una <input type="text" size="1" style="width:70px"
+                                                                    class="border-blue respuestas6 cajas1"><input type="hidden" style="color:blue"
+                                                                    class="solucion6" value="suma"></h4>
+                                                            <h4><input type="text" size="1" style="width:40px" class="border-blue respuestas6 cajas1"><input
+                                                                    type="hidden" style="color:blue" class="solucion6" value="489"> +
+                                                                <input type="text" size="1" style="width:40px" class="border-blue respuestas6 cajas1"><input
+                                                                    type="hidden" style="color:blue" class="solucion6" value="177"></h4>
+                                                        </li>
+    
+    
+                                                        <li>
+                                                            <b>Ejecuto</b> el plan.<br><br>
+                                                            <table border="1" bordercolor="orange">
+                                                                <tbody align="center">
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <font color="green">C</font>
+                                                                        </td>
+                                                                        <td>
+                                                                            <font color="#D81B60">D</font>
+                                                                        </td>
+                                                                        <td>
+                                                                            <font color="#2E86C1">U</font>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                                class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                                style="color:blue" class="solucion6" value="4"></td>
+                                                                        <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                                class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                                style="color:blue" class="solucion6" value="8"></td>
+                                                                        <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                                class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                                style="color:blue" class="solucion6" value="9"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>+</td>
+                                                                        <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                                class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                                style="color:blue" class="solucion6" value="1"></td>
+                                                                        <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                                class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                                style="color:blue" class="solucion6" value="7"></td>
+                                                                        <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                                class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                                style="color:blue" class="solucion6" value="7"></td>
+                                                                    </tr>
+                                                                </tbody>
+    
+                                                                <tbody align="center">
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                                class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                                style="color:blue" class="solucion6" value="6"></td>
+                                                                        <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                                class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                                style="color:blue" class="solucion6" value="6"></td>
+                                                                        <td><input type="text" size="1" style="width:40px" maxlength="1"
+                                                                                class="border-blue respuestas6 cajas1"><input type="hidden"
+                                                                                style="color:blue" class="solucion6" value="6"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <br>
+                                                        </li>
+    
+    
+                                                        <li>
+                                                            <b>Compruebo</b> la respuesta. Comparo mi respuesta con otros compañeros.
+                                                        </li>
+    
+                                                    </ol>
+                                                </h4>
+                                            </li>
+                                        </div>
+    
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">Actividad 7</a>
+                        </h4>
+                    </div>
+                    <div id="collapse7" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-group form-inline">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre7a" readonly>&nbsp;
+                            7. <b>Calcula</b> y <b>escribe</b> la mitad y el doble de las siguientes cantidades. <b>(1 pts.)
+                            </b><br><br>
+
+                            <div class="col-lg-12">
+                                <div class="table-responsive col-sm-6" align="center">
+                                    <table>
+                                        <tr>
+                                            <td colspan="3">
+                                                <center><img src="img/i1_p157_act7.jpg"></center>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="number" class="cajas" id="n7m0" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                            <td><img src="img/i2_p157_act7.jpg"></td>
+                                            <td><input type="number" class="cajas" id="n7r0" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="number" class="cajas" id="n7m1" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                            <td><img src="img/i2_p157_act7.jpg"></td>
+                                            <td><input type="number" class="cajas" id="n7r1" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="number" class="cajas" id="n7m2" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                            <td><img src="img/i2_p157_act7.jpg"></td>
+                                            <td><input type="number" class="cajas" id="n7r2" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="number" class="cajas" id="n7m3" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                            <td><img src="img/i2_p157_act7.jpg"></td>
+                                            <td><input type="number" class="cajas" id="n7r3" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="table-responsive col-sm-6" align="center">
+                                    <table>
+                                        <tr>
+                                            <td colspan="3">
+                                                <center><img src="img/i3_p157_act7.jpg"></center>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="number" class="cajas" id="n7m4" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                            <td><img src="img/i2_p157_act7.jpg"></td>
+                                            <td><input type="number" class="cajas" id="n7r4" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="number" class="cajas" id="n7m5" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                            <td><img src="img/i2_p157_act7.jpg"></td>
+                                            <td><input type="number" class="cajas" id="n7r5" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="number" class="cajas" id="n7m6" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                            <td><img src="img/i2_p157_act7.jpg"></td>
+                                            <td><input type="number" class="cajas" id="n7r6" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="number" class="cajas" id="n7m7" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                            <td><img src="img/i2_p157_act7.jpg"></td>
+                                            <td><input type="number" class="cajas" id="n7r7" style="width: 50px;border: 1px solid;text-align: center;border-color: #85C1E9"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                            Debes ingresar tu nombre</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+            <!--generador de pdf-->
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/Utilitario.js"></script>
+            <script src="js/numPaginas.js"></script>
+            <script src="js/validacionesExtras.js"></script>
+            <script src="js/uni4_actividad1.js"></script>
+
+            <script type="text/javascript">
+                $("#n_pagina").html('156');
+                var titulos = "refuerzo";
+                f_titulos();
+            </script>
+</body>
+
+</html>

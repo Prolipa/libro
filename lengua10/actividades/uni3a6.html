@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lengua y Literatura 10</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 500px;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.cajas1 {
+
+    border: 1px #009277 solid;
+}
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+.imagen3 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #FFF0CA;
+}
+.imagen4 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #F5F0F7;
+}
+.underline{
+        text-decoration: underline;
+        text-decoration-color: rgb(59, 114, 37);
+        
+    }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        
+        Lee las preguntas y responde. <br>
+        <b>Pregunta 2:</b> Para subrayar da click sobre la palabra. <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span> 
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_1"> <b style="color:#005CA9">1. </b> <b>Escribe</b> una oración de cada tipo.</span>
+                </div>
+                <div align="center" class="col-sm-12 text-question ">
+                    <div class="table-responsive">  
+                        <table class="table">
+                            <tr align="center">
+                                <td>
+                                    <div style="background: #BDDCEB; border-radius: 10px 0px 0px 10px"><b>Copulativa</b></div>
+                                </td>
+                                <td>
+                                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <div style="background: #FCF5D2; border-radius: 10px 0px 0px 10px"><b>Transitiva</b></div>
+                                </td>
+                                <td>
+                                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <div style="background: #BDDCEB; border-radius: 10px 0px 0px 10px"><b>Intransitiva</b></div>
+                                </td>
+                                <td>
+                                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <div style="background: #FCF5D2; border-radius: 10px 0px 0px 10px"><b>Reflexiva</b></div>
+                                </td>
+                                <td>
+                                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <div style="background: #BDDCEB; border-radius: 10px 0px 0px 10px"><b>Recíproca</b></div>
+                                </td>
+                                <td>
+                                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <div style="background: #FCF5D2; border-radius: 10px 0px 0px 10px"><b>Impersonal</b></div>
+                                </td>
+                                <td>
+                                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><b style="color:#005CA9">2. </b> <b>Subraya</b> el verbo y <b>reconoce</b> el tipo de oración según su naturaleza.</span>
+                </div>
+                <div class="col-sm-12 text-question ">
+                    <div class="table-responsive">  
+                        <table class="table">
+                            <tr align="left">
+                                
+                                <td>
+                                    <ul id="subres1">
+                                        <li><span class="sub1">Maestros</span> <span class="sub2">y</span> <span class="sub3">estudiantes</span> <span class="sub4">se</span> <span class="sub5">respetan</span>.</li>
+                                    </ul>
+                                </td>
+                                <td><input type="text" name="" id="p2dcon1" style="border: none; border-bottom: 2px dotted black; width: 100px; text-align: center;"></td>
+                            </tr>
+                            <tr align="left">
+                                
+                                <td>
+                                    <ul id="subres2">
+                                        <li><span class="sub6">Los</span> <span class="sub7">abuelos</span> <span class="sub8">compraron</span> <span class="sub9">juguetes</span> <span class="sub10">para</span> <span class="sub11">sus</span> <span class="sub12">nietos</span>.</li>
+                                    </ul>
+                                </td>
+                                <td><input type="text" name="" id="p2dcon2" style="border: none; border-bottom: 2px dotted black; width: 100px; text-align: center;"></td>
+                            </tr>
+                            <tr align="left">
+                                
+                                <td>
+                                    <ul id="subres3">
+                                        <li><span class="sub13">Todos</span> <span class="sub14">caminaron</span> <span class="sub15">al</span> <span class="sub16">menos</span> <span class="sub17">dos</span> <span class="sub18">horas</span> <span class="sub19">por</span> <span class="sub20">el</span> <span class="sub21">sendero</span>.</li>
+                                    </ul>
+                                </td>
+                                <td><input type="text" name="" id="p2dcon3" style="border: none; border-bottom: 2px dotted black; width: 100px; text-align: center;"></td>
+                            </tr>
+                            <tr align="left">
+                                
+                                <td>
+                                    <ul id="subres4">
+                                        <li><span class="sub22">Mi perro</span> <span class="sub23">está</span> <span class="sub24">triste</span> <span class="sub25">y</span> <span class="sub26">cansado</span>.</li>
+                                    </ul>
+                                </td>
+                                <td><input type="text" name="" id="p2dcon4" style="border: none; border-bottom: 2px dotted black; width: 100px; text-align: center;"></td>
+                            </tr>
+                            <tr align="left">
+                                
+                                <td>
+                                    <ul id="subres5">
+                                        <li><span class="sub27">Esteban</span> <span class="sub28">se</span> <span class="sub29">viste</span> <span class="sub30">con</span> <span class="sub31">ropa elegante</span>.</li>
+                                    </ul>
+                                </td>
+                                <td><input type="text" name="" id="p2dcon5" style="border: none; border-bottom: 2px dotted black; width: 100px; text-align: center;"></td>
+                            </tr>
+                            <tr align="left">
+                                
+                                <td>
+                                    <ul id="subres6">
+                                        <li><span class="sub32">Llovió</span> <span class="sub33">en</span> <span class="sub34">exceso</span>.</li>
+                                    </ul>
+                                </td>
+                                <td><input type="text" name="" id="p2dcon6" style="border: none; border-bottom: 2px dotted black; width: 100px; text-align: center;"></td>
+                            </tr>
+                            <tr align="left">
+                                
+                                <td>
+                                    <ul id="subres7">
+                                        <li><span class="sub35">El entrenador</span> <span class="sub36">preparó</span> <span class="sub37">un instructivo</span> <span class="sub38">para</span> <span class="sub39">sus jugadores</span>.</li>
+                                    </ul>
+                                </td>
+                                <td><input type="text" name="" id="p2dcon7" style="border: none; border-bottom: 2px dotted black; width: 100px; text-align: center;"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_2"> <b style="color:#005CA9">3. </b> <b>Escribe</b> un texto en el que utilices al menos una vez las distintas clases de oraciones simples según la naturaleza del verbo: Copulativa, transitiva, intransitiva, reflexiva, recíproca e impersonal</span>
+                </div>
+                <div  class="col-sm-12 text-question ">
+                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta" style="height: 500px;"></textarea>
+                </div>
+                <div class="row"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper1.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni3a6.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("117");
+    //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+    document.getElementById('nota1_1').addEventListener('keypress', () => {
+        validNumero(0, 3, 1);
+    });
+    document.getElementById('nota1_1').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1_1'), 3)
+    });
+    document.getElementById('nota1_2').addEventListener('keypress', () => {
+        validNumero(0, 3, 1);
+    });
+    document.getElementById('nota1_2').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1_2'), 3)
+    });
+    
+    </script>
+</body>
+
+</html>

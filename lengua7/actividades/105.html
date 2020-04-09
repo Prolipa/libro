@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LENGUA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+    .cajas {
+        max-width: 95%;
+        max-height: 200px;
+        border: 1px black solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+    }
+
+    .cajas1 {
+
+        border: 1px #009277 solid;
+    }
+
+    .actividad1 {
+        background: #fff;
+    }
+
+    .correcto {
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+
+    .incorrecto {
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+
+    .desactivar {
+        background-color: #444;
+        color: #888;
+        padding: 8px;
+    }
+
+    #cabecera .badge {
+        background-color: #232956;
+    }
+
+    .imagen3 {
+
+        width: 100%;
+        height: 100%;
+        display: flex;
+        background: #FFF0CA;
+    }
+
+    .imagen4 {
+
+        width: 100%;
+        height: 100%;
+        display: flex;
+        background: #F5F0F7;
+    }
+
+    .underline {
+        text-decoration: underline;
+        text-decoration-color: rgb(59, 114, 37);
+
+    }
+
+    .subrayar {
+        text-decoration: underline;
+        background-color: #a7d27d;
+    }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+
+        Lee las preguntas y responde. <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled
+                        data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar"
+                        onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;"
+                        data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span
+                            id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10"
+                        id="pre1a">&nbsp;
+                    <span><b> 1. Planifiquen </b>qué se podría decir sobre esa ciudad: qué características la hacen interesante, cuál es su comida
+                        típica, cómo es su gente, etc. <b>Utilicen</b> el siguiente organizador gráfico para anotar sus ideas. <b>5 pts.</b></span></div><br>
+                
+                        <div align="center">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div style="border: 3px solid #f4e3c7; border-radius: 15px; padding: 5px">
+                                                    <textarea class="form-control fuente" style="width: 200px; resize: none"></textarea>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div style="border: 3px solid #f4e3c7; border-radius: 15px; padding: 5px">
+                                                    <textarea class="form-control fuente" style="width: 200px; resize: none"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <div style="background-color: #f4e3c7; border-radius: 15px; width: 250px">
+                                                    <center><p class="fuente2"><b><h4>Ciudad</h4></b></p></center>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div style="border: 3px solid #f4e3c7; border-radius: 15px; padding: 5px">
+                                                    <textarea class="form-control fuente" style="width: 200px; resize: none"></textarea>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div style="border: 3px solid #f4e3c7; border-radius: 15px; padding: 5px">
+                                                    <textarea class="form-control fuente" style="width: 200px; resize: none"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10"
+                        id="pre2a">&nbsp;
+                    <span><b> 2. Seleccionen </b> una de las dos canciones y <b>complétenla</b> con el nombre de
+                        la ciudad que escogieron y sus características. Los colores les dan la pista
+                        de qué palabras deben rimar.. <b>5 pts.</b></span></div>
+
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                    <h4><b><font color="#2E86C1">Qué lindo es mi</font></b> <input type="text" style="width:200px"></h4>
+                                    <h4>Qué lindo es mi <input type="text" style="width:100px;background: rgb(244, 215, 248)"><br>
+                                            con su <input type="text" style="width:100px"> lleno de <input type="text" style="width:100px;background: rgb(244, 215, 248)"> ,<br>
+                                            por eso <input type="text" style="width:100px">:<br>
+                                            ¡lindo es mi <input type="text" style="width:100px"> !<br>
+                                            Y sí…<br>
+                                            Cualquiera pretende decir<br>
+                                            que el suyo es mej<font color="#AED6F1"><b>or</b></font><br>
+                                            yo le digo: ¡no, señ<font color="#AED6F1"><b>or</b></font>!,<br>
+                                            no hay <input type="text" style="width:100px"> el de <input type="text" style="width:100px"> .<br>
+                                            Con sus <input type="text" style="width:100px;background: #BB8FCE"> ,<br>
+                                            las lindas mujeres,<br>
+                                            rubias o trigueñas<br>
+                                            todas muy bonit<font color="#BB8FCE">as</font>,<br>
+                                            ¡lindo es mi <input type="text" style="width:100px"> !;<br>
+                                            con sus <input type="text" style="width:100px;background: #A9DFBF  "><br>
+                                            <input type="text" style="width:100px"> y  <input type="text" style="width:100px;background: #A9DFBF  "><br>
+                                            y las <input type="text" style="width:100px"><br>
+                                            que hay en sus calles,<br>
+                                            ¡lindo es mi <input type="text" style="width:100px">!</h4><br>
+                                    
+                            </div>
+                            <div class="col-sm-6">
+                                    <h4><b><font color="#2E86C1">Por eso te quiero</font></b> <input type="text" style="width:200px"></h4>
+                                    <h4>
+                                            Por tus <input type="text" style="width:100px;background: rgb(244, 215, 248)">,<br>
+                                            por tus <input type="text" style="width:100px;background: #AED6F1">,<br>
+                                            por tus mañanas preci<font color="rgb(244, 215, 248)">osas</font>,<br>
+                                            y tus cielos estrell<font color="#AED6F1">ados</font>.<br>
+                                            Por tus <input type="text" style="width:100px;background: #BB8FCE">,<br>
+                                            por tus <input type="text" style="width:100px;background: #BB8FCE">,<br>
+                                            por tus <input type="text" style="width:100px;background: #FAD7A0">,<br>
+                                            y por tu <input type="text" style="width:100px;background: #FAD7A0">.<br>
+                                            Por eso... Por eso...<br>
+                                            ¡Por eso te quiero <input type="text" style="width:100px"> ! (bis)<br>
+                                            En la fiesta de <input type="text" style="width:100px;background: #A9DFBF"><br>
+                                            y en la de <input type="text" style="width:100px"><br>
+                                            todos hemos bailado<br>
+                                            <input type="text" style="width:100px;background: #A9DFBF">,<br>
+                                            como buenos<br>
+                                            por siempre amamos las tradiciones.<br>
+                                            Por eso... Por eso...<br>
+                                            ¡Por eso te quiero, <input type="text" style="width:100px">! (bis)<br>
+                                    </h4>
+                            </div>
+                        </div>
+                    
+                    
+                    
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')"
+                                        aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/actividad105.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Lengua y Literatura 6</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link href="css/Comprendo.css" rel="stylesheet">
+
+        <style type="text/css">
+
+            .preguntas{
+                font-size: 17px;
+            }
+
+            .respuestas{
+                font-size: 17px;
+                color: #8819D6;
+            }
+
+            .checkmark {
+                height: 25px;
+                width: 25px;        
+            }
+
+            .pinta{                
+                text-decoration: underline;
+                color: #C2B405;
+            }
+
+            .bien{
+                text-decoration: underline;
+                color: #5ED188;
+            }
+
+            .mal{
+                text-decoration: underline;
+                color: #EF87A7;
+            }
+
+            .n1{
+                font-size: 23px;
+                color: #A50632;
+            }
+
+            .n2{
+                font-size: 23px;
+                color: #731136;
+            }
+
+        </style>
+    </head>
+    <body>
+        
+        <div id="nota-informativa" class="nota-ayuda">
+             <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+                            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+                           <br><br>
+                           
+                           <b>
+                               Actividad 1: Escribe tus respuestas en los cuadros de texto correspondientes. Cuida tu ortografía. En la columna desinencia escribe lo solicitado EJ. ar, er, ir, or, ur. NO ingreses texto adicional ya que afectará tu calificación.<br>
+                               Las respuestas que marques incorrectamente se restarán de las correctas.<br><br>
+
+                               Actividad 2: Escribe tus respuestas en los cuadros de texto correspondientes. Esta actividad debe ser calificada maualmente sobre 2 puntos.<br><br>
+
+                               Actividad 3: Completa el párrafo con los verbos adecuados, guíate por las ayudas entre paréntesis.<br>
+                               Al elaborar la lista de verbos regulares e irregulares asegúrate de NO escribir texto adicional ya que afectará tu calificación y separa los verbos con comas Ej cuidar, amar, estudiar <br>Cuida tu ortografía.<br>
+                                
+                           </b>
+
+                           <br><span id="ayudas"></span>
+
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" >/ 10</span> 
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág  <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-aplico" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-aplico">
+                    <span class="titulo"><img src="img/icoA.png"> Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                   
+                </div>
+
+
+
+                <div class="panel-body preguntas">
+                    <!--texto de ayuda de la actividad-->                    
+                    <button class="btn-link btn_mostrar" style="font-size: 16px;">Mostrar Preguntas</button><br><br>
+
+                    <img src="img/practico.png" class="img-responsive">
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                1. <b>Observa</b> los siguientes verbos conjugados. <b>Escribe</b> su infinitivo. <b>Escribe</b> su desinencia, <b>completa</b> la tabla según corresponda.<br><br>
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <tbody align="center" id="conjugados">
+                                            <tr>
+                                                <td rowspan="2" style="background-color: #1B63E3; color: white;"><br>Verbos conjugados</td>
+                                                <td rowspan="2" style="background-color: #E3C11B; color: white;"><br>Verbo en infinitivo</td>
+                                                <td rowspan="2" style="background-color: #E3C11B; color: white;"><br>Desinencia</td>
+                                                <td rowspan="1" colspan="3" style="background-color: #27D689; color: white;">Marca con un ✔ según corresponda</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #C1F2C7;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Verbo regular&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                <td style="background-color: #A5DCAC;">Verbo irregular(raíz)</td>                                                
+                                                <td style="background-color: #C1F2C7;">Verbo irregular(desinencia)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>    
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                                    <input type="number" id="calificacion2" placeholder="Puntaje/2" style="width: 120px;" class="form-control">
+                                </div>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2" style="margin-left: 70px;">Actividad 2</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                2. <b>Escribe</b> la primera persona del presente del singular de los siguientes verbos y <b>utilízalos</b> en una oración.<br><br>
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <tbody align="center" id="escribe1">
+                                            <tr>
+                                                <td style="background-color: #1B63E3; color: white;">Verbo</td>
+                                                <td style="background-color: #E3C11B; color: white;">Yo…</td>
+                                                <td style="background-color: #27D689; color: white;">Oración</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                3. <b>Completa</b> el siguiente párrafo con la conjugación más adecuada de los verbos entre paréntesis. Luego, <b>elabora</b> una lista de los verbos irregulares y otra de los verbos regulares. <br><br>
+
+                                <div class="col-sm-12">
+                                    <div class="col-sm-8" align="center"><b style="font-size: 23px; color: #46BAF5;">Resumen de las vacaciones de verano</b><br><br>
+
+                                        <div align="justify">
+                                        Este verano &nbsp;<input type="text" id="rCSP1" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(ser) muy emocionante para mí porque  &nbsp;<input type="text" id="rCSP2" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(aprender) a montar bicicleta. Al principio, &nbsp;<input type="text" id="rCSP3" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(parecer) imposible, pero en cuanto &nbsp;<input type="text" id="rCSP4" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(poder) pedalear todo fue muy sencillo. Un día, &nbsp;<input type="text" id="rCSP5" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(estar) manejando mi bicicleta en el parque, cuando un niño &nbsp;<input type="text" id="rCSP6" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(correr) frente a mí para buscar a sus padres. Entonces, &nbsp;<input type="text" id="rCSP7" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(reducir) la velocidad lo más pronto que pude y afortunadamente el niño &nbsp;<input type="text" id="rCSP8" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(terminar) ileso. Luego, él y yo &nbsp;<input type="text" id="rCSP9" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(encontrar) a su familia que estaba muy preocupada. Le &nbsp;<input type="text" id="rCSP10" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(decir) a mi madre lo que ocurrió y juntas &nbsp;<input type="text" id="rCSP11" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(emprender) una campaña para prevenir que los niños se pierdan en el parque. Al final del verano, todos los padres del barrio &nbsp;<input type="text" id="rCSP12" class="form-control respuestas input-sm" style="width: 90px; display: inline-block;">&nbsp;(firmar) un compromiso.<br><br><br><br>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4" align="center"><br>
+                                        <img src="img/i1_p155_act3.jpg" class="img-responsive">
+                                    </div>
+                                </div>
+                                  
+
+                                <span class="col-sm-4" style="padding: 5px; background-color: #FFF9CC; border-radius: 20px; text-align: center;">Verbos irregulares:</span>
+                                <span class="col-sm-8"><input type="text" id="rELV1" class="form-control respuestas" style="width: 90%;" placeholder="Ej: hubicar, llorar"><br><br></span>
+
+                                <span class="col-sm-4" style="padding: 5px; background-color: #CCE5FF; border-radius: 20px; text-align: center;">Verbos irregulares:</span>
+                                <span class="col-sm-8"><input type="text" id="rELV2" class="form-control respuestas" style="width: 90%;" placeholder="Ej: hubicar, llorar"></span>                              
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/107.js"></script>
+        
+        <script>
+            $("#n_pagina").html("155");            
+        </script>
+
+    </body>
+</html>

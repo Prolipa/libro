@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMÁTICA 7</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link rel="stylesheet" media="all" type="text/css" href="css/sudokuJS.css">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/sudokuJS.js"></script>
+
+</head>
+<style type="text/css">
+#draggable { width: 150px; height: 150px; padding: 0.5em; }
+	   * {
+                margin:0; padding:0;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            .wrap {
+                padding: 2em 1em;
+                width: 400px;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            @media(min-width: 30em){
+                .wrap{
+                    width: 490px;
+                }
+                .sudoku-board input {
+                    font-size: 24px;
+                    font-size: 1.5rem;
+                }
+                .sudoku-board .candidates {
+                    font-size: .8em;
+                }
+            }
+
+    .fondo_preg{
+        background-color: #D6F2F8;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+
+    .textTab{
+        color: #3D4C78;
+        font-size: 20px;
+    }
+
+    .textTab1{
+        color: #35A877;
+        font-size: 20px;
+    }
+
+    .n0{
+        color: #3D4C78;
+        font-size: 23px;
+    }
+
+    .np0{
+        color: #EB3959;
+        font-size: 23px;
+    }
+
+    .np1{
+        color: #0D9C73;
+        font-size: 23px;
+    }
+
+    .np2{
+        color: #9A983B;
+        font-size: 23px;
+    }
+
+    .n1{
+        color: white;
+        font-size: 23px;
+        background-color: #309794;
+        border-radius: 5px;
+    }
+
+    .n2{
+       color: white;
+        font-size: 23px;
+        background-color: #B4AD67;
+        border-radius: 5px;
+    }
+
+    .num{
+        background-color: #F9C797;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+
+    .num1{
+        background-color: #6DAB61;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+
+    .encabezado_pregunta{
+        background-color: #E5ECBD;
+        font-size: 19px;        
+        border-radius: 5px;
+    }
+   
+    .encabezados{
+        color: white;
+        font-size: 20px;
+    }
+
+    .r1{
+        border-top: none;
+        border-right: none;
+        border-left: none; 
+        border-bottom-width: 1px;
+        border-bottom-color: black;
+    }
+
+    .actividad1{
+        background: #fff;       
+    }
+
+    .t_images img{
+        padding: 8px;
+        max-width: 80%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+        margin-bottom: 15px;
+        padding: 3px;
+    }
+    
+@media (max-width: 770px) {
+	.cajas {
+	    clear: left;
+	  }
+   .t_images img{
+        padding: 8px;
+        max-width: 20%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+    }
+    .r_images img{
+        max-height: 100%;
+    }    
+}
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button><br>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Actividad 1, 2: <br> Resuelve los problemas planteados e ingresa tus resultados en los cuadros de texto correspondientes. Estas actividades deben ser evaluadas manualmente sobre 5 puntos cada una.<br>
+        <br>
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-aplico" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-aplico">
+                    <span class="titulo"><img src="img/icoD.png" alt="Aplico para Aprender"> Aplico para Aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+	 <div class="panel-body"> 
+            <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+
+
+        <div class="row">
+            <div class="col-sm-8"><img src="img/practica_individual.jpg"></div>
+        </div> 
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                                <input type="number" id="calificacion0" placeholder="Puntaje/5" style="width: 120px;" class="form-control">
+                            </div>                                                                              
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" style="margin-left: 70px;">Actividad 1</a>
+                        </h4>
+                    </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                          <div class="panel-body preguntas form-inline form-group">
+                                <b>Completa</b> las tablas de las magnitudes. Luego, <b>represéntalas</b> en el sistema de coordenadas rectangulares en tu cuaderno e <b>identifica</b> la clase de línea que se forma al unir sus puntos.
+                                    <br><br>
+                                    <div class="col-sm-6 table-responsive">
+                                        <table id="tablePreview" class="table table-bordered table-hover table-sm">
+                                            <tbody align="center">
+                                                <tr>                        
+                                                  <td style="background-color: #34D7F8;" align="left">N.° de niños</td>
+                                                  <td class="np1">1</td>
+                                                  <td class="np1">2</td>
+                                                  <td class="np1">4</td>
+                                                  <td class="np1">8</td>
+                                                  <td class="np1">10</td>
+                                                </tr>
+                                                <tr>                                      
+                                                  <td style="background-color: #F834B4;" align="left">N.° de niños lápices</td>
+                                                  <td class="np1">40</td>
+                                                  <td class="np1">80</td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="col-sm-6 table-responsive">
+                                        <table id="tablePreview" class="table table-bordered table-hover table-sm">
+                                            <tbody align="center">
+                                                <tr>                        
+                                                  <td style="background-color: #34D7F8;" align="left">N.° de blusas</td>
+                                                  <td class="np1">1</td>
+                                                  <td class="np1">3</td>
+                                                  <td class="np1">6</td>
+                                                  <td class="np1">8</td>
+                                                  <td class="np1">11</td>
+                                                </tr>
+                                                <tr>                                      
+                                                  <td style="background-color: #F834B4;" align="left">Precio ($)</td>
+                                                  <td class="np1">8</td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <br><br>
+                                    <span class="np2">R. &nbsp;&nbsp;</span><input type="text" class="form-control respuestas" style="width: 96%;">
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+        <div class="row">
+            <div class="col-sm-8"><img src="img/problema.jpg"></div>
+        </div>
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                                <input type="number" id="calificacion1" placeholder="Puntaje/5" style="width: 120px;" class="form-control">
+                            </div>                                                                                                          
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2" style="margin-left: 70px;">Actividad 2</a>
+                        </h4>
+                    </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                          <div class="panel-body preguntas">
+                            <div>2. Si <span class="np0" id="nOb"></span> obreros pueden terminar una obra en <span class="np0" id="nDias0"></span> días, ¿a cuántos se deberá contratar para que la obra esté lista en <span class="np0" id="nDias1"></span> días? ¿Cuál es la relación entre estas magnitudes?
+                            
+                            <br>
+                            <div class="form-inline form-group" align="center">
+                              <textarea class="form-control respuestas" style="width: 100%" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+ 
+</div>  
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+       
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad82.js"></script>
+        <script type="text/javascript">
+            var titulos="aplico";
+            f_titulos();         
+            $("#n_pagina").html('111');
+        </script>
+</body>
+</html>

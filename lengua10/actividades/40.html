@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lengua y Literatura 10</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <script src="js/evaluacion.js"></script>
+    <style>
+        hr {
+            border-color: black;
+            border-width: 2px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin: 3px;
+        }
+
+        .txt5 {
+            font-size: 16px;
+        }
+
+        .subrayar {
+            text-decoration: underline;
+        }
+
+        .pintarcorrecto {
+            background-color: #32a75b;
+        }
+
+        .pintarincorrecto {
+            background-color: #F97591;
+            text-decoration: line-through;
+        }
+
+        .correcto {
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+
+        .incorrecto {
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+        }
+
+
+        .calif {
+            position: relative;
+            font-size: 15px;
+        }
+
+        .textarea {
+            resize: none;
+            width: 350px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Lee cuidadosamente las pregunta y contesta.<br>
+        2. Da clic sobre la palabra que quieres subrayar.<br>
+        3. Lee cuidadosamente las pregunta y contesta.<br>
+        4. Da clic sobre la palabra que quieres subrayar.<br>
+        5. Lee cuidadosamente las pregunta y contesta.<br>
+        4. Da clic sobre la oración que quieres subrayar.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onClick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="act_actual">1</span> /
+                        <span id="act_total">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Evaluación Sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a">&nbsp;
+                    <span><b> 1. Responde.</b> ¿Qué estrategias puedes utilizar para identificar a una locución conjuntiva?
+                    </span></div><br>
+                <textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea><br>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a" readonly>&nbsp;
+                    <span><b> 2. Identifica </b> cuáles de las siguientes oraciones tienen una locución conjuntiva. Marca con X en la celda respectiva. Subráyalas.
+                    </span></div><br>
+
+                <table class="table" border="1" bordercolor="#2E86C1">
+                    <tr>
+                        <div class="col-lg-12  imagen2  " id="randos1"></div>
+
+                    </tr>
+                    <tr>
+                        <div class="col-lg-12  imagen2  " id="randos2"></div>
+
+                    </tr>
+                    <tr>
+                        <div class="col-lg-12  imagen2  " id="randos3"></div>
+
+                    </tr>
+                    <tr>
+                        <div class="col-lg-12  imagen2  " id="randos4"></div>
+
+                    </tr>
+                    <tr>
+                        <div class="col-lg-12  imagen2  " id="randos5"></div>
+
+                    </tr>
+                    <tr>
+                        <div class="col-lg-12  imagen2  " id="randos6"></div>
+
+                    </tr>
+                </table>
+
+
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a">&nbsp;
+                    <span><b>3. Escribe</b> tres oraciones con palabras baúl. Luego, <b>reescríbelas</b> con un lenguaje
+                        preciso. <b>Sigue</b> el ejemplo.
+                    </span></div><br>
+                <table class="table" border="1" bordercolor="#8C58C6">
+                    <tr>
+                        <td WIDTH="30%">puesto que</td>
+                        <td WIDTH="70%"><textarea class="form-control text-question no-redimensionar " cols="60" rows="1"
+                                placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>tan pronto como</td>
+                        <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>excepto que</td>
+                        <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>con objeto de que</td>
+                        <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>igual que</td>
+                        <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>por lo que</td>
+                        <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>me parece que</td>
+                        <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>o sea</td>
+                        <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>por más que</td>
+                        <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>sin embargo</td>
+                        <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>a fin de que</td>
+                        <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                </table>
+
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a" readonly>&nbsp;
+                    <span><b> 4. Lee</b> el siguiente texto y subraya los términos técnicos que emplea en su explicación.
+                    </span></div><br>
+
+                <div class="text-question">
+                        Me parece irrelevante <span class="enc1" id="18">que los</span> empresarios e industriales guarden silencio <span class="enc1" id="19">frente al</span> problema del calentamiento global,
+                        aunque <span class="enc1" id="20">a lo mejor</span> sería hasta útil que expresaran de <span class="enc1" id="21">una vez su</span> desacuerdo; <span class="enc1" id="22">es decir</span>, muestren abiertamente
+                        su oposición a tomar medidas de protección, <span class="enc1" id="23">tal como</span> lo han hecho los políticos que nos gobiernan. <span class="enc1" id="30">Mejor que</span> sepamos
+                        <span class="enc1" id="24">ya a qué</span> nos atenemos que seguir en un proceso de diálogo <span class="enc1" id="25">que no tiene</span> salida. <span class="enc1" id="26">Sin embargo</span>, necesitamos
+                        revisar nuestras estrategias de comunicación para posicionarnos <span class="enc1" id="27">ante la</span> opinión pública <span class="enc1" id="28">para que</span> aumentemos la
+                        presión <span class="enc1" id="29">y se tomen</span> las medidas de protección.
+                </div><br>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a">&nbsp;
+                    <span><b> 5. Escribe</b> un texto de cuatro o cinco líneas en el que utilices al menos tres locuciones conjuntivas.</span></div><br>
+                <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea><br>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre6a" readonly>&nbsp;
+                    <span><b> 6. Subraya</b> la oración en donde la palabra <font color="#8C58C6">mientras</font> forma parte de una locución
+                        conjuntiva.</span></div><br>
+                    <table class="table" border="1" bordercolor="#2E86C1">
+                            <tr>
+                                <div class="col-lg-12  imagen6  " id="ranseis1"></div>
+                                
+                            </tr>
+                            <tr>
+                                <div class="col-lg-12  imagen6  " id="ranseis2"></div>
+                                
+                            </tr>
+                            
+                        </table>
+                            
+                    
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" class="lblnombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre" id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper1.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/actividad40.js"></script>
+
+
+    <script>
+        $("#n_pagina").html("75"); //impresion de pagina            
+
+    </script>
+
+</body>
+
+</html>

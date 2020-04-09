@@ -1,0 +1,658 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/stylesopa.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+</head>
+<style type="text/css">
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.bordes_p6 {
+    width: 1.5cm;
+    height: 8mm;
+    border: 2px solid #5d0b82;
+    border-radius: 8px;
+    margin-right: 10px;
+    font-size: 20px;
+    margin: 5px;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/literatura.jpg" class="img img-responsive">
+                <!--LECTURA INICIAL-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta0">Lectura inicial</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta0" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <span><b>Lee</b> el cuento y resuelve las actividades.</span>
+                            <div class="contenido">
+                                <div style="background-color: #fbfbfb">
+                                    <p class="titulex">La tragedia de una pulga</p>
+                                    <p class="fuente">Había una vez un perrito flaco y sucio llamado Violín. Así le decían, porque siempre estaba rascándose a causa de las pulgas. Un día sus amigos, compadecidos de su flacura, le aconsejaron bañarse para que murieran todas las pulgas. Violín obedeció y fue al río a darse un soberbio baño.</p>
+                                    <p class="fuente">Todas las pulgas se ahogaron, menos una que había aprendido a nadar. Esta pulga salió a la orilla del río a lamentarse de la tragedia y dijo:</p>
+                                    <p class="fuente">—¡Qué desgracia me ha sucedido! ¡He perdido a mi familia! ¡Ya no tengo habitación! ¡Ya no tengo alimentación! ¡Se acabó el transporte! ¡Él era mi taxi, él era mi bus! ¡Ay, pobre de mí!</p>
+                                    <p class="fuente">La pulga, en su desesperación, comenzó a saltar una y otra vez. Por ahí cerca pasaba una elefanta con su crío llamado Cococho. En uno de sus saltos, la pulga brincó sobre Cococho.</p>
+                                    <p class="fuente">Este, como era un crío muy mimado, corrió a quejarse a su mamá:</p>
+                                    <p class="fuente">—¡Madre, este bicho me ha pisado! ¡Ay! ¡Me duele!</p>
+                                    <p class="fuente">Doña elefanta, al escuchar los lamentos de Cococho, recriminó a la pulga en estos términos:</p>
+                                    <p class="fuente">—¿Cómo se atreve a pisar a mi Cococho? ¿Qué le pasa?</p>
+                                    <p class="fuente">La pulga, asustada, contestó:</p>
+                                    <p class="fuente">—Discúlpeme, señora. Fue sin querer. Le aseguro que no le vi. Pero no le pisaré otra vez.</p>
+                                    <p class="fuente">La pobre pulga siguió caminando triste y, mientras se lamentaba de su mala suerte, decía:</p>
+                                    <p class="fuente">—Hoy ha sido un día fatal para mí, no sé cómo podré vivir.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 1-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta1">Pregunta 1</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta1" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-2">
+                                <span>1. Encuentra los personajes del cuento en la sopa de letras.</span>
+                            </section>
+                            <div class="contenido">
+                                <div id="puzzle"></div>
+                                <div id="words"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 2-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta2">Pregunta 2</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-3">
+                                <span>2. Escribe el nombre de los personajes que realizan cada acción.</span>
+                            </section>
+                            <div class="contenedor"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 3-->
+                <img src="img/comunicacion.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta3">Pregunta 3</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-4">
+                                <span>3. <b>Dibuja</b> tu autorretrato y <b>escribe</b> una lluvia de ideas para describir tus características.</span>
+                            </section>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div style="background-color: #faf2d8; border-radius: 15px">
+                                        <p class="fuente2">Así soy yo</p>
+                                    </div>
+                                    <p></p>
+                                    <div class="col-lg-12">
+                                        <div class="my-drawing"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div style="background-color: #f4f0f7; border-radius: 15px">
+                                        <p class="fuente2">Características físicas</p>
+                                    </div>
+                                    <p></p>
+                                    <div style="border: 2px solid #986fa6; border-radius: 15px; max-width: 100%; max-height: 100%; padding: 5px">
+                                        <textarea class="form-control fuente" style="width: 322px; height: 250px; resize: none"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div style="background-color: #faf2d8; border-radius: 15px">
+                                        <p class="fuente2">Características de carácter</p>
+                                    </div>
+                                    <p></p>
+                                    <div style="border: 2px solid #986fa6; border-radius: 15px; max-width: 100%; max-height: 100%; padding: 5px">
+                                        <textarea class="form-control fuente" style="width: 322px; height: 250px; resize: none"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 4-->
+                <img src="img/lectura.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta4">Pregunta 4</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span>4. <b>Lee</b> el extracto de un autorretrato y <b>contesta</b> las preguntas.</span>
+                            <div style="background-color: #fafafb">
+                                <p class="fuente">“Fue una angustia terrible el enfrentarme al espejo y hacer mi propio autorretrato... Me di cuenta de que soy un hombre triste, básicamente triste, ya me conozco… Soy un hombre de la tierra, soy un mestizo aindiado, triste, duro, con mucha fuerza interior. Pero ya me fui conociendo lentamente. Ese color de barro fundido que soy, lo he descubierto por primera vez en mi vida. Cuando termino de pintar, sale todo de mí. Lo que pienso, lo que siento queda reflejado en la tela. Ya puedo respirar. Es como deshacerse de uno desde lo más hondo”.</p>
+                            </div>
+                            <div>
+                                <p class="fuente"><span class="fuentecolorlista">●</span>&emsp;¿A quién pertenece este autorretrato?</p>
+                                <input type="text" class="form-control fuente" style="width: 100%; border: 2px solid #5c95cd">
+                            </div>
+                            <div>
+                                <p class="fuente"><span class="fuentecolorlista">●</span>&emsp;¿Qué carácter tiene?</p>
+                                <input type="text" class="form-control fuente" style="width: 100%; border: 2px solid #5c95cd">
+                            </div>
+                            <div>
+                                <p class="fuente"><span class="fuentecolorlista">●</span>&emsp;¿Qué quiere decir cuando afirma que es “un mestizo aindiado”?</p>
+                                <input type="text" class="form-control fuente" style="width: 100%; border: 2px solid #5c95cd">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 5-->
+                <img src="img/escritura.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta5">Pregunta 5</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">5 . Escribe oraciones con los siguientes adjetivos numerales.</div>
+                            <section id="contenido-pregunta-6" class="ancho-pregunta">
+                                <p></p>
+                                <div><span class="fuente2" style="background-color: #ede8f3; border-radius: 15px">medio</span>&ensp;
+                                    <label>
+                                        <input type="text" class="form-control fuente" style="width: 250%; border: 2px solid #5c95cd">
+                                    </label>
+                                </div>
+                                <p></p>
+                                <div><span class="fuente2" style="background-color: #cae2ef; border-radius: 15px">cinco</span>&ensp;
+                                    <label>
+                                        <input type="text" class="form-control fuente" style="width: 250%; border: 2px solid #5c95cd">
+                                    </label>
+                                </div>
+                                <p></p>
+                                <div><span class="fuente2" style="background-color: #ede8f3; border-radius: 15px">segundo</span>&ensp;
+                                    <label>
+                                        <input type="text" class="form-control fuente" style="width: 250%; border: 2px solid #5c95cd">
+                                    </label>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <!-- INICIO PREGUNTA 6 -->
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta6">Pregunta 6</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta6" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>6. En cada columna, <b>ordena</b> con números las palabras según el orden alfabético.</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div style="background-color: #f8e89a; border-radius: 15px 0px">
+                                        <p class="fuente2">Esdrújulas</p>
+                                    </div>
+                                    <p></p>
+                                    <div align="center">
+                                        <textarea class="form-control fuente" style="width: 322px; height: 100px; resize: none"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div style="background-color: #e7f2f9; border-radius: 15px 0px">
+                                        <p class="fuente2">Graves</p>
+                                    </div>
+                                    <p></p>
+                                    <div align="center">
+                                        <textarea class="form-control fuente" style="width: 322px; height: 100px; resize: none"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div style="background-color: #ede9f3; border-radius: 15px 0px">
+                                        <p class="fuente2">Agudas</p>
+                                    </div>
+                                    <p></p>
+                                    <div align="center">
+                                        <textarea class="form-control fuente" style="width: 322px; height: 100px; resize: none"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 7-->
+                <img src="img/lengua.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta7">Pregunta 7</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta7" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>7. Lee el texto y dibuja en secuencia las acciones que realiza el personaje.</span>
+                            </div>
+                            <div>
+                                <div class="col-lg-12">
+                                    <div class="my-drawing"></div>
+                                </div>
+                            </div>
+                            <p></p>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <p class="fuente">1. Juguemos en el bosque hasta que el lobo esté,
+                                        <br>si el lobo aparece, enteros nos comerá.
+                                        <br>¿Qué estás haciendo, lobito?
+                                        <br>Estoy levantándome de la cama.</p>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <p class="fuente">2. Juguemos en el bosque…
+                                        <br>¿Qué estás haciendo, lobito?
+                                        <br>Estoy poniéndome la ropa.</p>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <p class="fuente">3. Juguemos en el bosque...
+                                        <br>¿Qué estás haciendo, lobito?
+                                        <br>Estoy poniéndome los zapatos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 8-->
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta8">Pregunta 8</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta8" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">8. Pinta del mismo color el nombre de la cultura con su lengua natal.</div>
+                            <section id="contenido-pregunta-9" class="ancho-pregunta">
+                                <div>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div style="border: 2px solid #98007f; border-radius: 25px">
+                                                        <p class="fuente2">Shuar-chicham</p>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <div style="border: 2px solid #0077bb; border-radius: 25px">
+                                                        <p class="fuente2">Tsáfiqui</p>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <div style="border: 2px solid #98007f; border-radius: 25px">
+                                                        <p class="fuente2">Chachi</p>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <div style="border: 2px solid #0077bb; border-radius: 25px">
+                                                        <p class="fuente2">Awapit</p>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <div style="border: 2px solid #98007f; border-radius: 25px">
+                                                        <p class="fuente2">Tsáchila</p>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <div style="border: 2px solid #0077bb; border-radius: 25px">
+                                                        <p class="fuente2">Cha´palaa</p>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <div style="border: 2px solid #98007f; border-radius: 25px">
+                                                        <p class="fuente2">Awá</p>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <div style="border: 2px solid #0077bb; border-radius: 25px">
+                                                        <p class="fuente2">Shuar</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script src="js/literallycanvas.min.js"></script>
+    <script type="text/javascript" src="js/wordfind.js"></script>
+    <script type="text/javascript" src="js/wordfindgame1.js"></script>
+    <script>
+    var words = ['cococho', 'amigos', 'violin', 'elefanta', 'pulga'];
+    var gamePuzzle = wordfindgame.create(words, '#puzzle', '#words');
+    $('#solve').click(function() {
+        wordfindgame.solve(gamePuzzle, words);
+    });
+    var puzzle = wordfind.newPuzzle(words, {
+        height: 20,
+        width: 20,
+        fillBlanks: false
+    });
+    wordfind.print(puzzle);
+
+    $('.p_abierta').html('<span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"><input type="number" placeholder="1 punto" class="form-control calif"></span> ');
+
+    $("#n_pagina").html("80"); //impresion de pagina  
+    var titulos = "evaluacion";
+    f_titulos();
+
+    var ejer = 1,
+        itemsT = 10,
+        cont = 0,
+        tmp, cor = 0,
+        inc = 0,
+        calificacion = 4,
+        claseAnimada = 'animate bounceIn';
+    var totalC = 0,
+        total = 0,
+        totalFinal = 0; //variables de la calificacion
+
+
+    f_canvas();
+
+    function f_canvas() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        var lc = LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas'
+            }
+        );
+        var lc = LC.init(
+            document.getElementsByClassName('my-drawing')[1], {
+                imageURLPrefix: 'imgcanvas'
+            }
+        );
+        lc.respondToSizeChange();
+    }
+
+    var contpreg2,cont_resp2=[];
+
+    contpreg2 = [
+        '<div><p class="fuente">Le aconsejaron a Violín que se bañara. <label><input type="text" class="form-control respuestas fuente2" style="width: 40%; border: 2px solid #5c95cd"><input type="hidden" class="solucion" value="Amigos"></label></p></div>', '<div><p class="fuente">Pisó a Cococho. <label><input type="text" class="form-control respuestas fuente2" style="width: 40%; border: 2px solid #5c95cd"><input type="hidden" class="solucion" value="Pulga"></label></p></div>', '<div><p class="fuente">Perro flaco que se rasca. <label><input type="text" class="form-control respuestas fuente2" style="width: 40%; border: 2px solid #5c95cd"><input type="hidden" class="solucion" value="Violín"></label></p></div>', '<div><p class="fuente">Recriminó a la pulga por haber pisado a su hijo. <label><input type="text" class="form-control respuestas fuente2" style="width: 40%; border: 2px solid #5c95cd"><input type="hidden" class="solucion" value="Elefanta"></label></p></div>', '<div><p class="fuente">Elefante pequeño que se quejó la pulga. <label><input type="text" class="form-control respuestas fuente2" style="width: 40%; border: 2px solid #5c95cd"><input type="hidden" class="solucion" value="Cococho"></label></p></div>'
+    ];
+    contpreg2.sort(f_randomico);
+    $(".contenedor").append(contpreg2);
+
+    $(".btnCalificar").bind("click", function() {
+        cont++;
+        $(this).unbind("click");
+        AgregaClase(".nota", claseAnimada);
+        QuitaClase(".actividad", claseAnimada);
+
+        $(".solucion").each(function(index) {
+            cont_resp2.push($(this).val());
+        });
+        $(".respuestas").each(function(index) {
+            tmp = $(this);
+            if (tmp.val() == cont_resp2[index]) { //comparamos las respuestas
+                cor++
+                f_ok(tmp);
+            } else {
+                inc++
+                f_no(tmp);
+            }
+        });
+        totalC = (cor * (calificacion / itemsT)).toFixed(2); //suma de calificacion cerrada
+        $('.calif').each(function() { //suma de puntajes en respuestas abiertas
+            if ($(this).val() != '') {
+                total += parseFloat($(this).val());
+                f_ok($(this));
+            } else {
+                inc++;
+                f_no($(this));
+            }
+        });
+        totalFinal = (parseFloat(total) + parseFloat(totalC)).toFixed(2);
+        // console.log(total,totalC,totalFinal);
+        if (totalFinal > 10) {
+            alert("Verifique su puntaje en las respuestas Abiertas, excede el limite de calificación");
+        } else {
+            $("#txtNota").html(totalFinal);
+        }
+
+    });
+    </script>
+    <style type="text/css">
+    .mi_canvas {
+        min-width: 320px;
+    }
+
+    #prueba {
+        margin-top: 2rem;
+        display: block;
+        box-sizing: border-box;
+        padding: 0px;
+        transition: all .3s linear 0s;
+        width: 50%;
+        /*ANCHO DE LA IMAGEN DE FONDO*/
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #e5e5e5;
+        /*background-color:rgba(212,185,186,0.2); */
+        /*SI SE NECEITA UN COLOR DE FONDO ESPECIFICO*/
+        /*background-image: url(../img/img.png); /* SI SE NECESITA UNA IMAGEN DE FONDO */
+        background-size: 100% 100%;
+    }
+    </style>
+    <style type="text/css">
+    canvas {
+        /*display: block;*/
+        margin: 0 auto;
+        /*margin: calc(50vh - 150px) auto 0;
+    background-image: url('img/i2_p50_act25.jpg');
+    */
+        border-radius: 3px;
+        box-shadow: 0px 0px 15px 3px #ccc;
+        cursor: pointer;
+        background-repeat: no-repeat;
+        max-width: 100%;
+    }
+    </style>
+</body>
+
+</html>

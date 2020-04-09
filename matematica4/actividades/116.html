@@ -1,0 +1,1188 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Matemática 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 5px;
+            width: auto;
+            height: 100px
+    
+        }
+        #caja_res, #caja_res1,#caja_res2{
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+        .respuestas{
+                width: 80%;
+                border: none;
+                border-bottom: 1px solid #005ca4;
+            }
+        .c_imagenes{
+            padding: 10px;
+        }
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 140px;
+            height: 30px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 140px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+        .correcto{
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+        
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+        .encierra{
+            border: 1px solid blue;
+            border-radius: 40%;
+            
+        }
+        .respuesta {
+    text-align: center;
+    border: 0;
+    border-top: 2px solid #393939;
+    border-bottom: 1px solid #85BCEB;
+    width: 50px;
+}
+.bordeT {
+    border: 1px #76B82A solid;
+}
+
+
+
+.bordeT2 {
+    border: 1px #76B82A solid;
+    text-align: center;
+}
+
+.paso {
+    background-color: #F9B000;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+}
+.c_origen{
+        border:1px solid #009BDB;
+        border-radius: 10px;
+        
+        max-width: 100%;
+        margin-left: 1px;
+        min-width: 100px;
+    }
+.c_destino1{
+            padding: 5px;
+        border:1px solid #CCAE69;
+        border-radius: 10px;
+        min-height: 70px;
+        min-width: 100px;
+    }
+.bg_palabra{
+            
+            border-radius: 10px;
+            background: #F5E2AB;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+.pintar{
+    background: #EBE7CC;
+}
+.cajas1 {
+        width: 40px;
+        border: solid;
+        border-width: 1px;
+        border-color: blue;
+        text-align: center;
+        padding: 5px;
+        border-radius: 5px;
+
+
+    }
+        </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1: </b> Completa el proceso de las multiplicaciones.<br>
+        <b>Pregunta 2: </b> Resuelve las multiplicaciones.<br>
+        <b>Pregunta 3: </b> Une los factores con el producto correspondiente. Desplaza hacia los recuadros de tal forma coincida los factores y el producto.<br>
+        <b>Pregunta 4: </b> Realiza las multiplicaciones y pinta la respuesta. Para pintar da click sobre las respuestas.<br>
+        <b>Pregunta 5: </b> Plantea como multiplicación y encuentra lo que pagaron.<br>
+        <b>Pregunta 6: </b> Resuelve las multiplicaciones, luego escribe las respuestas en el crucinúmero.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                                <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="btn notificacion nota">
+                                <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> / 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                                <span class="glyphicon glyphicon-bookmark"></span> Pag 145
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container space" style="margin-top: 30px;">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-preparo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-preparo">
+                <span class="titulo"><img src="img/icoPRE.png" alt="">Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/practica_individual.png" class="img-responsive">
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">1. </b><b>Completa</b> el proceso de las siguientes multiplicaciones.</p>
+                </div>
+                <div class="actividad116 text-question">
+                    <p><b style="color: #005CA4;">a)</b></p>
+                    <div class="col-sm-4">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #009277;">C</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #A23288;">D</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #005CA4;">U</b></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p1im1"></span></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p1im2"></span></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p1im3"></span></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><b>x</b></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p1im4"></span></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p1im5"></span></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p1im6"></span></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;">
+                                        <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p1dcon1">
+                                    </td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;">
+                                        <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p1dcon2">
+                                    </td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;">
+                                        <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p1dcon3">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <p><span id="p1cim1"></span> × <span id="p1cim2"></span> = <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p1dco1"> se escribe <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p1dco2"> y se lleva o reagrupa <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p1dco3"> decenas.</p>
+                        <p><span id="p1cim3"></span> × <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p1dco4"> = <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p1dco5"> más <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p1dco6"> decenas que llevaba = <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p1dco7"></p>
+                        <p>Se escribe toda la cantidad.</p>
+                    </div>
+                    <div class="row">
+                    </div>
+                    <p><b style="color: #005CA4;">b)</b></p>
+                    <div class="col-sm-4">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #D68500;">UM</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #009277;">C</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #A23288;">D</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #005CA4;">U</b></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border: 2px solid #D68500;"></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p11im1"></span></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p11im2"></span></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p11im3"></span></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><b>x</b></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p11im4"></span></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p11im5"></span></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p11im6"></span></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;">
+                                        <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p1dcon4">
+                                    </td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;">
+                                        <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p1dcon5">
+                                    </td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;">
+                                        <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p1dcon6">
+                                    </td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;">
+                                        <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p1dcon7">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <p><span id="p11cim1"></span> × <span id="p11cim2"></span> = <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco1"> se escribe <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco2"> y se lleva o reagrupa <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco3"> decenas.</p>
+                        <p><span id="p11cim3"></span> × <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco4"> = <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco5"> más <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco6"> decenas que llevaba = <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco7"> , se escribe <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco8"> y se lleva o reagrupa <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco9"> centenas.</p><br>
+                        <p><span id="p11cim4"></span> × <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco10"> = <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco11"> más <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco12"> centenas que llevaba = <input type="text" style="border: 2px solid #D68500; border-radius: 5px; text-align:center; width: 40px;" onkeypress="return soloNumeros(event)" maxlength="3" id="p11dco13"></p>
+                        <p>Se escribe toda la cantidad.</p>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">2. </b><b>Ubica</b> las cantidades en forma vertical y <b>multiplica.</b></p>
+                </div>
+                <div class="actividad116 text-question">
+                    <div class="col-sm-3">
+                        <p>
+                            <div style="display: inline-block;"><b style="color: #005CA4">a)</b></div>
+                            <div align="center" style="border: 2px solid #009045; border-radius: 5px; background: #EEF7F1; display: inline-block;"> <span id="p2i1"></span> <b style="color: #BA007C;"> x </b> <span id="p2i2"></span> </div>
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p2im1" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td><input id="p2im2" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td><input id="p2im3" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p2im4" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p2im5" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p2im6" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td id="p2cim4"></td>
+                                    <td id="p2cim3"></td>
+                                    <td id="p2cim2"></td>
+                                    <td id="p2cim1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <p>
+                            <div style="display: inline-block;"><b style="color: #005CA4">b)</b></div>
+                            <div align="center" style="border: 2px solid #009045; border-radius: 5px; background: #EEF7F1; display: inline-block;"> <span id="p21i1"></span> <b style="color: #BA007C;"> x </b> <span id="p21i2"></span> </div>
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p21im1" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td><input id="p21im2" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td><input id="p21im3" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p21im4" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p21im5" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p21im6" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td id="p21cim4"></td>
+                                    <td id="p21cim3"></td>
+                                    <td id="p21cim2"></td>
+                                    <td id="p21cim1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <p>
+                            <div style="display: inline-block;"><b style="color: #005CA4">c)</b></div>
+                            <div align="center" style="border: 2px solid #009045; border-radius: 5px; background: #EEF7F1; display: inline-block;"> <span id="p22i1"></span> <b style="color: #BA007C;"> x </b> <span id="p22i2"></span> </div>
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p22im1" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td><input id="p22im2" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td><input id="p22im3" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p22im4" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p22im5" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p22im6" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td id="p22cim4"></td>
+                                    <td id="p22cim3"></td>
+                                    <td id="p22cim2"></td>
+                                    <td id="p22cim1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <p>
+                            <div style="display: inline-block;"><b style="color: #005CA4">d)</b></div>
+                            <div align="center" style="border: 2px solid #009045; border-radius: 5px; background: #EEF7F1; display: inline-block;"> <span id="p23i1"></span> <b style="color: #BA007C;"> x </b> <span id="p23i2"></span> </div>
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p23im1" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td><input id="p23im2" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td><input id="p23im3" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p23im4" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p23im5" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p23im6" type="text" disabled="true" style="width: 40px; text-align: center;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td id="p23cim4"></td>
+                                    <td id="p23cim3"></td>
+                                    <td id="p23cim2"></td>
+                                    <td id="p23cim1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">3. </b><b>Une</b> los factores con el producto correspondiente.</p>
+                </div>
+                <div class="actividad116 text-question">
+                    <div class="col-sm-6" id="p3act1">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center" style="border: 2px solid #005CA4; background: #F5E2AB;">
+                                    <td><b>Factor</b></td>
+                                    <td><b>x</b></td>
+                                    <td><b>Factor</b></td>
+                                    <td><b>=</b></td>
+                                    <td><b>Producto</b></td>
+                                </tr>
+                                <tr align="center" style="border-left: 2px solid #005CA4; border-right: 2px solid #005CA4; border-top: 2px solid #005CA4;">
+                                    <td colspan="2">
+                                        <div class=" c_origen textos"></div>
+                                    </td>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div class=" c_origen textos1"></div>
+                                    </td>
+                                </tr>
+                                <tr align="center" style="border-left: 2px solid #005CA4; border-right: 2px solid #005CA4;">
+                                    <td colspan="2">
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_destino1 drop1 p1dc1"></div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div style="border-radius: 40%; border: 2px solid #005CA4; background: #A7D4C2; width: 30px; text-align: center;" id="p3im1">
+                                        </div>
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_destino1 drop2 p1d1"></div>
+                                    </td>
+                                </tr>
+                                <tr align="center" style="border-left: 2px solid #005CA4; border-right: 2px solid #005CA4;">
+                                    <td colspan="2">
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_destino1 drop1 p1dc2"></div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div style="border-radius: 40%; border: 2px solid #005CA4; background: #FAD9B8; width: 30px; text-align: center;" id="p3im2">
+                                        </div>
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_destino1 drop2 p1d2"></div>
+                                    </td>
+                                </tr>
+                                <tr align="center" style="border-left: 2px solid #005CA4; border-right: 2px solid #005CA4; border-bottom: 2px solid #005CA4;">
+                                    <td colspan="2">
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_destino1 drop1 p1dc3"></div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div style="border-radius: 40%; border: 2px solid #005CA4; background: #A7D4C2; width: 30px; text-align: center;" id="p3im3">
+                                        </div>
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_destino1 drop2 p1d3"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <p align="center"><b style="color: #005CA4;">Operaciones</b></p>
+                        <div class="col-sm-4">
+                            <div class="table-responsive">
+                                <table class="table-responsive">
+                                    <tr align="center">
+                                        <td></td>
+                                        <td><input id="p3im1" type="text" disabled="true" style="width: 30px; text-align: center;" value="5"></td>
+                                        <td><input id="p3im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="3"></td>
+                                        <td><input id="p3im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="6"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                        <td style="border-bottom: 2px solid black;"><input id="p3im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                        <td style="border-bottom: 2px solid black;"><input id="p3im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                        <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" style="width: 30px; text-align: center;" id="p3dcon5"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p3dcon1"></td>
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p3dcon2"></td>
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p3dcon3"></td>
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p3dcon4"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="table-responsive">
+                                <table class="table-responsive">
+                                    <tr align="center">
+                                        <td></td>
+                                        <td><input id="p31im1" type="text" disabled="true" style="width: 30px; text-align: center;" value="2"></td>
+                                        <td><input id="p31im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="5"></td>
+                                        <td><input id="p31im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="3"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                        <td style="border-bottom: 2px solid black;"><input id="p31im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                        <td style="border-bottom: 2px solid black;"><input id="p31im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                        <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" style="width: 30px; text-align: center;" id="p31dcon5"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p31dcon1"></td>
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p31dcon2"></td>
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p31dcon3"></td>
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p31dcon4"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="table-responsive">
+                                <table class="table-responsive">
+                                    <tr align="center">
+                                        <td></td>
+                                        <td><input id="p32im1" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                        <td><input id="p32im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="6"></td>
+                                        <td><input id="p32im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="9"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                        <td style="border-bottom: 2px solid black;"><input id="p32im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                        <td style="border-bottom: 2px solid black;"><input id="p32im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                        <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" style="width: 30px; text-align: center;" id="p32dcon5"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p32dcon1"></td>
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p32dcon2"></td>
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p32dcon3"></td>
+                                        <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p32dcon4"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">4. </b><b>Realiza</b> las multiplicaciones y <b>pinta</b> la respuesta.</p>
+                </div>
+                <div class="actividad116 text-question">
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4;">a)</b></p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #D68500;">UM</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #009277;">C</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #A23288;">D</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #005CA4;">U</b></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border: 2px solid #D68500;"></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p4im1"></span></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p4im2"></span></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p4im3"></span></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><b>x</b></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p4im4"></span></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p4im5"></span></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p4im6"></span></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p4cim4">
+                                    </td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p4cim3"></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p4cim2"></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p4cim1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="p4p1">
+                            <div class="col-sm-4">
+                                <br>
+                                <div style="border: 2px solid #DDECEF; text-align: center;" class="1 pint1">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <br>
+                                <div style="border: 2px solid #DDECEF; text-align: center;" class="1 pint2">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <br>
+                                <div style="border: 2px solid #DDECEF; text-align: center;" class="1 pint3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4;">b)</b></p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #D68500;">UM</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #009277;">C</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #A23288;">D</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #005CA4;">U</b></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border: 2px solid #D68500;"></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p41im1"></span></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p41im2"></span></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p41im3"></span></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><b>x</b></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p41im4"></span></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p41im5"></span></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p41im6"></span></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p41cim4">
+                                    </td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p41cim3"></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p41cim2"></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p41cim1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="p4p2">
+                            <div class="col-sm-4">
+                                <br>
+                                <div style="border: 2px solid #DDECEF; text-align: center;" class="2 pint4">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <br>
+                                <div style="border: 2px solid #DDECEF; text-align: center;" class="2 pint5">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <br>
+                                <div style="border: 2px solid #DDECEF; text-align: center;" class="2 pint6">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4;">c)</b></p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #D68500;">UM</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #009277;">C</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #A23288;">D</b></td>
+                                    <td style="border: 2px solid #D68500; background: #F9EFDF;"><b style="color: #005CA4;">U</b></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border: 2px solid #D68500;"></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p42im1"></span></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p42im2"></span></td>
+                                    <td style="border: 2px solid #D68500;"><span id="p42im3"></span></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><b>x</b></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p42im4"></span></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p42im5"></span></td>
+                                    <td style="border-top: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-bottom: 2px solid black;"><span id="p42im6"></span></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p42cim4">
+                                    </td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p42cim3"></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p42cim2"></td>
+                                    <td style="border-bottom: 2px solid #D68500; border-left: 2px solid #D68500; border-right: 2px solid #D68500; border-top: 2px solid black;" id="p42cim1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="p4p3">
+                            <div class="col-sm-4">
+                                <br>
+                                <div style="border: 2px solid #DDECEF; text-align: center;" class="3 pint7">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <br>
+                                <div style="border: 2px solid #DDECEF; text-align: center;" class="3 pint8">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <br>
+                                <div style="border: 2px solid #DDECEF; text-align: center;" class="3 pint9">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">5. </b><b>Observa</b> lo que compró cada uno; <b>plantea</b> como multiplicación y <b>encuentra</b> lo que pagaron.</p>
+                </div>
+                <div class="actividad116 text-question">
+                    <div class="col-sm-4">
+                        <img src="img/i1_p145_act116.jpg" class="img-responsive">
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="img/i2_p145_act116.jpg" class="img-responsive">
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="img/i3_p145_act116.jpg" class="img-responsive">
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4">a)</b> <b>Leonardo</b> compró <span id="p5cim1"></span> pares de patines. ¿Cuánto pagó por la compra?</p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p5im1" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td><input id="p5im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="8"></td>
+                                    <td><input id="p5im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="2"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p5im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p5im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" style="width: 30px; text-align: center;" id="p5dcon5"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p5dcon1"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p5dcon2"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p5dcon3"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p5dcon4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <p><b style="color: #005CA4">R.</b> Pagó <input type="text" style="text-align:center; width: 60px;" onkeypress="return soloNumeros(event)" id="p5dcon6"> dólares.</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4">b)</b> <b>Julia</b> compró <span id="p5cim2"></span> patinetas eléctricas. ¿Cuánto pagó en total?</p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p51im1" type="text" disabled="true" style="width: 30px; text-align: center;" value="5"></td>
+                                    <td><input id="p51im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="8"></td>
+                                    <td><input id="p51im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="4"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p51im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p51im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" style="width: 30px; text-align: center;" id="p51dcon5"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p51dcon1"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p51dcon2"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p51dcon3"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p51dcon4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <p><b style="color: #005CA4">R.</b> Pagó <input type="text" style="text-align:center; width: 60px;" onkeypress="return soloNumeros(event)" id="p51dcon6"> dólares.</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4">c)</b> <b>Manolo</b> compró <span id="p5cim3"></span> bicicletas. ¿Cuánto pagó?</p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p52im1" type="text" disabled="true" style="width: 30px; text-align: center;" value="4"></td>
+                                    <td><input id="p52im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="7"></td>
+                                    <td><input id="p52im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="5"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p52im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p52im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" style="width: 30px; text-align: center;" id="p52dcon5"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p52dcon1"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p52dcon2"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p52dcon3"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p52dcon4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <p><b style="color: #005CA4">R.</b> Pagó <input type="text" style="text-align:center; width: 60px;" onkeypress="return soloNumeros(event)" id="p52dcon6"> dólares.</p>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">6. </b><b>Resuelve</b> las multiplicaciones, luego <b>escribe</b> las respuestas en el crucinúmero.</p>
+                </div>
+                <div class="actividad116 text-question">
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4">a)</b></p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p6im1" type="text" disabled="true" style="width: 30px; text-align: center;" value="5"></td>
+                                    <td><input id="p6im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="6"></td>
+                                    <td><input id="p6im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="8"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p6im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p6im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" disabled="true" style="width: 30px; text-align: center;" id="p6im6" value="4"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p6dcon1"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p6dcon2"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p6dcon3"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p6dcon4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4">b)</b></p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p61im1" type="text" disabled="true" style="width: 30px; text-align: center;" value="3"></td>
+                                    <td><input id="p61im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="7"></td>
+                                    <td><input id="p61im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="6"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p61im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p61im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" disabled="true" style="width: 30px; text-align: center;" id="p61im6" value="7"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p61dcon1"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p61dcon2"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p61dcon3"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p61dcon4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4">c)</b></p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p62im1" type="text" disabled="true" style="width: 30px; text-align: center;" value="4"></td>
+                                    <td><input id="p62im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="4"></td>
+                                    <td><input id="p62im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="2"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p62im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p62im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" disabled="true" style="width: 30px; text-align: center;" id="p62im6" value="6"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p62dcon1"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p62dcon2"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p62dcon3"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p62dcon4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4">d)</b></p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p63im1" type="text" disabled="true" style="width: 30px; text-align: center;" value="2"></td>
+                                    <td><input id="p63im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="3"></td>
+                                    <td><input id="p63im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="8"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p63im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p63im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" disabled="true" style="width: 30px; text-align: center;" id="p63im6" value="9"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p63dcon1"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p63dcon2"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p63dcon3"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p63dcon4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4">e)</b></p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p64im1" type="text" disabled="true" style="width: 30px; text-align: center;" value="9"></td>
+                                    <td><input id="p64im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="1"></td>
+                                    <td><input id="p64im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="5"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p64im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p64im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" disabled="true" style="width: 30px; text-align: center;" id="p64im6" value="7"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p64dcon1"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p64dcon2"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p64dcon3"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p64dcon4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><b style="color: #005CA4">f)</b></p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-responsive">
+                                <tr align="center">
+                                    <td></td>
+                                    <td><input id="p65im1" type="text" disabled="true" style="width: 30px; text-align: center;" value="7"></td>
+                                    <td><input id="p65im2" type="text" disabled="true" style="width: 30px; text-align: center;" value="4"></td>
+                                    <td><input id="p65im3" type="text" disabled="true" style="width: 30px; text-align: center;" value="2"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-bottom: 2px solid black;"><b style="color: #BA007C">x</b></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p65im4" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input id="p65im5" type="text" disabled="true" style="width: 30px; text-align: center;"></td>
+                                    <td style="border-bottom: 2px solid black;"><input type="text" onkeypress="return soloNumeros(event)" maxlength="1" disabled="true" style="width: 30px; text-align: center;" id="p65im6" value="8"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p65dcon1"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p65dcon2"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p65dcon3"></td>
+                                    <td><input type="text" style="text-align:center; width: 30px;" onkeypress="return soloNumeros(event)" maxlength="1" id="p65dcon4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                    <div align="center">
+                        <br>
+                            <div class="col-sm-12 table-responsive">
+                            <table style="width: auto;" align="center" >
+                                <tr>
+                                    <td></td>
+                                    <td style="text-align: center;"><b><span style="color:#005CA4">b ▼</span></b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align: center;"><b><span style="color:#005CA4">c ▼</span></b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right;"><b><span style="color:#005CA4">a►</span></b></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C0"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C1"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C2"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C3"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C4"></td>
+                                    <td></td>
+                                    <td style="text-align: right;"><b><span style="color:#005CA4">e►</span></b></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C5"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C6"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C7"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C8"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C9"></td>
+                                    <td></td>
+                                    <td style="text-align: right;"><b><span style="color:#005CA4">f►</span></b></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C10"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C11"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C12"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C13"></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right;"><b><span style="color:#005CA4">d►</span></b></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C14"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C15"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C16"></td>
+                                    <td><input maxlength="1" type="text" class="form-control cajas1" onkeyup="this.value=this.value.toUpperCase()" id="C17"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>    
+                </div>
+                <div class="row"></div>
+                <br>
+                <p id="trace" class="alert alert-warning display-none"></p>
+            </div>
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+            <!--generador de pdf-->
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/highcharts.js"></script>
+            <script src="js/exporting.js"></script>
+            <script src="js/export-data.js"></script>
+            <script src="js/animate.css.min.js"></script>
+            <script src="js/jquery.animate.css.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/Utilitario.js"></script>
+            <script src="js/actividad116.js"></script>
+            <!--<script src="js/activities.js"></script>-->
+            <script>
+            var titulos = 'aplico'
+            //Solo permite introducir numeros.
+            function soloNumeros(e) {
+                var key = window.event ? e.which : e.keyCode;
+                if (key < 48 || key > 57) {
+                    e.preventDefault();
+                }
+            }
+            </script>
+</body>
+
+</html>

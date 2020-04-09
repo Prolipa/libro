@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Lengua y Literatura 5</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+		<link href="css/fraccion.css" rel="stylesheet">
+		<link href="css/jquery-ui.min.css" rel="stylesheet">
+		<link href="css/Comprendo.css" rel="stylesheet">
+
+        <style type="text/css">
+            .respuestas{
+                font-size: 19px;
+                color: #8819D6;
+            }
+
+
+            .pinta{
+                background-color: #C2B405;
+                border-radius: 10px;
+                padding: 5px;
+            }
+
+
+            .pintaMal{
+                background-color: #E16164;
+                border-radius: 10px;
+                padding: 5px;
+            }
+
+            .num1{
+                background-color: #C120AB;
+                border-top-right-radius: 10px;
+                border-bottom-left-radius: 10px;
+                padding: 3px;
+                color: white;
+            }
+
+            .num2{
+                background-color: #D5C630;
+                border-top-right-radius: 10px;
+                border-bottom-left-radius: 10px;
+                padding: 3px;
+                padding-right: 10px; 
+                padding-left: 10px;
+            }
+
+            .num3{
+                background-color: #9BECBF;
+                border-top-right-radius: 10px;
+                border-bottom-left-radius: 10px;
+                padding: 3px;
+                padding-right: 10px; 
+                padding-left: 10px;
+            }
+
+            .num4{
+                background-color: #9BC0EC;
+                border-top-right-radius: 10px;
+                border-bottom-left-radius: 10px;
+                padding: 3px;
+                padding-right: 10px; 
+                padding-left: 10px;
+            }
+
+            .n1{
+
+                font-size: 23px;
+                color: #18BF7D;
+
+            }
+
+        </style>
+    </head>
+    <body>
+		
+		<div id="nota-informativa" class="nota-ayuda">
+             <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+                            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+                           <br>
+                           
+                           <b>
+                            Actividad 1: Da click sobre las palabras que desees pintar. Puedes dar click nuevamente para despintar. Las palabras que pintes incorrectamente se descontarán de tu calificación.<br>
+                            Actividad 3: Decifra la frase escribe la frase decifrada. NO escribas signos de puntuación, ni texto adicional al de la frase ya que afectará tu calificación. EN ESTA OCASIÓN VAMOS A OMITIR LAS TILDES<br>
+                            Actividad 4: Escribe el significado de las siglas planteadas. Cuida tu ortografía. NO escribas signos de puntuación, ni texto adicional al de la Sigla ya que afectará tu calificación.<br>
+                        </b>
+
+                           <br><span id="ayudas"></span>
+
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" >/ 10</span> 
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág  <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-aplico" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-aplico">
+                    <span class="titulo"><img src="img/icoA.png" alt=""> Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                   
+                </div>
+               
+                <div class="panel-body" style="font-size: 19px;">
+
+                    <button class="btn-link btn_mostrar" style="font-size: 15px;">Mostrar Preguntas</button><br>
+
+                    <div>
+                        <img src="img/practica_individual.png" class="img-responsive">
+                    </div>
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                                                                                                        
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                <div class="form-inline form-group">
+                                    1. <b>Lee</b> el siguiente texto. <b>Subraya</b> las palabras que tienen letra mayúscula y <b>deduce</b> cuatro reglas de su uso.<br><br>
+
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-8"><br>
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-11" align="justify" style="background-color: #E6E385; border-radius: 30px; box-shadow: 2px 2px 5px black; cursor: pointer;"><br>
+
+                                                    <div align="center" style="color: #2FCCDC;"><b>La chonta y su importancia</b></div><br>
+                                                    <div align="justify">
+                                                        <span id="sPM1">Hay</span> algunos pueblos que realizan fiestas en honor a algún alimento. <span id="sPM2">Una</span> de estas es la <span id="sPM3">Fiesta</span> de la <span id="sPM4">Chonta</span>. <span id="sPM5">La</span> chonta es un árbol parecido a una palma. <span id="sPM6">Su</span> madera se utiliza en la confección de una gran cantidad de objetos. <span id="sPM7">El</span> chontaduro es la fibra de la chonta, que sirve para hacer la chicha. <span id="sPM8">Los</span> indígenas consideran a la chonta como el árbol de la vida.<br>
+                                                        <span id="sPM9">La</span> costumbre indica que se debe realizar una fiesta en honor al espíritu benéfico de la chonta, para celebrar la abundancia de dones que, año tras año, trae este árbol. <span id="sPM10">Además</span>, creen que si la chonta florece y da frutos, los demás árboles también lo harán. <span id="sPM14">En</span> caso de no realizarse la fiesta, el espíritu de la chonta causará la muerte de los hombres de la <span id="sPM11">Amazonía</span>. <br>
+                                                    </div>
+                                                    <div align="center">“<span id="sPM12">Ecuador:</span> <span id="sPM13">Memorias</span> de un pueblo”<br><br></div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-4" align="center"><br><br>
+                                                <img src="img/i1_p147_act1.jpg" class="img-responsive">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-1"></div>
+                                            <div class="col-sm-11"><br>
+                                                Se escriben con letra mayúscula:<br><br>
+
+                                                <div class="col-sm-6">
+                                                    <span class="num1">&nbsp;1&nbsp;</span>&nbsp;&nbsp;&nbsp;
+                                                    <select id="rPM1" class="form-control respuestas" style="display: inline-block; width: 370px;">
+                                                        <option></option>
+                                                        <option>El fin de un párrafo</option>
+                                                        <option value="1">El inicio de un escrito</option>
+                                                        <option>El inicio de una palabra</option>
+                                                        <option>la última letra de una oración</option>
+                                                    </select><br><br>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                     <span class="num1">&nbsp;2&nbsp;</span>&nbsp;&nbsp;&nbsp;
+                                                    <select id="rPM2" class="form-control respuestas" style="display: inline-block; width: 370px;">
+                                                        <option></option>
+                                                        <option value="2">Los nombres propios</option>
+                                                        <option>Los nombres impropios</option>                                                        
+                                                        <option>los nombres de vehiculos</option>
+                                                        <option>las palabras agudas</option>
+                                                    </select><br><br>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                     <span class="num1">&nbsp;3&nbsp;</span>&nbsp;&nbsp;&nbsp;
+                                                    <select id="rPM3" class="form-control respuestas" style="display: inline-block; width: 370px;">
+                                                        <option></option>
+                                                        <option>La primera palabra después de una coma</option>                                         
+                                                        <option>La primera palabra después de un guión</option>
+                                                        <option>La primera letra de cada palabra en una oración</option>
+                                                        <option value="3">La primera palabra después de un punto</option>
+                                                    </select><br><br>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                     <span class="num1">&nbsp;4&nbsp;</span>&nbsp;&nbsp;&nbsp;
+                                                    <select id="rPM4" class="form-control respuestas" style="display: inline-block; width: 370px;">
+                                                        <option></option>
+                                                        <option value="4">El título de un artículo</option>
+                                                        <option>Los nombres impropios</option>                                                        
+                                                        <option>El inicio de una palabra</option>
+                                                        <option>El fin de un párrafo</option>
+                                                    </select><br><br>
+                                                </div>
+                                            </div>
+                                        
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                                    <input type="number" id="calificacion2" placeholder="Puntaje/2" style="width: 120px;" class="form-control">
+                                </div>                                                                                                          
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2" style="margin-left: 70px;">Actividad 2</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                <div class="form-inline form-group">
+                                        2. <b>Escribe</b> los nombres indicados.<br><br>
+                                        
+                                        <div class="col-sm-1"></div>
+
+                                        <div class="col-sm-7" style="border-radius: 20px; box-shadow: 2px 2px 5px black; background-image:url('img/i1_p147_act2.png');">
+                                            <br>
+
+                                            Tu libro preferido: &nbsp;&nbsp;<input type="text" class="form-control respuestas" style="display: inline-block; width: 60%;"><br><br>
+                                            Tu mejor amigo o amiga: &nbsp;&nbsp;<input type="text" class="form-control respuestas" style="display: inline-block; width: 50%;"><br><br>
+                                            Tu país: &nbsp;&nbsp;<input type="text" class="form-control respuestas" style="display: inline-block; width: 75%;"><br><br>
+                                            Tu escuela: &nbsp;&nbsp;<input type="text" class="form-control respuestas" style="display: inline-block; width: 70%;"><br><br>
+                                            Un río: &nbsp;&nbsp;<input type="text" class="form-control respuestas" style="display: inline-block; width: 75%;"><br><br>
+                                            Un volcán: &nbsp;&nbsp;<input type="text" class="form-control respuestas" style="display: inline-block; width: 70%;"><br><br>
+                                        </div>
+
+                                        <div class="col-sm-4" align="center"><br><br>
+                                            <img src="img/i2_p147_act2.jpg" class="img-responsive">
+                                        </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                                                                                                         
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                3. Juan ha escrito un mensaje en una lengua secreta. <b>Descífralo</b>: a cada vocal se le ha asignado un número del 1 al 5. <br>
+                                Luego, <b>juega</b> con tus compañeros y compañeras a escribir mensajes en clave.<br><br>
+                                        
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-11" align="justify">
+                                    <span class="n1" id="lengua"></span><br><br>
+                                    <input type="text" id="rlengua" class="form-control respuestas" style="width: 400px;">
+                                </div>
+                                        
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                                    <input type="number" id="calificacion4" placeholder="Puntaje/2" style="width: 120px;" class="form-control">
+                                </div>                                                                                                          
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4" style="margin-left: 70px;">Actividad 4</a>
+                            </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                <div class="form-inline form-group">
+                                        4. <b>Escribe</b> un breve texto en el que aparezca lo siguiente.<br><br>
+
+                                        <div align="center">
+                                            
+                                            <img src="img/i1_p147_act4.jpg" class="img-responsive" style="box-shadow: 2px 2px 5px black;"><br>
+
+                                            <textarea id="rBTA1" class="form-control respuestas" style="width: 800px; background-color: #F2EFD4;" rows="6"></textarea>
+
+                                        </div>
+                                        
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                                                                                                       
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Actividad 5</a>
+                            </h4>
+                        </div>
+                        <div id="collapse5" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                <div class="form-inline form-group">
+                                        5. <b>Averigua</b> y <b>escribe</b> lo que significan las siguientes siglas.<br><br>
+                                        
+                                        <div class="col-sm-1"></div>
+
+                                        <div class="col-sm-11" id="averigua"></div>
+                                        
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+				</div>
+
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+		<script src="js/jquery-ui.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+		<script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+		<script src="js/animate.css.min.js"></script>
+		<script src="js/jquery.animate.css.js"></script>
+		<script src="js/Utilitario.js"></script>
+		<script src="js/tema9_2.js"></script>
+		
+		<script>
+            $("#n_pagina").html("147"); //impresion de pagina            
+        </script>
+
+    </body>
+</html>

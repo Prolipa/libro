@@ -1,0 +1,499 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Lengua y Literatura 8</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/colorPick.min.css" rel="stylesheet">
+        <link href="css/paintToolBar.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <style>
+            table td{
+                padding: 5px;
+            }
+            .question{
+                padding: 15px;
+                border-radius: 20px;
+            }
+            .answer{
+                margin-left: 25px;
+                margin-right: 25px;
+                padding-top: 5px;
+                padding-bottom: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            Lee cuidadosamente las preguntas, contesta cada una de ellas.<br> 
+            Selecciona <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+            , en el cuadro de dialogo escribir el nombre del alumno o alumnos que realizaron actividad,<br> 
+            para descargar un pdf para que el profesor evalue sus respuestas.
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onclick="calificaTST()">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 46
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-evaluacion" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-evaluacion">
+                    <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+
+                </div>
+                <div class="panel-body">
+                    <!--pregunats de la actividad-->
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <input type="number" class="nota-abierta" min="0" max="10">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Literatura <span class="sobre">3 pts</span>
+                                    </a>
+
+
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <div  class="col-md-12 ">
+                                        <p class="text-question question bg-danger" style="padding: 15px">
+                                            1. <strong>Imagina</strong> un tema para una novela de aventuras. Pon un título y <strong>escribe</strong> en la tabla ideas para cada elemento
+                                        </p>
+                                        <div style="background-color: #ffffcc;" class="question answer" >
+                                            <table style="width: 100%">
+                                                <tr>
+                                                    <td style="width: 20%">
+                                                        Tema:
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control text-question respesta" value="">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Titulo:
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control text-question respuesta" value="">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Tiempo:
+                                                    </td>
+                                                    <td>
+                                                        <textarea class="form-control text-question no-redimensionar respuesta" rows="4" ></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Acción:
+                                                    </td>
+                                                    <td>
+                                                        <textarea class="form-control text-question no-redimensionar respuesta" rows="4" ></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Ambiente:
+                                                    </td>
+                                                    <td>
+                                                        <textarea class="form-control text-question no-redimensionar respuesta" rows="4" ></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Personajes:
+                                                    </td>
+                                                    <td>
+                                                        <textarea class="form-control text-question no-redimensionar respuesta" rows="4" ></textarea>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="html2pdf__page-break"></div>
+                                    <div  class="col-md-12" style="padding-top: 20px">
+                                        <p class="text-question question bg-info" style="padding: 15px">
+                                            2. <strong>Contesta</strong>. ¿Qué es lo que te agrada y lo que no te agrada de una novela de aventuras?
+                                        </p>
+                                        <div class="answer">
+                                            <textarea class="form-control text-question no-redimensionar respuesta" rows="3" ></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div  class="col-md-12 ">
+                                        <p class="text-question question bg-warning" style="padding: 15px">
+                                            3. <strong>Cuenta</strong> brevemente la trama de algún relato de aventuras que te haya llamado la atención.
+                                        </p>
+                                        <div class="answer">
+                                            <textarea class="form-control text-question no-redimensionar respuesta" rows="3" ></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div  class="col-md-12 ">
+                                        <p class="text-question question bg-info" style="padding: 15px">
+                                            4. ¿Crees que una novela de aventuras pueda enseñarte algo? <strong>Argumenta</strong> tu respuesta.
+                                        </p>
+                                        <div class="answer">
+                                            <textarea class="form-control text-question no-redimensionar respuesta" rows="5" ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <input type="number" class="nota-abierta" min="0" max="10">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Comunicación oral <span class="sobre">1 pts</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+
+                                    <div  class="col-md-12 ">
+                                        <p class="text-question question bg-warning" style="padding: 15px">
+                                            5. <strong>Reflexiona.</strong> ¿Cuál es la diferencia entre la conversación formal e informal?
+                                        </p>
+                                        <div class="answer">
+                                            <textarea class="form-control text-question no-redimensionar respuesta" rows="5" ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="html2pdf__page-break"></div>
+                                    <div  class="col-md-12" style="padding-top: 20px">
+                                        <p class="text-question question bg-info" style="padding: 15px">
+                                            6. <strong>Observa</strong> la imagen. <strong>Pon</strong> un nombre a cada personaje y <strong>escribe</strong> una conversación informal o coloquial.
+                                        </p>
+                                        <div class="answer">
+                                            <div class="col-md-6">
+                                                <img src="img/i1_p47_act45.png" alt="" class="img-responsive">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <textarea class="form-control text-question no-redimensionar respuesta" rows="15" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="html2pdf__page-break"></div>
+
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <input type="number" class="nota-abierta" min="0" max="10">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Lectura <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+
+                                    <div  class="col-md-12" style="padding-top: 20px">
+                                        <p class="text-question question bg-warning" style="padding: 15px">
+                                            7. <strong>Explica</strong> cada una de las características de la entrevista.
+                                        </p>
+                                        <div class="answer text-question">
+                                            <div class="table-responsive text-center">
+                                                <table >
+                                                    <tr >
+                                                        <td style="padding: 15px" colspan="3" class="text-center">
+                                                            <span class="question bg-danger" style="">Características de la
+                                                                entrevista</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td style="padding: 15px" class="text-right"><span class="question " style="background-color: #ffb366">Preparación</span></td>
+                                                        <td style="padding: 15px" class="text-center"><span class="question bg-info" style="">Claridad</span></td>
+                                                        <td style="padding: 15px" class="text-left"><span class="question bg-success" style="">Flexibilidad</span></td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td  class="text-right"><textarea style="border-color: #ff8080" class="form-control text-question no-redimensionar respuesta" rows="15" ></textarea></td>
+                                                        <td  class="text-center"><textarea style="border-color: #ff8080" class="form-control text-question no-redimensionar respuesta" rows="15" ></textarea></td>
+                                                        <td  class="text-left"><textarea style="border-color: #ff8080" class="form-control text-question no-redimensionar respuesta" rows="15" ></textarea></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingFour">
+                                <h4 class="panel-title">
+                                    <input type="number" class="nota-abierta" min="0" max="10">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        Escritura <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                <div class="panel-body">
+
+                                    <div  class="col-md-12" style="padding-top: 20px">
+                                        <p class="text-question question bg-info" style="padding: 15px">
+                                            8. <strong>Elabora</strong> un organizador gráfico para explicar el uso de los pronombres y adverbios interrogativos en la
+                                            construcción de preguntas. <strong>Escribe</strong> un ejemplo de cada tipo.
+                                        </p>
+                                        <div class="answer text-question">
+                                            <div class="table-responsive text-center">
+                                                <table class="table-bordered">
+                                                    <tr >
+                                                        <td  colspan="4" class="text-center">
+                                                            <textarea  class="form-control text-question no-redimensionar respuesta" rows="1" ></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td rowspan="2" class="text-right"><textarea  class="form-control text-question no-redimensionar respuesta" rows="5" ></textarea></td>
+                                                        <td class="text-center"><textarea  class="form-control text-question no-redimensionar respuesta" rows="5" ></textarea></td>
+                                                        <td class="text-left"><textarea  class="form-control text-question no-redimensionar respuesta" rows="10" ></textarea></td>
+                                                        <td  class="text-left"><textarea  class="form-control text-question no-redimensionar respuesta" rows="8" ></textarea></td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td  class="text-center"><textarea  class="form-control text-question no-redimensionar respuesta" rows="5" ></textarea></td>
+                                                        <td  class="text-left"><textarea  class="form-control text-question no-redimensionar respuesta" rows="10" ></textarea></td>
+                                                        <td  class="text-left"><textarea  class="form-control text-question no-redimensionar respuesta" rows="8" ></textarea></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="html2pdf__page-break"></div>
+                                    <div  class="col-md-12" style="padding-top: 20px">
+                                        <p class="text-question question bg-warning" style="padding: 15px">
+                                            9. <strong>Escribe</strong> dos oraciones en voz activa y transfórmalas a voz pasiva.
+                                        </p>
+                                        <div class="answer text-question">
+                                            <table style="width: 100%;" class="table-bordered">
+                                                <tr >
+                                                    <td  style="background-color: #ffcc99" class="text-center">
+                                                        Voz Activa
+                                                    </td>
+                                                    <td  style="background-color:#80bfff" class="text-center">
+                                                        Voz Pasiva
+                                                    </td>
+                                                </tr>
+                                                <tr >
+                                                    <td  class="text-center">
+                                                        <textarea  class="form-control text-question no-redimensionar respuesta" rows="2" ></textarea>
+                                                        <textarea  class="form-control text-question no-redimensionar respuesta" rows="2" ></textarea>
+                                                    </td>
+                                                    <td  class="text-center">
+                                                        <textarea  class="form-control text-question no-redimensionar respuesta" rows="2" ></textarea>
+                                                        <textarea  class="form-control text-question no-redimensionar respuesta" rows="2" ></textarea>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div  class="col-md-12" style="padding-top: 20px">
+                                        <p class="text-question question bg-info" style="padding: 15px">
+                                            10. <strong>Escribe</strong> dos oraciones en la que utilices la regla ortográfica del uso de z en conjugaciones de verbos
+                                            terminados en -ecer, -ucir.
+                                        </p>
+                                        <div class="answer text-question">
+                                            <textarea  class="form-control text-question no-redimensionar respuesta" rows="2" ></textarea>
+                                            <textarea  class="form-control text-question no-redimensionar respuesta" rows="2" ></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingFive">
+                                <h4 class="panel-title">
+                                    <input type="number" class="nota-abierta" min="0" max="10">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        Lengua y Cultura <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                <div class="panel-body">
+
+                                    <div  class="col-md-12" style="padding-top: 20px">
+                                        <p class="text-question question bg-warning" style="padding: 15px">
+                                            11. <strong>Observa</strong> la fotografía y <strong>escribe</strong> tu versión de lo que significa esta pintura rupestre.
+                                        </p>
+                                        <div class="answer">
+                                            <div class="col-md-6">
+                                                <img src="img/i1_p48_act45.png" alt="" class="img-responsive">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <textarea class="form-control text-question no-redimensionar respuesta" rows="15" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="guardar()">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/colorPick.min.js"></script>
+        <script src="js/paint.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script>
+                            function calificaTST() {
+                                var listNts = document.getElementsByClassName('nota-abierta');
+                                nt = 0;
+                                band = true;
+                                for (var i = 0; i < listNts.length; i++) {
+                                    if ($(listNts[i]).val() == '') {
+                                        band = false;
+                                        $(listNts[i]).addClass('no-valid')
+                                        $('.form-control').attr('disabled', true);
+                                    } else {
+                                        nt += parseFloat($(listNts[i]).val());
+                                        $(listNts[i]).addClass('valid')
+                                    }
+                                }
+                                if (band == false) {
+                                    alert('Hay preguntas sin calificar.\n\Verifica que todas las preguntas estan calificadas.')
+                                } else {
+                                    $('.respuesta').attr('desabled', true);
+                                    $('.btnCalificar').addClass('disabled');
+                                    $('.btnGuardar').removeClass('disabled');
+                                    $('#txtNota').html(nt)
+                                }
+
+                            }
+                            function guardar() {
+                                $('.collapse').collapse('show')
+                                save_open_activity_to_local('txtAlumno')
+                            }
+                            ;
+        </script>
+    </body>
+</html>

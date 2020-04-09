@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMÁTICA 7</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/highcharts.js"></script>
+    	<script src="js/data.js"></script>
+                   
+    	<script src="js/react-with-addons.js"></script>
+    	<script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+</head>
+
+<style type="text/css">
+       #draggable { width: 150px; height: 150px; padding: 0.5em; }
+	   * {
+                margin:0; padding:0;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            .wrap {
+                padding: 2em 1em;
+                width: 400px;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            @media(min-width: 30em){
+                .wrap{
+                    width: 490px;
+                }
+                .sudoku-board input {
+                    font-size: 24px;
+                    font-size: 1.5rem;
+                }
+                .sudoku-board .candidates {
+                    font-size: .8em;
+                }
+            }
+
+    .fondo_preg{
+        background-color: #D6F2F8;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+
+    .textTab{
+        color: #3D4C78;
+        font-size: 20px;
+    }
+
+    .textTab1{
+        color: #35A877;
+        font-size: 20px;
+    }
+
+    .n0{
+        color: #3D4C78;
+        font-size: 23px;
+    }
+
+    .np0{
+        color: #EB3959;
+        font-size: 23px;
+    }
+
+    .np1{
+        color: #0D9C73;
+        font-size: 23px;
+    }
+
+    .np2{
+        color: #9A983B;
+        font-size: 23px;
+    }
+
+    .n1{
+        color: white;
+        font-size: 23px;
+        background-color: #309794;
+        border-radius: 5px;
+    }
+
+    .n2{
+       color: white;
+        font-size: 23px;
+        background-color: #B4AD67;
+        border-radius: 5px;
+    }
+
+    .num{
+        background-color: #F9C797;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+
+    .num1{
+        background-color: #6DAB61;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+
+    .encabezado_pregunta{
+        background-color: #E5ECBD;
+        font-size: 19px;        
+        border-radius: 5px;
+    }
+   
+    .encabezados{
+        color: white;
+        font-size: 20px;
+    }
+
+    .r1{
+        border-top: none;
+        border-right: none;
+        border-left: none; 
+        border-bottom-width: 1px;
+        border-bottom-color: black;
+    }
+
+    .actividad1{
+        background: #fff;       
+    }
+
+    .t_images img{
+        padding: 8px;
+        max-width: 80%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+        margin-bottom: 15px;
+        padding: 3px;
+    }
+    
+@media (max-width: 770px) {
+	.cajas {
+	    clear: left;
+	  }
+   .t_images img{
+        padding: 8px;
+        max-width: 20%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+    }
+    .r_images img{
+        max-height: 100%;
+    }    
+}
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button><br>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Actividad 1: Encuentra los patrones y completa las sucesiones. Debes seleccionar el tipo de operacion (+,-,÷,x) y el valor.<br>
+        Actividad 2: Escribe tus respuestas en los cuadros de texto correspondientes a cada raíz. Aproxima 2 decimales únicamente. Ej: 15.879 = 15.88<br>
+        Actividad 3: Completa la tabla, guíate en el ejemplo de la primera fila.<br>
+        Actividad 4: Resuelve los problemas planteados e ingresa tus respuestas en los cuadros de texto correspondientes.<br>
+        Actividad 5: Completa la tabla y representa los porcentajes en un diagrama circular utilizando las herrramientas de dibujo y escritura proporcionadas. Esta actividad debe ser calificada manualmente sobre 1.5 puntos<br>
+        Actividad 6: Completa la tabla y grafica la proporcionalidad en cada caso utilizando las herrramientas de dibujo y escritura proporcionadas. Esta actividad debe ser calificada manualmente sobre 1.5 puntos<br>
+        Actividad 7: Observa el gráfico y responde las preguntas. Esta actividad debe ser calificada manualmente sobre 1.5 puntos<br>
+        <br>
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-refuerzo" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-refuerzo">
+                    <span class="titulo"><img src="img/icoD.png" alt="Refuerzo mis destrezas"> Refuerzo mis destrezas</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+	 <div class="panel-body"> 
+            <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                            
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-inline form-group">
+                            1. <b>Encuentra</b> el patrón y <b>completa</b> las sucesiones.<br><br>
+
+                            <div id="sucesion0"></div> 
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse in">
+                          <div class="panel-body preguntas form-inline form-group">
+                            2. <b>Estima</b> las raíces cuadradas y cúbicas. En tu cuaderno <b>resuelve</b> por descomposición en sus factores primos y <b>compara</b> con tu estimación.<br><br>
+                            
+                            <div class="col-lg-4" id="calRaiz0"></div>
+                            <div class="col-lg-4" id="calRaiz1"></div>
+                            <div class="col-lg-4" id="calRaiz2"></div>  
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+                        </h4>
+                    </div>
+                        <div id="collapse3" class="panel-collapse collapse in">
+                          <div class="panel-body preguntas form-inline form-group">
+                            3. <b>Completa</b> la tabla.<br><br>
+                            
+                            <div class="table-responsive">
+                                <table id="tablePreview" class="table table-bordered table-hover table-sm">
+                                    <tbody align="center">   
+                                        <tr>                        
+                                            <td style="background-color: #FE5782;">Potenciación</td>
+                                            <td style="background-color: #AD57FE;">Potencia desarrollada</td>
+                                            <td style="background-color: #57FEB2;">Radicación</td>                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="np1">4<sup>5</sup></td>
+                                            <td class="np1">4 × 4 × 4 × 4 × 4 = 1024</td>
+                                            <td class="np1"><sup>5</sup>√1024 = 4</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="np1"><span id="nRad0"></span><sup id="nExRad0"></sup></td>
+                                            <td class="np1">
+                                                <input type="text" id="rPD0" class="form-control respuestas"> = 
+                                                <input type="number" id="resPD0" class="form-control respuestas" style="width: 100px;">
+                                            </td>
+                                            <td class="np1">
+                                                <sup><input type="number" id="rexRad0" class="form-control respuestas" style="width: 55px;"></sup>
+                                                     √<input type="number" id="rbasRad0" class="form-control respuestas" style="width: 100px; border-top: 2px solid; border-top-color: #0D9C73;"> = 
+                                                     <input type="number" id="resRad0" class="form-control respuestas" style="width: 75px;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="np1"><span id="nRad1"></span><sup id="nExRad1"></sup></td>
+                                            <td class="np1">
+                                                <input type="text" id="rPD1" class="form-control respuestas"> = 
+                                                <input type="number" id="resPD1" class="form-control respuestas" style="width: 100px;">
+                                            </td>
+                                            <td class="np1">
+                                                <sup><input type="number" id="rexRad1" class="form-control respuestas" style="width: 55px;"></sup>
+                                                     √<input type="number" id="rbasRad1" class="form-control respuestas" style="width: 100px; border-top: 2px solid; border-top-color: #0D9C73;"> = 
+                                                     <input type="number" id="resRad1" class="form-control respuestas" style="width: 75px;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="np1"><span id="nRad2"></span><sup id="nExRad2"></sup></td>
+                                            <td class="np1">
+                                                <input type="text" id="rPD2" class="form-control respuestas"> = 
+                                                <input type="number" id="resPD2" class="form-control respuestas" style="width: 100px;">
+                                            </td>
+                                            <td class="np1">
+                                                <sup><input type="number" id="rexRad2" class="form-control respuestas" style="width: 55px;"></sup>
+                                                     √<input type="number" id="rbasRad2" class="form-control respuestas" style="width: 100px; border-top: 2px solid; border-top-color: #0D9C73;"> = 
+                                                     <input type="number" id="resRad2" class="form-control respuestas" style="width: 75px;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="np1"><span id="nRad3"></span><sup id="nExRad3"></sup></td>
+                                            <td class="np1">
+                                                <input type="text" id="rPD3" class="form-control respuestas"> = 
+                                                <input type="number" id="resPD3" class="form-control respuestas" style="width: 100px;">
+                                            </td>
+                                            <td class="np1">
+                                                <sup><input type="number" id="rexRad3" class="form-control respuestas" style="width: 55px;"></sup>
+                                                     √<input type="number" id="rbasRad3" class="form-control respuestas" style="width: 100px; border-top: 2px solid; border-top-color: #0D9C73;"> = 
+                                                     <input type="number" id="resRad3" class="form-control respuestas" style="width: 75px;">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                            
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Actividad 4</a>
+                        </h4>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse in">
+                          <div class="panel-body preguntas form-inline form-group">
+                            4. <b>Resuelve</b> los problemas.<br><br>
+                            
+                            <div class="col-sm-6">
+                                <div style="text-align: justify;">
+                                <span style="color: #3D5BAC;">a) </span> En una escuela se desea adecuar un jardín en un espacio de <span class="np2" id="nJ0"></span> metros de largo por <span class="np2" id="nJ1"></span> metros de ancho. Sin embargo, en el último momento se decide construir un parque infantil en un espacio de forma cuadrada, pero con un área igual a la proyectada inicialmente.<br> 
+                                ¿Cuánto medirá cada lado del jardín? <b>Encuentra</b> el resultado por radicación.<br><br>
+                                </div>
+
+                                <div class="col-sm-4 np1">A<sub>rectángulo</sub><input type="number" id="rAr0" class="form-control respuestas" style="width: 100px;">m<sup>2</sup></div>
+                                <div class="col-sm-4 np1">A<sub>cuadrado</sub><input type="number" id="rAc1" class="form-control respuestas" style="width: 100px;">m<sup>2</sup></div>
+                                <div class="col-sm-4 np1">ℓ<sub>cuadrado</sub><input type="number" id="rC0" class="form-control respuestas" style="width: 100px;"><br><br></div>
+
+
+
+                                <span class="np1"><br><br>R. </span> Cada lado del jardín medirá  <input type="number" id="rLj0" class="form-control respuestas" style="width: 90px;"> metros.
+
+                            </div>
+
+                            <div class="col-sm-6">
+                                <span style="color: #3D5BAC;">b) </span> Cuatro fundas de clavos pesan <span class="np0">5</span> kilogramos. ¿Cuánto pesarán seis y siete fundas?<br><br>
+                                <span class="np1">R. &nbsp;6</span> fundas pesarán <input type="number" id="rCl0" class="form-control respuestas" style="width: 90px;"> kg y <span class="np1">7</span> fundas pesarán <input type="number" id="rCl1" class="form-control respuestas" style="width: 90px;"> kilogramos.
+                                <br><br><br>
+                                <span style="color: #3D5BAC;">c) </span> Juan tarda en su auto <span class="np0">6</span> horas en llegar de una localidad a otra, a una velocidad constante de <span class="np0">80 km/h</span>. ¿Cuántas horas le tomará en recorrer el mismo trayecto a una velocidad constante de <span class="np0">100 km/h</span>?<br><br>
+                                <span class="np1">R. </span> Juan le tomará <input type="number" id="rHs0" class="form-control respuestas" style="width: 90px;"> horas.
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                                <input type="number" id="calificacion0" placeholder="Puntaje/1.5" style="width: 120px;" class="form-control">
+                            </div>                                                                                                          
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5" style="margin-left: 70px;">Actividad 5</a>
+                        </h4>
+                    </div>
+                        <div id="collapse5" class="panel-collapse collapse in">
+                          <div class="panel-body preguntas">
+                            <div>5. <b>Completa</b> la tabla y <b>representa</b> los porcentajes en un diagrama circular.
+                            
+                            <br>
+                            <div class="form-inline form-group">
+                              
+                                <div class="col-sm-6 table-responsive">
+                                    <br>
+                                        <table id="tablePreview" class="table table-bordered table-hover table-sm">
+                                            <tbody align="center">
+                                                <tr> 
+
+                                                  <td style="background-color: #EB39AD;" align="center">Actividades económicas de la localidad</td>
+                                                  <td style="background-color: #34D7F8;" align="center">Frecuencia</td>
+                                                  <td style="background-color: #EB39AD;" align="center">Porcentaje</td>
+                                                  <td style="background-color: #34D7F8;" align="center">Valor angular</td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="np1">Transporte</td>
+                                                  <td class="np1">90</td>
+                                                  <td class="np1">45%</td>
+                                                  <td class="np1">162°</td>
+                                                </tr>
+                                                <tr>                                                                                        
+                                                  <td class="np1">Turismo</td>
+                                                  <td class="np1">20</td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                </tr>
+                                                <tr>                                                                                        
+                                                  <td class="np1">Agricultura y ganadería</td>
+                                                  <td class="np1">60</td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                </tr>
+                                                <tr>                                                                                        
+                                                  <td class="np1">Industria</td>
+                                                  <td class="np1">30</td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                </tr>
+                                                <tr>                                                                                        
+                                                  <td class="np1">Total</td>
+                                                  <td class="np1">200</td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+
+                                <div class="col-sm-6">
+                                    <div class="my-drawing img-responsive"></div>
+                                    <br>
+
+                                    <script>
+                                    var backgroundImage = new Image()
+                                    backgroundImage.src = 'img/i1_p115_act5.jpg';
+                                    var winHeight = $(window).height();
+                                    var winWidth = $(window).width();
+                                    var lc = LC.init(
+                                        document.getElementsByClassName('my-drawing')[0], { imageURLPrefix: 'imgcanvas',
+                                                  backgroundShapes: [
+                                                    LC.createShape(
+                                                  'Image', {x: 0, y: 0, image: backgroundImage}),
+                                                    ] }
+                                    );
+                                    lc.respondToSizeChange();
+                                    </script>
+                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                                <input type="number" id="calificacion1" placeholder="Puntaje/1.5" style="width: 120px;" class="form-control">
+                            </div>                                                                                                          
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6" style="margin-left: 70px;">Actividad 6</a>
+                        </h4>
+                    </div>
+                        <div id="collapse6" class="panel-collapse collapse in">
+                          <div class="panel-body preguntas">
+                            <div>6. <b>Completa</b> la tabla y <b>grafica</b> la proporcionalidad en cada caso.
+                            
+                            <br><br>
+                            <div class="form-inline form-group">
+                              
+                                <div class="col-sm-6 table-responsive">
+                                    a) En una frutería hay 30 naranjas en cada cajón. ¿Cuántas naranjas habrá en 2, 3, 4 o 5 cajones?
+                                    <br><br>
+                                        <table id="tablePreview" class="table table-bordered table-hover table-sm">
+                                            <tbody align="center">
+                                                <tr> 
+
+                                                  <td style="background-color: #EB39AD;" align="center">N.° de cajones</td>
+                                                  <td>1</td>
+                                                  <td>2</td>
+                                                  <td>3</td>
+                                                  <td>4</td>
+                                                  <td>5</td>
+                                                </tr>
+                                                <tr>
+                                                  <td style="background-color: #34D7F8;" align="center">N.° de naranjas</td>
+                                                  <td>30</td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <br>
+                                    <div class="my-drawing img-responsive"></div>
+                                    <br>
+
+                                    <script>
+                                    var backgroundImage = new Image()
+                                    backgroundImage.src = 'img/i1_p115_act6.jpg';
+                                    var winHeight = $(window).height();
+                                    var winWidth = $(window).width();
+                                    var lc = LC.init(
+                                        document.getElementsByClassName('my-drawing')[1], { imageURLPrefix: 'imgcanvas',
+                                                  backgroundShapes: [
+                                                    LC.createShape(
+                                                  'Image', {x: 0, y: 0, image: backgroundImage}),
+                                                    ] }
+                                    );
+                                    lc.respondToSizeChange();
+                                    </script>
+                
+                                </div>
+
+
+
+                                <div class="col-sm-6 table-responsive">
+                                    b) Un autobús tarda 12 minutos en llegar a un lugar, a una velocidad de 60 km/h. ¿A qué velocidad debe ir para hacer el recorrido en 15, 20, 30 o 50 minutos?
+                                    <br><br>
+                                        <table id="tablePreview" class="table table-bordered table-hover table-sm">
+                                            <tbody align="center">
+                                                <tr> 
+
+                                                  <td style="background-color: #EB39AD;" align="center">Tiempo(min)</td>
+                                                  <td>12</td>
+                                                  <td>15</td>
+                                                  <td>20</td>
+                                                  <td>30</td>
+                                                  <td>50</td>
+                                                </tr>
+                                                <tr>
+                                                  <td style="background-color: #34D7F8;" align="center">Velocidad(km/h)</td>
+                                                  <td>60</td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                  <td><input type="number" class="form-control respuestas" style="width: 70px;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <br>
+                                    <div class="my-drawing img-responsive"></div>
+                                    <br>
+
+                                    <script>
+                                    var backgroundImage = new Image()
+                                    backgroundImage.src = 'img/i2_p115_act6.jpg';
+                                    var winHeight = $(window).height();
+                                    var winWidth = $(window).width();
+                                    var lc = LC.init(
+                                        document.getElementsByClassName('my-drawing')[2], { imageURLPrefix: 'imgcanvas',
+                                                  backgroundShapes: [
+                                                    LC.createShape(
+                                                  'Image', {x: 0, y: 0, image: backgroundImage}),
+                                                    ] }
+                                    );
+                                    lc.respondToSizeChange();
+                                    </script>
+                
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                                <input type="number" id="calificacion2" placeholder="Puntaje/1.5" style="width: 120px;" class="form-control">
+                            </div>                                                                                                          
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse7" style="margin-left: 70px;">Actividad 7</a>
+                        </h4>
+                    </div>
+                        <div id="collapse7" class="panel-collapse collapse in">
+                          <div class="panel-body preguntas">
+                            <div>7. <b>Observa</b> el gráfico y <b>responde</b> las preguntas.
+                            <br>
+                            <div class="form-inline form-group">
+                              	<div class="col-sm-6" id="graficoTemperatura">
+									<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <br><br>
+                                        a) ¿Qué ritmo musical es el que más le gusta a la gente? <br>
+                                        <input type="text" class="form-control respuestas" style="width: 100%;"><br><br>
+                                        b) ¿Qué ritmo musical es el que menos le gusta a la gente y qué porcentaje representa? 
+                                        <input type="text" class="form-control respuestas" style="width: 100%;"><br><br>
+                                        c) ¿Qué porcentaje suman entre el pasillo y el bolero? ¿Qué relación encuentras con el rock?
+                                        <input type="text" class="form-control respuestas" style="width: 100%;"><br>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+</div>
+</div>
+</div>
+
+
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+       
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad85.js"></script>
+        <script type="text/javascript">
+            var titulos="refuerzo";
+            f_titulos();         
+            $("#n_pagina").html('116');
+        </script>
+</body>
+</html>

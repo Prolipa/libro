@@ -1,0 +1,618 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 3</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <style>
+        table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+    .correcto {
+    color: #ffffff;
+    background-color: #00e600;
+    }
+
+    .incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+    }
+
+
+    .subrayar {
+        border-bottom: 2px solid #005ca4;
+    }
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+
+
+    .circulo {
+
+     border-radius: 50%;
+    border: 2px solid #008FFF;
+    width: 200px;
+}
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+    }
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 50px;
+    max-width: 100%;
+    margin-left: 1px;
+    width: auto;
+}
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 50px;
+    min-width: 40px;
+    width: auto;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>1. Seleccione</b> en kichwa las siguientes expresiones de afecto.
+        <br>
+        <b>2. Ordena</b> las letras y escribe las palabras en kichwa de una forma correcta..
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <img class="img-responsive" src="img/trabajamos_juntos.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota1" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
+                                        <b>1. Escribe</b> <span class="sobre">3 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>1. Escribe</b> en kichwa las siguientes expresiones de afecto.
+                                        <div class="row">
+                                            <div class="col-lg-4 act1class" id="act01Txt0">
+                                            </div>
+                                            <div class="col-lg-4 act1class" id="act01Txt1">
+                                            </div>
+                                            <div class="col-lg-4 act1class" id="act01Txt2">
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota2" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <b>2. Ordena</b> <span class="sobre">3 pts</span>
+                                        </a>
+                                        </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>2. Ordena</b> las letras y <b>descubre</b> las palabras en kichwa.
+                                        <br>
+                                        <div class="row" align="center">
+                                            <div class="col-lg-6">
+                                                <div style="border:3px solid #f5813c;font-size: 20px;">h u k s i</div>
+                                                <input class="form-control sinEspacios text-lowercase" placeholder="Escribe la palabra correcta" id="act2num0"></input>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div style="border:3px solid #ac1f8d;font-size: 20px;">y l y w a l u</div>
+                                                <input class="form-control sinEspacios text-lowercase" placeholder="Escribe la palabra correcta" id="act2num1"></input>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row" align="center">
+                                            <div class="col-lg-6">
+                                                <div style="border:3px solid #2275bc;font-size: 20px;">y u y k a</div>
+                                                <input class="form-control sinEspacios text-lowercase" placeholder="Escribe la palabra correcta" id="act2num2"></input>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div style="border:3px solid #a8ce39;font-size: 20px;">l a u k l y</div>
+                                                <input class="form-control sinEspacios text-lowercase" placeholder="Escribe la palabra correcta" id="act2num3"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota3" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <b>3. Lee</b> <span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>3. Lee</b> la palabra y elabora el dibujo correspondiente.
+                                    <br>
+                                    <div class="my-drawing" style="border: 1px solid #000000;"></div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota4" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        <b>4. Escoge</b> <span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>4. Escoge</b> una de las palabras que aprendiste y <b>crea</b> un emoticono para representarla.
+                                    <br>
+                                    <input class="form-control" placeholder="palabra escogida"></input>
+                                    <div class="my-drawing" style="border: 1px solid #000000;"></div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota5" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        <b>5. Palabra</b> <span class="sobre">2 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>5. </b> ¿Qué palabra del kichwa utilizarías para expresar que estás feliz?
+                                    <br>
+                                    <input class="form-control sinEspacios" id="act5num0"></input>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    f_titulos();
+    $("#txtNota").html("0");
+    $("#n_pagina").html("153");
+    $('.btnGuardar').removeClass('disabled');
+    $(document).ready(function() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        //var imageSize = { width: winHeight , height: winHeight };
+        var watermarkImage = new Image();
+        watermarkImage.src = 'img/i4_p113_u4tema14a3.jpg';
+        //var watermarkImage2 = new Image();
+        //watermarkImage2.src = 'img/i7_p98_act100.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+
+            });
+
+
+
+    });
+
+    $(document).ready(function() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        //var imageSize = { width: winHeight , height: winHeight };
+        var watermarkImage = new Image();
+        //watermarkImage.src = 'img/i4_p113_u4tema14a3.jpg';
+        //var watermarkImage2 = new Image();
+        //watermarkImage2.src = 'img/i7_p98_act100.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[1], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+
+            });
+
+
+
+    });
+    $('.enc').click(function() {
+
+        if ($(this).hasClass('circulo')) {
+            $(this).removeClass('circulo')
+        } else {
+            $(this).addClass('circulo')
+        }
+    })
+    $('.enc1').click(function() {
+
+        if ($(this).hasClass('subrayar')) {
+            $(this).removeClass('subrayar')
+        } else {
+            $(this).addClass('subrayar')
+        }
+    })
+    document.getElementById('nota3').addEventListener('keypress', () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById('nota3').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota3'), 1)
+    });
+    document.getElementById('nota4').addEventListener('keypress', () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById('nota4').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota4'), 1)
+    });
+
+    var random1 = [
+        ['<img src="img/i1_p113_u4tema14a3.jpg" alt="" class="img-responsive"></img>' +
+            '<select class="form-control" id="sel0">' +
+            '<option>---selecciona---</option>' +
+            '<option>waylluy</option>' +
+            '<option>ukllay</option>' +
+            '<option>kuyay</option>' +
+            '</select>'
+        ],
+        ['<img src="img/i2_p113_u4tema14a3.jpg" alt="" class="img-responsive"></img>' +
+            '<select class="form-control" id="sel1">' +
+            '<option>---selecciona---</option>' +
+            '<option>waylluy</option>' +
+            '<option>ukllay</option>' +
+            '<option>kuyay</option>' +
+            '</select>'
+        ],
+        ['<img src="img/i3_p113_u4tema14a3.jpg" alt="" class="img-responsive"></img>' +
+            '<select class="form-control" id="sel2">' +
+            '<option>---selecciona---</option>' +
+            '<option>waylluy</option>' +
+            '<option>ukllay</option>' +
+            '<option>kuyay</option>' +
+            '</select>'
+        ],
+    ];
+
+    var act01Txt = document.getElementsByClassName('act1class');
+
+    random1.sort(f_randomico);
+    for (i = 0; i < act01Txt.length; i++) {
+        $('#' + act01Txt[i].id).html(random1[i]);
+    }
+    /////////////pregunta///////////////////////
+    function pregunta1() {
+        var respact2 = ['waylluy', 'ukllay', 'kuyay', ];
+        var cont = 0;
+        for (var i = 0; i < 3; i++) {
+            var res = $('#sel' + [i] + ' option:selected').text();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#sel' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#sel' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 3) / 3;
+        $('#nota1').val(parseFloat(total).toFixed(2));
+        $('select').attr("disabled", true);
+    }
+    ///////////////////////pregunta2///////////////////////
+    function pregunta2() {
+        var respact2 = ['kushi', 'waylluy', 'kuyay', 'ukllay', ];
+        var cont = 0;
+        for (var i = 0; i < 4; i++) {
+            var res = $('#act2num' + [i] + '').val().toLowerCase();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#act2num' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#act2num' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 3) / 4;
+        $('#nota2').val(parseFloat(total).toFixed(2));
+
+
+    }
+
+    ////////////////////////////////////
+    function pregunta5() {
+        var respact2 = ['kushi', ];
+        var cont = 0;
+        for (var i = 0; i < 1; i++) {
+            var res = $('#act5num' + [i] + '').val().toLowerCase();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#act5num' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#act5num' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 2) / 1;
+        $('#nota5').val(parseFloat(total).toFixed(2));
+
+
+    }
+
+    function NotaFinal() {
+        var nota1 = document.getElementById('nota1').value;
+        var nota2 = document.getElementById('nota2').value;
+        var nota3 = document.getElementById('nota3').value;
+        var nota4 = document.getElementById('nota4').value;
+        var nota5 = document.getElementById('nota5').value;
+
+        if ((nota3 == "") || (nota4 == "")) {
+            alert("Debe ingresar la calificación de la pregunta 3 o 4.")
+        } else {
+            pregunta1();
+            pregunta2();
+            pregunta5();
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var nota5 = document.getElementById('nota5').value;
+
+            var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4) + parseFloat(nota5);
+            $('#txtNota').html(parseFloat(total).toFixed(2));
+            document.getElementById('bt_comprobar').disabled = true;
+            $('input').attr("disabled", true);
+            $('textarea').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+        }
+    }
+    </script>
+</body>
+
+</html>

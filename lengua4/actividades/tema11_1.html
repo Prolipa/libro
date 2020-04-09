@@ -1,0 +1,471 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Lengua y Literatura 4</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+		<link href="css/fraccion.css" rel="stylesheet">
+		<link href="css/jquery-ui.min.css" rel="stylesheet">
+		<link href="css/Comprendo.css" rel="stylesheet">
+                    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+        <style type="text/css">
+            .respuestas{
+                font-size: 20px;
+                color: #8819D6;                
+            }
+            .checkmark {    
+                height: 25px;
+                width: 25px;        
+            }
+        </style>
+    </head>
+    <body>
+		
+		<div id="nota-informativa" class="nota-ayuda">
+             <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+                            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+                           Para completar la actividad escribe la respuesta correcta en los lugares indicados.<br><br>
+
+                           
+
+                           <br><span id="ayudas"></span>
+
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onClick="" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" >/ 10</span> 
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág  <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-aplico" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-aplico">
+                    <span class="titulo"><img src="img/icoA.png" alt="">Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                   
+                </div>
+               
+                <div class="panel-body" style="font-size: 21px;">
+                    <!--texto de ayuda de la actividad-->
+                    <div>
+                        <img src="img/practico.jpg" class="img-responsive">
+                    </div>
+
+                    <button class="btn-link btn_mostrar" style="font-size: 16px;">Mostrar Preguntas</button><br>
+
+
+                     <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                                    <input type="number" id="calificacion0" placeholder="Puntaje/3" style="width: 110px;" class="form-control">      
+                                </div>                                    
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" style="margin-left: 70px;">Actividad 1</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                1. <b>Recuerda</b> y <b>explica</b> qué son las palabras agudas, graves y esdrújulas.<br>
+                                
+                                <textarea class="form-control respuestas"></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                                   
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                2. <b>Lee</b> en voz alta las siguientes palabras agudas. <b>Clasifica</b> en la tabla según corresponda.<br>
+                                <br>
+                                   
+                                    <div class="table-responsive" align="center">
+                                        <table class="table table-hover">
+                                            <tbody align="center" style="background-color: #DCC430;">
+                                                <tr>
+                                                    <td>investigación</td>
+                                                    <td>nacional</td>
+                                                    <td>allí</td>
+                                                    <td>jaguar</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>además</td>
+                                                    <td>hacer</td>
+                                                    <td>tucán</td>
+                                                    <td>deberán</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>autobús</td>
+                                                    <td>variedad</td>
+                                                    <td>viajar</td>
+                                                    <td>colibrí</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>reloj</td>
+                                                    <td>ciudad</td>
+                                                    <td>admirar</td>
+                                                    <td>maní</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="table-responsive form-group form-inline" align="center">
+                                        <table class="table table-hover">
+                                            <tbody align="center">
+                                                <tr>
+                                                    <td style="background-color: #2DC564; color: white;">Agudas con tilde</td>
+                                                    <td style="background-color: #C52D87; color: white;">Agudas sin tilde</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="rVPA0" class="form-control respuestas">, 
+                                                        <input type="text" id="rVPA1" class="form-control respuestas">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="rVPA2" class="form-control respuestas">, 
+                                                        <input type="text" id="rVPA3" class="form-control respuestas">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="rVPA4" class="form-control respuestas">, 
+                                                        <input type="text" id="rVPA5" class="form-control respuestas">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="rVPA6" class="form-control respuestas">, 
+                                                        <input type="text" id="rVPA7" class="form-control respuestas">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="rVPA8" class="form-control respuestas">, 
+                                                        <input type="text" id="rVPA9" class="form-control respuestas">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="rVPA10" class="form-control respuestas">, 
+                                                        <input type="text" id="rVPA11" class="form-control respuestas">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="rVPA12" class="form-control respuestas">, 
+                                                        <input type="text" id="rVPA13" class="form-control respuestas">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="rVPA14" class="form-control respuestas">, 
+                                                        <input type="text" id="rVPA15" class="form-control respuestas">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                                  
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                3. <b>Coloca</b> un visto en las palabras graves.<br>
+                                
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody align="center">
+                                            <tr id="numeros0"></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+				</div>
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+		<script src="js/jquery-ui.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+		<script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+		<script src="js/animate.css.min.js"></script>
+		<script src="js/jquery.animate.css.js"></script>
+		<script src="js/Utilitario.js"></script>
+		
+		<script>
+            $("#n_pagina").html("106"); //impresion de pagina      
+
+
+        $('.btn_mostrar').on('click', function(){ //mostrar todas las preguntas
+        $(".panel-collapse").removeClass('in');
+        $(".panel-collapse").addClass('in');
+        });
+
+
+    $(document).ready(function() {
+    $(".panel-collapse").removeClass('in');
+        Preg4();
+
+        
+        function Preg4(){
+
+                var num = ['<td class="np1">'+
+                            '<p class="np1" id="rNEP0" style="border-radius: 15px;">avión<input type="checkbox" class="checkmark" id="nNEP0" value="avión" style="top: 4px; position: relative;"></p>'+
+                            '</td>',
+                            '<td class="np1">'+
+                            '<p class="np1" id="rNEP1" style="border-radius: 15px;">cocina<input type="checkbox" class="checkmark" id="nNEP1" value="cocina" style="top: 4px; position: relative;"></p>'+
+                            '</td>',
+                            '<td class="np1">'+
+                            '<p class="np1" id="rNEP2" style="border-radius: 15px;">trébol<input type="checkbox" class="checkmark" id="nNEP2" value="trébol" style="top: 4px; position: relative;"></p>'+
+                            '</td>',
+                            '<td class="np1">'+
+                            '<p class="np1" id="rNEP3" style="border-radius: 15px;">manos<input type="checkbox" class="checkmark" id="nNEP3" value="manos" style="top: 4px; position: relative;"></p>'+
+                            '</td>',
+                            '<td class="np1">'+
+                            '<p class="np1" id="rNEP4" style="border-radius: 15px;">volumen<input type="checkbox" class="checkmark" id="nNEP4" value="volumen" style="top: 4px; position: relative;"></p>'+
+                            '</td>',
+                            '<td class="np1">'+
+                            '<p class="np1" id="rNEP5" style="border-radius: 15px;">orgánico<input type="checkbox" class="checkmark" id="nNEP5" value="orgánico" style="top: 4px; position: relative;"></p>'+
+                            '</td>',
+                        ];
+
+
+                var contenidos2 = num;
+
+                contenidos2.sort(f_randomico);
+
+                $.each( contenidos2, function( i, item ) {
+                  $("#numeros0").append( item );
+                });
+        }
+
+        var notaFinalP2 = 0;
+        function Resp2(){
+
+            var r=false;
+            var c=0;
+            resp = ['investigación','allí','además','tucán','autobús','deberán','colibrí','maní','nacional','jaguar','hacer','variedad','viajar','ciudad','admirar','reloj'];
+            for(var i=0; i<16; i++){
+
+                while (r == false && c<16) {
+                    //alert($('#rVPA'+i).val().toLowerCase().replace(/ /g, "")+' == '+ resp[c]);
+                    if($('#rVPA'+i).val().toLowerCase().replace(/ /g, "") == resp[c]){
+                        notaFinalP2++;
+                        r=true;
+                        $('#rVPA'+i).css("background-color", "#5ED188");
+                    }else{
+                        $('#rVPA'+i).css("background-color", "#EF87A7");
+                    }
+                    c++;
+                }   
+                c=0;
+                r=false;
+
+            }
+        }
+
+
+
+
+
+        var notaFinalP4 = 0;
+        var NP4 = 0;
+        function Resp4(){
+          var con=6;
+          for(var i=1; i<5; i++){
+
+              if($('#nNEP'+i).is(':checked')){
+                notaFinalP4++;              
+                $('#rNEP'+i).css("background-color", "#5ED188");
+              }else{
+                $('#rNEP'+i).css("background-color", "#EF87A7");                      
+              }
+
+          }
+            
+            NP4 = (notaFinalP4*3)/4;
+
+        }
+
+
+
+
+          function confirmar() {
+
+            Resp2();
+            Resp4();
+
+            var nota1 = parseFloat($('#calificacion0').val());
+            var nota2 = (notaFinalP2*4)/16;
+            var nota4 = 0;
+            if(NP4<0){NP4=0;}else{nota4 = NP4;}
+            
+            var notaFinal = (nota1+nota2+nota4).toFixed(2);
+
+                $("#txtNota").text(notaFinal);
+                $('#Calificar').attr('disabled', true);
+                $('#Refrescar').attr('disabled', false);                          
+                  return false
+          }
+      
+
+    $("#Calificar").click(function() {
+
+       if($('#calificacion0').val() !='' ){
+          confirmar();
+          $('#calificacion0').css("background-color", "#05D576");
+        }else{
+          $('#calificacion0').focus();
+          $('#calificacion0').css("background-color", "#D50545");
+        }
+        
+      });
+
+  });
+
+        </script>
+
+    </body>
+</html>

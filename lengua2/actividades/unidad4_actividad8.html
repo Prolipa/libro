@@ -1,0 +1,665 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 2</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/estilo_canvas.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css">
+</head>
+<style type="text/css">
+.correcto {
+    color: #ffffff;
+    background-color: #a7d27d;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.respuesta_p1 {
+    width: 1.5cm;
+    height: 1.5cm;
+    border: 2px solid #a863a5;
+    border-radius: 20%;
+    font-size: 1.5em
+}
+
+.fontnu {
+    color: #005CA4;
+    font-size: 20px;
+}
+
+.imagenes1 img {
+    padding: 25px;
+    max-width: 200px;
+    display: inline-table;
+}
+
+.actividad1 {
+    background: #fff;
+}
+
+.cuadros {
+    margin-top: 20px;
+    margin-left: -4.8px;
+    border: 2px solid #009fe3;
+    width: 1.1cm;
+    height: 1.1cm;
+    display: inline-block;
+}
+
+.cuadros input {
+    max-width: 1cm;
+    min-height: 1cm;
+    text-align: center;
+    border: none;
+}
+
+.contenedor {
+    display: inline-block;
+    margin: 20px;
+}
+
+.contenedor img {
+    max-height: 150px;
+}
+
+.sel_p5 {
+    border: 2px solid;
+    min-width: 50px;
+    max-width: 100px;
+    padding: 15px;
+    display: inline-block;
+    font-size: 15px;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Dibuje lo requerido.<br>
+        2. Escriba en el recuadro la respuesta correcta.<br>
+        3. Lea en voz alta.<br>
+        4. Escriba las palabras de acuerdo a los gráficos<br>
+        5. Escriba en el recuadro la respuesta correcta.<br>
+        6. Escriba en el recuadro la respuesta correcta.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button>
+                <br>
+                <br>
+                <img src="img/literatura.jpg" class="img img-responsive">
+                <!--  PREGUNTA 1-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                             <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a">&nbsp;</input><a data-toggle="collapse" data-parent="#aion" href="#pregunta1"><b>Pregunta 1</b> (1 pts.)</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <p class="text-question">
+                                <b>1. Leo</b> el siguiente poema infantil y elaboro un dibujo acerca de su contenido.
+                            </p>
+                            <p></p>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <img src="img/i1_p182_act1.jpg" class="img-responsive">
+                                </div>
+                                    <div class="col-sm-6">
+                                        <div class="my-drawing"></div><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="img/comunicacion.jpg" class="img img-responsive">
+                    <!--  PREGUNTA 2-->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a" >&nbsp;</input><a data-toggle="collapse" data-parent="#aion" href="#pregunta2"><b>Pregunta 2</b> (2 pts.)</a>
+                        </h4>
+                        </div>
+                        <div id="pregunta2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p class="text-question">
+                                    <b>2. Observo</b> la imagen e <b>imagino</b> que estoy en su lugar. Escribo lo que siento.
+                                </p>
+                                <p></p>
+                                <div class="row">
+                                    <div class="col-sm-4 table-responsive">
+                                       <center> <img src="img/i1_p182_act2.jpg"></center>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="6"
+                                                    placeholder="Texto" style="border-color: #E5BF34;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="img/lectura.jpg" class="img img-responsive">
+                    <!--  PREGUNTA 3-->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a" >&nbsp;</input><a data-toggle="collapse" data-parent="#aion" href="#pregunta3"><b>Pregunta 3</b> (1 pts.)</a>
+                        </h4>
+                        </div>
+                        <div id="pregunta3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <section class="text-question">
+                                    <span> <b>3. Leo</b> en voz alta el siguiente pictograma.</span>
+                                </section>
+                                <div class="row">
+                                    <div class="col-sm-12 table-responsive">
+                                        <center><img src="img/i1_p182_act3.jpg"></center>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="img/escritura.jpg" class="img img-responsive">
+                        <!--  PREGUNTA 4-->
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a" readonly>&nbsp;</input><a data-toggle="collapse" data-parent="#accordion" href="#pregunta4"><b>Pregunta 4</b> (4 pts.)</a>
+
+                        </h4>
+                            </div>
+                            <div id="pregunta4" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <section class="text-question">
+                                        <span> <b>4. Completo</b> el siguiente crucigrama con los nombres de cada imagen. <b>Reconozco</b> las imágenes y <b>escribo</b> sus nombres.</span>
+                                    </section>
+                                    <div class="table-responsive" >
+                                        <table>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><img src="img/i7_p182_act4.jpg"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><img src="img/i13_p182_act4.jpg"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VI0"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VAS0"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VAS1"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VAS2"></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><img src="img/i3_p182_act4.jpg"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><img src="img/i4_p182_act4.jpg"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VI1"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><img src="img/i6_p182_act4.jpg"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="B0"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VA0"></td>
+                                                <td></td>
+                                                <td><img src="img/i12_p182_act4.jpg"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VO0"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VI2"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VO1"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VO2"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VO3"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VO4"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><img src="img/i8_p182_act4.jpg"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VE0"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="B1"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VE1"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VE2"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VE3"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VE4"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VE5"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VI3"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="N0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="B2"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VA1"></td>
+                                                <td><img src="img/i5_p182_act4.jpg"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VI4"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="N1"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="B3"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><img src="img/i11_p182_act4.jpg"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VA2"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="A0"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="A1"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="A2"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="A3"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="N2"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><img src="img/i2_p182_act4.jpg"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="B4"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VEN0"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="N3"></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="U0"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="B5"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VEN1"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="img/i1_p182_act4.jpg"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="U1"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="V0"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="V1"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="V2"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="V3"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="V4"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><img src="img/i10_p182_act4.jpg"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="Z0"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VEN2"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="Z1"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="Z2"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="Z3"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="Z4"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="U2"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VEN3"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><img src="img/i9_p182_act4.jpg"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="Q0"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="Q1"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="Q2"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="Q3"></td>
+                                                <td><input type="text" class=" cajas" style="width:50px;border-color:#F4AFF4 " id="VEN4"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  PREGUNTA 5-->
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre5a" >&nbsp;</input><a data-toggle="collapse" data-parent="#aion" href="#pregunta5"><b>Pregunta 5</b> (1 pts.)</a>
+                        </h4>
+                            </div>
+                            <div id="pregunta5" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="text-question"> <b>5. Observo</b> la imagen y <b>elaboro</b> una oración.</div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <img src="img/i1_p182_act5.jpg">
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control text-question no-redimensionar " cols="60" rows="6"
+                                                    placeholder="Texto" style="border-color: #2E86C1;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="img/lengua.jpg" class="img img-responsive">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                            <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre6a">&nbsp;</input><a data-toggle="collapse" data-parent="#aion" href="#pregunta6"><b>Pregunta 6</b> (1 pts.)</a>
+                        </h4>
+                            </div>
+                            <div id="pregunta6" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="text-question">
+                                        <span> <b>6. Recuerdo</b> y <b>contesto</b>. ¿Qué es lo que aprendí acerca del pueblo Salasaca?.</span>
+                                    </div>
+                                    <div align="center">
+                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="6"
+                                                    placeholder="Texto" style="border-color: #2E86C1;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Por favor ingrese el nombre. Es obligatorio</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <script src="js/jquery.ui.touch-punch.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+            <!--generador de pdf-->
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/animate.css.min.js"></script>
+            <script src="js/jquery.animate.css.js"></script>
+            <script src="js/Utilitario.js"></script>
+            <script src="js/react-with-addons.js"></script>
+            <script src="js/literallycanvas.min.js"></script>
+            <script src="js/validacionesExtras.js"></script>
+            <script src="js/uni4_actividad8.js"></script>
+            <script>
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            $(document).ready(function() {
+                var watermarkImage = new Image();
+                watermarkImage.src = 'img/i2_p182_act1.jpg';
+                LC.init(
+                    document.getElementsByClassName('my-drawing')[0], {
+                        imageURLPrefix: 'imgcanvas',
+                        watermarkImage: watermarkImage,
+                        watermarkScale: 0.9, // you can scale it
+                        backgroundColor: 'white',
+                    });
+            });
+            /*$(document).ready(function() {
+                var lc = LC.init(
+                    document.getElementsByClassName('my-drawing')[0], { imageURLPrefix: 'imgcanvas' });
+                var newImage = new Image()
+                newImage.src = 'imgcanvas/screenshot.png';
+                lc.saveShape(LC.createShape('Image', { x: 10, y: 10, image: newImage }));
+
+
+            });*/
+            </script>
+</body>
+
+</html>

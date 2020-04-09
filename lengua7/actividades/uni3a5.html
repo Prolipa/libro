@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LENGUA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.cajas1 {
+
+    border: 1px #009277 solid;
+}
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+.imagen3 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #FFF0CA;
+}
+.imagen4 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #F5F0F7;
+}
+.underline{
+        text-decoration: underline;
+        text-decoration-color: rgb(59, 114, 37);
+        
+    }
+.c_origen{
+        border:1px solid #009BDB;
+        border-radius: 10px;
+        min-height: 50px;
+        max-width: 100%;
+        margin-left: 1px;
+    } 
+    .c_destinos2{
+        padding: 5px;
+        border:1px solid #CCAE69;
+        border-radius: 10px;
+        min-height: 70px;
+        min-width: 120px;
+    }
+.bg_palabra{
+            background-color: #F9E8B2;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+.cajas1 {
+        width: 40px;
+        border: solid;
+        border-width: 1px;
+        border-color: blue;
+        text-align: center;
+        padding: 5px;
+        border-radius: 5px;
+
+
+    }
+    .encierra{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra1{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra2{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra3{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        
+        <b>Pregunta 1:</b> Escribe oraciones con objeto directo usando los siguientes verbos.<br>
+        <b>Pregunta 2:</b> Encierra el objeto directo. Para encerrar da click sobre la palabra. Para quitar vuelve a dar click en la palabra.<br>
+        <b>Pregunta 3:</b> Escribe las oraciones anteriores, reemplazando el objeto directo por los pronombres la, las, lo o los, según corresponda.<br>
+        <b>Pregunta 4:</b> Subraya el objeto indirecto en estas oraciones y escribe las preguntas que formulaste para encontrarlo. <br>
+        <b>Pregunta 5:</b> Transforma los pronombres le/les en objetos indirectos y reescribe las oraciones. <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/practico.png" class="img-responsive" alt="">
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_1"> <b style="color:#005CA9">1. </b><b>Usa</b> los siguientes verbos para escribir oraciones con objeto directo.</span>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr align="center">
+                                <td style="border: 2px solid #53AD31; vertical-align: middle;" ><b>Pedir</b></td>
+                                <td style="border: 2px solid #53AD31;"><textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea></td>
+                            </tr>
+                            <tr align="center">
+                                <td style="border: 2px solid #53AD31; vertical-align: middle;"><b>Tomar</b></td>
+                                <td style="border: 2px solid #53AD31;"><textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea></td>
+                            </tr>
+                            <tr align="center">
+                                <td style="border: 2px solid #53AD31; vertical-align: middle;"><b>Traer</b></td>
+                                <td style="border: 2px solid #53AD31;"><textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><b style="color:#005CA9">2. </b><b>Encierra</b> el objeto directo en las siguientes oraciones.</span>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <p><span class="enc1">Mi hermano</span> <span class="enc2">trajo</span> <span class="enc3">sus juguetes.</span></p>
+                    <p><span class="enc4">En la radio</span> <span class="enc5">pusieron</span> <span class="enc6">sanjuanitos.</span></p>
+                    <p><span class="enc7">Ecuador</span> <span class="enc8">tiene</span> <span class="enc9">cuatro regiones naturales.</span></p>
+                    <p><span class="enc10">El reporte</span> <span class="enc11">presentó</span> <span class="enc12">resultados alarmantes.</span></p>
+                </div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_2"><b style="color:#005CA9">3. </b><b>Escribe</b> las oraciones anteriores, reemplazando el objeto directo por los pronombres la, las, lo o los, según corresponda.</span>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                </div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_3"><b style="color:#005CA9">4. </b><b>Subraya</b> el objeto indirecto en estas oraciones y <b>escribe</b> las preguntas que formulaste para encontrarlo.</span>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <p><span class="enc13">La doctora Martínez</span> <span class="enc14">atendió</span> <span class="enc15">a todos sus pacientes.</span></p>
+                    <p><span class="enc16">El noticiero</span> <span class="enc17">informó</span> <span class="enc18">a la ciudadanía.</span></p>
+                    <p><span class="enc19">Diego</span> <span class="enc20">leyó</span> <span class="enc21">un cuento</span> <span class="enc22">para su hijita.</span></p>
+                    <p><span class="enc23">Los niños</span> <span class="enc24">tenían</span> <span class="enc25">muchas preguntas</span> <span class="enc26">para la profesora.</span></p>
+                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                </div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_4"><b style="color:#005CA9">5. </b><b>Transforma</b> los pronombres le/les en objetos indirectos y <b>reescribe</b> las oraciones.</span>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td style="border: 2px solid #953F90;"><p>Sofía le prestó su cuaderno.</p></td>
+                                <td style="border: 2px solid #953F90;"><textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta" style="min-width: 100px;"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid #953F90;"><p>La osa les trajo comida.</p></td>
+                                <td style="border: 2px solid #953F90;"><textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta" style="min-width: 100px;"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid #953F90;"><p>El gobierno les entregó las casas.</p></td>
+                                <td style="border: 2px solid #953F90;"><textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta" style="min-width: 100px;"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid #953F90;"><p>Estefanía le comunicó su decisión.</p></td>
+                                <td style="border: 2px solid #953F90;"><textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta" style="min-width: 100px;"></textarea></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <p id="trace" class="alert alert-warning display-none"></p>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni3a5.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("109");
+    //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+      
+    </script>
+</body>
+
+</html>

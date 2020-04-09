@@ -1,0 +1,1242 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>LENGUA 3</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/selectDselect.css">
+    <style>
+    
+    table tr td div span{
+        vertical-align: middle;
+    }
+
+    table tr th span{
+        color: black;
+    }
+    table tr th{
+        text-align: center;
+    }
+    .underline{
+        text-decoration: underline;
+        text-decoration-color: rgb(59, 114, 37);
+        
+    }
+    .roundedDivs{
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 3px solid #ce2c85;
+        /* background: #009900; */
+        width: 150px;
+        height: 70px;
+    }
+    .roundedDivs2{
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 3px solid #ce2c85;
+        /* background: #009900; */
+        width: 100%;
+        height: 70px;
+    }
+    table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+    .cajas {
+    border: 1px #005ca4 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    text-align: center;
+    width: auto;
+    }
+    .subrayar {
+        text-decoration: underline;
+    }
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+    .bordeTabla{
+        border: 1px #005ca4 solid;
+    }
+    .incorrecto {
+
+    background-color: #E76E80;
+}
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br> Selecciona <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> , en el cuadro de dialogo escribir el nombre del alumno o alumnos que realizaron actividad,
+        <br> para descargar un pdf para que el profesor evalue sus respuestas.
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 46
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nt1" class="nota-abierta sumna" maxlength="3">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Literatura <span class="sobre">4 pts</span>
+                                    </a>
+
+
+                                </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <span><b>1.- Lee</b> el poema y<b> completa</b> el cuadro. (2pts)</span>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <img src="img/i1_p46_act35.png" alt="" srcset="" class="img-responsive">
+                                    </div>  
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tr class="btn-warning">
+                                                <th>
+                                                    <div>
+                                                        <span>Hablante lírico</span>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div>
+                                                        <span>Explicación</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="btn-info">
+                                                <th>
+                                                    <div>
+                                                        <span>Motivo lírico</span>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div>
+                                                        <span>Explicación</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="btn-danger">
+                                                <th>
+                                                    <div>
+                                                        <span>Objeto lírico</span>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div>
+                                                        <span>Explicación</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="btn-success">
+                                                <th>
+                                                    <div>
+                                                        <span>Actitud lírica</span>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div>
+                                                        <span>Explicación</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <br>
+                                    <div class="text-question">
+                                        <span><b>2.- Lee</b> el poema y completa el cuadro. (2pts)</span>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tr>
+                                                <th class="btn-info">
+                                                    <div>
+                                                        <span>Poema</span>
+                                                    </div>
+                                                </th>
+                                                <th class="btn-danger">
+                                                    <div>
+                                                        <span>Sílabas</span>
+                                                    </div>
+                                                </th>
+                                                <th class="btn-warning">
+                                                    <div>
+                                                        <span>Rima</span>
+                                                    </div>
+                                                </th>
+                                                <th class="btn-info">
+                                                    <div>
+                                                        <span>Sinalefa</span>
+                                                    </div>
+                                                </th>
+                                                <th class="btn-primary">
+                                                    <div>
+                                                        <span>Acento</span>
+                                                    </div>
+                                                </th>
+                                                <th class="btn-success">
+                                                    <div>
+                                                        <span>Sonoridad</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: center; vertical-align: middle;">
+                                                    <div>
+                                                        <span style="color: rgb(196, 61, 196)">Hagamos un trato</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>Compañera,</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>usted sabe</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>que puede contar conmigo,</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>no hasta dos o hasta diez</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>sino contar conmigo.</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>Si alguna vez</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>advierte</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>que la miro a los ojos,</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>y una veta de amor</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>reconoce en los míos,</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>no alerte sus fusiles</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>ni piense que deliro;</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>a pesar de la veta,</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>o tal vez porque existe,</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>usted puede contar</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <span>conmigo.</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <input type="text" name="" id="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: right; font-style: italic">
+                                                    <div>
+                                                        <span>Benedetti, Mario (s/f ). “Hagamos un trato”. Ciudad Seva.<br> Recuperado de<a href="https://goo.gl/FwBJXr"> https://goo.gl/FwBJXr</a></span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nt2" class="nota-abierta sumna" min="0" max="10" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Comunicación oral <span class="sobre">1 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="row">
+                                        <div class="text-question col-md-6 tqco3">
+                                            <span><b>3.- </b>El elemento más importante de un conversatorio es: (0.5 pts)</span>
+                                            <br>
+                                            <br>
+                                            <div>
+                                                <p><b>a. </b></p>
+                                                <p><b>b. </b></p>
+                                                <p><b>c. </b></p>
+                                                <p><b>d. </b></p>
+                                            </div>
+                                        </div>
+                                        <div class="text-question col-md-6 tqco4">
+                                            <span><b>4.- </b>El tema de un conversatorio se lo elige a partir de: (0.5 pts)</span>
+                                            <br>
+                                            <br>
+                                            <div>
+                                                <p><b>a. </b></p>
+                                                <p><b>b. </b></p>
+                                                <p><b>c. </b></p>
+                                                <p><b>d. </b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-success" id="btnCalifComunicOral">Calificar Comunicaión Oral</button>
+                                    
+                                <div class="html2pdf__page-break"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nt3" class="nota-abierta sumna" min="0" max="10" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Lectura <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="col-md-12" style="padding-top: 20px">
+                                    <div class="text-question">
+                                        <span><b>5.- Lee</b> cada uno de los siguientes párrafos y<b> determina</b> su tipología.<b> Escoge</b> la respuesta. (1 pts)</span>
+                                    </div>
+                                    <div><img src="img/i1_p47_act35.png" alt="" srcset="" class="img-responsive"></div>
+                                    <br>
+                                    <div class="contlect">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <b>a. </b>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <b>b. </b>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <b>c. </b>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <b>d. </b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr> 
+                                    <div class="text-question">
+                                        <span><b>6.- Lee</b> el texto y determina de qué tipo es, según su intencionalidad. (1 pts)</span>
+                                    </div> 
+                                    <div><img src="img/i2_p47_act35.png" alt="" srcset="" class="img-responsive"></div>
+                                    <br>
+                                    <div class="conlect6">
+                                        <p><b>a. </b></p>
+                                        <p><b>b. </b></p>
+                                        <p><b>c. </b></p>
+                                        <p><b>d. </b></p>
+                                    </div>
+                                    <button class="btn btn-success" id="btnCalifLectura">Calificar Lectura</button>
+                                    <div>
+                                        <br>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nt4" class="nota-abierta sumna" min="0" max="10" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        Escritura <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <input type="text" id="nes7" class="nota-abierta ne" min="0" max="10" readonly>&nbsp;&nbsp;<span><b>7.- Lee</b> el texto y responde de qué trata el texto. (0.5 pts)</span>
+                                    </div>
+                                </div>
+                                <div><img src="img/i1_p48_act35.png" alt="" srcset="" class="img-responsive"></div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                                <div class="conescrib7">
+                                    <p><b>a. </b></p>
+                                    <p><b>b. </b></p>
+                                    <p><b>c. </b></p>
+                                    <p><b>d. </b></p>
+                                </div>
+                                <br>
+                                <button class="btn btn-success" id="btnCalifEscrit7">Calificar Escritura 7</button>
+                                <hr>
+                                <div>
+                                    <div class="text-question">
+                                        <input type="text" id="nes8" class="nota-abierta ne" min="0" max="10">&nbsp;&nbsp;<span><b>8. </b>¿Cuál es la oración subordinada adjetiva que se encuentra en el texto anterior? (0.5 pts)</span>
+                                    </div>
+                                    <br>
+                                    <input type="text" name="" id="" class="form-control">
+                                    <br>
+                                    <div class="text-question">
+                                        <span><b>9. Construye </b>una oración subordinada adjetiva a partir de cada uno de los tipos de nexos: (1 pts)</span>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tr class="btn-warning">
+                                                <th>Tipo de nexo</th>
+                                                <th>Ejemplo</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="span">Relativo posesivo: cuyos</div>
+                                                </td>
+                                                <td>
+                                                    <div><input type="text" name="" id="" class="form-control"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="span">Adverbio relativo: que</div>
+                                                </td>
+                                                <td>
+                                                    <div><input type="text" name="" id="" class="form-control"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="span">Pronombre relativo: los cuales</div>
+                                                </td>
+                                                <td>
+                                                    <div><input type="text" name="" id="" class="form-control"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nt5" class="nota-abierta sumna" min="0" max="10" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        Lengua y Cultura <span class="sobre">1 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="text-question col-md-6 lc10">
+                                        <span><b>10.- Subraya </b>la opción correcta. (0.5 pts)</span>
+                                        <br>
+                                        <br>
+                                        <span>Las ideas abstractas se representaban a partir de la combinación de un:</span>
+                                        <br>
+                                        <br>
+                                        <div>
+                                            <p><b>a. </b></p>
+                                            <p><b>b. </b></p>
+                                            <p><b>c. </b></p>
+                                            <p><b>d. </b></p>
+                                        </div>
+                                    </div>
+                                    <div class="text-question col-md-6 lc11">
+                                        <span><b>4.- Subraya </b>el orden secuencial en que aparecieron las formas de escritura. (0.5 pts)</span>
+                                        <br>
+                                        <div><span>1.- Fonograma&emsp;2.- Pictograma&emsp;3.- Jeroglífico&emsp;4.- Ideograma</span></div>
+                                        <br>
+                                        <div>
+                                            <p><b>a. </b></p>
+                                            <p><b>b. </b></p>
+                                            <p><b>c. </b></p>
+                                            <p><b>d. </b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <button class="btn btn-success" id="btnCaliflectcom">Calificar Lectura y Cultura</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="guardar()">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/initElementos.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/select_dselect_elements.js"></script>
+    <script src="js/calcularNotas.js"></script>
+    <script src="js/actividad35.js"></script>
+    <script>
+    function calificaTST() {
+        var listNts = document.getElementsByClassName('nota-abierta');
+        nt = 0;
+        band = true;
+        for (var i = 0; i < listNts.length; i++) {
+            if ($(listNts[i]).val() == '') {
+                band = false;
+                $(listNts[i]).addClass('no-valid')
+                $('.form-control').attr('disabled', true);
+            } else {
+                nt += parseFloat($(listNts[i]).val());
+                $(listNts[i]).addClass('valid')
+            }
+        }
+        if (band == false) {
+            alert('Hay preguntas sin calificar.\n\Verifica que todas las preguntas estan calificadas.')
+        } else {
+            $('.respuesta').attr('desabled', true);
+            $('.btnCalificar').addClass('disabled');
+            $('.btnGuardar').removeClass('disabled');
+            $('#txtNota').html(nt)
+        }
+
+    }
+
+    function guardar() {
+        $('.collapse').collapse('show')
+        save_open_activity_to_local('txtAlumno')
+    };
+    </script>
+    <script type="text/javascript">
+    var titulos = "evaluacion";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("42");
+    $(".btnGuardar").removeClass('disabled');
+    </script>
+</body>
+
+</html>

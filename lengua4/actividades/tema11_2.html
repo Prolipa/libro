@@ -1,0 +1,485 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Lengua y Literatura 4</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+		<link href="css/fraccion.css" rel="stylesheet">
+		<link href="css/jquery-ui.min.css" rel="stylesheet">
+		<link href="css/Comprendo.css" rel="stylesheet">
+                    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+        <style type="text/css">
+            .respuestas{
+                font-size: 20px;
+                color: #8819D6;                
+            }
+            table.table-bordered{
+                border:2px solid #722BA6;
+                margin-top:20px;
+              }
+            table.table-bordered > thead > tr > th{
+                border:2px solid #722BA6;
+            }
+            table.table-bordered > tbody > tr > td{
+                border:2px solid #722BA6;
+            }
+        </style>
+    </head>
+    <body>
+		
+		<div id="nota-informativa" class="nota-ayuda">
+             <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+                            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+                           Para completar la actividad escribe la respuesta correcta en los lugares indicados.<br><br>
+
+                           <b>Cuida tu ortografía y evita escribir palabras o simbolos innecesarios ya que afectarán a tu calificación.</b><br>
+
+                           <br><span id="ayudas"></span>
+
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onClick="" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" >/ 10</span> 
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág  <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-aplico" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-aplico">
+                    <span class="titulo"><img src="img/icoA.png" alt="">Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                   
+                </div>
+               
+                <div class="panel-body" style="font-size: 20px;">
+                    <!--texto de ayuda de la actividad-->
+                    <div>
+                        <img src="img/practico.jpg" class="img-responsive">
+                    </div>
+
+                    <button class="btn-link btn_mostrar" style="font-size: 16px;">Mostrar Preguntas</button><br>
+
+
+                     <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                                 
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                1. <b>Observa</b> los emoticones. Lee la pista en cada caso y <b>selecciona</b> la palabra que corresponde.<br><br>
+                                
+                                <div class="col-sm-2">
+                                    <br>
+                                   <img src="img/i1_p107_act1.jpg" class="img-responsive">
+                                </div>
+                                <div class="col-sm-10" align="center">
+                                                <div class="col-sm-4 img-responsive table-responsive" style="background-image: url('img/i2_p107_act1.jpg'); border-top-right-radius: 20px; border-bottom-left-radius: 20px;">
+                                                    <br><br><br><br><br><br><input type="text" id="rEMP0" class="form-control respuestas">    
+                                                </div>
+                                                <div class="col-sm-4 img-responsive table-responsive" style="background-image: url('img/i3_p107_act1.jpg'); border-top-right-radius: 20px; border-bottom-left-radius: 20px;">
+                                                    <br><br><br><br><br><br><input type="text" id="rEMP1" class="form-control respuestas">    
+                                                </div>
+                                                <div class="col-sm-4 img-responsive table-responsive" style="background-image: url('img/i4_p107_act1.jpg'); border-top-right-radius: 20px; border-bottom-left-radius: 20px;">
+                                                    <br><br><br><br><br><br><input type="text" id="rEMP2" class="form-control respuestas">    
+                                                </div>
+
+                                                <div class="col-sm-4 img-responsive table-responsive" style="background-image: url('img/i5_p107_act1.jpg'); border-top-right-radius: 20px; border-bottom-left-radius: 20px;">
+                                                    <br><br><br><br><br><br><input type="text" id="rEMP3" class="form-control respuestas">    
+                                                </div>
+                                                <div class="col-sm-4 img-responsive table-responsive" style="background-image: url('img/i6_p107_act1.jpg'); border-top-right-radius: 20px; border-bottom-left-radius: 20px;">
+                                                    <br><br><br><br><br><br><input type="text" id="rEMP4" class="form-control respuestas">    
+                                                </div>
+                                                <div class="col-sm-4 img-responsive table-responsive" style="background-image: url('img/i7_p107_act1.jpg'); border-top-right-radius: 20px; border-bottom-left-radius: 20px;">
+                                                    <br><br><br><br><br><br><input type="text" id="rEMP5" class="form-control respuestas">    
+                                                </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                                   
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body preguntas">
+                                2. <b>Lee</b> las siguientes definiciones, <b>ordena</b> las sílabas y <b>descubre</b> la palabra escondida.<br>
+                                <div class="table-responsive" align="center">
+                                    <table class="table-responsive table-hover table-bordered" id="definiciones">
+                                        <tbody>
+                                        </tbody>
+                                    </table>    
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                                   
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body preguntas form-group form-inline">
+                                3. <b>Completa</b> las oraciones con las respuestas de la actividad anterior.<br><br>
+
+                                <ol id="oracionesC1"></ol>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <img src="img/trabajamos_juntos.jpg" class="img-responsive">
+                    </div>
+
+
+
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                                    <input type="number" id="calificacion0" placeholder="Puntaje/2" style="width: 110px;" class="form-control">      
+                                </div>                                                                    
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4" style="margin-left: 70px;">Actividad 4</a>
+                            </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                            <div class="panel-body preguntas form-group form-inline">
+                                4. <b>Reúnanse</b> en grupos de cuatro. <b>Escriban</b> palabras agudas, graves y esdrújulas que <b>cumplan</b> con las siguientes características.<br><br>
+                               
+                                <table class="table table-hover table-bordered">
+                                    <tbody align="center">
+                                        <tr>
+                                            <td style="background-color: #DABE2E; color: white;">Palabras agudas de plantas</td>
+                                            <td style="background-color: #DA2E9E; color: white;">Palabras graves de ciudades</td>
+                                            <td style="background-color: #2E6FDA; color: white;">Palabras esdrújulas de objetos</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                            <td><input type="text" class="form-control respuestas"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+				</div>
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+		<script src="js/jquery-ui.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+		<script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+		<script src="js/animate.css.min.js"></script>
+		<script src="js/jquery.animate.css.js"></script>
+		<script src="js/Utilitario.js"></script>
+		
+		<script>
+            $("#n_pagina").html("107"); //impresion de pagina      
+
+
+        $('.btn_mostrar').on('click', function(){ //mostrar todas las preguntas
+        $(".panel-collapse").removeClass('in');
+        $(".panel-collapse").addClass('in');
+        });
+
+
+    $(document).ready(function() {
+    $(".panel-collapse").removeClass('in');
+
+
+
+    ////preg1
+
+        var contenidos1 = [
+            ['<tr> <td>&nbsp;&nbsp;&nbsp;Mamífero pequeño, con cola larga y patas cortas. </td> <td>&nbsp;&nbsp;&nbsp;tón - ra</td> <td><input type="text" id="rDS0" class="form-control respuestas" style="width: 150px; padding: 25px;"></td> </tr>'],
+            ['<tr> <td>&nbsp;&nbsp;&nbsp;Ave que representa la fuerza en el escudo del Ecuador. </td> <td>&nbsp;&nbsp;&nbsp;dor – cón</td> <td><input type="text" id="rDS1" class="form-control respuestas" style="width: 150px; padding: 25px;"></td> </tr>'],
+            ['<tr> <td>&nbsp;&nbsp;&nbsp;Clase de pez depredador con dientes filudos. </td> <td>&nbsp;&nbsp;&nbsp;bu – ti - rón</td> <td><input type="text" id="rDS2" class="form-control respuestas" style="width: 150px; padding: 25px;"></td> </tr>'],
+            ['<tr> <td>&nbsp;&nbsp;&nbsp;Ave con plumaje visto, pico fuerte y curso. </td> <td>&nbsp;&nbsp;&nbsp;ga – pa – yo - pa</td> <td><input type="text" id="rDS3" class="form-control respuestas" style="width: 150px; padding: 25px;"></td> </tr>'],
+            ['<tr> <td>&nbsp;&nbsp;&nbsp;Mamífero doméstico de tamaño mediano. </td> <td>&nbsp;&nbsp;&nbsp;llo – ba - ca</td> <td><input type="text" id="rDS4" class="form-control respuestas" style="width: 150px; padding: 25px;"></td> </tr>'],
+
+        ]
+        contenidos1.sort(f_randomico);
+
+        $.each( contenidos1, function( i, item ) {
+            $("#definiciones").append( item );
+        });
+
+
+
+
+           ////preg3               
+
+        var contenidos2 = [
+            ['Las palabras <input type="text" id="rCOR0" class="form-control respuestas" style="width: 150px;"> y <input type="text" id="rCOR1" class="form-control respuestas" style="width: 150px;">se tildan porque son agudas que terminan en n o s.<br><br>'],
+            ['La palabra <input type="text" id="rCOR2" class="form-control respuestas" style="width: 150px;"> se tilda porque es grave que termina en consonante, menos en n o s.<br><br>'],
+            ['Las palabras <input type="text" id="rCOR3" class="form-control respuestas" style="width: 150px;"> y <input type="text" id="rCOR4" class="form-control respuestas" style="width: 150px;"> no se tildan porque son graves que terminan en vocal.<br><br>'],
+        ]
+        contenidos2.sort(f_randomico);
+
+        $.each( contenidos2, function( i, item ) {
+            $("#oracionesC1").append( item );
+        });
+
+
+
+
+
+
+        var notaFinalP1 = 0;
+        function Resp1(){
+
+            resp = ['feliz','alivio','estrés','preocupación','aceptación','sorpresa'];
+            for(var i=0; i<6; i++){
+
+                if($('#rEMP'+i).val().toLowerCase().replace(/ /g, "") == resp[i]){
+                    notaFinalP1++;
+                    $('#rEMP'+i).css("background-color", "#5ED188");
+                }else{
+                    $('#rEMP'+i).css("background-color", "#EF87A7");
+                }
+
+            }
+        }
+
+
+        var notaFinalP2 = 0;
+        function Resp2(){
+
+            resp = ['ratón','cóndor','tiburón','papagayo','caballo'];
+            for(var i=0; i<5; i++){
+
+                if($('#rDS'+i).val().toLowerCase().replace(/ /g, "") == resp[i]){
+                    notaFinalP2++;
+                    $('#rDS'+i).css("background-color", "#5ED188");
+                }else{
+                    $('#rDS'+i).css("background-color", "#EF87A7");
+                }
+
+            }
+        }
+
+
+
+        var notaFinalP3 = 0;
+        function Resp3(){
+
+            resp = ['ratón','tiburón','cóndor','papagayo','caballo'];
+            for(var i=0; i<5; i++){
+
+                if($('#rCOR'+i).val().toLowerCase().replace(/ /g, "") == resp[i]){
+                    notaFinalP3++;
+                    $('#rCOR'+i).css("background-color", "#5ED188");
+                }else{
+                    $('#rCOR'+i).css("background-color", "#EF87A7");
+                }
+
+            }
+        }
+        
+        
+
+
+
+          function confirmar() {
+            Resp1();
+            Resp2();
+            Resp3();
+
+            var nota1 = (notaFinalP1*3)/6;
+            var nota2 = (notaFinalP2*3)/5;
+            var nota3 = (notaFinalP3*2)/5;
+            var nota4 = parseFloat($('#calificacion0').val());
+            
+            var notaFinal = (nota1+nota2+nota3+nota4).toFixed(2);
+
+                $("#txtNota").text(notaFinal);
+                $('#Calificar').attr('disabled', true);
+                $('#Refrescar').attr('disabled', false);                          
+                  return false
+          }
+      
+
+    $("#Calificar").click(function() {
+
+       if($('#calificacion0').val() !='' ){
+          confirmar();
+          $('#calificacion0').css("background-color", "#05D576");
+        }else{
+          $('#calificacion0').focus();
+          $('#calificacion0').css("background-color", "#D50545");
+        }
+        
+      });
+
+  });
+
+        </script>
+
+    </body>
+</html>

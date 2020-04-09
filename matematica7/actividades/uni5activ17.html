@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMÁTICA 7</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+    	<script src="js/react-with-addons.js"></script>
+    	<script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+</head>
+
+<style type="text/css">
+    input[type=number]::-webkit-outer-spin-button,
+
+    input[type=number]::-webkit-inner-spin-button {
+
+        -webkit-appearance: none;
+
+        margin: 0;
+
+    }
+
+     
+
+    input[type=number] {
+
+        -moz-appearance:textfield;
+
+    }
+
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+
+    .respuestas{
+        font-size: 16px;
+        color: #002CAB;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .panel-sombra{
+        padding: 10px;
+        box-shadow: 5px 5px 5px #CFCDD3;
+        background-color: #7498FF;
+        border-radius: 7px;
+    }
+    
+    .btn-preparo{
+        background-color: #7498FF; 
+        color: #002CAB; 
+        border: 2px solid; 
+        border-style: dashed; 
+        border-color: #002CAB;
+    }
+
+    .panel-preparo {
+        border-radius: 9px;
+        border-color: #7498FF;
+    }
+    
+    .calificacion-preparo{
+        display: inline-block; 
+        width: 110px; 
+        margin-left: 20px; 
+        background-color: #C2D1FF; 
+        border-radius: 7px; 
+        border-left-color: #002CAB; 
+        border-right-color: #002CAB; 
+        border-top: none; 
+        border-bottom: none;
+    }
+
+    .fraction {
+        display: inline-block;
+        vertical-align: middle; 
+        margin: 0 0.2em 0.4ex;
+        text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid black;}
+    .fraction span.bar {display: none;}
+
+    .n1{
+        color: #2B1ECF;
+        font-size: 23px;
+    }
+
+    .n2{
+        color: #AC1ECF;
+        font-size: 23px;
+    }
+
+    .n3{
+        color: #CF1E3B;
+        font-size: 23px;
+    }
+
+    .n4{
+        color: #1EA7CF;
+        font-size: 23px;
+    }
+
+    .n5{
+        color: #1ECF87;
+        font-size: 23px;
+    }
+
+    .n6{
+        color: #79CF1E;
+        font-size: 23px;
+    }
+
+    .n7{
+        color: #B6A921;
+        font-size: 23px;
+    }
+
+    .n8{
+        color: #D15A1E;
+        font-size: 23px;
+    }
+
+    .num1{
+        width: 100px;
+        display: inline-block;
+        border: 1px solid;
+        border-color: #951DC2;
+        border-top-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        text-align: center;
+    }
+
+
+    .num2{
+        border-radius: 15px;
+        background-color: #C2C4FA;
+        padding: 5px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .num3{
+        border: none;
+        border-bottom: 1px solid;
+        border-bottom-style: dashed;
+        margin-bottom: 20px;
+    }
+
+    .num4{
+        padding: 5px;
+        border-top-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+    }
+
+    .pinta{
+        background-color: #E2CC52;
+    }
+
+    .pinta1{
+        border-left: 3px solid;
+        border-left-color: #E2CC52;
+    }
+
+    .bien{
+        background-color: #05D576;
+    }
+
+    .mal{
+        background-color: #D50545;
+    }
+
+    .bien1{
+        border-left: 3px solid;
+        border-left-color: #05D576;
+    }
+
+    .mal1{
+        border-left: 3px solid;
+        border-left-color: #D50545;
+    }
+
+    .r_imgKg{
+                min-height: 40px;
+                border: 1px solid #F1DC84;
+                margin-bottom: 15px;
+                padding: 2px;
+            }
+            @media (max-width: 770px) {
+                .cajas {
+                    clear: left;
+                  }
+               .imgKg img{
+                    padding: 8px;
+                    max-width: 20%;
+                }
+                .r_imgKg{
+                    min-height: 30px;
+                    border: 1px solid #F1DC84;
+                }
+                .r_imgKg img{
+                    max-height: 30%;
+                }
+            }
+    .dest{
+        border: 1px solid;
+        border-color: #F1DC84;
+        background-color: #F1DC84;
+        border-top-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Ingresa tus respuestas en los cuadros de texto correspondientes, evita ingresar texto innecesario. Guíate por los ejemplos.<br>
+        Utiliza las herramientas de dibujo en las actividades que lo requieran.<br>
+
+
+
+
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-preparo" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-preparo">
+                    <span class="titulo"><img src="img/icoTST.png"> Me preparo para mi evaluación</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+	 <div class="panel-body"> 
+            <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br>
+
+                <div class="panel panel-preparo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="btn btn-preparo">
+                            <b>Actividad 1</b>
+                        </button>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                        1. <b>Resuelve</b> el problema. <br>
+
+                            Una fábrica produce 4 000 almohadas al mes. Entrega la mitad al primer distribuidor, la mitad de lo que queda al segundo, y así sucesivamente. ¿Cuántas almohadas recibe el quinto distribuidor?<br><br>
+
+                            Para resolver el problema se plantea una sucesión  &nbsp;&nbsp;
+                            <select id="rA1" class="form-control respuestas input-sm" style="width: 150px;">
+                                <option></option>
+                                <option>creciente</option>
+                                <option>decreciente</option>
+                            </select>&nbsp;&nbsp; con la &nbsp;&nbsp;
+                            <select id="rA2" class="form-control respuestas input-sm" style="width: 150px;">
+                                <option></option>
+                                <option>suma</option>
+                                <option>resta</option>
+                                <option>multiplicación</option>
+                                <option>división</option>
+                            </select><br><br>
+
+	                       	<div>
+                                <span style="padding: 5px; border-top-right-radius: 15px; border-bottom-left-radius: 15px; background-color: #B933B5; color: white;">&nbsp;&nbsp;Patrón&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                                <select id="rA3" class="form-control respuestas input-sm" style="width: 60px; top: 2px; position: relative;">
+                                    <option></option>
+                                    <option>+</option>
+                                    <option>-</option>
+                                    <option>÷</option>
+                                    <option>x</option>
+                                </select>
+                                <input type="number" id="rA4" class="form-control respuestas input-sm" style="width: 50px;"><br><br>
+
+                                <span style="padding: 5px; border-top-right-radius: 15px; border-bottom-left-radius: 15px; background-color: #337AB9; color: white;">&nbsp;&nbsp;Sucesión&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                                <input type="number" id="rA5" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <input type="number" id="rA6" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <input type="number" id="rA7" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <input type="number" id="rA8" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <input type="number" id="rA9" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <input type="number" id="rA10" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <br><br>
+
+                                <span style="padding: 5px; border-top-right-radius: 15px; border-bottom-left-radius: 15px; background-color: #33B97E; color: white;">&nbsp;&nbsp;Distribuidores&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                                <input type="number" id="rA11" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <input type="number" id="rA12" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <input type="number" id="rA13" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <input type="number" id="rA14" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <input type="number" id="rA15" class="form-control respuestas" style="width: 70px; margin-right: 30px;">
+                                <br><br>
+
+                                <span class="n3">R. &nbsp;&nbsp;</span> El quinto distribuidor recibe&nbsp;&nbsp; <input type="number" id="rA16" class="form-control respuestas" style="width: 70px;"> &nbsp;&nbsp; almohadas.
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="panel panel-preparo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse2" class="btn btn-preparo">
+                            <b>Actividad 2</b>
+                        </button>
+                        <input type="number" id="calificacion2" class="form-control calificacion-preparo" placeholder="Puntaje/2">
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas">
+                            2. <b>Ubica</b> en el sistema de coordenadas rectangulares los siguientes puntos. Luego, <b>únelos</b> alfabéticamente.<br><br>
+
+                            <div class="my-drawing img-responsive"></div>
+                            <script>
+                                var backgroundImage = new Image()
+                                backgroundImage.src = 'img/i1_p214_act2.png';
+                                backgroundImage.class = 'img-responsive';
+                                var winHeight = $(window).height();
+                                var winWidth = $(window).width();
+                                var lc = LC.init(
+                                    document.getElementsByClassName('my-drawing')[0], { imageURLPrefix: 'imgcanvas',
+                                                backgroundShapes: [
+                                                LC.createShape(
+                                                'Image', {x: 0, y: 0, image: backgroundImage}),
+                                                ] }
+                                );
+                                lc.respondToSizeChange();
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-preparo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse3" class="btn btn-preparo">
+                            <b>Actividad 3</b>
+                        </button>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-group form-inline">
+                        3. <b>Ordena</b> los números de menor a mayor. <br><br>
+                        <div class="col-sm-12" align="center">
+                            <span class="num2">&nbsp;&nbsp;25,285&nbsp;&nbsp;</span>
+                            <span class="num2">&nbsp;&nbsp;59,7&nbsp;&nbsp;</span>
+                            <span class="num2">&nbsp;&nbsp;0,082&nbsp;&nbsp;</span>
+                            <span class="num2">&nbsp;&nbsp;71,295&nbsp;&nbsp;</span>
+                            <span class="num2">&nbsp;&nbsp;799,3&nbsp;&nbsp;</span>
+                            <span class="num2">&nbsp;&nbsp;0,29&nbsp;&nbsp;</span>
+                        </div>
+                        <br><br>
+                        <div class="col-sm-12" align="center">
+                            <input type="number" id="rC1" class="form-control respuestas input-sm num3" style="width: 70px;">
+                            <select id="rC2" class="form-control respuestas input-sm" style="width: 60px;"><option></option><option>></option><option><</option><option>=</option></select>
+                            <input type="number" id="rC3" class="form-control respuestas input-sm num3" style="width: 70px;">
+                            <select id="rC4" class="form-control respuestas input-sm" style="width: 60px;"><option></option><option>></option><option><</option><option>=</option></select>
+                            <input type="number" id="rC5" class="form-control respuestas input-sm num3" style="width: 70px;">
+                            <select id="rC6" class="form-control respuestas input-sm" style="width: 60px;"><option></option><option>></option><option><</option><option>=</option></select>
+                            <input type="number" id="rC7" class="form-control respuestas input-sm num3" style="width: 70px;">
+                            <select id="rC8" class="form-control respuestas input-sm" style="width: 60px;"><option></option><option>></option><option><</option><option>=</option></select>
+                            <input type="number" id="rC9" class="form-control respuestas input-sm num3" style="width: 70px;">
+                            <select id="rC10" class="form-control respuestas input-sm" style="width: 60px;"><option></option><option>></option><option><</option><option>=</option></select>
+                            <input type="number" id="rC11" class="form-control respuestas input-sm num3" style="width: 70px;">
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                
+
+                <div class="panel panel-preparo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse4" class="btn btn-preparo">
+                            <b>Actividad 4</b>
+                        </button>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                        <b>Realiza</b> las siguientes operaciones. <br><br>
+                        <ol type="a" id="realiza"></ol>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-preparo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse5" class="btn btn-preparo">
+                            <b>Actividad 5</b>
+                        </button>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                        5. Con el uso de la calculadora, <b>realiza</b> las siguientes operaciones. <br><br>
+                        
+                        a) &nbsp;&nbsp;<span class="num4 n1" style="background-color: #F2C2FA;">&nbsp;&nbsp;<span id="nE1"></span> + <span id="nE2"></span> × <span id="nE3"></span> – <span id="nE4"></span> ÷ <span id="nE5"></span> + <span id="nE6"></span>&nbsp;&nbsp;</span> &nbsp; = &nbsp; 
+                        <input type="number" id="rE1" class="form-control respuestas" style="width: 100px;"><br><br>
+
+                        b) &nbsp;&nbsp;<span class="num4 n1" style="background-color: #C2FADB;">&nbsp;&nbsp; (<span id="nE7"></span> ÷ <span id="nE8"></span>) – (<span id="nE9"></span> × <span id="nE10"></span>) + (<span id="nE11"></span> – <span id="nE12"></span>) &nbsp;&nbsp;</span> &nbsp; = &nbsp; 
+                        <input type="number" id="rE2" class="form-control respuestas" style="width: 100px;"><br><br>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-preparo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse6" class="btn btn-preparo">
+                            <b>Actividad 6</b>
+                        </button>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                        <b>Resuelve</b> el problema. <br>
+                        Un pantalón cuesta el doble que una camiseta. Si las dos prendas cuestan $ 73,56, ¿cuánto cuesta cada una? Si se compran cuatro conjuntos iguales, ¿cuánto se debe pagar en total?<br><br>
+
+                        <div align="center">
+                            <span class="n3">R. &nbsp;&nbsp;</span>
+                            La camiseta cuesta &nbsp;&nbsp;$ <input type="number" id="rF1" class="form-control respuestas" style="width: 80px;">;&nbsp;&nbsp; el pantalón,&nbsp;&nbsp; $ <input type="number" id="rF2" class="form-control respuestas" style="width: 80px;">;&nbsp;&nbsp; y los cuatro conjuntos,&nbsp;&nbsp; $ <input type="number" id="rF3" class="form-control respuestas" style="width: 80px;">.
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div><img src="img/estadistica_probabilidad.jpg" class="img-responsive"></div>
+
+                <div class="panel panel-preparo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse7" class="btn btn-preparo">
+                            <b>Actividad 7</b>
+                        </button>
+                        <input type="number" id="calificacion7" class="form-control calificacion-preparo" placeholder="Puntaje/1" data-toggle="tooltip" title="Puntaje sólo para el gráfico. Sobre 1 punto">
+                    </div>
+                    <div id="collapse7" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas">
+                        7. Con base en los datos presentados en la tabla de frecuencias, <b>elabora</b> un gráfico circular y <b>responde</b> las preguntas.<br><br>
+                        
+                        <div class="col-sm-3" align="center"><img src="img/i1_p215_act7.png" class="img-responsive"></div>
+                        <div class="col-sm-4" align="justify">
+                            a) ¿Cuál es el deporte preferido?  &nbsp;
+                            <select id="rG1" class="form-control respuestas input-sm" style="width: 150px;">
+                                <option></option>
+                                <option>Ciclismo</option>
+                                <option>Atletismo</option>
+                                <option>Fútbol</option>
+                                <option>Baloncesto</option>
+                            </select>
+                            <br><br>
+
+                            b) ¿Qué deporte tiene la menor frecuencia? &nbsp;
+                            <select id="rG2" class="form-control respuestas input-sm" style="width: 150px;">
+                                <option></option>
+                                <option>Ciclismo</option>
+                                <option>Atletismo</option>
+                                <option>Fútbol</option>
+                                <option>Baloncesto</option>
+                            </select>
+                            <br><br>
+
+                            c) ¿Cuántas personas fueron encestados? &nbsp;
+                            <select id="rG3" class="form-control respuestas input-sm" style="width: 150px;">
+                                <option></option>
+                                <option>70 personas</option>
+                                <option>51 personas</option>
+                                <option>72 personas</option>
+                                <option>70 personas</option>
+                            </select>
+                            <br><br>
+                        </div>
+
+                        <div class="col-sm-5">
+                            <div class="my-drawing img-responsive"></div>
+                            <script>
+                                var backgroundImage = new Image()
+                                backgroundImage.src = 'img/i1_p200_act2.png';
+                                backgroundImage.class = 'img-responsive';
+                                var winHeight = $(window).height();
+                                var winWidth = $(window).width();
+                                var lc = LC.init(
+                                    document.getElementsByClassName('my-drawing')[1], { imageURLPrefix: 'imgcanvas',
+                                                backgroundShapes: [
+                                                LC.createShape(
+                                                'Image', {x: 0, y: 0, image: backgroundImage}),
+                                                ] }
+                                );
+                                lc.respondToSizeChange();
+                            </script>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="panel panel-preparo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse8" class="btn btn-preparo">
+                            <b>Actividad 8</b>
+                        </button>
+                    </div>
+                    <div id="collapse8" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                        8. <b>Ordena</b> los siguientes datos y <b>calcula</b> el rango: <span class="n5">28, 27, 18, 20, 24, 25, 30, 27, 23, 27</span>.<br><br>
+                        
+                        Datos ordenados: &nbsp;&nbsp;<input type="text" id="rH1" class="form-control respuestas input-sm" style="width: 40%;" placeholder="Ej: 1,2,3,4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rango: &nbsp;&nbsp; <input type="number" id="rH2" class="form-control respuestas input-sm" style="width: 10%;"><br><br>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="panel panel-preparo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse9" class="btn btn-preparo">
+                            <b>Actividad 9</b>
+                        </button>
+                        <input type="number" id="calificacion9" class="form-control calificacion-preparo" placeholder="Puntaje/1">
+                    </div>
+                    <div id="collapse9" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas">
+                        Se tiene una funda con 4 bolas moradas, 11 rojas, 3 verdes y 6 azules. <b>Resuelve</b> gráfica y numéricamente. <br>
+                        Escribe la probabilidad de sacar:<br><br>
+                        
+                        <div class="my-drawing img-responsive"></div>
+                            <script>
+                                var backgroundImage = new Image()
+                                backgroundImage.src = 'img/i1_p215_act9.png';
+                                backgroundImage.class = 'img-responsive';
+                                var winHeight = $(window).height();
+                                var winWidth = $(window).width();
+                                var lc = LC.init(
+                                    document.getElementsByClassName('my-drawing')[2], { imageURLPrefix: 'imgcanvas',
+                                                backgroundShapes: [
+                                                LC.createShape(
+                                                'Image', {x: 0, y: 0, image: backgroundImage}),
+                                                ] }
+                                );
+                                lc.respondToSizeChange();
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+
+            
+<!--------------------------------------->
+    </div>
+</div>
+</div>
+
+
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog"d>
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+       
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/uni5activ17.js"></script>
+        <script type="text/javascript">
+            var titulos="preparo";
+                
+            $("#n_pagina").html('214');
+        </script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/stylesopa.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.pintarcorrecto {
+
+    background-color: #32a75b;
+    color: white;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+    color: white;
+
+}
+
+.cajaprincipal {
+    width: 100%;
+    min-height: 400px;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.titulop,
+.tnumero {
+    font-size: 25px;
+    color: #009988;
+    font-weight: bolder;
+    padding: 10px;
+
+}
+
+.pregunta {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 15px;
+    padding-bottom: 20px;
+
+}
+
+.opciones {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 20px;
+
+}
+
+.principal {}
+
+.opciones img {
+    max-height: 300px;
+
+}
+
+.letraAzul {
+    color: #005ca4;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.<br>
+        Hacer click en la respuesta correcta y solo se podra elegir una sola vez.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li style="display: none;">
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-primerquimestre" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-primerquimestre">
+                <span class="titulo"><img src="img/icoP1.png" alt=""> Segundo quimestre</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="cajaprincipal">
+                    <div>
+                        <span class="titulop">Pregunta Nº <span class="tnumero">1</span></span>
+                    </div>
+                    <div class="pregunta"></div>
+                    <div class="opciones">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <p class="letraAzul">Opciones de respuesta</p>
+                            <ol type="A" class="op1">
+                            </ol>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 imag1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script type="text/javascript">
+    var titulos = "quimestre2";
+    f_titulos();
+    $("#txtNota").html("0");
+    $("#n_pagina").html("238"); //impresion de pagina
+    var nota = 0,
+        cor = 0,
+        inc = 0,
+        itemsT = 11,
+        calificacion = 10,
+        cont = 0,
+        ejer = 11;
+    var preg = [];
+    var resp = [];
+    var nn1 = 0;
+
+    preg = [
+        ['Relaciona las imágenes de los diferentes tipos de texto de la izquierda con los usos y contenidos de la derecha. <br> <div class="table-responsive"><table><tr><td style="border:2px solid black;">Tipos de texto</td><td style="border:2px solid black;">Usos y contenidos</td></tr><tr><td style="border:2px solid black;"><img src="img/i1_p238_q2.jpg" class="img-responsive" alt=""></td><td style="border:2px solid black;"><p><b>a)</b> Lámina con imágenes y textos cortos que se usa para publicitar eventos, campañas sociales y lugares turísticos.</p></td></tr><tr><td style="border:2px solid black;" rowspan="2"><img src="img/i2_p238_q2.jpg" class="img-responsive" alt=""></td><td style="border:2px solid black;"><p><b>b)</b> Publicación periódica que se usa para difundir noticias, investigaciones y reportajes.</p></td></tr><tr><td style="border:2px solid black;"><p><b>c)</b> Folleto informativo plegado que se usa para promocionar eventos, lugares turísticos, etc.</p></td></tr></table></div>', 0],
+        ['Las palabras tienen familias y raíces. Selecciona la palabra que corresponde a cada familia. <br> pan, panadero, ___________, panecillo', 1],
+        ['Las palabras tienen familias y raíces. Selecciona la palabra que corresponde a cada familia. <br> flor, ________, florero, florista', 2],
+        ['Las palabras tienen familias y raíces. Selecciona la palabra que corresponde a cada familia. <br> punto, puntero, puntería, ______', 3],
+        ['Lee el siguiente texto y selecciona la respuesta correcta.<br> <div style="background:#ffebea;"><p align="center">Equilibrado</p><p align="justify">Jean Pierre presumía a su novia el ser un hombre equilibrado y para demostrárselo le invitó a su trabajo. Sin duda, Jean Pierre era un hombre muy equilibrado mientras caminaba por la cuerda floja en el circo.</p></div> <br>¿Qué significa equilibrado?', 4],
+        ['Ordena de forma coherente las partes de la carta. <br> <p><b>1.</b> Lamento haberme demorado tanto en escribirte esta carta. Mis primos y yo fuimos a acampar junto al río Pindal.</p><p><b>2.</b> Querida mamá:</p><p><b>3.</b> Con cariño se despide tu hija Marisol.</p><p><b>4.</b> El primo Roberto me enseñó a hacer clavados, fue muy divertido. Cuando salgamos a la ciudad te enviaré un video a tu celular. Espero con mucha ilusión que papá traiga a mi hermano para enseñarle a nadar. Pídele que me envíe unas medias, las que traje tienen muchos agujeros.</p><p><b>5.</b> Un abrazo, tu hija.</p>', 5],
+        ['Existen palabras que se usan para conectar las ideas de un párrafo. Completa el texto con los conectores temporales que correspondan. <br> _________ bata la mantequilla con el azúcar hasta conseguir una mezcla homogénea y cremosa. ___________ agregue de a poco la harina. _________ mezcle las claras a punto de nieve y revuelva lentamente. Por ________ vierta la masa en un molde aceitado y enharinado.', 6],
+        ['Completa el texto con las palabras que consideres más adecuadas <br> El viernes fue el mejor día de mi vida. No solo era mi cumpleaños, además estaba de visita mi tío _____. Fuimos juntos a la librería y luego a la _______. Yo pedí un helado de ______ y una tajada de pastel.', 7],
+        ['Selecciona las palabras que están escritas correctamente. <br> <div style="display:inline-block; padding:10px;">1. llave</div><div style="display:inline-block; padding:10px;">2. yueve</div><div style="display:inline-block; padding:10px;">3. yodo</div><div style="display:inline-block; padding:10px;">4. yegua</div><div style="display:inline-block; padding:10px;">5. yeva</div><div style="display:inline-block; padding:10px;">6. llueve</div>', 8],
+        ['Los adjetivos se clasifican de acuerdo a la función que cumplen en la oración. <br> Selecciona las oraciones que tengan palabras que indiquen posesión. <br> 1. Laura está de vacaciones en Quito. <br>2. Marlene lee tu libro, Juan el suyo. <br>3. Mi tío que vive en España llega hoy. <br>4. Tú eres la mujer más inteligente que conozco.', 9],
+        ['Selecciona la respuesta. ¿Cuál es el significado de la siguiente señal? <br> <img src="img/i3_p238_q2.jpg" class="img-responsive" alt="">', 10]
+    ];
+
+    resp = [
+
+        ['<li><p class="fuente no">1a, 2c</p></li>',
+            '<li><p class="fuente no">1b, 2c</p></li>',
+            '<li><p class="fuente no">1c, 2a</p></li>',
+            '<li><p class="fuente si">1b, 2a</p></li>'
+        ],
+        ['<li><p class="fuente no">Pana</p></li>',
+            '<li><p class="fuente no">Panacea</p></li>',
+            '<li><p class="fuente si">Panadería</p></li>',
+            '<li><p class="fuente no">Panadizo</p></li>'
+        ],
+        ['<li><p class="fuente no">Folio</p></li>',
+            '<li><p class="fuente no">Flácido</p></li>',
+            '<li><p class="fuente si">Floral</p></li>',
+            '<li><p class="fuente no">Floripondio</p></li>'
+        ],
+        ['<li><p class="fuente si">Puntillo</p></li>',
+            '<li><p class="fuente no">Pundonor</p></li>',
+            '<li><p class="fuente no">Puntal</p></li>',
+            '<li><p class="fuente no">Punzón</p></li>'
+        ],
+        ['<li><p class="fuente si">Mantenerse estable.</p></li>',
+            '<li><p class="fuente no">Continuar caminando.</p></li>',
+            '<li><p class="fuente no">Ser un novio.</p></li>',
+            '<li><p class="fuente no">Ser artista de circo.</p></li>'
+        ],
+        ['<li><p class="fuente no">1, 5, 4, 3, 2</p></li>',
+            '<li><p class="fuente no">2, 4, 1, 5, 3</p></li>',
+            '<li><p class="fuente si">2, 1, 4, 3, 5</p></li>',
+            '<li><p class="fuente no">5, 4, 3, 1, 2</p></li>'
+        ],
+        ['<li><p class="fuente no">Antes, mientras, rápidamente, arriba</p></li>',
+            '<li><p class="fuente no">Mientras, antes, cuando, que</p></li>',
+            '<li><p class="fuente si">Primero, luego, enseguida, último</p></li>',
+            '<li><p class="fuente no">Rápidamente, lentamente, enseguida, finalmente</p></li>'
+        ],
+        ['<li><p class="fuente no">Hugo, eladería, higo</p></li>',
+            '<li><p class="fuente no">Hugo, heladería, igo</p></li>',
+            '<li><p class="fuente no">Ugo, eladería, higo</p></li>',
+            '<li><p class="fuente si">Hugo, heladería, higo</p></li>'
+        ],
+        ['<li><p class="fuente si">1, 3, 4, 6</p></li>',
+            '<li><p class="fuente no">1, 2, 3, 5</p></li>',
+            '<li><p class="fuente no">2, 4, 5, 6</p></li>',
+            '<li><p class="fuente no">2, 3, 4, 5</p></li>'
+        ],
+        ['<li><p class="fuente no">1, 3</p></li>',
+            '<li><p class="fuente si">2, 3</p></li>',
+            '<li><p class="fuente no">2, 4</p></li>',
+            '<li><p class="fuente no">3, 4</p></li>'
+        ],
+        ['<li><p class="fuente no">Prohibido el paso a peatones.</p></li>',
+            '<li><p class="fuente si">Prohibido correr, camine.</p></li>',
+            '<li><p class="fuente no">Prohibido el ingreso de hombres.</p></li>',
+            '<li><p class="fuente no">Prohibido el ingreso de alimentos.</p></li>'
+        ]
+    ];
+    preg.sort(f_randomico);
+
+    $(".titulop").hide();
+
+
+    f_iniciar();
+
+
+    function f_iniciar() {
+
+        $(".titulop").show(500);
+        $(".principal").hide(500);
+        nn1 = (preg[cont][1]);
+        console.log(preg);
+        for (i = 0; i < resp.length; i++) {
+
+            resp[i].sort(f_randomico);
+        }
+        console.log(resp[nn1]);
+
+        $(".tnumero").html('').append(cont + 1)
+        $(".pregunta").html('').append(preg[cont][0])
+        $(".imag1").html('').append(preg[cont][2])
+        $(".op1").html('').append(resp[nn1])
+        $(".si").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarcorrecto");
+            cor++;
+            calificar_preg();
+        });
+        $(".no").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarincorrecto");
+            inc++;
+            calificar_preg();
+        });
+
+        function calificar_preg() {
+            cont++;
+            $(this).unbind("click");
+            if (cont == 11) {
+                $('.cajaprincipal').html('<table class="table table-bordered" style="text-align:center; font-size: 30px;">' +
+                    '<tr>' +
+                    '<td colspan="2"><b>Tu Calificación es:</b></td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td colspan="2"><b><span class="notaq1"></span>/10</b></td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td><b style="color:  green;">Respuesta Correctas</b></td>' +
+                    '<td><b style="color:  red;">Respuesta Incorrectas</b></td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>' + cor + '</td>' +
+                    '<td>' + inc + '</td>' +
+                    '</tr>' +
+                    '</table>');
+            }
+
+            Calculo_nota1();
+        }
+
+        function Calculo_nota1() {
+            //var calc = (calificacion / itemsT);
+            var total = (cor * (calificacion / itemsT)).toFixed(2);
+            //var total = suma.toFixed(2);
+            $("#txtNota").html(total);
+            $('.notaq1').text(total);
+            f_tiempo();
+        }
+
+    }
+    </script>
+</body>
+
+</html>

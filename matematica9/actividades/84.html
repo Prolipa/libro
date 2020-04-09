@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MATEMÁTICA 9</title>
+    <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link href="css/estilo_canvas.css" rel="stylesheet">
+            <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+</head>
+<style type="text/css">
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+    .n0{
+        color: #D70D22;
+        font-size: 23px;
+    }
+
+    .n1{
+        color: #D44B0B;
+        font-size: 23px;
+    }
+
+    .n2{
+        color: #3768F7;
+        font-size: 23px;
+    }
+
+    .np0{
+        color: #25B48B;
+        font-size: 23px;
+    }
+
+    .np1{
+        color: #EF435B;
+        font-size: 23px;
+    }
+
+    .np2{
+        color: #1C2E85;
+        font-size: 23px;
+    }
+
+    .np3{
+        color: #7E7E7E;
+        font-size: 25px;
+    }
+
+    .linea{
+        text-decoration:overline; 
+        text-decoration-color: #D44B0B;
+        border: none;
+    }
+
+    .linea1{
+        text-decoration:overline; 
+        text-decoration-color: #3768F7;
+        border: none;
+    }
+
+    .literal{
+        color: #485699;
+        font-size: 23px;
+    }
+
+    .num{
+        background-color: #F9C797;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .num1{
+        background-color: #E2C2F3;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .num2{
+        background-color: #C2F3CB;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .encabezados{
+        color: white;
+        font-size: 23px;
+    }
+
+    .actividad1{
+        background: #fff;       
+    }
+    .correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+    @media (max-width: 770px) {
+      .cajas {
+        clear: left;
+      }      
+
+    }
+
+    .fraction {
+        display: inline-block;
+        vertical-align: middle; 
+        margin: 0 0.2em 0.4ex;
+        text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid #636363;}
+    .fraction span.bar {display: none;}
+
+    .radical {
+    position: relative;
+    font-size: 1.6em;
+    vertical-align: middle;
+    }
+    .n-root {
+        position: absolute;
+        top: -0.333em;
+        left: 0.333em;
+        font-size: 45%;
+    }
+    .radicand { 
+        padding: 0.25em 0.25em;
+        border-top: thin black solid;
+        border-color: #EF435B;
+    }
+
+    .radicand1 { 
+        padding: 0.25em 0.25em;
+        border-top: thin black solid;
+        border-color: #1C2E85;
+    }
+
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Responde en los espacios en blanco según se solicita<br><br>
+        Actividad 7: Dibuja lo solicitado en el área de dibujo. Utiliza las herramientas de dibujo situadas en la barra lateral izquierda. Esta actividad debe ser calificada manualmente sobre 1 punto.<br>
+
+        <br>
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> <span id="txtNota1" style="display: none;"></span>/ 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-prueba" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-prueba">
+                    <span class="titulo"><img src="img/icoTST.png"> Prueba diagnóstica</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+
+                <div class="panel-body"> 
+            <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+        <div class="row">
+            <div class="col-sm-8"><img src="img/algebra_funciones.png" class="img-responsive" width="250px;"></div>           
+        </div> 
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">                                                                             
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                </h4>
+                </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-group form-inline">
+                        	1. <b>Resuelve</b> el siguiente problema.<br><br>
+
+                        	La edad del abuelo de Rafael es igual al cuadrado del cubo de la edad de su nieto. ¿Cuál será la edad de Rafael si su abuelo tiene <span class="n2" id="nEA0">64</span> años?<br><br>
+                        	<span class="n0">R. </span>&nbsp;&nbsp; El nieto tiene &nbsp;&nbsp;<input type="number" id="rEA0" class="form-control respuestas" style="width: 80px; text-align: center;">&nbsp;&nbsp; años.
+                           
+                        </div>
+                    </div>
+            </div>
+
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+	                <h4 class="panel-title">                                                                             
+	                	<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+	                </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body preguntas form-inline form-group">
+						2. <b>Calcula</b> y <b>expresa</b> la respuesta en la forma más simple posible.<br><br>
+
+						<div class="col-sm-12">
+							<div class="col-sm-4">							
+								<div class="eq-c"> 
+									<span class="np2 col-sm-3" style="top: 18px;">2<sup>-3</sup></span> = 
+									<div class="fraction">
+										<span class="fup"><input type="number" id="rCEx0" class="form-control respuestas" style="width: 80px;"></span>
+										<span class="bar">/</span>
+										<span class="fdn"><input type="number" id="rCEx1" class="form-control respuestas" style="width: 80px;"></span>
+									</div>
+								</div>							
+							</div>
+							
+
+							<div class="col-sm-3">							
+								<span class="np2 col-sm-6" style="top: 18px;">( 0.25 )<sup>-2</sup></span> <span style="top: 18px; position: relative;"> = </span>
+								<input type="number" id="rCEx2" class="form-control respuestas" style="width: 80px; top: 18px; position: relative;">	
+							</div>
+
+							<div class="col-sm-5">							
+								<span class="np2 col-sm-6" style="top: 18px;">2<sup>-2</sup>&nbsp; · &nbsp; 2<sup>-6</sup>&nbsp; · &nbsp; 2<sup>-6</sup></span> <span style="top: 18px; position: relative;"> = </span>
+								<input type="number" id="rCEx3" class="form-control respuestas" style="width: 70px; top: 18px; position: relative;">
+								<sup><input type="number" id="rCEx4" class="form-control respuestas" style="width: 60px; top: 18px; position: relative;"></sup>
+							</div>
+							<br><br>
+						</div>
+
+						<div class="col-sm-12">
+							<br><br>
+							<div class="col-sm-4" style="color: #1C2E85;">									
+								<div class="eq-c col-sm-4">
+									<span class="radical" style="font-size: 35px;">&radic;</span><span class="radicand1"><span style="top: 8px; position: relative;">-</span>
+										<div class="fraction" style="top: 10px; position: relative;">
+											<span class="fup">1</span>
+											<span class="bar">/</span>
+											<span class="fdn">8</span>
+										</div>
+									</span>
+								</div>
+								<div class="eq-c"> 
+									= -
+									<div class="fraction">
+										<span class="fup"><input type="number" id="rCEx5" class="form-control respuestas" style="width: 80px;"></span>
+										<span class="bar">/</span>
+										<span class="fdn"><input type="number" id="rCEx6" class="form-control respuestas" style="width: 80px;"></span>
+									</div>
+								</div>					
+							</div>
+
+							<div class="col-sm-4">
+								<div class="eq-c col-sm-4" style="color: #1C2E85; top: 10px; position: relative;">
+									<span class="radical" style="font-size: 35px;">&radic;</span><span class="radicand1"><span class="radical" style="font-size: 30px;">&radic;</span><span class="radicand1"></span>4</span>
+								</div>
+								<div class="eq-c" style="color: #1C2E85; top: 10px; position: relative;"> = 
+									<span class="radical" style="font-size: 35px;">&radic;</span><span class="radicand1">
+										<input type="number" id="rCEx7" class="form-control respuestas" style="width: 80px; top: 5px; position: relative;">
+									</span>
+								</div>
+							</div>
+
+
+						</div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+	                <h4 class="panel-title">                                                                             
+	                	<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+	                </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <div class="panel-body preguntas form-inline form-group">
+						3. <b>Simplifica</b>.<br><br>
+
+						<div class="col-sm-6" style="top: 25px; position: relative;">
+							<div class="col-sm-7">
+								<img src="img/i1_p100_act3.jpg" class="img-responsive" width="270px;" style="top: 10px; position: relative;"><br><br>
+							</div>							
+							<div class="eq-c col-sm-5"> 
+									R. 
+									<div class="fraction">
+										<span class="fup"><input type="number" id="rSm0" class="form-control respuestas" style="width: 80px;"></span>
+										<span class="bar">/</span>
+										<span class="fdn"><input type="number" id="rSm1" class="form-control respuestas" style="width: 80px;"></span>
+									</div>
+								</div>
+						</div>
+
+						<div class="col-sm-6">
+							<div class="col-sm-7">
+								<img src="img/i2_p100_act3.jpg" class="img-responsive" width="270px;" style="top: 10px; position: relative;"><br><br>
+							</div>							
+							<div class="eq-c col-sm-5" style="top: 20px; position: relative;"> 
+									R. 
+									<div class="fraction">
+										<span class="fup"><input type="number" id="rSm2" class="form-control respuestas" style="width: 80px;"></span>
+										<span class="bar">/</span>
+										<span class="fdn"><input type="number" id="rSm3" class="form-control respuestas" style="width: 80px;"></span>
+									</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12">
+							<div class="col-sm-3">
+								<img src="img/i3_p100_act3.jpg" class="img-responsive" width="200px;" style="top: 10px; position: relative;"><br><br>
+							</div>							
+							<div class="eq-c col-sm-9" style="top: 20px; position: relative;"> 
+									R. &nbsp;&nbsp; <input type="number" id="rSm4" class="form-control respuestas" style="width: 80px;">
+									<div class="fraction">
+										<span class="fup"><input type="number" id="rSm5" class="form-control respuestas" style="width: 80px;"></span>
+										<span class="bar">/</span>
+										<span class="fdn"><input type="number" id="rSm6" class="form-control respuestas" style="width: 80px;"></span>
+									</div>
+							</div>
+						</div>					
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+	                <h4 class="panel-title">                                                                             
+	                	<a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Actividad 4</a>
+	                </h4>
+                </div>
+                <div id="collapse4" class="panel-collapse collapse">
+                    <div class="panel-body preguntas form-inline form-group">
+						4. <b>Imagina</b> <span class="np1" id="nCA0">5</span> cuadrados alineados uno a continuación de otro. Los dos primeros tienen un área de <span class="np1" id="nCA1">2</span> m<sup>2</sup> y los tres siguientes, un área de <span class="np1" id="nCA2">8</span> m<sup>2</sup>. ¿Cuál es la longitud que ocupan?<br><br>
+						<div align="center">
+							<span class="n0">R. &nbsp;&nbsp;</span> Ocupan una longitud de&nbsp;&nbsp;<input type="number" id="rCA0" class="form-control respuestas" style="width: 90px;">&nbsp;&nbsp;m.
+						</div>						
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+	                <h4 class="panel-title">                                                                             
+	                	<a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Actividad 5</a>
+	                </h4>
+                </div>
+                <div id="collapse5" class="panel-collapse collapse">
+                    <div class="panel-body preguntas form-inline form-group">
+						5. En el cuadrado ABCD de la figura se sabe que la diagonal AC mide <span class="np1" id="nDAC0">8</span> cm. Calcula el área y el perímetro de este cuadrado.<br><br>
+
+						<div class="col-sm-6" align="center">
+							<br><br>
+							<span class="n0">R. &nbsp;&nbsp;</span>
+							<input type="number" id="rDAC0" class="form-control respuestas" style="width: 80px;">
+							<span class="np2">√</span><span class="radicand1"><input type="number" id="rDAC1" class="form-control respuestas" style="width: 90px; top: 3px; position: relative;"></span> cm							
+						</div>
+						<div class="col-sm-6">
+							<img src="img/i1_p100_act5.jpg" class="img-responsive">
+						</div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="row">
+            	<div class="col-sm-8"><img src="img/estadistica_probabilidad.jpg" class="img-responsive" width="300px;"></div>           
+        	</div>
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+	                <h4 class="panel-title">                                                                             
+	                	<a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Actividad 6</a>
+	                </h4>
+                </div>
+                <div id="collapse6" class="panel-collapse collapse">
+                    <div class="panel-body preguntas form-inline form-group">
+						6. <b>Completa</b> las tablas de frecuencias.<br><br>
+						a) La cantidad de bicicletas que transitan por una calle durante <span class="np1" id="nBT0">30</span> días es la siguiente:<br><br>
+						<div class="col-sm-12" style="font-size: 25px;">
+							0, 1, 0, 0, 3, 2, 1, 4, 0, 0, 1, 1, 2, 0, 1, <br>
+							1, 2, 0, 1, 1, 2, 1, 3, 0, 0, 2, 1, 2, 3, 5<br><br>
+						</div>
+						<table id="tablePreview" class="table table-bordered table-hover table-sm">
+							<tr>
+						      <td style="background-color: #902CED; color: white;">Cantidad de bicicletas</td>
+						      <td style="background-color: #A863E8; color: white;">Frecuencia absoluta (<i>f<sub>i</sub></i>)</td>
+						      <td style="background-color: #902CED; color: white;">Frecuencia relativa (<i>Fr</i>)</td>
+						      <td style="background-color: #A863E8; color: white;">Frecuencia acumulada (<i>fa</i>)</td>
+						      <td style="background-color: #902CED; color: white;">Frecuencia relativa acumulada (<i>Fra</i>)</td>
+						    </tr>
+						  	<tbody>
+							  	<tr>
+							      <td><input type="text" id="" class="form-control respuestas" value="0"></td>
+							      <td><input type="text" id="" class="form-control respuestas" value="9"></td>
+							      <td><input type="text" id="" class="form-control respuestas" value="9/30"></td>
+							      <td><input type="text" id="" class="form-control respuestas" value="9"></td>
+							      <td><input type="text" id="" class="form-control respuestas" value="9/30"></td>
+							    </tr>
+							    <tr>
+							      <td><input type="text" id="rBT0" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT1" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT2" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT3" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT4" class="form-control respuestas"></td>
+							    </tr>
+							    <tr>
+							      <td><input type="text" id="rBT5" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT6" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT7" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT8" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT9" class="form-control respuestas"></td>
+							    </tr>
+							    <tr>
+							      <td><input type="text" id="rBT10" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT11" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT12" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT13" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT14" class="form-control respuestas"></td>
+							    </tr>
+							    <tr>
+							      <td><input type="text" id="rBT15" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT16" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT17" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT18" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT19" class="form-control respuestas"></td>
+							    </tr>
+							    <tr>
+							      <td><input type="text" id="rBT20" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT21" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT22" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT23" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT24" class="form-control respuestas"></td>
+							    </tr>
+							    <tr>
+							      <td style="text-align: center; font-size: 25px;"><b>Σ</b></td>
+							      <td><input type="number" id="rBT25" class="form-control respuestas"></td>
+							      <td><input type="number" id="rBT26" class="form-control respuestas"></td>
+							      <td><input type="number" id="rBT27" class="form-control respuestas"></td>
+							      <td><input type="number" id="rBT28" class="form-control respuestas"></td>
+							    </tr>
+						  	</tbody>
+						</table>
+						<br><br>
+						b) En un estudio estadístico sobre el número de participantes que asisten a una conferencia se obtuvieron los siguientes datos de las horas asistidas por cada participante.<br><br>
+						<div class="col-sm-12" style="font-size: 25px;">
+							10, 12, 12, 11, 12, 10, 13, 11, 13, 11, 13, 9<br><br>
+						</div>
+						<table id="tablePreview" class="table table-bordered table-hover table-sm">
+							<tr>
+						      <td style="background-color: #902CED; color: white;">Cantidad de bicicletas</td>
+						      <td style="background-color: #A863E8; color: white;">Frecuencia absoluta (<i>f<sub>i</sub></i>)</td>
+						      <td style="background-color: #902CED; color: white;">Frecuencia relativa (<i>Fr</i>)</td>
+						      <td style="background-color: #A863E8; color: white;">Frecuencia acumulada (<i>fa</i>)</td>
+						      <td style="background-color: #902CED; color: white;">Frecuencia relativa acumulada (<i>Fra</i>)</td>
+						    </tr>
+						  	<tbody>
+							    <tr>
+							      <td><input type="text" id="rBT29" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT30" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT31" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT32" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT33" class="form-control respuestas"></td>
+							    </tr>
+							    <tr>
+							      <td><input type="text" id="rBT34" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT35" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT36" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT37" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT38" class="form-control respuestas"></td>
+							    </tr>
+							    <tr>
+							      <td><input type="text" id="rBT39" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT40" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT41" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT42" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT43" class="form-control respuestas"></td>
+							    </tr>
+							    <tr>
+							      <td><input type="text" id="rBT44" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT45" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT46" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT47" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT48" class="form-control respuestas"></td>
+							    </tr>
+							    <tr>
+							      <td><input type="text" id="rBT49" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT50" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT51" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT52" class="form-control respuestas"></td>
+							      <td><input type="text" id="rBT53" class="form-control respuestas"></td>
+							    </tr>
+							    <tr>
+							      <td style="text-align: center; font-size: 25px;"><b>Σ</b></td>
+							      <td><input type="number" id="rBT54" class="form-control respuestas"></td>
+							      <td><input type="number" id="rBT55" class="form-control respuestas"></td>
+							      <td><input type="number" id="rBT56" class="form-control respuestas"></td>
+							      <td><input type="number" id="rBT57" class="form-control respuestas"></td>
+							    </tr>
+						  	</tbody>
+						</table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+	                <h4 class="panel-title">
+	                	<div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                    		<input type="number" id="calificacion0" placeholder="Puntaje/1" style="width: 110px;" class="form-control">      
+                		</div>                                                                                               
+	                	<a data-toggle="collapse" data-parent="#accordion" href="#collapse7" style="margin-left: 70px;">Actividad 7</a>
+	                </h4>
+                </div>
+                <div id="collapse7" class="panel-collapse collapse in">
+                    <div class="panel-body preguntas form-inline form-group">
+						7.	<b>Grafica</b> la información del literal a) del ejercicio 6 en un diagrama de barras.<br><br>
+
+						<div class="my-drawing img-responsive"></div>
+                            <br>
+
+                            <script>
+                            var backgroundImage = new Image()                            
+                            var winHeight = $(window).height();
+                            var winWidth = $(window).width();
+                            var lc = LC.init(
+                                document.getElementsByClassName('my-drawing')[0], { imageURLPrefix: 'imgcanvas',
+                                          backgroundShapes: [
+                                            LC.createShape(
+                                          'Image', {x: 0, y: 0, image: backgroundImage}),
+                                            ] }
+                            );
+                            lc.respondToSizeChange();
+                            </script>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+    <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/84.js"></script>
+
+        <script type="text/javascript">
+            $("#n_pagina").html('100');
+            $( ".btnCalificar" ).bind( "click", function() {
+                CalificacionAbierta();
+            });
+        </script>
+</body>
+</html>

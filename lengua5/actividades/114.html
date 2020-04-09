@@ -1,0 +1,505 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <style>
+        table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+
+
+    .subrayar {
+        border-bottom: 2px solid #000000;
+    }
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+    .pintar{
+        background: #FFB64E;
+        border-radius: 15px;
+        color: white;
+        padding: 5px;
+    }
+    .correcto {
+    color: #ffffff;
+    background-color: #00e600;
+    }
+    .incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+    }
+    .inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+    }
+
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>2. </b>haz click en la palabra que desea pintar.
+        <br> <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="calificar_abierta()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota1" class="nota-abierta" style="background: white;text-align: center;"></input>
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <b>1. Dibuja</b> <span class="sobre">4 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>1. Lee</b> la noticia y <b>pinta</b> los conceptos importantes.
+                                        <br><br>
+                                        <img class="img-responsive" src="img/i1_p140_act114.jpg"></img>
+                                        <br>
+                                        <div align="justify">
+                                            <b>Elena Paucar</b>
+                                            <br>
+                                            <span class="enc">El canclón es el símbolo de este humedal,</span> aunque está amenazado de extinción. Es un ave acuática poco común del suroccidente y la zona oriental del Ecuador, que habita en colonia en la reserva manglares Churute, en el cantón Naranjal (Guayas).
+                                            <br><br>
+                                            Este viernes, <span class="enc">2 de febrero</span> del 2018, <span class="enc">se recuerda el Día Mundial de los Humedales</span>. La laguna El Canclón, en Churute, es parte de una reserva marino-costera de 49 389 hectáreas de superficie, una de las más grandes del Ecuador continental…
+                                            <br><br>
+                                            <span class="enc">El agua es el principal elemento que da vida a los humedales.</span> <span class="enc">En el país, han sido identificados 138 en todas las regiones:</span> 50 en la Costa, 45 en la Sierra, 30 en el Oriente y 13 en Galápagos. <span class="enc">Ecuador es parte de la Convención Internacional para la Conservación de Humedales Ramsar.</span> Los humedales reconocidos son parte de tres iniciativas regionales: manglares y corales, humedales altoandinos y humedales de la cuenca amazónica.
+                                            <br><br>
+                                            <span class="enc">Desde 1971 el mundo reconoció el 2 de febrero como el Día Mundial de los Humedales.</span> Estos espacios naturales son fundamentales para la conservación de la biodiversidad y el desarrollo de las comunidades.
+                                            <br><br>
+                                            <span class="enc">En el mundo, más de 660 millones de personas dependen de la pesca o la acuicultura</span> que se desarrolla en estos hábitats. Se calcula que el arroz cultivado en áreas que constituyen estos ecosistemas es el alimento básico de 3 500 millones de personas.
+                                            <br><br>
+                                            También <span class="enc">son barreras naturales frente a inundaciones y tsunamis,</span> en especial los manglares; regulan el ciclo de agua y del clima, controlan inundaciones y sequías, garantizan la seguridad alimentaria y cuidan el suelo para la agricultura.
+                                            <br><br>
+                                            Aunque sus beneficios son múltiples, <span class="enc">es uno de los ecosistemas más amenazados. Desde el año 1900 se calcula que ha desaparecido el 64% de los humedales del planeta…</span>
+                                        </div>
+                                        <h6>Paucar, Elena (2 de febrero de 2018). “138 humedales han sido identificados en Ecuador”. El Comercio. Recuperado de https://goo.gl/z4xzfA</h6>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota2" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <b>2. Responde</b> <span class="sobre">3 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question" align="justify">
+                                        <b>2. Selecciona</b> el organizador gráfico que prefieras y <b>elabóralo</b> en un papelote con la información del tema anterior. <b>Toma</b> en cuenta las palabras claves de los recuadros. Finalmente, <b>exponlo</b> en clase.
+                                        <br>
+                                        <table style="border: 1px solid #a9007c">
+                                            <tr>
+                                                <td style="border: 1px solid #a9007c">Los humedales</td>
+                                                <td style="border: 1px solid #a9007c">Pueden ser</td>
+                                                <td style="border: 1px solid #a9007c">Importancia</td>
+                                                <td style="border: 1px solid #a9007c">Son</td>
+                                                <td style="border: 1px solid #a9007c">Ecuador</td>
+                                                <td style="border: 1px solid #a9007c">Peligros</td>
+                                                <td style="border: 1px solid #a9007c">Sirven para</td>
+                                            </tr>
+                                        </table>
+                                        <div class="row" align="center">
+                                            <div class="col-lg-4">
+                                                <div class="1 enc1">
+                                                    <img class="img-responsive" src="img/i2_p140_act114.jpg"></img>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="1 enc2">
+                                                    <img class="img-responsive" src="img/i3_p140_act114.jpg"></img>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="1 enc3">
+                                                    <img class="img-responsive" src="img/i4_p140_act114.jpg"></img>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota3" class="nota-abierta" style="background: white; text-align: center;" >
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <b>3. Lectura inferencial</b> <span class="sobre">3 pts</span>
+                                        </a>
+                                        </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="text-question">
+                                        <b>3. Selecciona</b> las características y escríbelas. Luego, <b>elabora</b> un mapa de caracterización de este espacio natural. <b>Observa</b> el ejemplo del mapa.
+                                        <br><br>
+                                        <table>
+                                            <tr>
+                                                <td style="border: 2px solid #005ca4;"><textarea name="" class="form-control" style="resize: none;" rows="10"></textarea></td>
+                                                <td style="border: 2px solid #005ca4;"><img src="img/i5_p140_act114.jpg" alt="" class="img-responsive"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script>
+    $("#n_pagina").html("140"); //impresion de pagina
+    var titulos = 'aplico';
+    f_titulos();
+    $('.btnGuardar').removeClass('disabled');
+
+    $('.enc').click(function() {
+
+        if ($(this).hasClass('pintar')) {
+            $(this).removeClass('pintar')
+        } else {
+            $(this).addClass('pintar')
+        }
+    });
+    /*$(document).ready(function() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        //var imageSize = { width: winHeight , height: winHeight };
+        var watermarkImage = new Image();
+        watermarkImage.src = 'img/i1_p163_actema10_3.jpg';
+        //var watermarkImage2 = new Image();
+        //watermarkImage2.src = 'img/i7_p98_act100.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+
+                watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+
+            });
+    });
+*/
+
+    $('.1').click(function() {
+        switch ($(this).attr('class')) {
+            case '1 enc1':
+                $('.enc1').addClass('pintar');
+                $('.enc2').removeClass('pintar');
+                $('.enc3').removeClass('pintar');
+                $('.enc4').removeClass('pintar');
+
+                break;
+            case '1 enc2':
+                $('.enc2').addClass('pintar');
+                $('.enc1').removeClass('pintar');
+                $('.enc3').removeClass('pintar');
+                $('.enc4').removeClass('pintar');
+                break;
+            case '1 enc3':
+                $('.enc3').addClass('pintar');
+                $('.enc1').removeClass('pintar');
+                $('.enc2').removeClass('pintar');
+                $('.enc4').removeClass('pintar');
+
+                break;
+            case '1 enc4':
+                $('.enc4').addClass('pintar');
+                $('.enc1').removeClass('pintar');
+                $('.enc2').removeClass('pintar');
+                $('.enc3').removeClass('pintar');
+
+                break;
+
+
+        }
+    });
+    document.getElementById('nota1').addEventListener('keypress', () => {
+        validNumero(0, 4, 1);
+    });
+    document.getElementById('nota1').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1'), 4)
+    });
+    document.getElementById('nota2').addEventListener('keypress', () => {
+        validNumero(0, 3, 1);
+    });
+    document.getElementById('nota2').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota2'), 3)
+    });
+
+
+
+    document.getElementById('nota3').addEventListener('keypress', () => {
+        validNumero(0, 3, 1);
+    });
+    document.getElementById('nota3').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota3'), 3)
+    });
+
+
+
+    function NotaFinal() {
+
+
+        var nota1 = document.getElementById('nota1').value;
+        var nota2 = document.getElementById('nota2').value;
+        var nota3 = document.getElementById('nota3').value;
+        var nota4 = document.getElementById('nota4').value;
+
+
+        if ((nota1 == "") || (nota3 == "") || (nota4 == "")) {
+            alert("Calificar la pregunta 1, 3 o 4.")
+        } else {
+
+            pregunta2();
+
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+
+            var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4);
+            $('#txtNota').html(parseFloat(total).toFixed(2));
+            document.getElementById('bt_comprobar').disabled = true;
+            $('input').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+            //}
+
+
+        }
+    }
+
+    $('.btn_mostrar').on('click', function() { //mostrar todas las preguntas
+        if ($(".panel-collapse").hasClass('in')) {
+            $(".panel-collapse").removeClass('in');
+        } else {
+            $(".panel-collapse").addClass('in');
+        }
+
+
+    });
+    </script>
+</body>
+
+</html>

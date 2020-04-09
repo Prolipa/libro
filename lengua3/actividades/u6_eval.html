@@ -1,0 +1,441 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+</head>
+<style type="text/css" media="screen">
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+
+.pintar {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.pintar1 {
+    background: #CEC8A1;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+
+}
+
+.c_destino1 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 100px;
+    min-width: 100px;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    max-width: 100%;
+    margin-left: 1px;
+
+}
+
+.bg_palabra {
+
+    border-radius: 10px 10px 10px 0px;
+    background: #E6E0EF;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1:</b> Observa las imágenes que muestran la secuencia de la retahíla y complétala. <br>
+        <b>Pregunta 2:</b> Dibuja carteles que utilizarías para una exposición oral sobre las señales de prevención en la escuela. <br>
+        <b>Pregunta 3:</b> Elabora la señalética sobre las disposiciones y las recomendaciones.<br>
+        <b>Pregunta 4:</b> Escribe las medidas de prevención que debes tener en caso de un sismo.<br>
+        <b>Pregunta 5:</b> Escribe los signos de admiración o interrogación.<br>
+        <b>Pregunta 6:</b> Analiza la parte subrayada y marca un visto en la casilla que corresponde.<br>
+        <b>Pregunta 7:</b> Escribe un sueño curioso que hayas tenido.<br>
+        <b>Pregunta 8:</b> Arrastra los gráficos hacia el recuadro según corresponda.<br>
+        <b>Pregunta 9:</b> Arrastra las palabras hacia el recuadro según corresponda.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span>/ 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-aplico" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico">
+                <span class="titulo"><img src="img/icoA.png" alt="">Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/literatura.jpg" class="img-responsive"><br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><input type="text" maxlength="3" size="2" class="nota-abierta calif" min="0" max="10" id="nota1_1" readonly>&nbsp; <b style="color: #005CA4;">1. </b> <b>Observa</b> las imágenes que muestran la secuencia de la retahíla y <b>complétala.</b> <b>(1.25 pts.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <div align="center">
+                        <img src="img/i1_p234_u6e1.jpg" class="img-responsive" style="display: inline-block;">
+                        <img src="img/i2_p234_u6e1.jpg" class="img-responsive" style="display: inline-block;">
+                        <img src="img/i3_p234_u6e1.jpg" class="img-responsive" style="display: inline-block;">
+                        <img src="img/i4_p234_u6e1.jpg" class="img-responsive" style="display: inline-block;">
+                        <img src="img/i5_p234_u6e1.jpg" class="img-responsive" style="display: inline-block;">
+                    </div>
+                    <p>Este es el <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon1" onkeyup="mayus(this)"></p>
+                    <p>Esta es la <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon2" onkeyup="mayus(this)"> que vive en el <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon3" onkeyup="mayus(this)">.</p>
+                    <p>Esta es la <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon4" onkeyup="mayus(this)"> con que vuela la <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon5" onkeyup="mayus(this)"> que vive en el <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon6" onkeyup="mayus(this)">.</p>
+                    <p>Este es el <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon7" onkeyup="mayus(this)"> que por las noches destroza la <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon8" onkeyup="mayus(this)"> con que vuela la <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon9" onkeyup="mayus(this)"> que vive en el <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon10" onkeyup="mayus(this)">.</p>
+                    <p>Este es el <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon11" onkeyup="mayus(this)"> llorón que con sus llantos asusta al <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon12" onkeyup="mayus(this)"> que por las noches destroza la <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon13" onkeyup="mayus(this)"> con que vuela la <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon14" onkeyup="mayus(this)"> que vive en el <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 100px;" id="p1dcon15" onkeyup="mayus(this)">.</p>
+                    <h5 align="right">S/A (2014). “El castillo encantado”. Educación infantil. Recuperado de https://goo.gl/bRde1N</h5>
+                </div>
+                <div class="row"></div>
+                <br>
+                <img src="img/comunicacion.jpg" class="img-responsive"><br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><input type="text" maxlength="3" size="2" class="nota-abierta calif" min="0" max="10" id="nota1_2">&nbsp; <b style="color: #005CA4;">2. </b> <b>Dibuja</b> carteles que utilizarías para una exposición oral sobre las señales de prevención en la escuela. Luego, <b>escribe</b> su significado. <b>(1.5 pts.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <div class="col-sm-4">
+                        <div class="my-drawing"></div>
+                        <textarea class="form-control text-question no-redimensionar" cols="20" rows="2"></textarea>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="my-drawing"></div>
+                        <textarea class="form-control text-question no-redimensionar" cols="20" rows="2"></textarea>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="my-drawing"></div>
+                        <textarea class="form-control text-question no-redimensionar" cols="20" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <img src="img/lectura.jpg" class="img-responsive"><br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><input type="text" maxlength="3" size="2" class="nota-abierta calif" min="0" max="10" id="nota1_3">&nbsp; <b style="color: #005CA4;">3. </b> <b>Lee</b> las instrucciones establecidas y <b>elabora</b> la señalética sobre las disposiciones y las recomendaciones. <b>(2 pts.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <div style="border: 4px solid #99d0c8; background: #00b6a4; color: white;" align="center"><b>NORMAS PARA EL USO DE UNA PISCINA</b></div>
+                    <div class="col-sm-6" align="center" style="border: 4px solid #99d0c8; background: #99d0c8;">
+                        <div style="border: 4px solid #99d0c8; background: #99d0c8;"><b>Disposiciones</b></div>
+                        <div style="border: 4px solid #99d0c8; background: #daeff0;" align="left">
+                            <ul>
+                                <li>No está permitido jugar con pelotas de cualquier naturaleza.</li>
+                                <li>Ingresar al recinto con calzado adecuado.</li>
+                                <li>Ingresar sin botellas o vasos de vidrio.</li>
+                                <li>Ingresar sin animales.</li>
+                            </ul>
+                        </div>
+                        <div style="border: 4px solid #99d0c8; background: #daeff0;" align="left">
+                            <div class="my-drawing"></div>
+                            <br>
+                            <div class="my-drawing"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" align="center" style="border: 4px solid #99d0c8; background: #99d0c8;">
+                        <div style="border: 4px solid #99d0c8; background: #99d0c8;"><b>Recomendaciones</b></div>
+                        <div style="border: 4px solid #99d0c8; background: #daeff0;" align="left">
+                            <ul>
+                                <li>Ducharse antes de entrar al agua.</li>
+                                <li>Menores de 10 años, deberán estar acompañados de sus padres u otro adulto.</li>
+                                <li>Dar aviso a conserjería ante cualquier accidente.</li>
+                                <li>Tener cuidado con el piso resbaloso.</li>
+                            </ul>
+                        </div>
+                        <div style="border: 4px solid #99d0c8; background: #daeff0;" align="left">
+                            <div class="my-drawing"></div>
+                            <br>
+                            <div class="my-drawing"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <img src="img/escritura.jpg" class="img-responsive"><br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><input type="text" maxlength="3" size="2" class="nota-abierta calif" min="0" max="10" id="nota1_4">&nbsp; <b style="color: #005CA4;">4. </b> <b>Escribe</b> las medidas de prevención que debes tener en caso de un sismo. <b>(1 pt.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <div class="col-sm-6" align="center">
+                        <p style="color: #00b2d2;">Mantener la calma.</p>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-sm-6" align="center">
+                        <p style="color: #00b2d2;">No gritar, ni causar pánico.</p>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><input type="text" maxlength="3" size="2" class="nota-abierta calif" min="0" max="10" id="nota1_5" readonly>&nbsp; <b style="color: #005CA4;">5. </b> <b>Escribe</b> los signos de admiración o interrogación según corresponda. <b>(1 pt.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question" id="p5im1">
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><input type="text" maxlength="3" size="2" class="nota-abierta calif" min="0" max="10" id="nota1_6" readonly>&nbsp; <b style="color: #005CA4;">6. </b> <b>Lee</b> las oraciones. <b>Analiza</b> la parte subrayada y <b>marca</b> un visto en la casilla que corresponde. <b>(0.75 pt.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <div class="table-responsive">
+                        <table id="p6im1">
+                        </table>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><input type="text" maxlength="4" size="2" class="nota-abierta calif" min="0" max="10" id="nota1_7">&nbsp; <b style="color: #005CA4;">7. </b> <b>Escribe</b> un sueño curioso que hayas tenido. <b>Utiliza</b> tres conectores aditivos. <b>(0.75 pt.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <textarea class="form-control text-question no-redimensionar" cols="20" rows="5"></textarea>
+                </div>
+                <div class="row"></div>
+                <br>
+                <img src="img/lengua.jpg" class="img-responsive"><br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><input type="text" maxlength="3" size="2" class="nota-abierta calif" min="0" max="10" id="nota1_8" readonly>&nbsp; <b style="color: #005CA4;">8. </b> <b>Relaciona</b> los colores del semáforo con su significado. Luego, <b>explica</b> por qué debemos respetar estos colores. <b>(0.75 pt.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question" align="center" id="p8act1">
+                    <div class="textos" style="display: inline-block;"></div>
+                    <div align="center" id="datos">
+                    </div>
+                    <textarea class="form-control text-question no-redimensionar" cols="20" rows="5"></textarea>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><input type="text" maxlength="3" size="2" class="nota-abierta calif" min="0" max="10" id="nota1_9" readonly>&nbsp; <b style="color: #005CA4;">9. </b> <b>Une</b> con líneas la expresión en kichwa y su traducción al castellano. <b>(1 pt.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question" align="center" id="p9act1">
+                    <div class="textos1" style="display: inline-block;"></div>
+                    <div align="center" id="datos1">
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--<p id="trace" class="alert alert-warning display-none"></p>-->
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/u6_eval.js"></script>
+    <script type="text/javascript">
+    var titulos = "evaluacion";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("234"); //impresion de pagina
+    function onlyOne(checkbox) {
+        var checkboxes = document.getElementsByName('check')
+        checkboxes.forEach((item) => {
+            if (item !== checkbox) item.checked = false
+        })
+    }
+    function onlyOne1(checkbox) {
+        var checkboxes = document.getElementsByName('check1')
+        checkboxes.forEach((item) => {
+            if (item !== checkbox) item.checked = false
+        })
+    }
+    function onlyOne2(checkbox) {
+        var checkboxes = document.getElementsByName('check2')
+        checkboxes.forEach((item) => {
+            if (item !== checkbox) item.checked = false
+        })
+    }
+    </script>
+    <script>
+    LC.init(
+        document.getElementsByClassName('my-drawing')[0], {
+            imageURLPrefix: 'imgcanvas',
+            backgroundColor: 'white'
+
+        });
+    LC.init(
+        document.getElementsByClassName('my-drawing')[1], {
+            imageURLPrefix: 'imgcanvas',
+            backgroundColor: 'white'
+
+        });
+    LC.init(
+        document.getElementsByClassName('my-drawing')[2], {
+            imageURLPrefix: 'imgcanvas',
+            backgroundColor: 'white'
+
+        });
+    LC.init(
+        document.getElementsByClassName('my-drawing')[3], {
+            imageURLPrefix: 'imgcanvas',
+            backgroundColor: 'white'
+
+        });
+    LC.init(
+        document.getElementsByClassName('my-drawing')[4], {
+            imageURLPrefix: 'imgcanvas',
+            backgroundColor: 'white'
+
+        });
+    LC.init(
+        document.getElementsByClassName('my-drawing')[5], {
+            imageURLPrefix: 'imgcanvas',
+            backgroundColor: 'white'
+
+        });
+    LC.init(
+        document.getElementsByClassName('my-drawing')[6], {
+            imageURLPrefix: 'imgcanvas',
+            backgroundColor: 'white'
+
+        });
+    </script>
+</body>
+
+</html>

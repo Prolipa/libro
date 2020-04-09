@@ -1,0 +1,411 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.pintarcorrecto {
+
+    background-color: #32a75b;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+
+}
+
+.pintar1 {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.colorear {
+
+    background: #fdb87c;
+    border-radius: 10px 10px 10px 10px;
+    padding: 5px;
+}
+
+.letraAzul {
+    color: #005ca4;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+
+textarea {
+    resize: none;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="calificar_abierta()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-aplico" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico">
+                <span class="titulo"><img src="img/icoE.png" alt="">Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--texto de ayuda de la actividad-->
+                <!--pregunats de la actividad-->
+                <div class="text-question" style="text-align: justify;">
+                    <input class="nota-abierta" style="text-align: center;" id="nota1"></input><b>1. Observa</b> las imágenes y <b>conversa</b> con tus compañeros sobre los tipos de leyendas que puedes escribir a partir de las imágenes. <b>Imagina y escribe</b> los nombres en cada recuadro. <i><b>(2 pts.)</b></i>
+                    <div class="table-responsive">
+                        <table style="text-align: center;" class="table table-bordered" align="center">
+                            <tr>
+                                <td colspan="3"><span style="background: #74c045;border-radius: 10px 0px 10px 0px;padding: 10px;color: white;">Leyendas</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="" name="" class="form-control" style="border:3px solid #4380c3;border-radius: 10px 0px 10px 0px;padding: 10px;color: white;"><img src="img/i1_p168_uni5Tema3_1.jpg" alt="" class="img-responsive"></img></td>
+                                <td><input type="" name="" class="form-control" style="border:3px solid #ffd75d;border-radius: 10px 0px 10px 0px;padding: 10px;color: white;"><img src="img/i2_p168_uni5Tema3_1.jpg" alt="" class="img-responsive"></img></td>
+                                <td><input type="" name="" class="form-control" style="border:3px solid #a472b1;border-radius: 10px 0px 10px 0px;padding: 10px;color: white;"><img src="img/i3_p168_uni5Tema3_1.jpg" alt="" class="img-responsive"></img></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <input class="nota-abierta" style="text-align: center;" id="nota2"></input><b>2. Inventa</b> un personaje extraordinario para una leyenda, a partir de una de las imágenes anteriores. Luego, <b>describe</b> las características, los rasgos físicos y los lugares. <b>Observa</b> el ejemplo. <i><b>(2 pts.)</b></i>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <td style="background: #93cee6;width: 25%;"><b>Personaje</b></td>
+                                <td style="background: #93ce8c;width: 25%;"><b>Lugar</b></td>
+                                <td style="background: #ffd75e;width: 25%;"><b>Características</b></td>
+                                <td style="background: #dacbe4;width: 25%;"><b>Rasgos físicos</b></td>
+                            </tr>
+                            <tr>
+                                <td style="background: #c9e5f1;">El cacique Huan</td>
+                                <td style="background: #e0f0dd;">En las tierras altas y desérticas de la Costa ecuatoriana, lo que hoy es la provincia de Manabí.</td>
+                                <td style="background: #ffeebc;">Aparece cuando sale el sol. <br> Enseña a hablar a los niños pequeños que aún no lo hacen.</td>
+                                <td style="background: #eee8f4;">Es de piel cobriza, lleva vestimenta típica. Saluda la llegada de un nuevo día.</td>
+                            </tr>
+                            <tr>
+                                <td><textarea name="" id="" class="form-control"></textarea></td>
+                                <td><textarea name="" id="" class="form-control"></textarea></td>
+                                <td><textarea name="" id="" class="form-control"></textarea></td>
+                                <td><textarea name="" id="" class="form-control"></textarea></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <input class="nota-abierta" style="text-align: center;" id="nota3"></input><b>3. Crea</b> una leyenda con los datos anteriores. <b>Pinta</b> las frases con que abres y cierras la narración <i><b>(2 pts.)</b></i>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td style="background: #c9e5f1;"><b>Para iniciar la leyenda</b></td>
+                                <td style="background: #ffeebc;"><b>Palabras conectoras</b></td>
+                                <td style="background: #eee8f4;"><b>Para concluir la leyenda</b></td>
+                            </tr>
+                            <tr>
+                                <td><span class="enc">Hace muchos años atrás…</span></td>
+                                <td><span class="enc">Entonces, …</span></td>
+                                <td><span class="enc">hasta ahora se cree que el origen del pueblo…</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="enc">En tiempo de los tatarabuelos…</span></td>
+                                <td><span class="enc">Después, …</span></td>
+                                <td rowspan="3"><span class="enc">y así todos los habitantes de…</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="enc">Cuenta la leyenda…</span></td>
+                                <td><span class="enc">Luego, …</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="enc">Cuando las personas salían…</span></td>
+                                <td><span class="enc">Por lo tanto, …</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <input class="nota-abierta" style="text-align: center;" id="nota4"></input><b>4. Redacta</b> la leyenda con los datos anteriores y <b>acompaña</b> con dibujos cada parte. <i><b>(2 pts.)</b></i>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td style="border:2px solid #c9e5f1;width: 40%;"><span style="background: #ffe293;padding: 5px;"><b>Inicio</b></span><textarea name="" class="form-control" rows="5"></textarea></td>
+                                <td style="border:2px solid #c9e5f1">
+                                    <div class="my-drawing" style="border:2px solid #c9e5f1;"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:2px solid #ffeebc"><span style="background: #b9db9c;padding: 5px;"><b>Nudo</b></span><textarea name="" class="form-control" rows="5"></textarea></td>
+                                <td style="border:2px solid #ffeebc">
+                                    <div class="my-drawing" style="border:2px solid #ffeebc"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:2px solid #eee8f4"><span style="background: #dacbe4;padding: 5px;"><b>Desenlace</b></span><textarea name="" class="form-control" rows="5"></textarea></td>
+                                <td style="border:2px solid #eee8f4">
+                                    <div class="my-drawing" style="border:2px solid #eee8f4"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <input class="nota-abierta" style="text-align: center;" id="nota5"></input><b>5. Revisa</b> tu leyenda con la siguiente ficha para que la mejores. <i><b>(2 pts.)</b></i>
+                    <table class="table">
+                        <tr>
+                            <td>La leyenda tiene:</td>
+                            <td style="background: #00add6;color:white;text-align: center;"><b>Sí</b></td>
+                            <td style="background: #74c045;color:white;text-align: center;"><b>No</b></td>
+                        </tr>
+                        <tr>
+                            <td style="background: #dbedcb;">Inicio, nudo, desenlace</td>
+                            <td style="text-align: center;"><input type="checkbox"></td>
+                            <td style="text-align: center;"><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td style="background: #c2e9f5;">Un título creativo</td>
+                            <td style="text-align: center;"><input type="checkbox"></td>
+                            <td style="text-align: center;"><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td style="background: #dbedcb;">Personajes imaginarios</td>
+                            <td style="text-align: center;"><input type="checkbox"></td>
+                            <td style="text-align: center;"><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td style="background: #c2e9f5;">Un lugar del Ecuador</td>
+                            <td style="text-align: center;"><input type="checkbox"></td>
+                            <td style="text-align: center;"><input type="checkbox"></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <b>6. Presenta</b> tu leyenda en una cartulina INEN A4. <b>Mira</b> ejemplos para la portada.
+                    <img src="img/i4_p168_uni5Tema3_1.jpg" alt="" class="img-responsive"></img>
+                    <br>
+                    <b>7. Expón</b> en la cartelera de la clase.
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script>
+    $("#n_pagina").html("168"); //impresion de pagina
+    var titulos = 'aplico';
+    f_titulos();
+
+    $(document).ready(function() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        //var imageSize = { width: winHeight , height: winHeight };
+        var watermarkImage = new Image();
+        //watermarkImage.src = 'img/i2_p217_uni6tema3_1.jpg';
+        //var watermarkImage2 = new Image();
+        //watermarkImage2.src = 'img/i7_p98_act100.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+                //watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[1], {
+                imageURLPrefix: 'imgcanvas',
+                //watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[2], {
+                imageURLPrefix: 'imgcanvas',
+                //watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+            });
+    });
+    var cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        cor = 0,
+        inc = 0,
+        calificacion = 10;
+
+    document.getElementById('nota1').addEventListener('keypress', () => {
+        validNumero(0, 2, 1);
+    });
+    document.getElementById('nota1').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1'), 2)
+    });
+    document.getElementById('nota2').addEventListener('keypress', () => {
+        validNumero(0, 2, 1);
+    });
+    document.getElementById('nota2').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota2'), 2)
+    });
+     document.getElementById('nota3').addEventListener('keypress', () => {
+        validNumero(0, 2, 1);
+    });
+    document.getElementById('nota3').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota3'), 2)
+    });
+     document.getElementById('nota4').addEventListener('keypress', () => {
+        validNumero(0, 2, 1);
+    });
+    document.getElementById('nota4').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota4'), 2)
+    });
+     document.getElementById('nota5').addEventListener('keypress', () => {
+        validNumero(0, 2, 1);
+    });
+    document.getElementById('nota5').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota5'), 2)
+    });
+    $('.enc').click(function() {
+
+        if ($(this).hasClass('colorear')) {
+            $(this).removeClass('colorear')
+        } else {
+            $(this).addClass('colorear')
+        }
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMÁTICA 7</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link rel="stylesheet" media="all" type="text/css" href="css/sudokuJS.css">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link href="css/estilo_canvas.css" rel="stylesheet">
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+
+        <script src="js/highcharts.js"></script>
+        <script src="js/highcharts-3d.js"></script>
+        <script src="js/data.js"></script>
+
+</head>
+<style type="text/css">
+#draggable { width: 150px; height: 150px; padding: 0.5em; }
+	   * {
+                margin:0; padding:0;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            .wrap {
+                padding: 2em 1em;
+                width: 400px;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            @media(min-width: 30em){
+                .wrap{
+                    width: 490px;
+                }
+                .sudoku-board input {
+                    font-size: 24px;
+                    font-size: 1.5rem;
+                }
+                .sudoku-board .candidates {
+                    font-size: .8em;
+                }
+            }
+
+    .fondo_preg{
+        background-color: #D6F2F8;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+
+    .textTab{
+        color: #3D4C78;
+        font-size: 20px;
+    }
+
+    .textTab1{
+        color: #35A877;
+        font-size: 20px;
+    }
+
+   
+    .n0{
+        color: #27AD70;
+        font-size: 23px;
+    }
+
+    .np0{
+        color: #2AD1A6;
+        font-size: 23px;
+    }
+
+    .np1{
+        color: #E63361;
+        font-size: 23px;
+    }
+
+    .np2{
+        color: #9A983B;
+        font-size: 23px;
+    }
+
+    .n1{
+        color: white;
+        font-size: 23px;
+        background-color: #309794;
+        border-radius: 5px;
+    }
+
+    .n2{
+       color: white;
+        font-size: 23px;
+        background-color: #B4AD67;
+        border-radius: 5px;
+    }
+
+    .num{
+        background-color: #FFEBCA;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .num0{
+        border-color: #E63361;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+
+    .num1{
+        background-color: #ACEDF9;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+
+    .num1_0{
+        border-color: #36C2CB;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+
+    .num2{
+        background-color: #F7D4E2;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+
+    .num2_0{
+        border-color: #C19B3C;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .encabezado_pregunta{
+        background-color: #E5ECBD;
+        font-size: 19px;        
+        border-radius: 5px;
+    }
+   
+    .encabezados{
+        color: white;
+        font-size: 20px;
+    }
+
+    .r1{
+        border-top: none;
+        border-right: none;
+        border-left: none; 
+        border-bottom-width: 1px;
+        border-bottom-color: black;
+    }
+
+
+    .bordes{
+        border-width: 3px;
+        border-style: dashed;
+        border-color: #FFA91C;
+        text-align: justify;
+    }
+
+
+    .actividad1{
+        background: #fff;       
+    }
+
+    .t_images img{
+        padding: 8px;
+        max-width: 80%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+        margin-bottom: 15px;
+        padding: 3px;
+    }
+    
+@media (max-width: 770px) {
+	.cajas {
+	    clear: left;
+	  }
+   .t_images img{
+        padding: 8px;
+        max-width: 20%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+    }
+    .r_images img{
+        max-height: 100%;
+    }    
+}
+
+
+#contenedoropciones table:nth-of-type(1) td {
+    cursor: pointer;
+    }
+    .celdascoloresdefondo {
+    width: 20px;
+    height: 10px;
+    border: solid 1px transparent;
+    }
+
+    /*ESTILO DEL CANVAS PARA MODIFICAR IMAGEN*/
+      #prueba {
+        margin-top: 2rem;
+        display: block;
+        box-sizing: border-box;
+        padding: 0px;
+        transition: all .3s linear 0s;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color:#e5e5e5; 
+        /*background-color:rgba(212,185,186,0.2); */
+        background-image: url(img/i1_p92_act6.jpg); /* SI SE NECESITA UNA IMAGEN DE FONDO */
+        background-size: 100% 100%;
+      }
+
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Actividad 1: En base a la sucesión de números planteada calcula los dos patrones correspondientes, indica que tipo de operación es (+,-,x,÷) y el valor. finalmente calcula los números que continuan la sucesión y escribe tu resultado en los cuadros de texto correspondientes.<br>
+        Actividad 2: Resuelve el problema e ingresa los valores separados por una coma y sin espacios en el cuadro de texto correspondiente<br>
+        Actividad 3: Resuelve los problemas de MCD e ingresa tus resultados en los cuadros de texto correspondientes<br>
+        Actividad 4: Resuelve las raíces planteadas e ingresa solo tu resultado final en los cuadros de texto de la columna 'Comprobación', puedes utilizar los cuadros de texto de la columna 'Estimación' para realizar el proceso.<br>        
+        Actividad 5: Resuelve las raíces planteadas e ingresa solo tu resultado final en los cuadros de texto correspondientes<br>
+        Actividad 6: Llena la tabla con los valores correspondientes en base al problema planteado, luego dibuja los datos en un diagrama de barras y en un gráfico circular, esta parte debe ser calificada manualmente sobre 0.75 puntos.<br>
+        Actividad 7: En base a el gráfico estadístico planteado responde las preguntas. Esta actividad debe ser calificada manualmente sobre 1 punto<br>
+        Actividad 8: En base a los datos planteados, halla la media, mediana, moda y el rango. Escribe tus respuestas en los cuadros de texto correspondientes.<br>
+        Actividad 9: Resuelve el problema planteado, ingresa tus respuestas en los cuadros de texto correspondientes. En el cuadro de texto de 'CASOS FAVORABLES' ingresa los valores que calcules separados por comas y sin espacios.<br>
+
+
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-evaluacion" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-evaluacion">
+                    <span class="titulo"><img src="img/icoTST.png"> Evaluación sumativa</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+	 <div class="panel-body"> 
+            <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+        <div class="row">
+            <div class="col-sm-8"><img src="img/algebra_funciones.jpg"></div>
+         </div> 
+                <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"> 
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                          <div class="panel-body preguntas">
+                           <span>1. <b>Encuentra</b> el patrón y <b>completa</b> la sucesión.</span>
+                            <br><br>
+							<div class="table-responsive form-inline form-group">
+                                <div id="sucesion0"></div>            
+                            </div>                          
+                          </div>                   
+                     </div>
+                    </div>
+
+                
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title"> 
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+                    </h4>
+                </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                           <span>2. <b>Resuelve</b>.</span>
+                            <br>
+                            <div class="col-sm-8">
+                                En una zona rural del país se tenía un promedio anual de <span class="n0" id="nh0"></span> visitantes, pero en los últimos <span class="n0" id="nh1"></span> años esta cifra se ha ido triplicando cada año, favoreciendo la economía de sus habitantes. ¿Cuál fue el número de visitantes en cada año?
+                            <br><br>
+                                R. El número de visitantes en cada año fue: <textarea id="rNHab" class="form-control respuestas" style="width: 100%;" placeholder="Ej: 120,360,1080,3240,9720"></textarea>
+                            </div> 
+                            <div class="col-sm-4">
+                                <img class="img-responsive" src="img/i1_p92_act2.jpg">
+                            </div>                            
+                                                   
+                        </div>                
+                </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title"> 
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+                    </h4>
+                </div>
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                           <span>3. <b>Resuelve</b> los problemas.</span>
+                            <br><br>
+
+                            <div class="form-inline form-group">
+                                <div class="col-sm-6">
+                                    <div class="panel bordes">
+                                        <div class="panel-body">
+                                        <div id="problemaP3_1"></div> 
+                                        <br>
+                                        R. Andrés volverá a practicar los dos deportes juntos a los 
+                                        <input type="number" id="rMcd1" class="form-control respuestas" style="width: 60px;">  días.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="panel bordes">
+                                        <div class="panel-body">
+                                          <div id="problemaP3_2"></div>
+                                    
+                                        <br>
+                                        R. Patricia puede enviar <input type="number" id="rP3Mcd0" class="form-control respuestas" style="width: 60px;"> cajas. En cada caja enviará <input type="number" id="rP3Mcd1" class="form-control respuestas" style="width: 60px;"> cremas de hombre y <input type="number" id="rP3Mcd2" class="form-control respuestas" style="width: 60px;"> cremas de mujer.
+                                        </div>
+                                       </div>
+                                </div>
+                            </div>
+   
+                    </div>                
+                </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title"> 
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Actividad 4</a>
+                    </h4>
+                </div>
+            <div id="collapse4" class="panel-collapse collapse">
+                <div class="panel-body preguntas">
+                    <span>4. <b>Escribe</b> el número que estimas que corresponde a las siguientes raíces y <b>comprueba</b>.</span>
+                    <br><br>
+                   <div class="table-responsive">
+                        <table id="tablePreview" class="table table-bordered table-hover table-sm">
+                          <tbody>
+                            <tr align="center">  
+                              <td colspan="4" style="background-color: #36A6D1; color: white; font-size: 20px;">Raíz</td>
+                              <td colspan="4" style="background-color: #7DBA87; color: white; font-size: 20px;">Estimación</td>
+                              <td colspan="4" style="background-color: #EAA4DC; color: white; font-size: 20px;">Comprobación</td>
+                            </tr>
+                            <tr>
+                              <td colspan="4" align="center"><sup class="np1" style="font-size: 15px;" id="radical0"></sup>√<span class="np1" id="radicando0"></span></td>
+                              <td colspan="4" align="center"><input type="text" class="form-control respuestas"></td>
+                              <td colspan="4" align="center"><input type="number" class="form-control respuestas" id="rRaiz0"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="4" align="center"><sup class="np2" style="font-size: 15px;" id="radical1"></sup>√<span class="np2" id="radicando1"></span></td>
+                              <td colspan="4" align="center"><input type="text" class="form-control respuestas"></td>
+                              <td colspan="4" align="center"><input type="number" class="form-control respuestas" id="rRaiz1"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="4" align="center"><sup class="np1" style="font-size: 15px;" id="radical2"></sup>√<span class="np1" id="radicando2"></span></td>
+                              <td colspan="4" align="center"><input type="text" class="form-control respuestas"></td>
+                              <td colspan="4" align="center"><input type="number" class="form-control respuestas" id="rRaiz2"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="4" align="center"><sup class="np2" style="font-size: 15px;" id="radical3"></sup>√<span class="np2" id="radicando3"></span></td>
+                              <td colspan="4" align="center"><input type="text" class="form-control respuestas"></td>
+                              <td colspan="4" align="center"><input type="number" class="form-control respuestas" id="rRaiz3"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                         
+                    </div>                
+                </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title"> 
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Actividad 5</a>
+                    </h4>
+                </div>
+            <div id="collapse5" class="panel-collapse collapse">
+                <div class="panel-body preguntas">
+                    <span>5. Con el uso de la calculadora, <b>encuentra</b> las raíces cuadradas y cúbicas.</span>
+                    <br><br>
+                        <div class="form-inline form-group">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-5">
+                             a)   <sup id="rP10Sup0" class="n0"></sup>
+                            √<span id="rP10Num0" class="n0"></span> = 
+                            <input type="number" id="rP10_0" class="form-control respuestas" style="width: 100px;">
+                            </div>
+                            <div class="col-sm-6">
+                             b)   <sup id="rP10Sup1" class="np1"></sup>
+                            √<span id="rP10Num1" class="np1"></span> = 
+                            <input type="number" id="rP10_1" class="form-control respuestas" style="width: 100px;">
+                            </div>
+                            <br><br><br>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-5">
+                             c)   <sup id="rP10Sup2" class="np2"></sup>
+                            √<span id="rP10Num2" class="np2"></span> = 
+                            <input type="number" id="rP10_2" class="form-control respuestas" style="width: 100px;">
+                            </div>                        
+                            <div class="col-sm-6">
+                             d)   <sup id="rP10Sup3" class="n0"></sup>
+                            √<span id="rP10Num3" class="n0"></span> = 
+                            <input type="number" id="rP10_3" class="form-control respuestas" style="width: 100px;">
+                            </div>
+
+                        </div>  
+                    </div>                
+                </div>
+            </div>
+            
+
+        <br>
+        <div class="row">
+            <div class="col-sm-8"><img src="img/estadistica_probabilidad.jpg"></div>
+        </div> 
+
+
+        <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title"> 
+                        <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;" data-toggle="tooltip" title="Puntaje sólo para el gráfico estadístico sobre 0.75 puntos">
+                            <input type="number" id="calificacion0" placeholder="Puntaje/0.75" style="width: 120px;" class="form-control">
+                        </div>
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse6" style="margin-left: 70px;">Actividad 6</a>
+                    </h4>
+                </div>
+            <div id="collapse6" class="panel-collapse collapse">
+                <div class="panel-body preguntas">
+                    <span>6. <b>Lee</b> y <b>organiza</b> la información en una tabla de frecuencias. Luego <b>representa</b> los datos en un diagrama de barras y en un gráfico circular.</span>
+                    <br><br>
+                    Se aplicó una encuesta a <span class="np1" id="in4"></span> personas sobre los grupos étnicos más numerosos del país. <span class="np1" id="in0"></span> respondieron que son los otavalos, <span class="np1" id="in1"></span> consideraron que son los salasacas, <span class="np1" id="in2"></span> dijeron que son los chachis y <span class="np1" id="in3"></span> aseguraron que son los cofán.
+                    
+                    <br><br>
+                    <div class="col-sm-3"></div>
+                    <div class="table-responsive col-sm-6">
+                        <table id="tablePreview" class="table table-bordered table-hover table-sm">
+                          <tbody>
+                            <tr align="center">
+                              <td colspan="12" style="background-color: #53B6E1; color: white; font-size: 25px;">Inasistencias en el trimestre</td>
+                            </tr>
+                            <tr>
+                              <td colspan="9" style="background-color: #C9EFFF;">Otavalos</td>
+                              <td colspan="2" style="background-color: #F8DFFF;" align="center"><input type="number" id="rIn0" class="form-control respuestas"></td>
+                            </tr>
+                            <tr>
+                             <td colspan="9" style="background-color: #C9EFFF;">Salasacas</td>
+                              <td colspan="2" style="background-color: #F8DFFF;" align="center"><input type="number" id="rIn1" class="form-control respuestas"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="9" style="background-color: #C9EFFF;">Chachis</td>
+                              <td colspan="2" style="background-color: #F8DFFF;" align="center"><input type="number" id="rIn2" class="form-control respuestas"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="9" style="background-color: #C9EFFF;">Cofán</td>
+                              <td colspan="2" style="background-color: #F8DFFF;" align="center"><input type="number" id="rIn3" class="form-control respuestas"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="9" style="background-color: #C9EFFF;">Total</td>
+                              <td colspan="2" style="background-color: #F8DFFF;" align="center"><input type="number" id="rIn4" class="form-control respuestas"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-1"></div>
+
+                     <div>
+                                <main>
+                                        <canvas id="prueba">Este navegador no soporta canvas, visualice la web con un navegador actualizado.</canvas>
+                                        <div id="paleta" class="mi_canvas">
+                                            <div id="contenedoropciones">
+                                            <div class="col-sm-4">
+                                                <table width="auto">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td colspan="9" class="titulotabla">Color</td>
+                                                    </tr>
+                                                    <tr>
+                                                      
+                                                      <td class="celdascoloresdefondo" data-color="red">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="pink">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="orange">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="yellow">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="magenta">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="MEDIUMSEAGREEN">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="green">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="DARKCYAN">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="cyan">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                    
+                                                      <td class="celdascoloresdefondo" data-color="blue">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="wheat">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="brown">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="white">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="LIGHTGRAY">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="gray">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="LIGHTSLATEGRAY">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="DARKSLATEGRAY">&nbsp;</td>
+                                                      <td class="celdascoloresdefondo" data-color="black">&nbsp;</td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                            </div>
+                                              
+                                        <div class="table-responsive col-sm-8">
+                                                <table width="auto" id="opcionesdedibujo">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td colspan="5" class="bg-info">Opciones de dibujo</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Grosor pincel: <input onChange="cambiagrosor(this)" name="grosor" type="number" id="grosor" max="100" min="3" step="1" title="Grosor del cursor" value="5"></td>
+                                                      <td onClick="cambiapincel(this)" id="celdapincelcuadrado" style="cursor:pointer;border:solid 1px black;background-color: white;">Pincel cuadrado</td>
+                                                      <td onClick="cambiaaccion(this)" id="xpintar"class="celdaaccion" style="cursor:pointer;border:solid 1px black;background-color: white;">Pintar</td>
+                                                      <td rowspan="2"  onClick="borrartodo()"><span class="btn btn-danger">Borrar todo</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Grosor borrar: <input onChange="cambiagrosorborrador(this)" name="grosorborrar" type="number" id="grosorborrar" max="100" min="3" step="1" title="Grosor del borrardor" value="10"></td>
+                                                      <td onClick="cambiapincel(this)" id="celdapincelredondo" style="cursor:pointer;border:solid 1px transparent">Pincel redondo</td>
+                                                      <td onClick="cambiaaccion(this)" id="xborrar" class="celdaaccion" style="cursor:pointer;border:solid 1px transparent">Borrar</td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                            </div>
+                                            </div>
+                                        
+                                        </div>
+                                    </main>
+                            </div>  
+
+                    </div>                
+                </div>
+            </div>
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title"> 
+                        <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                            <input type="number" id="calificacion1" placeholder="Puntaje/1" style="width: 120px;" class="form-control">
+                        </div>
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse7" style="margin-left: 70px;">Actividad 7</a>
+                    </h4>
+                </div>
+            <div id="collapse7" class="panel-collapse collapse">
+                <div class="panel-body preguntas">
+                    <span>7. <b>Analiza</b> el gráfico estadístico y <b>responde</b>.</span>
+                    <br><br>
+
+                    <div class="col-sm-5">
+                        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                    </div>
+
+                    <div class="col-sm-7">
+                        a) ¿Cuál es el ritmo musical que más les gusta? <input type="text" id="rMu" class="form-control respuestas"><br>
+                        b) ¿Qué ritmo musical es el que menos les gusta? <input type="text" id="rMu" class="form-control respuestas"><br>
+                        c) ¿A cuántas personas les gusta la cumbia? <input type="text" id="rMu" class="form-control respuestas"><br>
+                        d) ¿Cuántas personas fueron encuestadas? <input type="text" id="rMu" class="form-control respuestas"><br>
+                    </div>
+
+                   
+                    </div>                
+                </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title"> 
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">Actividad 8</a>
+                    </h4>
+                </div>
+            <div id="collapse8" class="panel-collapse collapse">
+                <div class="panel-body preguntas">
+                    <span>8. <b>Halla</b> la media, la mediana, la moda y el rango de los siguientes datos estadísticos. Luego <b>responde</b>.</span>
+                    <br><br>
+                        <div class="form-inline form-group">
+                            <div class="table-responsive col-sm-4">
+                            <table id="tablePreview" class="table table-bordered table-hover table-sm">
+                              <tbody>
+                                <tr align="center">
+                                  <td style="background-color: #B648A3; font-size: 20px; color: white;">Área</td>
+                                  <td style="background-color: #3DC167; font-size: 20px; color: white;">Calificación</td>
+                                </tr>
+                                <tr>
+                                  <td style="background-color: #FED8FB;">Lengua y Literatura</td>
+                                  <td style="background-color: #D8FEE4;" align="center" id="cal0"></td>
+                                </tr>
+                                <tr>
+                                  <td style="background-color: #FED8FB;">Matemática</td>
+                                  <td style="background-color: #D8FEE4;" align="center" id="cal1"></td>
+                                </tr>
+                                <tr>
+                                  <td style="background-color: #FED8FB;">Ciencias Naturales</td>
+                                  <td style="background-color: #D8FEE4;" align="center" id="cal2"></td>
+                                </tr>
+                                <tr>
+                                  <td style="background-color: #FED8FB;">Estudios Sociales</td>
+                                  <td style="background-color: #D8FEE4;" align="center" id="cal3"></td>
+                                </tr>
+                                <tr>
+                                  <td style="background-color: #FED8FB;">Cultura Física</td>
+                                  <td style="background-color: #D8FEE4;" align="center" id="cal4"></td>
+                                </tr>
+                                <tr>
+                                  <td style="background-color: #FED8FB;">Lengua Extranjera</td>
+                                  <td style="background-color: #D8FEE4;" align="center" id="cal5"></td>
+                                </tr>
+                                <tr>
+                                  <td style="background-color: #FED8FB;">Emprendimiento</td>
+                                  <td style="background-color: #D8FEE4;" align="center" id="cal6"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            </div>
+
+                            <br>
+
+                            <div class="col-sm-8">                                
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-1">
+                                    <br>
+                                     <span style="font-size: 25px;">x̄</span> = 
+                                </div>
+                                <div class="col-sm-5">
+                                    <div>
+                                        <input type="text" id="conjDatosP4" placeholder="Ej: 1+2+3+4" class="form-control" style="width: 250px; text-align: center;">
+                                    </div>
+                                    <div>
+                                      -------------------------------------------------  
+                                    </div>                                     
+                                    <div align="center">
+                                        <input type="number" id="denConjDatosP4" class="form-control" style="width: 70px;" align="center">
+                                    </div> 
+                                </div>
+                                <div class="col-sm-1">
+                                    <br>
+                                     <span style="font-size: 25px;"></span> &nbsp;&nbsp; =
+                                </div>
+                                <div class="col-sm-4">
+                                   <input type="number" id="rNumConjP4" class="form-control" style="width: 70px;">
+                                   <br>-------------<br>                                
+                                    <input type="number" id="rDenConjP4" class="form-control" style="width: 70px;">
+                                    <br><br>
+                                </div>                                
+                                                     
+
+                            ¿Cuál es la media o promedio de las calificaciones?<br>
+                            <div>
+                                <span class="num1">Media <span style="font-size: 25px;">x̄</span></span>
+                                <input type="number" id="rMediaP4" class="form-control num1_0" style="width: 110px;">
+                                <br><br>
+                            </div>
+
+
+                            ¿Cuál es la mediana, la moda y el rango?<br>
+                            <div>
+                              <div class="col-sm-4">
+                                 <span class="num2">Mediana <span style="font-size: 25px;">M</span><sub>e</sub></span> 
+                                <input type="number" id="rMedianaP4" class="form-control num0" style="width: 80px;">
+                              </div>
+
+
+                              <div class="col-sm-4">
+                                <span class="num">Moda <span style="font-size: 25px;">M</span><sub>o</sub></span>
+                                <input type="number" id="rModaP4" class="form-control num2_0" style="width: 80px;">
+                              </div>
+
+                              <div class="col-sm-4">
+                                <span class="num1">Rango <span style="font-size: 25px;">R</span><sub>a</sub></span>
+                                <input type="number" id="rRangoP4" class="form-control num1_0" style="width: 80px;">
+                              </div>  
+                              <br><br><br>
+                            </div>
+                            
+
+                            <div>
+                               ¿Cuántas materias tienen menos de 7?
+                               <input type="number" id="mM7" class="form-control" style="width: 90px;"> 
+                            </div>
+                            
+                         </div> 
+
+                        </div>  
+                    </div>                
+                </div>
+            </div>
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title"> 
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">Actividad 9</a>
+                    </h4>
+                </div>
+            <div id="collapse9" class="panel-collapse collapse">
+                <div class="panel-body preguntas">
+                    <span>9. <b>Resuelve</b> el problema.</span>
+                    <br><br>
+                    En un almacén hay <span class="np1" id="nbic0"></span> bicicletas rojas, <span class="np1" id="nbic1"></span> verdes y <span class="np1" id="nbic2"></span> azules. Si un cliente escoge al azar.<br><br>
+
+                        <div class="form-inline form-group">
+                            <div class="col-sm-6">
+                                    <span class="n2">Casos favorables: </span> &nbsp;&nbsp;
+                                    <input type="text" id="cf" placeholder="Ej: 1,2,3" class="form-control" style="width: 90px;">
+                                </div>
+                                <div class="col-sm-6">
+                                    <span class="n1">Total de casos: </span> &nbsp;&nbsp;
+                                    <input type="number" id="tc" class="form-control" style="width: 90px;">
+                                    <br><br><br>
+                                </div>
+                                <div class="col-sm-4">
+                                    <br>
+                                    ¿cuál es la probabilidad de que sea verde?
+                                </div>
+                                <div class="col-sm-2" style="margin-left: -40px;">
+                                    <div>
+                                        <input type="number" id="pcbNum" class="form-control input-sm" style="width: 90px;">
+                                    </div>                                    
+                                    -----------------
+                                    <div>
+                                        <input type="number" id="pcbDen" class="form-control input-sm" style="width: 90px;">
+                                    </div>
+                                    <br>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <br>
+                                    &nbsp;&nbsp;, probabilidad de que sea blanca
+                                </div>
+                                <div class="col-sm-2" style="margin-left: -40px;">
+                                    <div>
+                                        <input type="number" id="pcbNum1" class="form-control input-sm" style="width: 90px;">
+                                    </div>                                    
+                                    -----------------
+                                    <div>
+                                        <input type="number" id="pcbDen1" class="form-control input-sm" style="width: 90px;">
+                                    </div>
+                                    <br>
+                                </div>
+                        </div>  
+                    </div>                
+                </div>
+            </div>
+            
+
+</div>  
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+       
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/dibujarCANVAS.js"></script>
+        <script src="js/actividad74.js"></script>
+        <script type="text/javascript">
+            var titulos="evaluacion";
+            f_titulos();         
+            $("#n_pagina").html('92');
+        </script>
+</body>
+</html>

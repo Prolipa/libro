@@ -1,0 +1,295 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 3</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/stylesopa.css" rel="stylesheet">
+</head>
+<style>
+    .pinta{
+            background-color: #9b8600;
+            
+        }
+    .correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+.underline{
+
+        text-decoration: underline overline solid;
+        text-decoration-color: rgb(59, 114, 37);
+        
+    }
+
+.subrayar{
+    border: none;
+    border-bottom: 2px solid #9b8600;
+}
+.encierra{
+    border: 2px solid #9b8600;
+    border-radius: 10px;
+}
+.c_destino1{
+    padding: 5px;
+    border:1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 100px;
+}
+.c_origen {
+
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: auto;
+    max-width: 100%;
+    margin-left: 1px;
+    min-width: 100%;
+
+}
+.bg_palabra{
+                
+    border-radius: 10px;
+    background: #4EB399;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1: </b> Escribe el plural  de las siguientes palabras. <br>
+        <b>Pregunta 2: </b> Coloca la letra c en las palabras que corresponda. <br>
+        <b>Pregunta 3: </b> Elabora una oración con los plurales de las palabras. <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">0</span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--texto de ayuda de la actividad-->
+                <img src="img/practica.png" class="img-responsive" alt="">
+                <!--pregunats de la actividad-->
+                <div class="col-md-12 space">
+                    <span class="text-question"><input type="text" class="nota-abierta calif" id="nota1_1" readonly> <span style="color: #3385c3; font-size: 15pt">1.</span> <b>Transforma</b> al plural las siguientes palabras. <b>(3.5 pts.)</b></span>
+                </div>
+                <div class="col-sm-12 text-question" align="center">
+                    <div class="col-sm-6">
+                        <div class="table-responsive">
+                            <table id="p1im1">
+                                
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="table-responsive">
+                            <table id="p1im2">
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--pregunats de la actividad-->
+                <div class="col-md-12 space">
+                    <span class="text-question"><input type="text" class="nota-abierta calif" id="nota1_2" readonly> <span style="color: #3385c3; font-size: 15pt">2.</span> <b>Lee</b> esta noticia y <b>coloca</b> la letra <span style="color: #00aeef;">c</span> en las palabras que corresponda. <b>(3 pts.)</b></span>
+                </div>
+                <div class="col-sm-12 text-question" align="center">
+                    <div class="col-sm-7">
+                        <div style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                            <p align="justify" style="font-size: 15px; color: #22408f;">Diario</p>
+                            <p align="justify" style="font-size: 30px; color: #22408f;">La Información</p>
+                            <p align="justify" style="font-size: 15px; color: #22408f;">tu periódico local</p>
+                        </div>
+                        <div>
+                            <p align="justify"><b>Lu<input type="text" style="width: 30px; text-align: center; border: none; border-bottom: 2px dotted black;" maxlength="1" onkeyup="mayus(this)" id="p2dcon1">es por toda la ciudad</b></p>
+                            <p align="justify">La noche de ayer, 31 de diciembre, la ciudad se iluminó con las lu<input type="text" style="width: 30px; text-align: center; border: none; border-bottom: 2px dotted black;" maxlength="1" onkeyup="mayus(this)" id="p2dcon2">es de colores que acompañaron la llegada del nuevo año.</p>
+                            <p align="justify">Centenares de ciudadanos feli<input type="text" style="width: 30px; text-align: center; border: none; border-bottom: 2px dotted black;" maxlength="1" onkeyup="mayus(this)" id="p2dcon3">es se congregaron en las calles principales de la ciudad, para mirar el hermoso espectáculo.</p>
+                            <p align="justify">Las lu<input type="text" style="width: 30px; text-align: center; border: none; border-bottom: 2px dotted black;" maxlength="1" onkeyup="mayus(this)" id="p2dcon4">es saltarinas y fuga<input type="text" style="width: 30px; text-align: center; border: none; border-bottom: 2px dotted black;" maxlength="1" onkeyup="mayus(this)" id="p2dcon5">es se pudieron distinguir desde varios puntos de la urbe. Este evento se ha convertido en una tradición que se repite cada año y en el cual cada vez participan más personas.</p>
+                            <p align="justify">A las doce en punto de la noche se escucharon muchas vo<input type="text" style="width: 30px; text-align: center; border: none; border-bottom: 2px dotted black;" maxlength="1" onkeyup="mayus(this)" id="p2dcon6">es gritando: ¡Feliz Año Nuevo!</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <img src="img/i1_p185_u5a31.jpg" class="img-responsive">
+                    </div>
+                </div>
+                <!--pregunats de la actividad-->
+                <div class="col-md-12 space">
+                    <span class="text-question"><input type="text" class="nota-abierta calif" id="nota1_3"> <span style="color: #3385c3; font-size: 15pt">3.</span> <b>Elabora</b> una oración con los plurales de estas palabras. <b>(3.5 pts.)</b></span>
+                </div>
+                <div class="col-sm-12 text-question" align="center">
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <td style="border: 2px solid #ee4e73; padding: 5px;">feliz</td>
+                                <td style="border: 2px solid #ee4e73;"><textarea  class="form-control text-question no-redimensionar" cols="60" rows="2"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid #ee4e73; padding: 5px;">feroz</td>
+                                <td style="border: 2px solid #ee4e73;"><textarea  class="form-control text-question no-redimensionar" cols="60" rows="2"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid #ee4e73; padding: 5px;">vez</td>
+                                <td style="border: 2px solid #ee4e73;"><textarea  class="form-control text-question no-redimensionar" cols="60" rows="2"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid #ee4e73; padding: 5px;">disfraz</td>
+                                <td style="border: 2px solid #ee4e73;"><textarea  class="form-control text-question no-redimensionar" cols="60" rows="2"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid #ee4e73; padding: 5px;">pez</td>
+                                <td style="border: 2px solid #ee4e73;"><textarea  class="form-control text-question no-redimensionar" cols="60" rows="2"></textarea></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script type="text/javascript" src="js/wordfind.js"></script>
+    <script type="text/javascript" src="js/wordfindgame1.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/uni5act31.js"></script>
+    <script>
+    var titulos = "aplico";
+    f_titulos();
+    $("#n_pagina").html("185"); //impresion de pagina
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <style>
+        table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+
+
+    .subrayar {
+        border-bottom: 2px solid #000000;
+    }
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>1. </b> Subraya las acciones haciendo un click en la respuesta correspondiente.
+        <br> <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <img src="img/practico.jpg" alt="">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota1" class="nota-abierta" readonly></input>
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <b>1. Subraya</b> <span class="sobre">2,5 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <span><b style="color: #000000;">1.-</b> <b>Subraya</b> las acciones que podemos hacer para preparar nuestra intervención en una discusión en grupo.</span>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <table>
+                                                    <tr class="act1class" id="act01Txt0">
+                                                    </tr>
+                                                    <tr class="act1class" id="act01Txt1">
+                                                    </tr>
+                                                    <tr class="act1class" id="act01Txt2">
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <table>
+                                                    <tr class="act1class" id="act01Txt3">
+                                                    </tr>
+                                                    <tr class="act1class" id="act01Txt4">
+                                                    </tr>
+                                                    <tr class="act1class" id="act01Txt5">
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                    <input type="number" id="nota2" class="nota-abierta" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <b>2. Ordena</b> <span class="sobre">2,5 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <span><b style="color: #000000;">2.-</b> <b>Ordena</b> con números los siguientes pasos para <b>planificar</b>, <b>organizar</b> y <b>presentar</b> una discusión grupal.</span>
+                                        <table class="table-bordered">
+                                            <tr class="act2class" id="act02Txt0">
+                                            </tr>
+                                            <tr class="act2class" id="act02Txt1">
+                                            </tr>
+                                            <tr class="act2class" id="act02Txt3">
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="img/trabajamos.jpg" alt="">
+                    <div class="panel panel-default">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota3" class="nota-abierta" style="background: white; text-align: center;" >
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <b>3. Reúnanse</b> <span class="sobre">2,5 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="text-question">
+                                        <span><b>3. Reúnanse</b> en grupos de cuatro personas. <b>Elijan</b> uno de los siguientes temas para realizar una discusión grupal.</span>
+                                        <table class="table">
+                                            <tr>
+                                                <td><span class="enc1">Importancia de la lectura</span></td>
+                                                <td><span class="enc1">Problemas medioambientales</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><span class="enc1">Formas de prevenir el acoso escolar.</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota4" class="nota-abierta" style="background: white; text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                       <b>4. Profundicen</b> <span class="sobre">2,5 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>4. Profundicen</b> el tema que escogieron con información obtenida de internet, revistas especializadas u otras fuentes. Cada uno debe sostener su punto de vista con argumentos (razones que apoyan nuestro punto de vista) y ejemplos, para ello <b>completen</b> la siguiente ficha.
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td colspan="2">Tema:
+                                                    <textarea name="" class="form-control" style="resize: none; border: 2px solid #0099c4;"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">Punto de vista.<textarea name="" class="form-control" style="resize: none; border: 2px solid #0099c4;"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Argumento 1:<textarea name="" class="form-control" style="resize: none; border: 2px solid #0099c4;"></textarea></td>
+                                                <td>Ejemplos:<textarea name="" class="form-control" style="resize: none; border: 2px solid #0099c4;"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Argumento 2:<textarea name="" class="form-control" style="resize: none; border: 2px solid #0099c4;"></textarea></td>
+                                                <td>Ejemplos:<textarea name="" class="form-control" style="resize: none; border: 2px solid #0099c4;"></textarea></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("101");
+    $('.btnGuardar').removeClass('disabled');
+    var random1 = [
+        ['<td><span class="1 enc">Improvisar</span></td>'],
+        ['<td><span class="2 enc">investigar el tema</span></td>'],
+        ['<td><span class="3 enc">contar una anécdota</span></td>'],
+        ['<td><span class="4 enc">practicar lo que se va a decir en casa</span></td>'],
+        [' <td><span class="5 enc">imprimir un resumen de internet</span></td>'],
+        [' <td><span class="6 enc">escribir los datos más relevantes</span></td>'],
+    ];
+    var act01Txt = document.getElementsByClassName('act1class');
+
+    random1.sort(f_randomico);
+    for (i = 0; i < act01Txt.length; i++) {
+        $('#' + act01Txt[i].id).html(random1[i]);
+    }
+    /////////////////////////////////////////////////////////////
+    var random2 = [
+        ['<td>Preparación individual: búsqueda de información, definición de puntos de vista y argumentos.</td>' +
+            '<td><input type="text" class="inputfraccciones soloNumeros" id="act2num0"></td>' +
+            '<td>Presentación de la discusión grupal: se dice el tema que van a trabajar en el momento de empezar la discusión.</td>' +
+            '<td><input type="text" class="inputfraccciones soloNumeros" id="act2num1"></td>'
+        ],
+        ['<td>Cada uno de los miembros dice sus puntos de vista con argumentos y ejemplos.</td>' +
+            '<td><input type="text" class="inputfraccciones soloNumeros" id="act2num2"></td>' +
+            '<td>Elección del tema por parte de los participantes.</td>' +
+            '<td><input type="text" class="inputfraccciones soloNumeros" id="act2num3"></td>'
+        ],
+        ['<td>Acuerdos entre los participantes: pautas para pedir la palabra y tiempo de cada intervención.</td>' +
+            '<td><input type="text" class="inputfraccciones soloNumeros" id="act2num4"></td>' +
+            '<td>El grupo de discusión establece conclusiones generales a partir de aportes individuales.</td>' +
+            '<td><input type="text" class="inputfraccciones soloNumeros" id="act2num5"></td>'
+        ],
+    ];
+    var act02Txt = document.getElementsByClassName('act2class');
+
+    random2.sort(f_randomico);
+    for (i = 0; i < act02Txt.length; i++) {
+        $('#' + act02Txt[i].id).html(random2[i]);
+    }
+    $('.enc').click(function() {
+
+        if ($(this).hasClass('subrayar')) {
+            $(this).removeClass('subrayar')
+        } else {
+            $(this).addClass('subrayar')
+        }
+    });
+
+    $('.enc1').click(function() {
+
+        if ($(this).hasClass('encierra')) {
+            $(this).removeClass('encierra')
+        } else {
+            $(this).addClass('encierra')
+        }
+    });
+    document.getElementById('nota3').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota3').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota3'), 2.5)
+    });
+    document.getElementById('nota4').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota4').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota4'), 2.5)
+    });
+
+
+
+    function pregunta1() {
+        var nt1 = 0,
+            nt2 = 0,
+            nt3 = 0,
+            nt4 = 0,
+            nt5 = 0;
+
+        if ($('.2').hasClass('subrayar') == true) {
+            nt1 = 1;
+            $('.2').addClass('correcto');
+        }
+        if ($('.6').hasClass('subrayar') == true) {
+            nt2 = 1;
+            $('.6').addClass('correcto');
+        }
+        if ($('.4').hasClass('subrayar') == true) {
+            nt3 = 1;
+            $('.4').addClass('correcto');
+        }
+        if ($('.1').hasClass('subrayar') == true) {
+            nt4 = 1;
+            $('.1').addClass('incorrecto');
+        }
+        if ($('.3').hasClass('subrayar') == true) {
+            nt5 = 1;
+            $('.3').addClass('incorrecto');
+        }
+        if ($('.5').hasClass('subrayar') == true) {
+            nt5 = 1;
+            $('.5').addClass('incorrecto');
+        }
+
+        $('.enc').off('click');
+        var subtotal = parseFloat(nt1) + parseFloat(nt2) + parseFloat(nt3) - parseFloat(nt4) - parseFloat(nt5) - parseFloat(nt5);
+        var total = (subtotal * 5) / 3;
+        if (total < 0) {
+            total = 0;
+            $('#nota1').val(parseFloat(total).toFixed(2));
+        } else {
+            $('#nota1').val(parseFloat(total).toFixed(2));
+        }
+
+    }
+
+    function pregunta2() {
+        var respact2 = ['2', '4', '5', '1', '3', '6', ];
+        var cont = 0;
+        for (var i = 0; i < 6; i++) {
+            var res = $('#act2num' + [i] + '').val().toLowerCase();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#act2num' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#act2num' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 2.5) / 6;
+        $('#nota2').val(parseFloat(total).toFixed(2));
+    }
+
+
+    function NotaFinal() {
+
+        var nota1 = document.getElementById('nota1').value;
+        var nota2 = document.getElementById('nota2').value;
+        var nota3 = document.getElementById('nota3').value;
+        var nota4 = document.getElementById('nota4').value;
+
+        if ((nota3 == "") || (nota4 == "")) {
+            alert("Calificar la pregunta 3 ó 4")
+        } else {
+            pregunta1();
+            pregunta2();
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4);
+            $('#txtNota').html(parseFloat(total).toFixed(2));
+            document.getElementById('bt_comprobar').disabled = true;
+            $('input').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+
+        }
+    }
+    </script>
+</body>
+
+</html>

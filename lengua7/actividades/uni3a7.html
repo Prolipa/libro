@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LENGUA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.cajas1 {
+
+    border: 1px #009277 solid;
+}
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+.imagen3 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #FFF0CA;
+}
+.imagen4 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #F5F0F7;
+}
+.underline{
+        text-decoration: underline;
+        text-decoration-color: rgb(59, 114, 37);
+        
+    }
+.c_origen{
+        border:1px solid #009BDB;
+        border-radius: 10px;
+        min-height: 50px;
+        max-width: 100%;
+        margin-left: 1px;
+    } 
+    .c_destinos2{
+        padding: 5px;
+        border:1px solid #CCAE69;
+        border-radius: 10px;
+        min-height: 70px;
+        min-width: 120px;
+    }
+.bg_palabra{
+            background-color: #F9E8B2;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+.cajas1 {
+        width: 40px;
+        border: solid;
+        border-width: 1px;
+        border-color: blue;
+        text-align: center;
+        padding: 5px;
+        border-radius: 5px;
+
+
+    }
+    .encierra{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra1{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra2{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra3{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra4{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra5{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra6{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra7{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+    .encierra8{
+            border: 1px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        
+        <b>Pregunta 1:</b> Encierra el complemento circunstancial. Para encerrar da click sobre la palabra. Para quitar vuelve a dar click en la palabra. Escribe si es de modo, tiempo, lugar, instrumento o finalidad.<br>
+        <b>Pregunta 2:</b> Subraya el circunstancial. Para encerrar da click sobre la palabra de los literales.<br>
+        <b>Pregunta 3:</b> Observa los gráficos y completa las oraciones con un complemento circunstancial de cada tipo.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/practico.png" class="img-responsive" alt="">
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><b style="color:#005CA9">1. </b><b>Encierra</b> el complemento circunstancial en las siguientes oraciones y <b>señala</b> si es de modo, tiempo, lugar, instrumento o finalidad.</span>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr align="left">
+                                <td >
+                                    <span id="enc1">El</span> <span id="enc2">físico</span> <span id="enc3">envió</span> <span id="enc4">su</span> <span id="enc5">reporte</span> <span id="enc6">del</span> <span id="enc7">experimento</span>
+                                    <span id="enc8">ayer.</span>
+                                </td>
+                                <td><input type="text" class="form-control" style="min-width: 120px;" id="p1dcon1"></td>
+                            </tr>
+                            <tr align="left">
+                                <td>
+                                    <span id="enc9">En el</span> <span id="enc10">laboratorio</span> <span id="enc11">se analizaron</span> <span id="enc12">los</span> <span id="enc13">resultados</span> <span id="enc14">cuidadosamente.</span>
+                                </td>
+                                <td><input type="text" class="form-control" style="min-width: 120px;" id="p1dcon2"></td>
+                            </tr>
+                            <tr align="left">
+                                <td>
+                                    <span id="enc15">Tu</span> <span id="enc16">amigo</span> <span id="enc17">se</span> <span id="enc18">olvidó</span> <span id="enc19">sus</span> <span id="enc20">cuadernos</span> <span id="enc21">aquí.</span>
+                                </td>
+                                <td><input type="text" class="form-control" style="min-width: 120px;" id="p1dcon3"></td>
+                            </tr>
+                            <tr align="left">
+                                <td>
+                                    <span id="enc22">Tendré</span> <span id="enc23">que</span> <span id="enc24">diseñar</span> <span id="enc25">una</span> <span id="enc26">tabla</span> <span id="enc27">con la computadora.</span>
+                                </td>
+                                <td><input type="text" class="form-control" style="min-width: 120px;" id="p1dcon4"></td>
+                            </tr>
+                            <tr align="left">
+                                <td>
+                                    <span id="enc28">Andrés</span> <span id="enc29">trajo</span> <span id="enc30">fruta</span> <span id="enc31">para compartir.</span>
+                                </td>
+                                <td><input type="text" class="form-control" style="min-width: 120px;" id="p1dcon5"></td>
+                            </tr>
+                            <tr align="left">
+                                <td>
+                                    <span id="enc32">Los</span> <span id="enc33">participantes</span> <span id="enc34">del</span> <span id="enc35">coloquio</span> <span id="enc36">se</span> <span id="enc37">presentarán</span> <span id="enc38">dentro de dos días.</span>
+                                </td>
+                                <td><input type="text" class="form-control" style="min-width: 120px;" id="p1dcon6"></td>
+                            </tr>
+                            <tr align="left">
+                                <td>
+                                    <span id="enc39">El</span> <span id="enc40">profesor</span> <span id="enc41">explicó</span> <span id="enc42">los</span> <span id="enc43">efectos</span> <span id="enc44">de la</span> <span id="enc45">contaminación</span> <span id="enc46">como un experto.</span>
+                                </td>
+                                <td><input type="text" class="form-control" style="min-width: 120px;" id="p1dcon7"></td>
+                            </tr>
+                            <tr align="left">
+                                <td>
+                                    <span id="enc47">La</span> <span id="enc48">noticia</span> <span id="enc49">apareció</span> <span id="enc50">en la primera plana.</span>
+                                </td>
+                                <td><input type="text" class="form-control" style="min-width: 120px;" id="p1dcon8"></td>
+                            </tr>
+                            <tr align="left">
+                                <td>
+                                    <span id="enc51">Mi</span> <span id="enc52">mamá</span> <span id="enc53">cambió</span> <span id="enc54">la</span> <span id="enc55">llanta</span> <span id="enc56">con una llave de tuercas.</span> 
+                                </td>
+                                <td><input type="text" class="form-control" style="min-width: 120px;" id="p1dcon9"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><b style="color:#005CA9">2. </b> En estas oraciones con dos complementos, <b>subraya</b> el circunstancial.</span>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <ul><li>El moderador organizó eficientemente a los participantes.</li></ul>
+                    <ol type="a" id="sres1">
+                        <li class="sub1">Eficientemente</li>
+                        <li class="sub2">A los participantes.</li>
+                        
+                    </ol>
+                    <ul><li>Mañana compraremos las entradas.</li></ul>
+                    <ol type="a" id="sres2">
+                        <li class="sub3">Las entradas.</li>
+                        <li class="sub4">Mañana</li>
+                        
+                    </ol>
+                    <ul><li>Con mucho cariño, papá horneó el pastel.</li></ul>
+                    <ol type="a" id="sres3">
+                        <li class="sub5">Con mucho cariño</li>
+                        <li class="sub6">El pastel</li>
+                        
+                    </ol>
+                </div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_1"><b style="color:#005CA9">3. </b><b>Observa</b> las imágenes y <b>completa</b> las oraciones con un complemento circunstancial de cada tipo.</span>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <div class="col-sm-3">
+                        <img src="img/i1_p111_uni3a7.jpg" class="img-responsive" alt="">
+                    </div>
+                    <div class="col-sm-3">
+                        <img src="img/i2_p111_uni3a7.jpg" class="img-responsive" alt="">
+                    </div>
+                    <div class="col-sm-3">
+                        <img src="img/i3_p111_uni3a7.jpg" class="img-responsive" alt="">
+                    </div>
+                    <div class="col-sm-3">
+                        <img src="img/i4_p111_uni3a7.jpg" class="img-responsive" alt="">
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-sm-3">
+                        <img src="img/i5_p111_uni3a7.jpg" class="img-responsive" alt="">
+                    </div>
+
+                    <div class="row"></div>
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr align="left">
+                                <td style="border: 2px solid #00B4D5;"><b>De tiempo</b></td>
+                                <td style="border: 2px solid #00B4D5;">
+                                    <p>Él trota <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea></p>
+                                </td>
+                            </tr>
+                            <tr align="left">
+                                <td style="border: 2px solid #00B4D5;"><b>Modo</b></td>
+                                <td style="border: 2px solid #00B4D5;">
+                                    <p>La madre mira <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea></p>
+                                </td>
+                            </tr>
+                            <tr align="left">
+                                <td style="border: 2px solid #00B4D5;"><b>Lugar</b></td>
+                                <td style="border: 2px solid #00B4D5;">
+                                    <p>Los niños juegan <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea></p>
+                                </td>
+                            </tr>
+                            <tr align="left">
+                                <td style="border: 2px solid #00B4D5;"><b>Instrumento</b></td>
+                                <td style="border: 2px solid #00B4D5;">
+                                    <p>El artista pintó <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea></p>
+                                </td>
+                            </tr>
+                            <tr align="left">
+                                <td style="border: 2px solid #00B4D5;"><b>Finalidad</b></td>
+                                <td style="border: 2px solid #00B4D5;">
+                                    <p>Ella observa <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="row"></div>
+                <br>
+                <p id="trace" class="alert alert-warning display-none"></p>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni3a7.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("111");
+    //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+      
+    </script>
+</body>
+
+</html>

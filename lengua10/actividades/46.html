@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lengua y Literatura 10</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <script src="js/evaluacion.js"></script>
+    <style>
+        hr {
+            border-color: black;
+            border-width: 2px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin: 3px;
+        }
+
+        .txt5 {
+            font-size: 16px;
+        }
+
+        .subrayar {
+            text-decoration: underline;
+        }
+
+        .pintarcorrecto {
+            background-color: #32a75b;
+        }
+
+        .pintarincorrecto {
+            background-color: #F97591;
+            text-decoration: line-through;
+        }
+
+        .correcto {
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+
+        .incorrecto {
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+        }
+
+
+        .calif {
+            position: relative;
+            font-size: 15px;
+        }
+
+        .textarea {
+            resize: none;
+            width: 350px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.<br><span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onClick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="act_actual">1</span> /
+                        <span id="act_total">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Evaluación Sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a">&nbsp;
+                    <span><b> 1. Responde.</b> ¿A qué clase de registro pertenecen las siguientes palabras?</span></div><br>
+                <table class="table">
+                    <td>
+                        <table class="table" border="3" bordercolor="#8C58C6" style="text-align: center">
+                            <tr>
+                                <td>barriga</td>
+                            </tr>
+                            <tr>
+                                <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td><br>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="table" border="3" bordercolor="#2A6EA7" style="text-align: center">
+                            <tr>
+                                <td>estómago</td>
+                            </tr>
+                            <tr>
+                                <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td><br>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="table" border="3" bordercolor="#E3A347" style="text-align: center">
+                            <tr>
+                                <td>vientre</td>
+                            </tr>
+                            <tr>
+                                <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td><br>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="table" border="3" bordercolor="#58CF2F  " style="text-align: center">
+                            <tr>
+                                <td>panza</td>
+                            </tr>
+                            <tr>
+                                <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td><br>
+                            </tr>
+                        </table>
+                    </td>
+                </table>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a">&nbsp;
+                    <span><b>2. Escribe </b> dos expresiones que correspondan a un registro coloquial. <b>Transfórmalas</b>
+                        a un registro formal.</span></div><br>
+                <table class="table" style="text-align: center" border="1">
+
+                    <tr>
+                        <td bgcolor="#AB47BC" style="color: #FFFFFF"><b>Registro informal o coloquial</b></td>
+                        <td bgcolor="#FFB300" style="color: #FFFFFF"><b>Registro formal</b></td>
+                    </tr>
+                    <tr>
+                        <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar " cols="15" rows="1"
+                                placeholder="Texto"></textarea></td>
+                        <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar " cols="15" rows="1"
+                                placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar " cols="15" rows="1"
+                                placeholder="Texto"></textarea></td>
+                        <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar " cols="15" rows="1"
+                                placeholder="Texto"></textarea></td>
+                    </tr>
+                </table>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a">&nbsp;
+                    <span><b>3 . Redacta</b> dos expresiones del registro informal y transfórmalas al registro vulgar.</span></div><br>
+                <table class="table" style="text-align: center" border="1">
+
+                    <tr>
+                        <td bgcolor="#AB47BC" style="color: #FFFFFF"><b>Registro informal o coloquial</b></td>
+                        <td bgcolor="#FFB300" style="color: #FFFFFF"><b>Registro vulgar</b></td>
+                    </tr>
+                    <tr>
+                        <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar " cols="15" rows="1"
+                                placeholder="Texto"></textarea></td>
+                        <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar " cols="15" rows="1"
+                                placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar " cols="15" rows="1"
+                                placeholder="Texto"></textarea></td>
+                        <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar " cols="15" rows="1"
+                                placeholder="Texto"></textarea></td>
+                    </tr>
+                </table>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a">&nbsp;
+                    <span><b>4. Transforma</b> el siguiente fragmento de vulgar a coloquial.</span></div><br>
+                <div class="rows">
+                    <div class="col-lg-5">
+                        <img src="img/i1_p83_act4.jpg" class="img-responsive "><br></div>
+                    <div class="col-lg-7"><br><textarea class="form-control text-question no-redimensionar " cols="60" rows="6"
+                            placeholder="Texto"></textarea><br></div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="text-question">
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a">&nbsp;
+                        <span><b>5. Indaga </b> y <b>escribe</b> palabras pertenecientes al tecnolecto que se indica. <b>Sigue</b>
+                            el ejemplo.</span></div><br>
+                    <table class="table" style="text-align: center" border="1" bordercolor="#427AC7">
+
+                        <tr>
+                            <td bgcolor="#FFB300" style="color: #FFFFFF" WIDTH="25%"><b>Médicos</b></td>
+                            <td bgcolor="#AB47BC" style="color: #FFFFFF" WIDTH="25%"><b>Fútbol</b></td>
+                            <td bgcolor="#1ABC9C" style="color: #FFFFFF" WIDTH="25%"><b>Carpinteros</b></td>
+                            <td bgcolor="#427AC7" style="color: #FFFFFF" WIDTH="25%"><b>Abogados</b></td>
+                        </tr>
+                        <tr>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                            <td>formón</td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                            <td>chilena</td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                            <td>albacea</td>
+                        </tr>
+                        <tr>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                        </tr>
+
+                    </table>
+                    <div class="text-question">
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre6a">&nbsp;
+                        <span><b>6. Transforma </b> en formales los siguientes registros.</span></div><br>
+                    <table class="table" style="text-align: center" border="1" bordercolor="#427AC7">
+                        <tr>
+                            <td WIDTH="50%">Lo más sapeado</td>
+                            <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Perol falseta peló caleta</td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Más pelado que pepa de guaba</td>
+                            <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                        </tr>
+                    </table>
+                    <div class="text-question">
+                        <span><b> 7. Responde.</b> ¿Qué estrategias puedes utilizar para identificar a una locución conjuntiva?
+                        </span></div><br>
+                        <img src="img/i1_p83_act7.jpg" class="img-responsive "><br>
+                   <div class="text-question">
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre8a">&nbsp;
+                        <span><b> 8. Determina.</b> a qué tipo de registro pertenecen las anteriores expresiones.
+                            <b>Explica</b> tu respuesta.</span></div><br>
+                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="3" placeholder="Texto"></textarea><br>
+                    <div class="text-question">
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre9a">&nbsp;
+                        <span><b> 9. Redacta </b> un texto en registro formal en el que expongas, a partir de lo que
+                            dicen las expresiones anteriores, lo que significa “ser ecuatoriano”.</span></div><br>
+                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="3" placeholder="Texto"></textarea><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" class="lblnombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre" id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper1.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/actividad46.js"></script>
+
+
+    <script>
+        $("#n_pagina").html("83"); //impresion de pagina            
+
+    </script>
+
+</body>
+
+</html>

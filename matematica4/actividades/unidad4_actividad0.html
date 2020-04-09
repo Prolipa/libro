@@ -1,0 +1,1162 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Matemática 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #0047a4 solid;
+            border-radius: 30px;
+            width: auto;
+            height: auto;
+            text-align: center;
+
+        }
+
+        #caja_res,
+        #caja_res1,
+        #caja_res2 {
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+
+        .respuestas {
+            width: 80%;
+            border: none;
+            border-bottom: 1px solid #005ca4;
+        }
+
+        .c_imagenes {
+            padding: 10px;
+        }
+
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 140px;
+            height: 30px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 140px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .correcto {
+            color: #ffffff;
+            background-color: #8FB435;
+
+        }
+
+        .incorrecto {
+            color: #ffffff;
+            background-color: #E76E80;
+
+
+        }
+
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+
+        .encierra {
+            border: 2px solid blue;
+            border-radius: 40%;
+
+        }
+
+        .respuesta {
+            text-align: center;
+            border: 0;
+            border-top: 2px solid #393939;
+            border-bottom: 1px solid #85BCEB;
+            width: 50px;
+        }
+
+        .bordeT {
+            border: 1px #76B82A solid;
+        }
+
+
+
+        .bordeT2 {
+            border: 1px #76B82A solid;
+            text-align: center;
+        }
+
+        .paso {
+            background-color: #F9B000;
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 5px;
+        }
+
+        .pintar {
+            background-color: rgb(211, 178, 68);
+        }
+
+        .subrayar {
+            text-decoration: underline;
+            background-color: #8FB435;
+        }
+
+        .correctoi {
+            text-decoration: underline;
+            background-color: #8FB435;
+
+        }
+
+        .incorrectoi {
+            text-decoration: underline;
+            background-color: #E76E80;
+        }
+        .subrayar {
+        text-decoration: underline;
+        text-decoration-color: rgb(87, 53, 180) 10px solid;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Escriba la respuesta correcta en los recuadros.<br>
+        2. Escriba la respuesta correcta en los recuadros.<br>
+        3. Escriba la respuesta correcta en los recuadros.<br>
+        4. Escriba la respuesta correcta en los recuadros.<br>
+        5. Escriba la respuesta correcta en los recuadros.<br>
+        6. Seleccione la respuesta correcta.<br>
+        7. Escriba la respuesta correcta en los recuadros.<br>
+        8.  Escriba la respuesta correcta en los recuadros.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> /
+                    <span id='act_total'>1</span>
+                    </span>
+                    <span class="btn notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container space" style="margin-top: 30px;">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-preparo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-preparo">
+                <span class="titulo"><img src="img/icoPRE.png" alt="">Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button>
+                <br>
+                <br>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a" readonly>&nbsp;
+                                    Álgebra y funciones: <b>1. Forma</b> <span class="sobre">(<b>1</b> pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <span class="text-question">
+                                    <b>1. Forma</b> el conjunto de los pares ordenados del producto cartesiano R × T, de tal manera que el primer elemento sea mayor que el segundo elemento.
+                                </span><br>
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6">
+                                        <br>
+                                        <img src="img/i1_p154_act1.jpg" class="img-responsive"><br>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <br>
+                                        <p>T x U ={
+                                            <div class="table-responsive" style="display: inline-block;">
+                                                <table class="table-responsive">
+                                                    <tr>
+                                                        <td><b>(</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dcon1" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>,</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dco1" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>);</b></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive" style="display: inline-block;">
+                                                <table class="table-responsive">
+                                                    <tr>
+                                                        <td><b>(</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dcon2" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>,</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dco2" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>);</b></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive" style="display: inline-block;">
+                                                <table class="table-responsive">
+                                                    <tr>
+                                                        <td><b>(</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dcon3" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>,</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dco3" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>);</b></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive" style="display: inline-block;">
+                                                <table class="table-responsive">
+                                                    <tr>
+                                                        <td><b>(</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dcon4" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>,</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dco4" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>);</b></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive" style="display: inline-block;">
+                                                <table class="table-responsive">
+                                                    <tr>
+                                                        <td><b>(</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dcon5" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>,</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dco5" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>);</b></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive" style="display: inline-block;">
+                                                <table class="table-responsive">
+                                                    <tr>
+                                                        <td><b>(</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dcon6" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>,</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dco6" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>);</b></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive" style="display: inline-block;">
+                                                <table class="table-responsive">
+                                                    <tr>
+                                                        <td><b>(</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dcon7" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>,</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dco7" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>);</b></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive" style="display: inline-block;">
+                                                <table class="table-responsive">
+                                                    <tr>
+                                                        <td><b>(</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dcon8" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>,</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dco8" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>);</b></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive" style="display: inline-block;">
+                                                <table class="table-responsive">
+                                                    <tr>
+                                                        <td><b>(</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dcon9" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>,</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dco9" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>);</b></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive" style="display: inline-block;">
+                                                <table class="table-responsive">
+                                                    <tr>
+                                                        <td><b>(</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dcon10" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>,</b></td>
+                                                        <td>
+                                                            <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 60px;" id="p1dco10" onkeyup="mayus(this)">
+                                                        </td>
+                                                        <td><b>);</b></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <br>}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a" readonly>&nbsp;
+                                    Álgebra y funciones: <b>2. Representa</b> <span class="sobre">(<b>1</b> pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <span class="text-question">
+                                    <b>2. Representa</b> en un diagrama de árbol el producto cartesiano de M × N.
+                                </span><br>
+                                <div class="col-sm-12">
+                                    <br>
+                                    <img src="img/i1_p154_act2.jpg" class="img-responsive"><br>
+                                </div>
+                                <div class="col-sm-12 table-responsive text-question">
+                                    <table>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td rowspan="3"><input id="p2aux0" style="width: 100px"></td>
+                                            <td rowspan="3"><img src="img/i2_p154_act2.jpg" class="img-responsive"></td>
+                                            <td><input id="p2bux0" style="width: 100px"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td rowspan="9"><img src="img/i3_p154_act2.jpg" class="img-responsive"></td>
+                                            <td><input id="p2bux1" style="width: 100px"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><input id="p2bux2" style="width: 100px"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><br></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td rowspan="3"><input id="p2aux1" style="width: 100px"></td>
+                                            <td rowspan="3"><img src="img/i2_p154_act2.jpg" class="img-responsive"></td>
+                                            <td><input id="p2cux0" style="width: 100px"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><input id="p2cux1" style="width: 100px"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><input id="p2cux2" style="width: 100px"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><br></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td rowspan="3"><input id="p2aux2" style="width: 100px"></td>
+                                            <td rowspan="3"><img src="img/i2_p154_act2.jpg" class="img-responsive"></td>
+                                            <td><input id="p2dux0" style="width: 100px"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><input id="p2dux1" style="width: 100px"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td><input id="p2dux2" style="width: 100px"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a" readonly >&nbsp;
+                                    Álgebra y funciones: <b>3. Completa</b> <span class="sobre">(<b>1</b> pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <span class="text-question">
+                                    <b>3. Completa</b> la siguiente tabla de pares ordenados y <b>escribe</b> los pares ordenados del producto cartesiano H × I
+                                </span><br>
+                                <div>
+                                    <div class="col-sm-12">
+                                        <br>
+                                        <center>
+                                            <img src="img/i1_p154_act3.jpg" class="img-responsive"><br>
+                                        </center>
+                                        <div class="table-responsive text-align">
+                                            <table class="table " border="2" bordercolor="#0071BB" style="text-align: center">
+                                                <tr>
+                                                    <td width="20%"><img src="img/i2_p154_act3.jpg" class="img-responsive"></td>
+                                                    <td width="40%" bgcolor="#FFF100">amarillo
+                                </span>
+                                <td width="40%">blanco</span>
+                                    </tr>
+                                    <tr>
+                                        <td bgcolor="FFE3CA">rosa</td>
+                                        <td>(<input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="rosa">
+                                            ; <input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="amarillo">)</td>
+                                        <td>(<input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="rosa">
+                                            ; <input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="blanco">)</td>
+                                    </tr>
+                                    <tr>
+                                        <td bgcolor="#D0EAE2">clavel</td>
+                                        <td>(<input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="clavel">
+                                            ; <input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="amarillo">)</td>
+                                        <td>(<input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="clavel">
+                                            ; <input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="blanco">)</td>
+                                    </tr>
+                                    <tr>
+                                        <td bgcolor="#FDDEDE">tulipán</td>
+                                        <td>(<input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="tulipán">
+                                            ; <input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="amarillo">)</td>
+                                        <td>(<input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="tulipán">
+                                            ; <input type="text" size="1" style="width:150px;text-align: center;" class="border-blue respuestas3"><input type="hidden" style="color:blue" class="solucion3" value="blanco">)</td>
+                                    </tr>
+                                    </table>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingFour">
+                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+                                    aria-controls="collapseFour">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a" readonly>&nbsp;
+                                    Álgebra y funciones: <b>4. Escribe </b> <span class="sobre">(<b>2</b> pts)</span>
+                                </a>
+                            </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                <div class="panel-body">
+                    <span class="text-question">
+                                    <b>4. Escribe</b> los múltiplos de cada número según corresponda.
+                                </span><br><br>
+                    <div class="col-sm-12 text-question">
+                        <div class="col-sm-6 table-responsive">
+                            <table>
+                                <tr>
+                                    <td rowspan="6"><img src="img/i1_p154_act4.jpg" class="img-responsive"></td>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res0"></td>
+                                </tr>
+                                <tr>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res1"></td>
+                                </tr>
+                                <tr>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res2"></td>
+                                </tr>
+                                <tr>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res3"></td>
+                                </tr>
+                                <tr>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res4"></td>
+                                </tr>
+                                <tr>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res5"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-6 table-responsive">
+                            <table>
+                                <tr>
+                                    <td rowspan="6"><img src="img/i2_p154_act4.jpg" class="img-responsive"></td>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res6"></td>
+                                </tr>
+                                <tr>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res7"></td>
+                                </tr>
+                                <tr>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res8"></td>
+                                </tr>
+                                <tr>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res9"></td>
+                                </tr>
+                                <tr>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res10"></td>
+                                </tr>
+                                <tr>
+                                    <td><input style="width:50px;text-align: center" maxlength="2" id="v5res11"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingFive">
+                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false"
+                                    aria-controls="collapseFive">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre5a" readonly>&nbsp;
+                                    Álgebra y funciones: <b>5. Realiza</b> <span class="sobre">(<b>2</b> pts)</span>
+                                </a>
+                            </h4>
+            </div>
+            <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                <div class="panel-body">
+                    <span class="text-question">
+                                    <b>5. Realiza</b> las multiplicaciones.
+                                </span><br><br>
+                    <div class="col-sm-12 text-question">
+                        <div class="col-sm-3 table-responsive">
+                            <table style="text-align: center" border="1" bordercolor="orange">
+                                <tr>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#FDB67E"></font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#ADC9B3">C</font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#C75C9E">D</font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#006CB6">U</font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input id="p4aux1" style="width: 25px" maxlength="1"></td>
+                                    <td><input id="p4aux2" style="width: 25px" maxlength="1"></td>
+                                    <td><input id="p4aux3" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                                <tr>
+                                    <td>X</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input id="p4aux4" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top:solid 2px"><input id="p4aux5" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4aux6" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4aux7" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4aux8" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-3 table-responsive">
+                            <table style="text-align: center" border="1" bordercolor="orange">
+                                <tr>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#FDB67E"></font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#ADC9B3">C</font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#C75C9E">D</font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#006CB6">U</font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input id="p4bux1" style="width: 25px" maxlength="1"></td>
+                                    <td><input id="p4bux2" style="width: 25px" maxlength="1"></td>
+                                    <td><input id="p4bux3" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                                <tr>
+                                    <td>X</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input id="p4bux4" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top:solid 2px"><input id="p4bux5" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4bux6" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4bux7" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4bux8" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-3 table-responsive">
+                            <table style="text-align: center" border="1" bordercolor="orange">
+                                <tr>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#FDB67E"></font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#ADC9B3">C</font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#C75C9E">D</font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#006CB6">U</font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input id="p4cux1" style="width: 25px" maxlength="1"></td>
+                                    <td><input id="p4cux2" style="width: 25px" maxlength="1"></td>
+                                    <td><input id="p4cux3" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                                <tr>
+                                    <td>X</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input id="p4cux4" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top:solid 2px"><input id="p4cux5" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4cux6" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4cux7" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4cux8" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-3 table-responsive">
+                            <table style="text-align: center" border="1" bordercolor="orange">
+                                <tr>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#FDB67E"></font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#ADC9B3">C</font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#C75C9E">D</font>
+                                    </td>
+                                    <td bgcolor="#FFE7D3">
+                                        <font color="#006CB6">U</font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input id="p4dux1" style="width: 25px" maxlength="1"></td>
+                                    <td><input id="p4dux2" style="width: 25px" maxlength="1"></td>
+                                    <td><input id="p4dux3" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                                <tr>
+                                    <td>X</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input id="p4dux4" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top:solid 2px"><input id="p4dux5" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4dux6" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4dux7" style="width: 25px" maxlength="1"></td>
+                                    <td style="border-top:solid 2px"><input id="p4dux8" style="width: 25px" maxlength="1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingSix">
+                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false"
+                                    aria-controls="collapseSix">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre6a" readonly>&nbsp;
+                                    Álgebra y funciones: <b>6. Pinta </b> <span class="sobre">(<b>1</b> pts)</span>
+                                </a>
+                            </h4>
+            </div>
+            <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                <div class="panel-body">
+                    <span class="text-question">
+                                    <b>6. Pinta </b> la respuesta correcta.
+                                </span><br><br>
+                    <div class="col-sm-12 text-question">
+                        <ol type="a">
+                            <div class="col-sm-4 table-responsive">
+                                <li>
+                                    <div style="background: url('img/i1_p155_act6.jpg');;width:175px;height:172px;"><br><br><br>
+                                        <center>
+                                            <div id="respuesta1">
+                                                <div class="col-sm-6 imagen1" id="ranuno1"></div>
+                                                <div class="col-sm-6 imagen1" id="ranuno2"></div>
+                                            </div>
+                                    </div>
+                                    <img src="img/i2_p155_act6.jpg" class="img-responsive"></li>
+                            </div>
+                            <div class="col-sm-4 table-responsive">
+                                <li>
+                                    <div style="background: url('img/i1_p155_act6.jpg');;width:175px;height:172px;"><br><br><br>
+                                        <center>
+                                            <div id="respuesta2">
+                                                <div class="col-sm-6 imagen2" id="randos1"></div>
+                                                <div class="col-sm-6 imagen2" id="randos2"></div>
+                                            </div>
+                                    </div>
+                                    <img src="img/i3_p155_act6.jpg" class="img-responsive"></li>
+                            </div>
+                            <div class="col-sm-4 table-responsive">
+                                <li>
+                                    <div style="background: url('img/i1_p155_act6.jpg');;width:175px;height:172px;"><br><br><br>
+                                        <center>
+                                            <div id="respuesta3">
+                                                <div class="col-sm-6 imagen3" id="rantres1"></div>
+                                                <div class="col-sm-6 imagen3" id="rantres2"></div>
+                                            </div>
+                                    </div>
+                                    <img src="img/i4_p155_act6.jpg" class="img-responsive"></li>
+                            </div>
+                            <div class="col-sm-4 table-responsive">
+                                <li>
+                                    <div style="background: url('img/i1_p155_act6.jpg');;width:175px;height:172px;"><br><br><br>
+                                        <center>
+                                            <div id="respuesta4">
+                                                <div class="col-sm-6 imagen4" id="rancuatro1"></div>
+                                                <div class="col-sm-6 imagen4" id="rancuatro2"></div>
+                                            </div>
+                                    </div>
+                                    <img src="img/i5_p155_act6.jpg" class="img-responsive"></li>
+                            </div>
+                            <div class="col-sm-4 table-responsive">
+                                <li>
+                                    <div style="background: url('img/i1_p155_act6.jpg');;width:175px;height:172px;"><br><br><br>
+                                        <center>
+                                            <div id="respuesta5">
+                                                <div class="col-sm-6 imagen5" id="rancinco1"></div>
+                                                <div class="col-sm-6 imagen5" id="rancinco2"></div>
+                                            </div>
+                                    </div>
+                                    <img src="img/i6_p155_act6.jpg" class="img-responsive"></li>
+                            </div>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingSeven">
+                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false"
+                                    aria-controls="collapseSeven">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre7a" readonly>&nbsp;
+                                    Geometría y medida: <b>7. Escribe</b> <span class="sobre">(<b>1</b> pts)</span>
+                                </a>
+                            </h4>
+            </div>
+            <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                <div class="panel-body">
+                    <span class="text-question">
+                                    <b>7. Escribe </b> cada multiplicación aplicando la propiedad asociativa y <b>resuelve</b>.
+                                </span><br><br>
+                    <div class="col-sm-12">
+                        <ol type="a">
+                            <div class="col-sm-6 table-responsive">
+                                <li>
+                                    <table>
+                                        <tr>
+                                            <td rowspan="3">
+                                                <table>
+                                                    <tr>
+                                                        <td><span id="p7aux0"></span></td>
+                                                        <td>×</td>
+                                                        <td><span id="p7aux1"></span></td>
+                                                        <td>×</td>
+                                                        <td><span id="p7aux2"></span></td>
+                                                        <td>=</td>
+                                                        <td><span id="p7aux6"></span></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="img/i1_p154_act7.jpg">
+                                                </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>(</td>
+                                                        <td><input id="cj0" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>x</td>
+                                                        <td><input id="cj1" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>)</td>
+                                                        <td>x</td>
+                                                        <td><input id="cj2" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>=</td>
+                                                        <td><input id="cj3" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>(</td>
+                                                        <td><input id="ck0" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>x</td>
+                                                        <td><input id="ck1" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>)</td>
+                                                        <td>x</td>
+                                                        <td><input id="ck2" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>=</td>
+                                                        <td><input id="ck3" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </li>
+                            </div>
+                            <div class="col-sm-6 table-responsive">
+                                <li>
+                                    <table>
+                                        <tr>
+                                            <td rowspan="3">
+                                                <table>
+                                                    <tr>
+                                                        <td><span id="p7aux3"></span></td>
+                                                        <td>×</td>
+                                                        <td><span id="p7aux4"></span></td>
+                                                        <td>×</td>
+                                                        <td><span id="p7aux5"></span></td>
+                                                        <td>=</td>
+                                                        <td><span id="p7aux7"></span></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="img/i1_p154_act7.jpg">
+                                                </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>(</td>
+                                                        <td><input id="cl0" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>x</td>
+                                                        <td><input id="cl1" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>)</td>
+                                                        <td>x</td>
+                                                        <td><input id="cl2" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>=</td>
+                                                        <td><input id="cl3" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>(</td>
+                                                        <td><input id="cm0" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>x</td>
+                                                        <td><input id="cm1" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>)</td>
+                                                        <td>x</td>
+                                                        <td><input id="cm2" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                        <td>=</td>
+                                                        <td><input id="cm3" style="width: 50px;text-align: center;" maxlength="5"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </li>
+                            </div>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOcho">
+                <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOcho" aria-expanded="false"
+                                    aria-controls="collapseOcho">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre8a" readonly>&nbsp;
+                                    Geometría y medida: <b>8. Resuelve</b> <span class="sobre">(<b>1</b> pts)</span>
+                                </a>
+                            </h4>
+            </div>
+            <div id="collapseOcho" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOcho">
+                <div class="panel-body">
+                    <span class="text-question">
+                                    <b>8. Resuelve </b> los siguientes problemas
+                                </span><br><br>
+                    <div class="col-sm-12 text-question">
+                        <ol type="a">
+                            <li class="col-sm-12">
+                                <div class="col-sm-6">
+                                    <span>Un camión tiene la capacidad para transportar <span id="nran0"></span> cajas de <span id="nran1"></span> pelotas cada uno. Si son <span id="nran2"></span> camiones, ¿cuántas pelotas transportarán en total?</span><br><br>
+                                    <span>R. Transportarán <input id="p8aux0" style="width: 75px;text-align: center" maxlength="3"> pelotas.</span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <br><img src="img/i1_p154_act8.jpg" class="img-responsive"><br>
+                                </div>
+                            </li>
+                            <li class="col-sm-12">
+                                <div class="col-sm-6">
+                                    <br><img src="img/i2_p154_act8.jpg" class="img-responsive"><br>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span>Marcelo compró <span id="nran3"></span> fundas con <span id="nran4"></span> llaveros cada uno. Si cada llavero cuesta <span id="nran5"></span> dólares, ¿cuánto debe pagar en total?</span><br><br>
+                                    <span>R. Marcelo debe pagar <input id="p8aux1" style="width: 75px;text-align: center" maxlength="3">  dólares. </span>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/export-data.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/numPaginas.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni4_actividad0.js"></script>
+</body>
+
+</html>

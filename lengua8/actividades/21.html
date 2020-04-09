@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Lengua y Literatura 8</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            Lee cuidadosamente las preguntas, contesta cada una de ellas.<br> 
+            Selecciona <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+            , en el cuadro de dialogo escribir el nombre del alumno o alumnos que realizaron actividad,<br> 
+            para descargar un pdf para que el profesor evalue sus respuestas.
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onclick="calificar_abierta()">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad " >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 25
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-reflexiono" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-reflexiono">
+                    <span class="titulo"><img src="img/icoR.png" alt="">Reflexiono para avanzar</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+
+                </div>
+
+                <div class="panel-body">
+
+                    <!--pregunats de la actividad-->
+                    <div  class="col-md-12 ocultable text-center text-question">
+                        <strong>Lee</strong> la siguiente entrevista.
+                    </div>
+                    <div  class="col-md-12 ocultable">
+                        <div class="col-md-12 text-center">
+                            <h3 class="text-center txt-azul">Misión: George</h3>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <img src="img/i1_p24_act20.png" alt="Tortuga_George">
+                            <small class="text-">Cuerpo disecado del Solitario George. Museo Americano
+                                de Historia Natural</small>
+                        </div>
+                        <div class="col-md-3 text-justify">
+                            Impresiones de un joven que conoció a George, la última tortuga gigante de Galápagos de su especie.<br>
+                            Esta entrevista fue realizada el 27 de junio de 2012, una vez que se supiera de la muerte de George, el espécimen
+                            más famoso de las Galápagos por ser el último miembro de su especie, Geochelone nigra abingdoni.
+                            Nuestro entrevistado fue David Sandoval, un joven ingeniero ambiental, quien, en sus tiempos de estudiante
+                            de Ciencias Ambientales en la Universidad Central del Ecuador, debió
+                            cumplir una pasantía en el Parque Nacional Galápagos (PNG). El trabajo de
+                            David fue hacer el seguimiento de las actividades reproductivas de George.<br>
+                            <span style="color:#cc00cc">Entrevistadora:</span> ¿En qué consistía tu trabajo de seguimiento a George?<br>
+                            <span style="color:#00cc00">David:</span> George estaba acompañado de tres hembras de tres diferentes
+                            subespecies, compatibles genéticamente con la suya, que era
+                            la Geochelone abingdoni. Se diría que su reproducción fue uno de los
+                            objetivos más importantes del PNG durante los últimos cuarenta años,
+                            desde que se recogió a George en el año 1970. 
+                            El señor Fausto Llerena,
+                            quien estuvo a cargo del proyecto, es básicamente el encargado de la 
+                            reproducción, 
+                        </div>
+                        <div class="col-md-3 text-justify">
+                            crianza y repoblamiento de tortugas en todo el archipiélago.
+                            Mi trabajo consistía en visitar a George todos los días, con
+                            libreta en mano, y anotar la frecuencia
+                            de sus intentos de apareamiento
+                            con sus compañeras.<br>
+                            <span style="color:#cc00cc">Entrevistadora:</span> Cuéntanos algo de
+                            tu vivencia con George, ¿cómo era?,
+                            ¿cómo lo viste en su <span style="color:#3366ff">hábitat</span>?
+                            <br>
+                            <span style="color:#00cc00">David:</span> En los primeros tiempos,
+                            cuando yo llegaba en la mañana y lo
+                            saludaba, George alzaba el cuello y
+                            se quedaba mirándome fijamente, yo
+                            diría que súper desafiante; inclusive,
+                            algunas veces, cuando me acercaba
+                            a ponerle su alimento, su actitud era
+                            como si estuviera resguardando su
+                            territorio.<br>
+                            Después de un tiempo, ya me
+                            reconocía y ya no se sentía incómodo
+                            con mi presencia. George era un
+                            animalito súper especial.<br>
+                            <span style="color:#cc00cc">Entrevistadora:</span> En una nota de
+                            prensa se dice que las cabras llevadas
+                            a Galápagos fueron las que marcaron el
+                            final de la especie. Por favor, explícanos
+                            de qué manera ocurrió esta situación.<br>
+                            <span style="color:#00cc00">David:</span> Galápagos es un lugar muy
+                            especial. Cualquier proceso de construcción o destrucción del <span style="color:#3366ff">ecosistema</span>,
+                            cuyas consecuencias en
+                            otros lugares son observables en
+                            cientos de años, en el archipiélago,
+                        </div>
+                        <div class="col-md-3 text-justify">
+                            se evidencia ya a los veinte años.
+                            El caso de las cabras es el ejemplo
+                            más gráfico de este fenómeno:<br>
+                            Para poblar el archipiélago y hacer un
+                            lugar más cómodo para los colonos,
+                            se llevó a las islas ganado como
+                            vacas, cabras, caballos entre otros,
+                            sin imaginar el daño que harían estos
+                            animales a la flora de ese lugar que
+                            es la base de la alimentación de las
+                            tortugas gigantes, así como de otras
+                            especies endémicas de Galápagos.
+                            Se dice que las cabras causaron más
+                            daño, dada su rápida reproducción y
+                            la cantidad de hierba que consumen
+                            diariamente, así como el cambio que
+                            experimentó el suelo de las islas por
+                            la influencia del estiércol del ganado.<br>
+                            Por otro lado, no podemos olvidar
+                            que, durante muchos años, los barcos
+                            pesqueros que pasaban por las
+                            islas se llevaban grandes cantidades
+                            de tortugas como alimento; cuando
+                            estaban en alta mar, obtenían de ellas
+                            carne fresca de gran calidad nutritiva.<br>
+                            Esta actividad realizada a lo largo de
+                            muchos años fue otra causa del desaparecimiento
+                            de las tortugas gigantes
+                            de Galápagos.
+                            <br>
+                            <br> 
+                            <small>Prolipa (2015). Lengua y Literatura 8. Quito: Prolipa. p. 164.</small>
+                        </div>
+                    </div>
+                    <div  class="col-md-12 space">
+                        <p class="txt-morado text-question" style="color:#d24dff">Lectura Literal</p>
+                        <input type="number" class="nota-abierta" min="0" max="10">
+                        <span class="text-question">¿En qué consistía el trabajo de David Sandoval?</span>>
+                        <textarea class="form-control text-question no-redimensionar respuesta" rows="2"></textarea>
+                    </div>
+                    <div  class="col-md-12 space">
+                        <p class="txt-morado text-question" style="color:#d24dff"> Lectura inferencial</p>
+                        <input type="number" class="nota-abierta" min="0" max="10">
+                        <span class="text-question">¿Si George hubiera dejado descendencia, ¿esta se
+                            hubiera podido reproducir? ¿Por qué?</span>
+                        <textarea class="form-control text-question no-redimensionar respuesta" rows="2"></textarea>
+                    </div>
+                    <div  class="col-md-12 space">
+                        <p class="txt-morado text-question" style="color:#d24dff">Lectura crítico-valorativa</p>
+                        <input type="number" class="nota-abierta" min="0" max="10">
+                        <span class="text-question">¿Qué otras especies endémicas pueden estar siendo
+                            amenazadas en las islas Galápagos? ¿Qué medidas
+                            consideras necesarias para disminuir esta amenaza?</span>
+                        <textarea class="form-control no-redimensionar respuesta" rows="2"></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MATEMÁTICA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 100%;
+    max-height: 100%;
+    border: 1px #005ca4 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    width: auto;
+    display: grid;
+}
+
+.encierra {
+    border: 5px solid #FF9D29;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.sobre {
+    padding: 4px;
+    border-style: none;
+    border-width: 2px;
+    border-radius: 15%;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-color: #1a75ff;
+    color: #1a75ff;
+}
+
+.saltos2 {
+    text-align: center;
+    border: 1px solid #C3C7C3;
+    border-bottom: 1px solid #85BCEB;
+    border-radius: 15px;
+
+
+    width: 100px;
+}
+
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+
+.inputPequeño {
+    text-align: center;
+    border: 0;
+    border-bottom: 1px dotted #328AF7;
+    width: 40px;
+    color: blue;
+}
+
+.cajas1 {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #ed8700 dotted;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    width: auto;
+}
+
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+
+.periodicos {
+    border-top: 2px solid #000000;
+    border-radius: 15px;
+}
+
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+
+.subrayar {
+
+    border-bottom: 3px solid #FF8A00;
+}
+
+.circulo {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #008FFF;
+    border-radius: 100%;
+}
+
+.cuadrado {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #FFA800;
+}
+
+.letraAzul {
+    color: #005ca4;
+}
+
+.inputmejorado {
+    border-radius: 10px 10px 10px 10px;
+    text-align: center;
+    width: 100px;
+}
+
+.vacio {}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>Pregunta 2. </b>Selecciona la respuesta correcta.
+        <br>
+        <b>Pregunta 6. </b>Selecciona la respuesta correcta.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <img class="img-responsive" src="img/alegebra.png"></img>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <input type="text" maxlength="4" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota1" readonly>&nbsp; <b>1. Encuentra</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>1. Encuentra</b> el patrón y <b>completa</b> cada sucesión.
+                                        <div class="table-responsive">
+                                            <table class="table" style="text-align: center;">
+                                                <tr>
+                                                    <td><b style="color: #005ca4;">a)</b></td>
+                                                    <td colspan="2" style="background: #e6d9eb;">Patrón:</td>
+                                                    <td colspan="2">x<input id="act1num0" class="inputfraccciones sinEspacios"></input>, +<input id="act1num1" class="inputfraccciones sinEspacios"></input>;</td>
+                                                    <td><input class="form-control"></input></td>
+                                                    <td><input class="form-control"></input></td>
+                                                    <td><input class="form-control"></input></td>
+                                                    <td><input class="form-control"></input></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td style="background: #c5e7f1;">Sucesión:</td>
+                                                    <td id="num0act1"></td>
+                                                    <td id="num1act1"></td>
+                                                    <td id="num2act1"></td>
+                                                    <td id="num3act1"></td>
+                                                    <td id="num4act1"></td>
+                                                    <td> <input id="act1num2" class="inputfraccciones sinEspacios" style="width: 70px;"></input>,</td>
+                                                    <td> <input id="act1num3" class="inputfraccciones sinEspacios" style="width: 70px;"></input></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <br>
+                                        <div class="table-responsive">
+                                            <table class="table" style="text-align: center;">
+                                                <tr>
+                                                    <td><b style="color: #005ca4;">b)</b></td>
+                                                    <td colspan="2" style="background: #e6d9eb;">Patrón:</td>
+                                                    <td colspan="2">÷<input id="act1num4" class="inputfraccciones sinEspacios"></input>, -<input id="act1num5" class="inputfraccciones sinEspacios"></input>;</td>
+                                                    <td><input class="form-control"></input></td>
+                                                    <td><input class="form-control"></input></td>
+                                                    <td><input class="form-control"></input></td>
+                                                    <td><input class="form-control"></input></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td style="background: #c5e7f1;">Sucesión:</td>
+                                                    <td>1148,</td>
+                                                    <td>574,</td>
+                                                    <td>520,</td>
+                                                    <td>206,</td>
+                                                    <td>103,</td>
+                                                    <td><input id="act1num6" class="inputfraccciones sinEspacios" style="width: 70px;"></input>,</td>
+                                                    <td> <input id="act1num7" class="inputfraccciones sinEspacios" style="width: 70px;"></input></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                     <input type="text" maxlength="" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota2" readonly>&nbsp;<b>2. Compara y escribe</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="text-question">
+                                        <b>2. Compara y escribe</b>
+                                        <,> o =, según corresponda.
+                                            <div class="row">
+                                                <ol type="a">
+                                                    <div class="col-lg-3">
+                                                        <table>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td id="1num0act2"></td>
+                                                                <td>
+                                                                    <select name="" id="selec0">
+                                                                        <option value=""></option>
+                                                                        <option value=""><b><</b></option>
+                                                                        <option value=""><b>=</b></option>
+                                                                        <option value=""><b>></b></option>
+                                                                    </select>
+                                                                </td>
+                                                                <td id="2num0act2"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td id="1num1act2"></td>
+                                                                <td>
+                                                                    <select name="" id="selec1">
+                                                                        <option value=""></option>
+                                                                        <option value=""><b><</b></option>
+                                                                        <option value=""><b>=</b></option>
+                                                                        <option value=""><b>></b></option>
+                                                                    </select>
+                                                                </td>
+                                                                <td id="2num1act2"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <table>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td id="1num2act2"></td>
+                                                                <td>
+                                                                    <select name="" id="selec2">
+                                                                        <option value=""></option>
+                                                                        <option value=""><b><</b></option>
+                                                                        <option value=""><b>=</b></option>
+                                                                        <option value=""><b>></b></option>
+                                                                    </select>
+                                                                </td>
+                                                                <td id="2num2act2"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td id="1num3act2"></td>
+                                                                <td>
+                                                                    <select name="" id="selec3">
+                                                                        <option value=""></option>
+                                                                        <option value=""><b><</b></option>
+                                                                        <option value=""><b>=</b></option>
+                                                                        <option value=""><b>></b></option>
+                                                                    </select>
+                                                                </td>
+                                                                <td id="2num3act2"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <table>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td id="1num4act2"></td>
+                                                                <td>
+                                                                    <select name="" id="selec4">
+                                                                        <option value=""></option>
+                                                                        <option value=""><b><</b></option>
+                                                                        <option value=""><b>=</b></option>
+                                                                        <option value=""><b>></b></option>
+                                                                    </select>
+                                                                </td>
+                                                                <td id="2num4act2"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td id="1num5act2"></td>
+                                                                <td>
+                                                                    <select name="" id="selec5">
+                                                                        <option value=""></option>
+                                                                        <option value=""><b><</b></option>
+                                                                        <option value=""><b>=</b></option>
+                                                                        <option value=""><b>></b></option>
+                                                                    </select>
+                                                                </td>
+                                                                <td id="2num5act2"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <table>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td id="1num6act2"></td>
+                                                                <td>
+                                                                    <select name="" id="selec6">
+                                                                        <option value=""></option>
+                                                                        <option value=""><b><</b></option>
+                                                                        <option value=""><b>=</b></option>
+                                                                        <option value=""><b>></b></option>
+                                                                    </select>
+                                                                </td>
+                                                                <td id="2num6act2"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td id="1num7act2"></td>
+                                                                <td>
+                                                                    <select name="" id="selec7">
+                                                                        <option value=""></option>
+                                                                        <option value=""><b><</b></option>
+                                                                        <option value=""><b>=</b></option>
+                                                                        <option value=""><b>></b></option>
+                                                                    </select>
+                                                                </td>
+                                                                <td id="2num7act2"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </ol>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                 <input type="text" maxlength="" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota3" readonly>&nbsp;
+                                    <b>3. Calcula</b> <span class="sobre">1 pts</span>
+
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>3. Calcula</b> los siguientes porcentajes. <b>Observa</b> el ejemplo.
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div>
+                                                <b style="color: #005ca4;">a)</b><span style="background: #e3ecbb;">El 20% de 200</span> = 40
+                                                <table style="width: 30%;" style="text-align: center;">
+                                                    <tr>
+                                                        <td>100%</td>
+                                                        <td>200</td>
+                                                        <td style="font-size: 60px;" rowspan="2">}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>20%</td>
+                                                        <td>x</td>
+                                                    </tr>
+                                                </table>
+                                                <div class="eq-c">
+                                                    x =
+                                                    <div class="fraction">
+                                                        <span class="fup">20 × 2<s>00</s></span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">1<s>00</s></span>
+                                                    </div>
+                                                    = 40
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <b style="color: #005ca4;">b)</b><span style="background: #e3ecbb;" id="num0act3"></span><input type="text" class="inputfraccciones sinEspacios soloPunto" style="width:70px;" id="act3num0">
+                                                <table style="width: 30%;" style="text-align: center;">
+                                                    <tr>
+                                                        <td>100%</td>
+                                                        <td><input type="text" class="inputfraccciones sinEspacios"></td>
+                                                        <td style="font-size: 60px;" rowspan="2">}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="inputfraccciones sinEspacios">%</td>
+                                                        <td>x</td>
+                                                    </tr>
+                                                </table>
+                                                <div class="eq-c">
+                                                    x =
+                                                    <div class="fraction">
+                                                        <span class="fup"><input type="text" class="inputfraccciones sinEspacios" style="width: 70px;"></span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn"><input type="text" class="inputfraccciones sinEspacios"></span>
+                                                    </div>
+                                                    = <input type="text" class="inputfraccciones sinEspacios soloPunto" style="width:70px;" id="act3num1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div>
+                                                <b style="color: #005ca4;">c)</b><span style="background: #e3ecbb;" id="num1act3"></span><input type="text" class="inputfraccciones sinEspacios soloPunto" style="width:70px;" id="act3num2">
+                                                <table style="width: 30%;" style="text-align: center;">
+                                                    <tr>
+                                                        <td>100%</td>
+                                                        <td><input type="text" class="inputfraccciones sinEspacios"></td>
+                                                        <td style="font-size: 60px;" rowspan="2">}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="inputfraccciones sinEspacios">%</td>
+                                                        <td>x</td>
+                                                    </tr>
+                                                </table>
+                                                <div class="eq-c">
+                                                    x =
+                                                    <div class="fraction">
+                                                        <span class="fup"><input type="text" class="inputfraccciones sinEspacios" style="width: 70px;"></span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn"><input type="text" class="inputfraccciones sinEspacios"></span>
+                                                    </div>
+                                                    = <input type="text" class="inputfraccciones sinEspacios soloPunto" style="width:70px;" id="act3num3">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <b style="color: #005ca4;">d)</b><span style="background: #e3ecbb;" id="num2act3"></span><input type="text" class="inputfraccciones sinEspacios soloPunto" style="width:70px;" id="act3num4">
+                                                <table style="width: 30%;" style="text-align: center;">
+                                                    <tr>
+                                                        <td>100%</td>
+                                                        <td><input type="text" class="inputfraccciones sinEspacios"></td>
+                                                        <td style="font-size: 60px;" rowspan="2">}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="inputfraccciones sinEspacios">%</td>
+                                                        <td>x</td>
+                                                    </tr>
+                                                </table>
+                                                <div class="eq-c">
+                                                    x =
+                                                    <div class="fraction">
+                                                        <span class="fup"><input type="text" class="inputfraccciones sinEspacios" style="width: 70px;"></span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn"><input type="text" class="inputfraccciones sinEspacios"></span>
+                                                    </div>
+                                                    = <input type="text" class="inputfraccciones sinEspacios soloPunto" style="width:70px;" id="act3num5">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+                                    aria-controls="collapseFour">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota4" readonly>&nbsp;<b>4. Resuelve</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <b>4. Resuelve</b> el problema
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            En el aula de 7.° grado hay 40 estudiantes, de los cuales el 35% ya cumplió 12 años. ¿Cuántos estudiantes tienen 12 años?
+                                            <table style="width: 30%;" style="text-align: center;">
+                                                <tr>
+                                                    <td>100%</td>
+                                                    <td>40</td>
+                                                    <td style="font-size: 60px;" rowspan="2">}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="inputfraccciones sinEspacios">%</td>
+                                                    <td><input type="text" class="inputfraccciones sinEspacios"></td>
+                                                </tr>
+                                            </table>
+                                            <div class="eq-c">
+                                                x =
+                                                <div class="fraction">
+                                                    <span class="fup"><input type="text" class="inputfraccciones sinEspacios"> × <input type="text" class="inputfraccciones sinEspacios"></span>
+                                                    <span class="bar">/</span>
+                                                    <span class="fdn"><input type="text" class="inputfraccciones sinEspacios"></span>
+                                                </div>
+                                                =
+                                                <div class="fraction">
+                                                    <span class="fup"><input type="text" class="inputfraccciones sinEspacios"></span>
+                                                    <span class="bar">/</span>
+                                                    <span class="fdn"><input type="text" class="inputfraccciones sinEspacios"></span>
+                                                </div>
+                                                = <input type="text" class="inputfraccciones sinEspacios" id="act4num0">
+                                            </div>
+                                            <b class="letraAzul">R.</b>En el séptimo grado hay <input id="act4num1" type="text" class="inputfraccciones sinEspacios"> estudiantes que han cumplido 12 años.
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <img src="img/i1_p220_uni6diagnostico.jpg" alt="" class="img-responsive"></img>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false"
+                                    aria-controls="collapseFive">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota5" readonly>&nbsp;<b>5. Completa</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <b>5. Completa</b> las tablas y <b>grafica</b> el ejercicio a).
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div>
+                                                <b class="letraAzul">a)</b>
+                                                <table class="table" style="text-align: center;">
+                                                    <tr>
+                                                        <td style="background: #bde3ef;">N.° de llantas</td>
+                                                        <td>1</td>
+                                                        <td>2</td>
+                                                        <td>3</td>
+                                                        <td>4</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background: #e4d1e8;">Precio ($)</td>
+                                                        <td>65</td>
+                                                        <td><input id="act5num0" type="text" class="inputfraccciones sinEspacios"></td>
+                                                        <td><input id="act5num1" type="text" class="inputfraccciones sinEspacios"></td>
+                                                        <td><input id="act5num2" type="text" class="inputfraccciones sinEspacios"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div>
+                                                <b class="letraAzul">b)</b>
+                                                <table class="table" style="text-align: center;">
+                                                    <tr>
+                                                        <td style="background: #bde3ef;">N.° de trabajadores</td>
+                                                        <td>2</td>
+                                                        <td>3</td>
+                                                        <td>4</td>
+                                                        <td>5</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background: #e4d1e8;">Días de trabajo</td>
+                                                        <td>60</td>
+                                                        <td><input id="act5num3" type="text" class="inputfraccciones sinEspacios"></td>
+                                                        <td><input id="act5num4" type="text" class="inputfraccciones sinEspacios"></td>
+                                                        <td><input id="act5num5" type="text" class="inputfraccciones sinEspacios"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="my-drawing" style="border:1px solid #000000;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/geometria.png"></img>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingSix">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false"
+                                    aria-controls="collapseSix">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota6" readonly>&nbsp;<b>6. Completa</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>6. Completa</b> las siguientes expresiones, usando las palabras correctas.
+                                    <ol type="a">
+                                        <table class="table">
+                                            <tr class="act6class" id="act06Txt0">
+                                            </tr>
+                                            <tr class="act6class" id="act06Txt1">
+                                            </tr>
+                                            <tr class="act6class" id="act06Txt2">
+                                            </tr>
+                                        </table>
+                                    </ol>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingSeven">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false"
+                                    aria-controls="collapseSeven">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota7" readonly>&nbsp;<b>7. Escribe</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>7. Escribe</b> los múltiplos y submúltiplos del metro lineal y su equivalencia en metros.
+                                    <div class="table-responsive">
+                                        <table class="table" style="text-align: center;">
+                                            <tr>
+                                                <td><input id="act7num0" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td><input id="act7num1" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td>Decámetro</td>
+                                                <td>metro</td>
+                                                <td><input id="act7num2" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td><input id="act7num3" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td>milímetro</td>
+                                            </tr>
+                                            <tr>
+                                                <td><input id="act7num4" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td><input id="act7num5" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td><input id="act7num6" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td>1 m</td>
+                                                <td>1 dm</td>
+                                                <td><input id="act7num7" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td><input id="act7num8" type="text" class="sinEspacios inputmejorado"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1000 m</td>
+                                                <td><input id="act7num9" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td><input id="act7num10" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td>1 m</td>
+                                                <td><input id="act7num11" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td><input id="act7num12" type="text" class="sinEspacios inputmejorado"></td>
+                                                <td><input id="act7num13" type="text" class="sinEspacios inputmejorado"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingEigth">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEigth" aria-expanded="false"
+                                    aria-controls="collapseEigth">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center;" readonly class="nota-abierta" min="0" max="1" id="nota8">&nbsp;<b>8. Completa</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEigth" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEigth">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>8. Completa</b> la tabla. <b>Sigue</b> las indicaciones.
+                                    <br>
+                                    De mayor a menor se <input type="text" style="border:0; border-bottom: 1px dotted #000000;"> por cada lugar. →
+                                    <div class="row table-responsive">
+                                        <div class="col-md-12">
+                                            <div style="background: url('img/i3_p220_uni6diagnostico.jpg');width: 875px; height: 167px;">
+                                                <input type="text" class="inputfraccciones sinEspacios" id="act8num0" style="position: absolute;top: 70px; left: 180px;"><sup style="position: absolute;top: 75px; left: 220px;">2</sup>
+                                                <input type="text" class="inputfraccciones sinEspacios" id="act8num1" style="position: absolute;top: 70px; left: 550px;"><sup style="position: absolute;top: 75px; left: 590px;">2</sup>
+                                                <input type="text" class="inputfraccciones sinEspacios" id="act8num2" style="position: absolute;top: 70px; left: 800px;"><sup style="position: absolute;top: 75px; left: 840px;">2</sup>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ← De menor a mayor <input type="text" style="border:0; border-bottom: 1px dotted #000000;"> por cada lugar.
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingNine">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false"
+                                    aria-controls="collapseNine">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center;" readonly class="nota-abierta" min="0" max="1" id="nota9">&nbsp;<b>9. Calcula</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <b>9. Calcula</b> el área de las siguientes figuras. Expresa el resultado en metros cuadrasdos.
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-6"><b class="letraAzul">a)</b>
+                                            Un rectángulo cuya base mida 900 centímetros y la altura sea un tercio de la base.
+                                            <img src="img/i4_p220_uni6diagnostico.jpg" alt="" class="img-responsive"></img>
+                                            A<sub>rectángulo</sub> = <input type="text" class="inputfraccciones sinEspacios"> = <input type="text" class="inputfraccciones sinEspacios" id="act9num0">m<sup>2</sup>
+                                        </div>
+                                        <div class="col-lg-6"><b class="letraAzul">b)</b>Un cuadrado que mide 5,9 dam de lado.
+                                            <img src="img/i5_p220_uni6diagnostico.jpg" alt="" class="img-responsive"></img>
+                                            A<sub>cuadrado</sub> = <input type="text" class="inputfraccciones sinEspacios"><sup>2</sup> = <input type="text" class="inputfraccciones sinEspacios" id="act9num1">m<sup>2</sup>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingTen">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="false"
+                                    aria-controls="collapseTen">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center;" readonly class="nota-abierta" min="0" max="1" id="nota10">&nbsp;<b>10. Convierte</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">
+                            <div class="panel-body">
+                                <div class="col-lg-12">
+                                    <div class="text-question">
+                                        <b>10. Convierte</b> las medidas según se indica. Observa los ejemplos.
+                                        <ol type="a">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <table>
+                                                        <tr>
+                                                            <td><b class="letraAzul"><li></li></b></td>
+                                                            <td>92,74 m<sup>2</sup> a hm<sup>2</sup> =</td>
+                                                            <td>92,74 ÷ 10 000 =</td>
+                                                            <td>0,009274 hm<sup>2</sup></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul"><li></li></b></td>
+                                                            <td id="num0act10"></td>
+                                                            <td><input type="text" class="inputmejorado">=</td>
+                                                            <td><input type="text" class="inputmejorado sinEspacios" id="act10num0"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul"><li></li></b></td>
+                                                            <td id="num1act10"></td>
+                                                            <td><input type="text" class="inputmejorado">=</td>
+                                                            <td><input type="text" class="inputmejorado sinEspacios" id="act10num1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul"><li></li></b></td>
+                                                            <td id="num2act10"></td>
+                                                            <td><input type="text" class="inputmejorado">=</td>
+                                                            <td><input type="text" class="inputmejorado sinEspacios" id="act10num2"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul"><li></li></b></td>
+                                                            <td id="num3act10"></td>
+                                                            <td><input type="text" class="inputmejorado">=</td>
+                                                            <td><input type="text" class="inputmejorado sinEspacios" id="act10num3"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <table>
+                                                        <tr>
+                                                            <td><b class="letraAzul"><li></li></b></td>
+                                                            <td id="num4act10"></td>
+                                                            <td><input type="text" class="inputmejorado">=</td>
+                                                            <td><input type="text" class="inputmejorado sinEspacios" id="act10num4"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul"><li></li></b></td>
+                                                            <td id="num5act10"></td>
+                                                            <td><input type="text" class="inputmejorado">=</td>
+                                                            <td><input type="text" class="inputmejorado sinEspacios" id="act10num5"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul"><li></li></b></td>
+                                                            <td id="num6act10"></td>
+                                                            <td><input type="text" class="inputmejorado">=</td>
+                                                            <td><input type="text" class="inputmejorado sinEspacios" id="act10num6"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul"><li></li></b></td>
+                                                            <td id="num7act10"></td>
+                                                            <td><input type="text" class="inputmejorado">=</td>
+                                                            <td><input type="text" class="inputmejorado sinEspacios" id="act10num7"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul"><li></li></b></td>
+                                                            <td id="num8act10"></td>
+                                                            <td><input type="text" class="inputmejorado">=</td>
+                                                            <td><input type="text" class="inputmejorado sinEspacios" id="act10num8"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal conLevent-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/dragNdrop.js"></script>
+        <script type="text/javascript">
+        var titulos = "prueba";
+        f_titulos();
+        $("#txtNota").html("0");
+        $("#n_pagina").html("220");
+
+        $(document).ready(function() {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            //var imageSize = { width: winHeight , height: winHeight };
+            var watermarkImage = new Image();
+            watermarkImage.src = 'img/i2_p220_uni6diagnostico.jpg';
+            /*var watermarkImage2 = new Image();
+            watermarkImage2.src = 'img/i2_p129_act146.jpg';*/
+
+            LC.init(
+                document.getElementsByClassName('my-drawing')[0], {
+                    imageURLPrefix: 'imgcanvas',
+                    watermarkImage: watermarkImage,
+                    watermarkScale: 0.8, // you can scale it
+                    //imageSize: imageSize
+                    backgroundColor: 'white'
+
+
+                });
+
+        });
+
+
+
+        function soloNumeros2(e) {
+            var key = window.event ? e.which : e.keyCode;
+            if (key < 108 || key > 108) {
+                e.preventDefault();
+            }
+        }
+
+        function sinEspacios(inputs) {
+            $(inputs).on('keypress', function(e) {
+                if (e.which == 32)
+                    return false;
+            });
+        }
+        sinEspacios(".sinEspacios");
+
+
+        //////////////pregunta1/////////////////////////
+        var num1ini1 = Math.floor((Math.random() * 200) + 100);
+        var num1mul1 = Math.floor((Math.random() * 6) + 2);
+        var num1sum1 = Math.floor((Math.random() * 100) + 2);
+        var num2 = num1ini1 * num1mul1;
+        var num3 = num2 + num1sum1;
+        var num4 = num3 * num1mul1;
+        var num5 = num4 + num1sum1;
+        var num6 = num5 * num1mul1;
+        var num7 = num6 + num1sum1;
+        var array1 = [num1ini1, num2, num3, num4, num5, num6, num7, ];
+        $('#num0act1').html('' + array1[0] + ', ');
+        $('#num1act1').html('' + array1[1] + ', ');
+        $('#num2act1').html('' + array1[2] + ', ');
+        $('#num3act1').html('' + array1[3] + ', ');
+        $('#num4act1').html('' + array1[4] + ', ');
+        $('#num5act1').html('' + array1[5] + ', ');
+        //////////////////////////////
+
+
+        function pregunta1() {
+            var respact2 = [num1mul1, num1sum1, num6, num7, 2, 54, 103, 49, ];
+            var cont = 0;
+            for (var i = 0; i < 8; i++) {
+                var res = $('#act1num' + [i] + '').val().toUpperCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act1num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act1num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 8;
+            $('#nota1').val(parseFloat(total).toFixed(2));
+
+        }
+        /////////////////pregunta2//////////////////
+        var num1act2 = [];
+        var num2act2 = [];
+
+        for (var i = 0; i < 16; i++) {
+            num1act2.push(((Math.random() * 90.5) + 1.5).toFixed(2));
+            num2act2.push(((Math.random() * 90.5) + 1.5).toFixed(2));
+            $('#1num' + [i] + 'act2').html(num1act2[i]);
+            $('#2num' + [i] + 'act2').html(num2act2[i]);
+        }
+
+        function pregunta2() {
+            /*var respact2 = [
+                'ocho enteros y tres centésimos ocho con tres centésimos',
+                'doce enteros y cinco décimos doce con tres décimos',
+                'cero enteros y cuatro milésimos cuatro milésimos',
+                'cincuenta enteros y dos décimos cincuenta con dos décimos',
+                'diez enteros y siete milésimos diez con siete milésimos',
+                'sesenta enteros y un centésimo',
+                'ocho enteros y cinco décimos ocho con cinco décimos',
+                'nueve enteros y ciento tres milésimos nueve con ciento tres milesimos',
+            ];*/
+            var cont = 0;
+            for (var i = 0; i < 8; i++) {
+                var signo = $('#selec' + [i] + ' option:selected').text();
+
+
+                if (signo == "") {
+                    $('#selec' + [i] + '').css("background", "#ff6666");
+                } else {
+                    if (signo == "=") {
+                        if (parseFloat(num1act2[i]) == parseFloat(num2act2[i])) {
+                            cont = cont + 1;
+                            $('#selec' + [i] + '').css("background", "#00e600");
+
+                        } else {
+                            $('#selec' + [i] + '').css("background", "#ff6666");
+
+                        }
+                    } else if (signo == ">") {
+                        if (parseFloat(num1act2[i]) >= parseFloat(num2act2[i])) {
+                            cont = cont + 1;
+                            $('#selec' + [i] + '').css("background", "#00e600");
+                        } else {
+                            $('#selec' + [i] + '').css("background", "#ff6666");
+
+                        }
+
+
+                    } else if (signo == "<") {
+                        if (parseFloat(num1act2[i]) <= parseFloat(num2act2[i])) {
+                            cont = cont + 1;
+                            $('#selec' + [i] + '').css("background", "#00e600");
+
+                        } else {
+                            $('#selec' + [i] + '').css("background", "#ff6666");
+
+                        }
+                    }
+                }
+
+            }
+            var total = (cont * 1) / 8;
+            $('#nota2').val(parseFloat(total).toFixed(2));
+            $('select').attr("disabled", true);
+        }
+
+        /////////////////pregunta3//////////////////
+        var n1umact3 = [],
+            n2umact3 = [],
+            respact3 = [];
+        for (var i = 0; i < 3; i++) {
+            n1umact3.push(Math.floor(Math.random() * 100) + 1);
+            n2umact3.push(Math.floor(Math.random() * 1000) + 100);
+            $('#num' + [i] + 'act3').html('El ' + n1umact3[i] + '% de ' + n2umact3[i] + ' = ');
+            respact3.push((parseInt(n1umact3[i]) * parseInt(n2umact3[i])) / 100);
+        }
+
+        function pregunta3() {
+            var respact2 = [respact3[0], respact3[0], respact3[1], respact3[1], respact3[2], respact3[2], ];
+            var cont = 0;
+            for (var i = 0; i < 6; i++) {
+                var res = $('#act3num' + [i] + '').val().toUpperCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act3num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act3num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 6;
+            $('#nota3').val(parseFloat(total).toFixed(2));
+
+        }
+
+        function pregunta4() {
+            var respact2 = [14, 14];
+            var cont = 0;
+            for (var i = 0; i < 2; i++) {
+                var res = $('#act4num' + [i] + '').val().toUpperCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act4num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act4num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 2;
+            $('#nota4').val(parseFloat(total).toFixed(2));
+
+        }
+
+        function pregunta5() {
+            var respact2 = [130, 195, 260, 40, 30, 24];
+            var cont = 0;
+            for (var i = 0; i < 6; i++) {
+                var res = $('#act5num' + [i] + '').val().toUpperCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act5num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act5num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 6;
+            $('#nota5').val(parseFloat(total).toFixed(2));
+
+        }
+        ///////////////pregunta6////////////////////////////
+        var random6 = [
+            '<td><b class="letraAzul"><li></li></b></td> <td>El metro cuadrado es la unidad básica de las medidas de <select name="" id="se0"> <option value="">---seleccione---</option> <option value="">superficie</option> <option value="">m2</option> <option value="">cuadrado</option> <option value="">submúltiplo</option> </select> del Sistema Internacional de Unidades.</td>', '<td><b class="letraAzul"><li></li></b></td> <td>El metro cuadrado se representa con el símbolo <select name="" id="se1"> <option value="">---seleccione---</option> <option value="">superficie</option> <option value="">m2</option> <option value="">cuadrado</option> <option value="">submúltiplo</option> </select> y es el área comprendida dentro de un <select name="" id="se2"> <option value="">---seleccione---</option> <option value="">superficie</option> <option value="">m2</option> <option value="">cuadrado</option> <option value="">submúltiplo</option> </select> que tiene un metro por lado.</td>', '<td><b class="letraAzul"><li></li></b></td> <td>El centímetro cuadrado es un <select name="" id="se3"> <option value="">---seleccione---</option> <option value="">superficie</option> <option value="">m2</option> <option value="">cuadrado</option> <option value="">submúltiplo</option> </select> del metro cuadrado.</td>',
+        ];
+        var act06Txt = document.getElementsByClassName('act6class');
+
+        random6.sort(f_randomico);
+        for (i = 0; i < act06Txt.length; i++) {
+            $('#' + act06Txt[i].id).html(random6[i]);
+        }
+
+        function pregunta6() {
+            var respact2 = ['superficie', 'm2', 'cuadrado', 'submúltiplo', ];
+            var cont = 0;
+            for (var i = 0; i < 4; i++) {
+                var res = $('#se' + [i] + ' option:selected').text();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#se' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#se' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 4;
+            $('#nota6').val(parseFloat(total).toFixed(2));
+            $('select').attr("disabled", true);
+        }
+        ///////////////////pregunta7////////////
+        function pregunta7() {
+            var respact2 = ['kilómetro', 'hectómetro', 'decímetro', 'centímetro', '1km', '1hm', '1dam', '1cm', '1mm', '100m', '10m', '0,1m', '0,01m', '0,001m'];
+            var cont = 0;
+            for (var i = 0; i < 14; i++) {
+                var res = $('#act7num' + [i] + '').val().toLowerCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act7num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act7num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 14;
+            $('#nota7').val(parseFloat(total).toFixed(2));
+        }
+        /////////////////pregunta8///////////////////
+        function pregunta8() {
+            var respact2 = ['hm', 'dm', 'mm', ];
+            var cont = 0;
+            for (var i = 0; i < 3; i++) {
+                var res = $('#act8num' + [i] + '').val().toLowerCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act8num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act8num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 3;
+            $('#nota8').val(parseFloat(total).toFixed(2));
+        }
+        /////////////////pregunta9///////////////////
+        function pregunta9() {
+            var respact2 = [27, 3481];
+            var cont = 0;
+            for (var i = 0; i < 2; i++) {
+                var res = $('#act9num' + [i] + '').val().toLowerCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act9num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act9num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 2;
+            $('#nota9').val(parseFloat(total).toFixed(2));
+        }
+        ////////////////////pregunta10///////////////////////
+        var numact10 = [];
+        for (var i = 0; i < 10; i++) {
+            numact10.push(Math.floor(Math.random() * 99) + 1);
+
+        }
+        $('#num0act10').html('' + numact10[0] + ' dam<sup>2</sup> a km<sup>2</sup> =');
+        $('#num1act10').html('' + numact10[1] + ' hm<sup>2</sup> a m<sup>2</sup> =');
+        $('#num2act10').html('' + numact10[2] + ' dm<sup>2</sup> a cm<sup>2</sup> =');
+        $('#num3act10').html('' + numact10[3] + ' km<sup>2</sup> a hm<sup>2</sup> =');
+        $('#num4act10').html('' + numact10[4] + ' m<sup>2</sup> =');
+        $('#num5act10').html('' + numact10[5] + ' hm<sup>2</sup> =');
+        $('#num6act10').html('' + numact10[6] + ' mm<sup>2</sup> =');
+        $('#num7act10').html('' + numact10[7] + ' m<sup>2</sup> =');
+        $('#num8act10').html('' + numact10[8] + ' m<sup>2</sup> =');
+
+
+        var r10_0 = parseFloat(numact10[0]) / 10000;
+        var r10_1 = parseFloat(numact10[1]) * 10000;
+        var r10_2 = parseFloat(numact10[2]) * 100;
+        var r10_3 = parseFloat(numact10[3]) * 100;
+        var r10_4 = parseFloat(numact10[4]) * 10000;
+        var r10_5 = parseFloat(numact10[5]) * 1000000;
+        var r10_6 = parseFloat(numact10[6]) / 100;
+        var r10_7 = parseFloat(numact10[7]) * 100;
+        var r10_8 = parseFloat(numact10[8]) / 10000;
+        var res10 = [r10_0, r10_1, r10_2, r10_3, r10_4, r10_5, r10_6, r10_7, r10_8];
+
+        function pregunta10() {
+            var respact2 = [r10_0, r10_1, r10_2, r10_3, r10_4, r10_5, r10_6, r10_7, r10_8];
+            var cont = 0;
+            for (var i = 0; i < 9; i++) {
+                var res = $('#act10num' + [i] + '').val().toLowerCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act10num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act10num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 9;
+            $('#nota10').val(parseFloat(total).toFixed(2));
+
+        }
+
+
+
+
+        function validarN(inputs) {
+
+            $(inputs).on('keypress', function(e) {
+                tecla = document.all ? e.keyCode : e.which;
+                if (tecla == 8) return true;
+                patron = /[,qwertyuiopñlkvjhfgdsazcxbnmQWERTYFVUIOPÑLKJHGDSAZCBNM<>,;-_""]/;
+                te = String.fromCharCode(tecla);
+                if (patron.test(te)) {
+                    //alert("INGRESE V(VERDADERO) O F(FALSO) ");
+                    return false;
+                }
+
+            });
+        }
+
+        validarN(".soloPunto");
+
+
+        function NotaFinal() {
+            /*var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var nota5 = document.getElementById('nota5').value;
+            var nota6 = document.getElementById('nota6').value;
+            var nota7 = document.getElementById('nota7').value;
+            var nota8 = document.getElementById('nota8').value;
+            var nota9 = document.getElementById('nota9').value;
+            var nota10 = document.getElementById('nota10').value;
+            var nota11 = document.getElementById('nota11').value;
+
+            if (nota4 == "") {
+                alert("Debe ingresar la nota de la pregunta 4.")
+            } else {*/
+            pregunta1();
+            pregunta2();
+            pregunta3();
+            pregunta4();
+            pregunta5();
+            pregunta6();
+            pregunta7();
+            pregunta8();
+            pregunta9();
+            pregunta10();
+
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var nota5 = document.getElementById('nota5').value;
+            var nota6 = document.getElementById('nota6').value;
+            var nota7 = document.getElementById('nota7').value;
+            var nota8 = document.getElementById('nota8').value;
+            var nota9 = document.getElementById('nota9').value;
+            var nota10 = document.getElementById('nota10').value;
+            var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4) + parseFloat(nota5) + parseFloat(nota6) + parseFloat(nota7) + parseFloat(nota8) + parseFloat(nota9) + parseFloat(nota10);
+            $('#txtNota').html(total.toFixed(2));
+            $('#bt_comprobar').attr("disabled", true);
+            $('input').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+            //}
+        }
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lengua y Literatura 9</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+</head>
+<style type="text/css">
+    table tr td {
+        text-align: center;
+    }
+
+    .cajas {
+        max-width: 95%;
+        max-height: 200px;
+        border: 1px #009900 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+    }
+
+    .actividad1 {
+        background: #fff;
+    }
+
+    .correcto {
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+
+    .incorrecto {
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+
+    .desactivar {
+        background-color: #444;
+        color: #888;
+        padding: 8px;
+    }
+
+    #cabecera .badge {
+        background-color: #232956;
+    }
+
+    .subrayar0 {
+        color: Black;
+        border-bottom: 1px solid black;
+    }
+
+    .subrayar {
+        color: Black;
+        border-bottom: 1px solid red;
+    }
+
+    .subrayar1 {
+        color: Black;
+        border-bottom: 1px solid purple;
+    }
+
+    .subrayar2 {
+        color: Black;
+        border-bottom: 1px solid blue;
+    }
+
+    .subrayar3 {
+        color: Black;
+        border-bottom: 1px solid green;
+    }
+
+    .subrayar4 {
+        color: Black;
+        border-bottom: 1px solid yellow;
+    }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Lee cuidadosamente las pregunta y contesta.<br>
+        2. Da (2 clics) para subrayar la palabra.<br>
+        3. Lee cuidadosamente las pregunta y contesta.<br>
+        <span id="ayudas"></span>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa"
+                        onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+
+            </ul>
+        </div>
+
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a" readonly>&nbsp;
+                    <span><b>1. Realiza </b> la sustitución pronominal del elemento subrayado. <b>Sigue</b> el ejemplo.</span>
+                </div><br>
+                <table class="table" style="text-align: center">
+                    <tr>
+                        <td WIDTH="50%" bgcolor="#1FC5E3" style="color: #FFFFFF"><b>Oración</b></td>
+                        <td WIDTH="50%" bgcolor="#E3751F" style="color: #FFFFFF"><b>Sustitución</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <table class="table" style="text-align: center" border="1" bordercolor="#1AAADF">
+
+                                <tr>
+                                    <td WIDTH="50%">
+                                        <div class="text-question">
+                                            <span><span class="subrayar">Martha</span> se cayó de la bicicleta.</span>
+                                        </div>
+                                    </td>
+                                    <td WIDTH="50%">
+                                        <span> <div class="text-question">
+                                                <span><b>Ella</b> se cayó de la bicicleta.</span>
+                                            </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="col-lg-12  imagen1  " id="ranuno1"></div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="col-lg-12  imagen1  " id="ranuno2"></div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="col-lg-12  imagen1  " id="ranuno3"></div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="col-lg-12  imagen1  " id="ranuno4"></div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="col-lg-12  imagen1  " id="ranuno5"></div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="col-lg-12  imagen1  " id="ranuno6"></div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="col-lg-12  imagen1  " id="ranuno8"></div>
+
+                        </td>
+                    </tr>
+
+
+                </table><br>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a" readonly>&nbsp;
+                    <span><b>2. Lee </b> el siguiente texto y <b>subraya</b> las expresiones que son una sustitución pronominal.
+                    </span>
+                </div><br>
+                <div class="text-question">
+                    <span><span class="enc2" id="1">Mercedes</span> <span class="enc2" id="2">consiguió</span> <span class="enc2"
+                            id="3">trabajo</span> <span class="enc2" id="4">después</span> <span class="enc2" id="5">de</span>
+                        <span class="enc2" id="6">una</span> <span class="enc2" id="7">larga</span> <span class="enc2" id="8">búsqueda</span>.
+                        <span class="enc2" id="9">Ella</span> <span class="enc2" id="10">lo</span> <span class="enc2" id="11">buscó</span>
+                        <span class="enc2" id="12">por </span><span class="enc2" id="13">más </span><span class="enc2" id="14">de
+                        </span><span class="enc2" id="15">un </span><span class="enc2" id="16">año. </span><span class="enc2"
+                            id="17">Dejó </span><span class="enc2" id="18">su </span><span class="enc2" id="19">currículo </span><span
+                            class="enc2" id="20">en </span><span class="enc2" id="21">muchísimas </span><span class="enc2" id="22">empresas,
+                        </span><span class="enc2" id="23">las cuales</span><span class="enc2" id="24">
+                        </span><span class="enc2" id="25">casi </span><span class="enc2" id="26">nunca </span><span class="enc2"
+                            id="27">le</span> <span class="enc2" id="28">respondían. </span><span class="enc2" id="29">También
+                        </span><span class="enc2" id="30">aplicó </span><span class="enc2" id="31">en </span><span class="enc2"
+                            id="32">ofertas </span><span class="enc2" id="33">de </span><span class="enc2" id="34">Internet.
+                        </span><span class="enc2" id="35">A </span><span class="enc2" id="36">todo
+                        </span><span class="enc2" id="37">eso</span>, <span class="enc2" id="38">se </span><span class="enc2"
+                            id="39">suma </span><span class="enc2" id="40">que </span><span class="enc2" id="41">esta </span><span
+                            class="enc2" id="42">muchacha </span><span class="enc2" id="43">nunca </span><span class="enc2" id="44">se
+                        </span><span class="enc2" id="45">desanimó </span><span class="enc2" id="46">y </span><span class="enc2"
+                            id="47">siempre </span><span class="enc2" id="48">mantuvo </span><span class="enc2" id="49">la
+                        </span><span class="enc2" id="50">esperanza </span><span class="enc2" id="51">de </span><span class="enc2"
+                            id="52">conseguir</span><span class="enc2" id="53">lo</span>.</span>
+                </div><br>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a">&nbsp;
+                    <span><b>3. Escribe </b> en el siguiente cuadro la expresión a la que sustituyen los pronombres.</span>
+                </div><br>
+
+                <div class="text-question">
+                    <span>Conmovedor el homenaje realizado en la Universidad Central a la doctora Isabel Robalino. El 14
+                        de octubre cumple 100 años de vida dedicada a la justicia social, a la defensa de la democracia y
+                        a la práctica de la honradez. Así <font color="purple"><b>lo</b></font> reconocieron expresidentes
+                        del Ecuador, militantes e intelectuales de diversa vertiente ideológica, trabajadores, educadores,
+                        comunicadores, rectores de universidades y egresados del Instituto Nacional Mejía, su colegio, que
+                        <font color="purple"><b>se</b></font> dieron cita para celebrar
+                        <font color="purple"><b>su</b></font> cumpleaños.</span>
+                </div><br>
+                <table class="table" style="text-align: center" border="1" bordercolor="purple">
+                    <tr>
+                        <td WIDTH="10%" bgcolor="#7DE05A" style="color: #FFFFFF"><b><h4>Pronombre</h4></b></td>
+                        <td WIDTH="90%" bgcolor="#ECADDD" style="color: #FFFFFF"><b><h4>Expresión sustituida</h4></b></td>
+                    </tr>
+                    <tr>
+                        <td>lo</td>
+                        <td><textarea class="form-control text-question no-redimensionar" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>su</td>
+                        <td><textarea class="form-control text-question no-redimensionar" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>se</td>
+                        <td><textarea class="form-control text-question no-redimensionar" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                    </tr>
+
+                </table><br>
+
+
+            </div>
+
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                            Debes ingresar tu nombre</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+            <!--generador de pdf-->
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/Utilitario.js"></script>
+            <script src="js/numPaginas.js"></script>
+            <script src="js/validacionesExtras.js"></script>
+            <script src="js/actividad54.js"></script>
+
+
+</body>
+
+</html>

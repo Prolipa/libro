@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMATICA 6</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/icomoon.css" rel="stylesheet">
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+</head>
+<style type="text/css">
+*{
+    box-sizing: border-box;
+}
+	.actividad1{
+		background: #fff;
+	}
+    .respuestas{
+        width: 180px;
+        display: inline-table;
+    }
+    .respuesta{
+        width: 90px;
+        display: inline-table;
+    }
+	.correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+    .set-width{
+        max-width: 90px;
+        display: inline-block;
+    }
+    #pregunta1 .venn1{
+        border-radius: 25px;
+        display: inline-block;
+        padding: 15px;
+        letter-spacing: 10px;
+    }
+    .letra1{
+        width: 1.5cm; 
+        height: 1.5cm; 
+        border: 2px solid #a863a5; 
+        border-radius: 20%; 
+        font-size:1.5em;
+        margin-top: -5px;
+        margin-right: 15px;
+    }
+    .c_imagenes{
+        padding: 5px;
+    }
+    .bordes{
+        padding: 10px;
+        border: 2px dotted #a863a5;
+        border-radius: 10px;
+        min-height: 170px;
+    }
+    #pregunta2 img, #pregunta5 img {
+        mix-blend-mode:multiply;
+    }
+    /*PREGUNTA 3*/
+    .c_imagen{
+        position: relative;
+    }
+    #pregunta3 .c1{background-color: #CFC0DB;font-weight: bold;text-align: center;}
+    #pregunta3 .c2{background-color: #BADAEA;font-weight: bold;text-align: center;}
+    #pregunta3 .c3{background-color: #BED49D;font-weight: bold;text-align: center;}
+    #pregunta3 .c4{background-color: #BADAEA;font-weight: bold;text-align: center;}
+    #pregunta3 .c5{background-color: #CFC0DB;font-weight: bold;text-align: center;}
+    /*FIN PREGUNTA 3*/
+    /*PREGUNTA 4*/
+    #pregunta4 .c1{
+        background-color: #F9EFDF;
+        text-align: center;
+        padding: 5px;
+        border: 1px #D68500 solid;
+        font-size: 18px;
+    }
+    #pregunta4 .c2{
+        text-align: center;
+        padding: 5px;
+        border: 1px #D68500 solid;
+        font-size: 18px;
+    }
+    .input {
+        border: none;
+        border-bottom: 1px solid #0066ff;
+        padding: 6px;
+        width: 80%;
+    }
+    .color1{
+        font-weight: bold;
+        color: #BA007C;
+    }
+    
+    .color2{
+        font-weight: bold;
+        color: #009BDB;
+    }
+    .actividad1 input{
+        text-align: center;
+    }
+    .t_head{
+        background-color: #333;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 15px 15px 0 0;
+    }
+    .bg1{background-color: #D68611;}
+    .bg2{background-color: #A23589;}
+    .bg3{background-color: #5A9876;}
+    .bg4{background-color: #2F5FA4;}
+    .i_valor{
+        letter-spacing: 8px;
+        font-weight: bold;
+    }
+    /*pregunta 5*/
+    .borde_p5{
+        border: dotted 2px #444;
+        min-height: 180px;
+        min-width: 80px;
+        border-radius: 5px;
+        padding: 8px;
+    }
+    /*pregunta 6*/
+    .imagenes_p6{
+        min-height: 180px;
+        border: 2px dotted #e5e5e5;
+    }
+    /*pregunta 8*/
+    .imagen_p8{
+        display: inline-block;
+    }
+    @media (max-width: 770px) {
+      .cajas {
+        clear: left;
+      }
+    }
+
+    .mi_canvas {
+    min-width: 320px;
+  }
+  #prueba {
+    margin-top: 2rem;
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    transition: all .3s linear 0s;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#e5e5e5; 
+    /*background-color:rgba(212,185,186,0.2); 
+    background-image: url(imagenes/fondo.jpg);*/ /* SI SE NECESITA UNA IMAGEN DE FONDO */
+    background-size: 100% 100%;
+  }
+  #logo {
+    display: block;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    z-index: 1;
+    width: 30%;
+    height: auto;
+    max-width: 350px;
+    min-width: 100px;
+  }
+  .caja{
+      width: 20%;
+  }
+  .cajaa{
+      width: 15%;
+  }
+  #contenedoropciones {
+    margin-top: 2rem;
+    padding: 2px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #contenedoropciones table {
+  background-color: rgba(220,220,220,1.00);
+  border: .25rem solid rgba(188,185,185,1.00);
+  margin-bottom: .5rem;
+  border-spacing: 5px;
+  border-collapse: separate;
+  }
+  #contenedoropciones table:nth-of-type(2) {
+    border-spacing: 5px;
+  }
+  #contenedoropciones table:nth-of-type(2) td {
+    width: 1px;
+    white-space: nowrap;
+  }
+  #contenedoropciones table:nth-of-type(1) td {
+    cursor: pointer;
+  }
+  #contenedoropciones .titulotabla {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color:rgba(103,103,103,1.00)
+  }
+  #contenedoropciones table {
+    display: inline-table;
+  }
+  
+  .celdascoloresdefondo {
+    width: 20px;
+    height: 10px;
+    border: solid 1px transparent;
+  }
+  @media (max-width: 890px) {
+    /*.mi_canvas {
+      font-size: .750rem;
+    }*/
+    #contenedoropciones, #prueba {
+      width: 98%
+    }
+    #contenedoropciones {
+      margin-left: 1%;
+    }
+  }
+  @media (max-width: 450px) {
+    /*.mi_canvas {
+      font-size: .75rem;
+    }*/
+  }
+  @media (max-width: 1px) {
+    #contenedoropciones #opcionesdedibujo {
+      display: table;
+      width: 100%;
+    }
+    #contenedoropciones #opcionesdedibujo td {
+      display: block;
+      width: auto;
+      text-align: left;
+      margin-top: 5px;    
+    }
+  }
+
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            <b>Pregunta 1:</b> Escribe en los espacios en blanco<br>
+            <b>Pregunta 2:</b> Escribe en los recuadros en blanco<br>
+            <b>Pregunta 3:</b> Escribe en los espacios en blanco<br>
+            <b>Pregunta 4:</b> Escribe en los recuadros en blanco<br>
+            <b>Pregunta 5:</b> Escribe en los espacios en blanco<br>
+            <b>Pregunta 6:</b> Escribe en los recuadros en blanco<br>
+
+           
+            <span id="ayudas"></span>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li >
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li >
+                <li >
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                        <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span  class="notificacion actividad" >
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span  class="notificacion nota" >
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                    </span>
+                    <span  class="notificacion pagina" >
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág 210<i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+	<div class="container espacio">
+		<div class="panel border-aplico" id="activity"> 
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico">
+                <span class="titulo"></span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>                    
+            </div>
+            <div class="panel-body">
+                <!--preguntas de la actividad-->
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+                <div><img src="img/algebra_funciones.jpg" class="img img-responsive"></div>
+                <div class="actividad1">
+                    <!--PREGUNTA 1-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <span class="p_abierta"></span>
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#aion" href="#pregunta1"> Pregunta 1</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    <p><b>Ubica</b> los siguientes números en la semirrecta numérica. Luego, <b>ordénalos</b> de mayor a menor. </p>
+                                    <div class="row">
+                                        <div class="col col-md-2">
+                                            <img class="img-responsive center-block" src="img/i3_p210_act146.png" alt="">
+                                        </div>
+                                        <div class="col col-md-2">
+                                            <img class="img-responsive center-block" src="img/i4_p210_act146.png" alt="">
+                                        </div>
+                                        <div class="col col-md-2">
+                                            <img class="img-responsive center-block" src="img/i5_p210_act146.png" alt="">
+                                        </div>
+                                        <div class="col col-md-2">
+                                            <img class="img-responsive center-block" src="img/i6_p210_act146.png" alt="">
+                                        </div>
+                                        <div class="col col-md-2">
+                                            <img class="img-responsive center-block" src="img/i7_p210_act146.png" alt="">
+                                        </div>
+                                        <div class="col col-md-2">
+                                            <img class="img-responsive center-block" src="img/i8_p210_act146.png" alt="">
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-md-1"> <input type="text" id="w0" class="form-control"></div>
+                                        <div class="col col-md-2"> <input type="text" id="w1" class="form-control"></div>
+                                        <div class="col col-md-2"> <input type="text" id="w2" class="form-control"></div>
+                                        <div class="col col-md-2"> <input type="text" id="w3" class="form-control"></div>
+                                        <div class="col col-md-2"> <input type="text" id="w4" class="form-control"></div>
+                                        <div class="col col-md-2"> <input type="text" id="w5" class="form-control"></div>
+                                        <div class="col col-md-1"> <input type="text" id="w6" class="form-control"></div>
+                                    </div>
+                                    <img src="img/i1_p210_act146.png" class="img-responsive" alt="">
+                                    <div class="row text-center">
+                                        <input type="text" id="w7" class="form-control respuesta">
+                                        < <input type="text" id="w8" class="form-control respuesta">
+                                        < <input type="text" id="w9" class="form-control respuesta">
+                                        < <input type="text" id="w10" class="form-control respuesta">
+                                        < <input type="text" id="w11" class="form-control respuesta">
+                                        < <input type="text" id="w12" class="form-control respuesta">
+                                        < <input type="text" id="w13" class="form-control respuesta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- pregunta 2-->
+                    <div class="panel bg-danger" style="color:white;">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#aion" href="#pregunta2">Pregunta 2</a>
+                                </h4>
+                            </div>
+                            <div id="pregunta2" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="text-question" style="color:black;">
+                                        <p><input type="number" size="1" style="text-align:center" id="notaa" class="nota-abierta" min="0" step="0.1" max="1"> <b>Ubica</b> en el plano cartesiano los siguientes puntos.
+                                        <b>Únelos</b> en orden alfabético y  <b>escribe</b> el nombre de la
+                                        figura geométrica que se forma.</p>
+                                        <div class="row">
+                                            <div class="col col-md-6">
+                                                <div class="col col-md-6">
+                                                    <img src="img/i9_p210_act146.png" class="center-block img-responsive" alt="">
+                                                </div>
+                                                <div class="col col-md-6">
+                                                    Nombre <input type="text" class="form-control" style="width: 200px;">
+                                                </div>
+                                            </div>
+                                            <div class="col col-md-6">
+                                                <div class="my-drawing"></div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>
+                    <!-- pregunta 3-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta3">Pregunta 3</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta3" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    <p><b>Escribe</b> las operaciones en forma vertical y <b>resuelve</b>. </p>
+                                    <ol type="a">
+                                        <div class="col col-md-6">
+                                            <li>7 564,095 × 65,8 = <input type="text" class="form-control respuesta" id="a0"></li>
+                                            <p></p>
+                                            <span class="cajares"></span>
+                                        </div>
+                                        <div class="col col-md-6">
+                                            <li>8 674,18 ÷ 23,6 = <input type="text" class="form-control respuesta" id="a1"></li>
+                                            <p></p>
+                                            <div class="cajares"></div>
+                                        </div>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- pregunta 4-->                    
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta4">Pregunta 4</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta4" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;"> 
+                                   <p><b>Resuelve</b> y <b>escribe</b> la respuesta en su mínima expresión. </p>
+                                   <ol type="a">
+                                       <div class="col col-md-6">
+                                           <li></li>
+                                           <p>Nelson compró para su papelería 12 globos terráqueos. Si cada uno costó 5,45
+                                            dólares, ¿cuánto pagó en total?</p>
+                                            <div class="col col-md-6">
+                                                <p>R. <input type="text" class="form-control respuestas" id="a2"></p>
+                                            </div>
+                                            <div class="col col-md-6">
+                                                <img src="img/i12_p210_act146.png" class="img-responsive" alt="">
+                                            </div>
+                                       </div>
+                                       <div class="col col-md-6">
+                                           <li></li>
+                                           <p>Marcia vendió las 18,5 libras de uvas que tenía en
+                                            su frutería. Si vendió cada libra en 1,75 dólares,
+                                            ¿cuánto obtuvo por la venta total?</p>
+                                            <div class="col col-md-6">
+                                                <p>R. <input type="text" class="form-control respuestas" id="a3"></p>
+                                            </div>
+                                            <div class="col col-md-6">
+                                                <img src="img/i13_p210_act146.png" class="img-responsive" alt="">
+                                            </div>
+                                       </div>
+                                   </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- pregunta 5-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta5">Pregunta 5</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta5" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    <p><b>Marca</b> con X los valores correspondientes para que se cumplan las igualdades.</p>
+                                    <div class="row">
+                                        <div class="col col-md-4">
+                                           <p><img src="img/i1_p211_act146.png" alt=""></p>
+                                           <p><img src="img/i2_p211_act146.png" alt=""> <input type="text" class="form-control respuesta" id="a4"></p>
+                                           <p><img src="img/i3_p211_act146.png" alt=""> <input type="text" class="form-control respuesta" id="a5"></p>
+                                        </div>
+                                        <div class="col col-md-4">
+                                           <p><img src="img/i4_p211_act146.png" alt=""></p>
+                                           <p><img src="img/i5_p211_act146.png" alt=""> <input type="text" class="form-control respuesta" id="a6"></p>
+                                           <p><img src="img/i6_p211_act146.png" alt=""> <input type="text" class="form-control respuesta" id="a7"></p>
+                                        </div>
+                                        <div class="col col-md-4">
+                                           <p><img src="img/i7_p211_act146.png" alt=""></p>
+                                           <p><img src="img/i8_p211_act146.png" alt=""> <input type="text" class="form-control respuesta" id="a8"></p>
+                                           <p><img src="img/i9_p211_act146.png" alt=""> <input type="text" class="form-control respuesta" id="a9"></p>
+                                        </div>
+                                    </div>                                
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- pregunta 6-->
+                    <img src="img/geometria_medida.jpg" alt="">
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta6">Pregunta 6</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta6" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    <p>Resuelve los problemas.</p>  
+                                    <ol type="a">
+                                        <div class="col col-md-6">
+                                            <li></li>
+                                            <p>Ariana elaboró un mantel de forma nonagonal; cada uno de los lados mide
+                                            14 centímetros. Si quiere colocar una cinta alrededor, ¿cuántos centímetros de cinta necesita?</p>
+                                            <p>R. Necesita <input type="text" class="form-control respuestas" id="a10"> centímetros de cinta.</p> 
+                                        </div>
+                                        <div class="col col-md-6">
+                                            <li></li>
+                                            <p>La Policía Nacional debe colocar cintas reflectivas en las señales de tránsito de PARE. Si cada
+                                            lado mide 18 centímetros, ¿cuántos centímetros de cinta reflectiva necesita? </p>
+                                            <p>R. Necesita <input type="text" class="form-control respuestas" id="a11">  centímetros de cinta.</p>
+                                        </div>                                                           
+                                    </ol>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- pregunta 7-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta7">Pregunta 7</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta7" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    <p>Escribe dentro de los paréntesis
+                                    el número que corresponde a los
+                                    elementos del círculo</p>
+                                    <div class="col col-md-9 text-center">
+                                        <img src="img/i10_p211_act146.png" alt="">
+                                    </div>
+                                    <div class="col col-md-3">
+                                        <p>(<input type="text" class="form-control respuesta" id="a12">) Radio</p>
+                                        <p>(<input type="text" class="form-control respuesta" id="a13">) Diámetro</p>
+                                        <p>(<input type="text" class="form-control respuesta" id="a14">) Circunferencia</p>
+                                        <p>(<input type="text" class="form-control respuesta" id="a15">) Centro</p>
+                                        <p>(<input type="text" class="form-control respuesta" id="a16">) Círculo</p>
+                                        <p>(<input type="text" class="form-control respuesta" id="a17">) Arco</p>
+                                        <p>(<input type="text" class="form-control respuesta" id="a18">) Cuerda</p>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- pregunta 8-->
+                    <div class="panel bg-danger" style="color:white;">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#aion" href="#pregunta8">Pregunta 8</a>
+                                </h4>
+                            </div>
+                            <div id="pregunta8" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="text-question" style="color:black;">
+                                        <p><b>Resuelve</b> el problema.</p>
+                                        <p>Una familia de cuatro personas sale a pasear en bicicleta; estas se clasifican como se indica en la tabla.
+                                        <b>Complétala</b>, y <b>utiliza</b> al valor de pi como 3,14. ¿Qúe bicicleta dio el mayor número de vueltas? ¿Por qué?
+                                        <b>Aproxima</b> el número de vueltas a enteros.</p>
+                                        <div class="row">
+                                            <table class="table talble-bordered">
+                                                <tr>
+                                                    <td class="text-center bg bg-info">Bicicleta</td>
+                                                    <td class="text-center bg bg-danger">Diámetro de la llanta (cm)</td>
+                                                    <td class="text-center bg bg-success">Perímetro de la llanta (cm)</td>
+                                                    <td class="text-center bg bg-warning">Número de vueltas al recorrer 120 metros</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">Adulto</td>
+                                                    <td class="text-center">70</td>
+                                                    <td><input type="text" class="form-control" id="a19"></td>
+                                                    <td><input type="text" class="form-control" id="a20"></td>
+                                                </tr> 
+                                                <tr>
+                                                    <td class="text-center">Joven</td>
+                                                    <td class="text-center">36</td>
+                                                    <td><input type="text" class="form-control" id="a21"></td>
+                                                    <td><input type="text" class="form-control" id="a22"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">Montaña</td>
+                                                    <td class="text-center">62</td>
+                                                    <td><input type="text" class="form-control" id="a23"></td>
+                                                    <td><input type="text" class="form-control" id="a24"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">Infantil</td>
+                                                    <td class="text-center">30</td>
+                                                    <td><input type="text" class="form-control" id="a25"></td>
+                                                    <td><input type="text" class="form-control" id="a26"></td>
+                                                </tr>
+                                            </table>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <p id="trace" class="alert alert-warning display-none"></p>
+        </div>
+    </div>
+
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>  
+                            <div class="col-sm-10"> 
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-su" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>        
+        </div>
+    </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/react-with-addons.js"></script>
+        <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/highcharts.js"></script>
+        <script src="js/exporting.js"></script>
+        <script src="js/export-data.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/146.js"></script>
+        <script type="text/javascript">
+            var titulos="evaluacion";
+        </script>
+        <script>
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            //var imageSize = { width: winHeight , height: winHeight };
+            var watermarkImage = new Image();
+            watermarkImage.src = 'img/i10_p210_act146.png';
+            LC.init(
+                document.getElementsByClassName('my-drawing')[0], {
+                    imageURLPrefix: 'imgcanvas',
+                    watermarkImage: watermarkImage,
+                    watermarkScale: 0.95, // you can scale it
+                    //imageSize: imageSize
+                    backgroundColor: 'white'
+                });
+            var watermarkImagee = new Image();
+            watermarkImagee.src = 'img/i11_p210_act146.png';
+            LC.init(
+                document.getElementsByClassName('my-drawinge')[0], {
+                    imageURLPrefix: 'imgcanvas',
+                    watermarkImagee: watermarkImagee,
+                    watermarkScale: 0.95, // you can scale it
+                    //imageSize: imageSize
+                    backgroundColor: 'white'
+                });
+        </script>
+</body>
+</html>

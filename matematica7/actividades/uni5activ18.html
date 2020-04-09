@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMÁTICA 7</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+    	<script src="js/react-with-addons.js"></script>
+    	<script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+</head>
+
+<style type="text/css">
+    input[type=number]::-webkit-outer-spin-button,
+
+    input[type=number]::-webkit-inner-spin-button {
+
+        -webkit-appearance: none;
+
+        margin: 0;
+
+    }
+
+     
+
+    input[type=number] {
+
+        -moz-appearance:textfield;
+
+    }
+
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+
+    .respuestas{
+        font-size: 16px;
+        color: #601CC2;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .panel-sombra{
+        padding: 10px;
+        box-shadow: 5px 5px 5px #CFCDD3;
+        background-color: #D9C2FA;
+        border-radius: 7px;
+    }
+    
+    .btn-evaluacion{
+        background-color: #D9C2FA; 
+        color: #601CC2; 
+        border: 2px solid; 
+        border-style: dashed; 
+        border-color: #601CC2;
+    }
+
+    .panel-evaluacion {
+        border-radius: 9px;
+        border-color: #D9C2FA;
+    }
+    
+    .calificacion-evaluacion{
+        display: inline-block; 
+        width: 110px; 
+        margin-left: 20px; 
+        background-color: #F4EEFE; 
+        border-radius: 7px; 
+        border-left-color: #601CC2; 
+        border-right-color: #601CC2; 
+        border-top: none; 
+        border-bottom: none;
+    }
+
+    .fraction {
+        display: inline-block;
+        vertical-align: middle; 
+        margin: 0 0.2em 0.4ex;
+        text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid black;}
+    .fraction span.bar {display: none;}
+
+    .n1{
+        color: #2B1ECF;
+        font-size: 23px;
+    }
+
+    .n2{
+        color: #AC1ECF;
+        font-size: 23px;
+    }
+
+    .n3{
+        color: #CF1E3B;
+        font-size: 23px;
+    }
+
+    .n4{
+        color: #1EA7CF;
+        font-size: 23px;
+    }
+
+    .n5{
+        color: #1ECF87;
+        font-size: 23px;
+    }
+
+    .n6{
+        color: #79CF1E;
+        font-size: 23px;
+    }
+
+    .n7{
+        color: #B6A921;
+        font-size: 23px;
+    }
+
+    .n8{
+        color: #D15A1E;
+        font-size: 23px;
+    }
+
+    .num1{
+        width: 100px;
+        display: inline-block;
+        border: 1px solid;
+        border-color: #951DC2;
+        border-top-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        text-align: center;
+    }
+
+
+    .num2{
+        border-radius: 15px;
+        background-color: #C2C4FA;
+        padding: 5px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .num3{
+        border: none;
+        border-bottom: 1px solid;
+        border-bottom-style: dashed;
+        margin-bottom: 20px;
+    }
+
+    .num4{
+        padding: 5px;
+        border-top-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+    }
+
+    .pinta{
+        background-color: #E2CC52;
+    }
+
+    .pinta1{
+        border-left: 3px solid;
+        border-left-color: #E2CC52;
+    }
+
+    .bien{
+        background-color: #05D576;
+    }
+
+    .mal{
+        background-color: #D50545;
+    }
+
+    .bien1{
+        border-left: 3px solid;
+        border-left-color: #05D576;
+    }
+
+    .mal1{
+        border-left: 3px solid;
+        border-left-color: #D50545;
+    }
+
+    .r_imgKg{
+                min-height: 40px;
+                border: 1px solid #F1DC84;
+                margin-bottom: 15px;
+                padding: 2px;
+            }
+            @media (max-width: 770px) {
+                .cajas {
+                    clear: left;
+                  }
+               .imgKg img{
+                    padding: 8px;
+                    max-width: 20%;
+                }
+                .r_imgKg{
+                    min-height: 30px;
+                    border: 1px solid #F1DC84;
+                }
+                .r_imgKg img{
+                    max-height: 30%;
+                }
+            }
+    .dest{
+        border: 1px solid;
+        border-color: #F1DC84;
+        background-color: #F1DC84;
+        border-top-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Ingresa tus respuestas en los cuadros de texto correspondientes, evita ingresar texto innecesario. Guíate por los ejemplos.<br>
+        Utiliza las herramientas de dibujo en las actividades que lo requieran.<br>
+
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-evaluacion" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-evaluacion">
+                    <span class="titulo"><img src="img/icoTST.png"> Evaluación sumativa</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+	 <div class="panel-body"> 
+                
+                <div><img src="img/algebra_funciones.jpg" class="img-responsive" width="250"></div>
+
+                <div class="panel panel-evaluacion">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="btn btn-evaluacion">
+                            <b>Actividad 1</b>
+                        </button>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                        1. <b>Analiza</b> el problema y <b>responde</b> las preguntas.<br>
+
+                            Ana tiene una hoja que mide 0,001 metros de espesor. Al doblarla por la mitad, obtuvo un espesor de 0,002; al doblarla nuevamente, obtuvo uno de 0,004 metros.<br><br>
+
+                            a) Si Ana dobló la hoja de cartulina cinco veces, ¿qué espesor obtuvo? <br>
+                            <div align="center">
+                                <span class="n3">R. &nbsp;&nbsp;</span>
+                                El espesor que obtuvo Ana fue de &nbsp;<input type="number" id="rA1" class="form-control respuestas input-sm" style="width: 70px;"> &nbsp; metros.<br><br>
+                            </div>
+
+
+                            b) ¿Qué tipo de sucesión obtuvo Ana al realizar este ejercicio con la hoja?<br>
+                            <div align="center">
+                                <span class="n3">R. &nbsp;&nbsp;</span>
+                                <select id="rA2" class="form-control respuestas input-sm" style="width: 250px;">
+                                    <option></option>
+                                    <option>Una sucesión creciente</option>
+                                    <option>Una sucesión decreciente</option>
+                                    <option>Una sucesión mixta</option>
+                                </select><br><br>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="panel panel-evaluacion">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse2" class="btn btn-evaluacion">
+                            <b>Actividad 2</b>
+                        </button>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas">
+                            <div class="col-sm-6">
+                                2. Raquel ubicó ciertos implementos deportivos en el sistema de coordenadas. ¿En qué punto se encuentra cada uno de ellos?<br><br>
+                                <div class="col-sm-12 num4" style="background-color: #fbe3cb;">
+                                    <div class="col-sm-6" align="center"><br>
+                                        <img src="img/i1_p216_act2.png" class="img-responsive" style="display: inline-block;">&nbsp;&nbsp;
+                                        <span style="display: inline-block;">( <input type="number" id="rB1" class="form-control respuestas input-sm" style="width: 50px;">;&nbsp; <input type="number" id="rB2" class="form-control respuestas input-sm" style="width: 50px;"> )</span><br><br>
+
+                                        <img src="img/i2_p216_act2.png" class="img-responsive" style="display: inline-block;">&nbsp;&nbsp;
+                                        <span style="display: inline-block;">( <input type="number" id="rB3" class="form-control respuestas input-sm" style="width: 50px;">;&nbsp; <input type="number" id="rB4" class="form-control respuestas input-sm" style="width: 50px;"> )</span><br><br>
+                                    </div>
+
+                                    <div class="col-sm-6" align="center"><br>
+                                        <img src="img/i3_p216_act2.png" class="img-responsive" style="display: inline-block;">&nbsp;&nbsp;
+                                        <span style="display: inline-block;">( <input type="number" id="rB5" class="form-control respuestas input-sm" style="width: 50px;">;&nbsp; <input type="number" id="rB6" class="form-control respuestas input-sm" style="width: 50px;"> )</span><br><br>
+
+                                        <img src="img/i4_p216_act2.png" class="img-responsive" style="display: inline-block;">&nbsp;&nbsp;
+                                        <span style="display: inline-block;">( <input type="number" id="rB7" class="form-control respuestas input-sm" style="width: 50px;">;&nbsp; <input type="number" id="rB8" class="form-control respuestas input-sm" style="width: 50px;"> )</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6" align="center">
+                                <img src="img/i5_p216_act2.png" class="img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-evaluacion">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse3" class="btn btn-evaluacion">
+                            <b>Actividad 3</b>
+                        </button>
+                        <input type="number" id="calificacion3" class="form-control calificacion-evaluacion" placeholder="Puntaje/1">
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-group form-inline">
+                        3. <b>Resuelve</b> el problema<br>
+
+                        En una carrera de autos que duró una hora, Lorenzo recorrió 65,8 kilómetros; Pepe, 62,7 kilómetros; Jacinto, 67,8 kilómetros; Bernarda, 66,8 kilómetros; y Raquel, 63,9 kilómetros.<br><br>
+
+                        <div class="my-drawing img-responsive"></div>
+                            <script>
+                                var backgroundImage = new Image()
+                                backgroundImage.src = 'img/i1_p216_act3.png';
+                                backgroundImage.class = 'img-responsive';
+                                var winHeight = $(window).height();
+                                var winWidth = $(window).width();
+                                var lc = LC.init(
+                                    document.getElementsByClassName('my-drawing')[0], { imageURLPrefix: 'imgcanvas',
+                                                backgroundShapes: [
+                                                LC.createShape(
+                                                'Image', {x: 0, y: 0, image: backgroundImage}),
+                                                ] }
+                                );
+                                lc.respondToSizeChange();
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                
+
+                <div class="panel panel-evaluacion">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse4" class="btn btn-evaluacion">
+                            <b>Actividad 4</b>
+                        </button>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                        4. Con el uso de la calculadora, <b>resuelve</b> los siguientes ejercicios.<br><br>
+                        <ol type="a">
+                            <div class="col-sm-6">
+                                <li>&nbsp;&nbsp;
+                                    <span class="n1" id="nD1"></span> &nbsp;&nbsp;+&nbsp;&nbsp;
+                                    <span class="n1" id="nD2"></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                                    <input type="number" id="rD1" class="form-control respuestas input-sm" style="width: 100px;"><br><br>
+                                </li>
+
+                                <li>&nbsp;&nbsp;
+                                    <span class="n1" id="nD3"></span> &nbsp;&nbsp;-&nbsp;&nbsp;
+                                    <span class="n1" id="nD4"></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                                    <input type="number" id="rD2" class="form-control respuestas input-sm" style="width: 100px;"><br><br>
+                                </li>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <li>&nbsp;&nbsp;
+                                    <span class="n1" id="nD5"></span> &nbsp;&nbsp;x&nbsp;&nbsp;
+                                    <span class="n1" id="nD6"></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                                    <input type="number" id="rD3" class="form-control respuestas input-sm" style="width: 100px;"><br><br>
+                                </li>
+
+                                <li>&nbsp;&nbsp;
+                                    <span class="n1" id="nD7"></span> &nbsp;&nbsp;÷&nbsp;&nbsp;
+                                    <span class="n1" id="nD8"></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                                    <input type="number" id="rD4" class="form-control respuestas input-sm" style="width: 100px;"><br><br>
+                                </li>
+                            </div>
+                        </ol>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div><img src="img/estadistica_probabilidad.jpg" class="img-responsive"></div>
+
+
+                <div class="panel panel-evaluacion">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse5" class="btn btn-evaluacion">
+                            <b>Actividad 5</b>
+                        </button>
+                        <input type="number" id="calificacion5" class="form-control calificacion-evaluacion" placeholder="Puntaje/1" data-toggle="tooltip" title="Puntaje sólo para el gráfico. Sobre 1 punto">
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas">
+                        5. De 20 llamadas telefónicas, 6 se hicieron el día lunes, 10 el martes y 4 el miércoles. ¿A qué porcentaje corresponde cada día? Completa la tabla y representa los datos en un diagrama circular.<br><br>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <tbody align="center">
+                                    <tr>
+                                        <td style="background-color: #C248AE; color: white;">Días</td>
+                                        <td style="background-color: #5A48C2; color: white;">Frecuencia</td>
+                                        <td style="background-color: #48C27C; color: white;">Porcentaje (%)</td>
+                                        <td style="background-color: #4860C2; color: white;">Medida de ángulos</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lunes</td>
+                                        <td><input type="number" id="rE1" class="form-control respuestas input-sm" style="width: 80px;"></td>
+                                        <td><input type="number" id="rE2" class="form-control respuestas input-sm" style="width: 80px;"></td>
+                                        <td><input type="number" id="rE3" class="form-control respuestas input-sm" style="width: 80px;">º</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Martes</td>
+                                        <td><input type="number" id="rE4" class="form-control respuestas input-sm" style="width: 80px;"></td>
+                                        <td><input type="number" id="rE5" class="form-control respuestas input-sm" style="width: 80px;"></td>
+                                        <td><input type="number" id="rE6" class="form-control respuestas input-sm" style="width: 80px;">º</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Miércoles</td>
+                                        <td><input type="number" id="rE7" class="form-control respuestas input-sm" style="width: 80px;"></td>
+                                        <td><input type="number" id="rE8" class="form-control respuestas input-sm" style="width: 80px;"></td>
+                                        <td><input type="number" id="rE9" class="form-control respuestas input-sm" style="width: 80px;">º</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td><input type="number" id="rE10" class="form-control respuestas input-sm" style="width: 80px;"></td>
+                                        <td><input type="number" id="rE11" class="form-control respuestas input-sm" style="width: 80px;"></td>
+                                        <td><input type="number" id="rE12" class="form-control respuestas input-sm" style="width: 80px;">º</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <br>
+
+                        <div class="my-drawing img-responsive"></div>
+                            <script>
+                                var backgroundImage = new Image()
+                                backgroundImage.src = 'img/i1_p200_act2.png';
+                                backgroundImage.class = 'img-responsive';
+                                var winHeight = $(window).height();
+                                var winWidth = $(window).width();
+                                var lc = LC.init(
+                                    document.getElementsByClassName('my-drawing')[1], { imageURLPrefix: 'imgcanvas',
+                                                backgroundShapes: [
+                                                LC.createShape(
+                                                'Image', {x: 0, y: 0, image: backgroundImage}),
+                                                ] }
+                                );
+                                lc.respondToSizeChange();
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-evaluacion">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse6" class="btn btn-evaluacion">
+                            <b>Actividad 6</b>
+                        </button>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                        6. La tabla muestra cuánto ahorró John mensualmente, durante 6 meses, para comprar una computadora. <b>Ordena</b> los datos, <b>encuentra</b> su rango e <b>interpreta</b> el tipo de muestra. <br><br>
+
+                        <div class="col-sm-4" align="center">
+                            <table class="table table-hover table-bordered">
+                                <tbody align="center">
+                                    <tr>
+                                        <td style="background-color: #C248AE; color: white;">Meses</td>
+                                        <td style="background-color: #5A48C2; color: white;">Ahorro ($)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Enero</td>
+                                        <td id="nF1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Febrero</td>
+                                        <td id="nF2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Marzo</td>
+                                        <td id="nF3"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Abril</td>
+                                        <td id="nF4"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mayo</td>
+                                        <td id="nF5"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Junio</td>
+                                        <td id="nF6"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td><input type="number" id="rF1" class="form-control respuestas input-sm" style="width: 70px;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-sm-8" align="justify"><br><br>
+                            Datos ordenados: &nbsp;&nbsp;<input type="text" id="rF2" class="form-control respuestas input-sm" style="width: 350px;" placeholder="Ej: 1, 2, 3, 4"><br><br>
+                            Rango: &nbsp;&nbsp;<input type="number" id="rF3" class="form-control respuestas input-sm" style="width: 70px;"><br><br>
+                            Interpretación: &nbsp;&nbsp;
+                            <select id="rF4" class="form-control respuestas input-sm" style="width: 80%;">
+                                <option></option>
+                                <option>La muestra es heterogénea; esto quiere decir que John ahorra mucho unos meses y poco otros.</option>
+                                <option>La muestra es homogénea; esto quiere decir que John ahorra lo mismo todos los meses.</option>
+                            </select><br><br>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-evaluacion">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse7" class="btn btn-evaluacion">
+                            <b>Actividad 7</b>
+                        </button>
+                    </div>
+                    <div id="collapse7" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas">
+                        7. <b>Escribe</b> un suceso posible, uno imposible y uno seguro al lanzar un dado.<br><br>
+                        <div class="col-sm-7">
+                            <span class="n1">P<sub>posible</sub></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                            <select id="rG1" class="form-control respuestas input-sm" style="width: 80%;">
+                                <option></option>
+                                <option>Que salga algún número del 1 al 3. Por ejemplo, el 8. P = 1/3</option>
+                                <option>Que salga algún número del 1 al 6. Por ejemplo, el 4. P = 1/6</option>
+                                <option>Que salga algún número del 1 al 6. Por ejemplo, el 4. P = 7/6</option>
+                            </select><br><br>
+
+                            <span class="n1">P<sub>imposible</sub></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                            <select id="rG2" class="form-control respuestas input-sm" style="width: 80%;">
+                                <option></option>
+                                <option>Que salga un número mayor a 6. Por ejemplo, el 10. P = 0</option>
+                                <option>Que salga un número mayor a 1. Por ejemplo, el 6. P = 0</option>
+                                <option>Que salga un número menor a 6. Por ejemplo, el 5. P = 0</option>
+                            </select><br><br>
+
+                            <span class="n1">P<sub>seguro</sub></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                            <select id="rG3" class="form-control respuestas input-sm" style="width: 80%;">
+                                <option></option>
+                                <option>Que salga cualquier número del 1 al 8</option>
+                                <option>Que salga cualquier número del 1 al 6</option>
+                                <option>Que salga cualquier número del 1 al 7</option>
+                            </select><br><br>
+                        </div>
+                        <div class="col-sm-5" align="center">
+                            <img src="img/i1_p217_act7.jpg" class="img-responsive">
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+            
+<!--------------------------------------->
+    </div>
+</div>
+</div>
+
+
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog"d>
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+       
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/uni5activ18.js"></script>
+        <script type="text/javascript">
+            var titulos="evaluacion";
+                
+            $("#n_pagina").html('216');
+        </script>
+</body>
+</html>

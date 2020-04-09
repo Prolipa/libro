@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Lengua y Literatura 8</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            Lee cuidadosamente las preguntas, contesta cada una de ellas.<br> 
+            Selecciona <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+            , en el cuadro de dialogo escribir el nombre del alumno o alumnos que realizaron actividad,<br> 
+            para descargar un pdf para que el profesor evalue sus respuestas.
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onclick="calificar_abierta()">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad " >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 15
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-aplico" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-aplico">
+                    <span class="titulo"><img src="img/icoA.png" alt="">Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+
+                </div>
+
+                <div class="panel-body">
+                    <!--texto de ayuda de la actividad-->
+                    <div class="col-md-12 space">
+                        <div id="alertHelp" class="ayuda display-none" role="alert">
+                            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+                            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+                            Lee cuidadosamente las preguntas, contesta cada una de ellas.<br> 
+                            Selecciona el botón <span  class="glyphicon glyphicon-floppy-save help-ico bguardar"  aria-hidden="true"></span>
+                            de la sección superior, en el cuadro de dialogo escribir el nombre del alumno o alumnos que realizaron actividad,<br> 
+                            para descargar un pdf para que el profesor evalue sus respuestas.
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <!--texto de ayuda de la actividad-->
+                        <div class="col-md-12 space">
+                            <div id="alertHelp" class="ayuda display-none" role="alert">
+                                <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+                                <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+                                esta es la ayuda de cada actividad
+                            </div>
+                        </div>
+                        <!--pregunats de la actividad-->
+                        <div class="col-md-10 col-md-offset-1 space">
+
+                            <blockquote class="gray-box-shadow ocultable">
+
+                                <h3 class="text-center text-primary"> En el horizonte</h3>
+                                <p class="text-justify">Al parecer, todo indicaba que la nave se dirigía a la aventura, la tormenta
+                                    había empezado.</p>
+
+                                <p class="text-justify">La tempestad tomó su forma más terrible. El aire corría a una velocidad
+                                    de noventa <span class="text-primary">millas</span> por hora, soplando del Sudoeste, convirtiendo
+                                    aquella tempestad en un huracán, cuyo viento terrible arroja
+                                    hacia la costa a los buques, que no pueden resistir el terrible choque.
+                                    La Pilgrim se hallaba en peligro.</p>
+
+                                <p class="text-justify">Pero, ¿qué podía hacerse para evitar la catástrofe? Dick se veía
+                                    impotente para dominar el barco y aferrado a la barra, que a duras
+                                    penas podía mantener, veía pasar las horas preso de la mayor angustia.
+                                    Todos trabajaban bajo una terrible tensión.</p>
+                                <p class="text-justify">En un momento dado, el navío se movió de forma alarmante, cogido
+                                    por una fuerte ola, y el portugués perdió el equilibrio y de no
+                                    haberse agarrado a la <span class="text-primary">bitácora,</span> a buen seguro que hubiese sido
+                                    barrido de la cubierta.</p>
+
+                                <p class="text-justify">La costa, determinada por una alta cima, se manifestaba a unas
+                                    diez millas, por babor. Era, seguramente, un promontorio de la costa
+                                    americana, que entre un claro de las nubes, pudo verse con toda
+                                    claridad.</p>
+
+                                <p class="text-justify">Al cabo de dos horas el navío se encontraba a la altura del <span class="text-primary">promontorio.</span></p>
+                                <p class="text-justify">La tempestad había remitido y el cielo iba aclarando, pudiendo distinguirse
+                                    entonces una costa elevada, que seguramente podía corresponder
+                                    a la cordillera andina.</p>
+
+                                <footer class="text-right">Verne, Julio (1988). Un capitán de quince años. Barcelona: Editorial Molino, pp. 79-84.</footer>
+                            </blockquote>
+                        </div>
+                        <div  class="col-md-12 space">
+                            <input type="number" class="nota-abierta" min="0" max="10">
+                            <span class="text-question"> 2. <strong>Escribe</strong> el tema de la lectura anterior. </span>
+                            <textarea  class="form-control text-question respuesta no-redimensionar" cols="60" rows="3"></textarea>
+                        </div>
+                        <div  class="col-md-12 space">
+                            <input type="number" class="nota-abierta" min="0" max="10">
+                            <span class="text-question"> 3. ¿Crees que se pueda alterar el orden de la estructura de la novela de
+                                aventuras sin que eso afecte su comprensión? </span>
+                            <textarea  class="form-control text-question respuesta no-redimensionar" cols="60" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+
+    </body>
+</html>

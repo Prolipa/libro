@@ -1,0 +1,396 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Mate 3</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/estilo_canvas.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+</head>
+<style type="text/css">
+.pintarcorrecto {
+
+    background-color: #32a75b;
+    color: white;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+    color: white;
+
+}
+
+.cajaprincipal {
+    width: 100%;
+    min-height: 400px;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.titulop,
+.tnumero {
+    font-size: 25px;
+    color: #009988;
+    font-weight: bolder;
+    padding: 10px;
+
+}
+
+.pregunta {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 15px;
+    padding-bottom: 20px;
+
+}
+
+.opciones {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 20px;
+
+}
+
+.principal {}
+
+.opciones img {
+    max-height: 300px;
+
+}
+
+.letraAzul {
+    color: #005ca4;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.<br>
+        Hacer click en la respuesta correcta y solo se podra elegir una sola vez.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li style="display: none;">
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo">Primer quimestre</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="cajaprincipal">
+                    <div>
+                        <span class="titulop">Pregunta Nº <span class="tnumero">1</span></span>
+                    </div>
+                    <div class="pregunta"></div>
+                    <div class="opciones">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <p class="letraAzul">Opciones de respuesta</p>
+                            <ol type="A" class="op1">
+                            </ol>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 imag1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni6_a9.js"></script>
+    <script type="text/javascript">
+    var titulos = "primerquimestre";
+    f_titulos();
+    $("#txtNota").html("0");
+    $("#n_pagina").html("252");
+
+    var nota = 0,
+        cor = 0,
+        inc = 0,
+        itemsT = 11,
+        calificacion = 10,
+        cont = 0,
+        ejer = 11;
+    var preg = [];
+    var resp = [];
+    var nn1 = 0;
+
+    preg = [
+        ['Elige los elementos que pertenecen al conjunto de los animales.<br><br><img src="img/i1_p252_act1.jpg" alt="" class="img-responsive"></img>', 0, ],
+        ['Selecciona el conjunto que mejor represente estos elementos.<br><br><img src="img/i2_p252_act1.jpg" alt="" class="img-responsive"></img>', 1, ],
+        ['Escoge el pez que completa esta serie, y elige la respuesta correcta.<br><br><img src="img/i3_p252_act1.jpg" alt="" class="img-responsive"></img>', 2, ],
+        ['Encuentra el patrón en la siguiente secuencia numérica y selecciona la respuesta correcta.<br><br><img src="img/i4_p252_act1.jpg" alt="" class="img-responsive"></img>', 3],
+        ['Relaciona cada herramienta con el material empleado que corresponda y elige la respuesta correcta.<br><br><img src="img/i5_p252_act1.jpg" alt="" class="img-responsive"></img>', 4],
+        ['Organiza las siguientes imágenes de menor a mayor teniendo en cuenta el número ordinal que las acompaña, y elige la repuesta correcta.<br><br><img src="img/i6_p252_act1.jpg" alt="" class="img-responsive"></img>', 5],
+        ['Empleando solo el signo > mayor que, encuentra una relación lógica entre los números que aparecen a continuación, y elige la respuesta correcta.<br><br><img src="img/i7_p252_act1.jpg" alt="" class="img-responsive"></img>', 6],
+        ['Elige la respuesta correcta para la siguiente sustracción: <br><br><img src="img/i8_p252_act1.jpg" alt="" class="img-responsive"></img>', 7],
+        ['Relaciona cada objeto con su correspondiente característica y elige la respuesta correcta. <br><br><img src="img/i9_p252_act1.jpg" alt="" class="img-responsive"></img>', 8],
+        ['Relaciona cada figura con su característica y elige la respuesta correcta. <br><br><img src="img/i10_p252_act1.jpg" alt="" class="img-responsive"></img>', 9],
+        ['Identifica las frases que analicen la información del pictograma, y elige la respuesta correcta.<br><br><img src="img/i11_p252_act1.jpg" alt="" class="img-responsive"></img>', 10],
+        ['Identifica las palabras que corresponden a la información del pictograma, y elige la respuesta correcta.<br><br><img src="img/i12_p252_act1.jpg" alt="" class="img-responsive"></img>', 11]
+
+    ];
+
+    resp = [
+
+        ['<li><p class="fuente no">1, 2, 3</p></li>',
+            '<li><p class="fuente si">1, 3, 5</p></li>',
+            '<li><p class="fuente no">2, 3, 4</p></li>',
+            '<li><p class="fuente no">3, 4, 5</p></li>'
+        ],
+        ['<li><p class="fuente no">Útiles= {llave, libro, compás, regla, lápiz}</p></li>',
+            '<li><p class="fuente si">Útiles={libro, compás, borrador, lápiz, regla}</p></li>',
+            '<li><p class="fuente no">Útiles= {libro, compás, borrador, lápiz, conejo}</p></li>',
+            '<li><p class="fuente no">Útiles= {compás, libro, borrador, lápiz, gato}</p></li>'
+        ],
+        ['<li><p class="fuente no">Pez morado</p></li>',
+            '<li><p class="fuente no">Pez amarillo</p></li>',
+            '<li><p class="fuente no">Pez naranja</p></li>',
+            '<li><p class="fuente si">Pez rojo</p></li>'
+        ],
+        ['<li><p class="fuente no">12</p></li>',
+            '<li><p class="fuente si">14</p></li>',
+            '<li><p class="fuente no">24</p></li>',
+            '<li><p class="fuente no">10</p></li>'
+        ],
+        ['<li><p class="fuente si">1c, 2d, 3b, 4a</p></li>',
+            '<li><p class="fuente no">1a, 2b, 3c, 4d</p></li>',
+            '<li><p class="fuente no">1b, 2c, 3a, 4d</p></li>',
+            '<li><p class="fuente no">1b, 2a, 3d, 4c</p></li>'
+        ],
+        ['<li><p class="fuente si">imagen 2, imagen 4, imagen 1, imagen 5, imagen 3</p></li>',
+            '<li><p class="fuente no">imagen 1, imagen 2, imagen 3, imagen 4, imagen 5</p></li>',
+            '<li><p class="fuente no">imagen 2, imagen 3, imagen 4, imagen 5, imagen 1</p></li>',
+            '<li><p class="fuente no">imagen 3, imagen 1, imagen 4, imagen 5, imagen 2</p></li>'
+        ],
+        ['<li><p class="fuente no">372>529>687</p></li>',
+            '<li><p class="fuente no">529>372>687</p></li>',
+            '<li><p class="fuente si">687>529>372</p></li>',
+            '<li><p class="fuente no">687>372>529</p></li>'
+        ],
+        ['<li><p class="fuente no">205</p></li>',
+            '<li><p class="fuente si">203</p></li>',
+            '<li><p class="fuente no">200</p></li>',
+            '<li><p class="fuente no">210</p></li>'
+        ],
+        ['<li><p class="fuente no">1a, 2b, 3c</p></li>',
+            '<li><p class="fuente no">1c, 2b, 3a</p></li>',
+            '<li><p class="fuente no">1b, 2c, 3a</p></li>',
+            '<li><p class="fuente si">1b, 2a, 3c</p></li>'
+        ],
+        ['<li><p class="fuente no">1a, 2b, 3c</p></li>',
+            '<li><p class="fuente no">1b, 2c, 3a</p></li>',
+            '<li><p class="fuente no">1b, 2a, 3c</p></li>',
+            '<li><p class="fuente si">1c, 2a, 3b</p></li>'
+        ],
+        ['<li><p class="fuente no">1, 2, 3</p></li>',
+            '<li><p class="fuente si">1, 4, 5</p></li>',
+            '<li><p class="fuente no">2, 3, 4</p></li>',
+            '<li><p class="fuente no">3, 4, 5</p></li>'
+        ],
+        ['<li><p class="fuente no">posible-seguroimposible</p></li>',
+            '<li><p class="fuente si">seguro-posibleimposible</p></li>',
+            '<li><p class="fuente no">seguro-seguroposible</p></li>',
+            '<li><p class="fuente no">Imposible-seguroimposible</p></li>'
+        ],
+
+    ];
+    preg.sort(f_randomico);
+
+    $(".titulop").hide();
+
+
+    f_iniciar();
+
+
+    function f_iniciar() {
+
+        $(".titulop").show(500);
+        $(".principal").hide(500);
+        nn1 = (preg[cont][1]);
+        console.log(preg);
+        for (i = 0; i < resp.length; i++) {
+
+            resp[i].sort(f_randomico);
+        }
+        console.log(resp[nn1]);
+
+        $(".tnumero").html('').append(cont + 1)
+        $(".pregunta").html('').append(preg[cont][0])
+        $(".imag1").html('').append(preg[cont][2])
+        $(".op1").html('').append(resp[nn1])
+        $(".si").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarcorrecto");
+            cor++;
+            calificar_preg();
+        });
+        $(".no").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarincorrecto");
+            inc++;
+            calificar_preg();
+        });
+
+        function calificar_preg() {
+            cont++;
+            $(this).unbind("click");
+            var timer = setTimeout(f_condicion, 3000);
+
+            function f_condicion() {
+                if (cont == 11) {
+                    $('.cajaprincipal').html('<table class="table table-bordered" style="text-align:center; font-size: 30px;">' +
+                        '<tr>' +
+                        '<td colspan="2"><b>Tu Calificación es:</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td colspan="2"><b><span class="notaq1"></span>/10</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td><b style="color:  green;">Respuestas Correctas</b></td>' +
+                        '<td><b style="color:  red;">Respuestas Incorrectas</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td>' + cor + '</td>' +
+                        '<td>' + inc + '</td>' +
+                        '</tr>' +
+                        '</table>');
+                }
+
+                clearTimeout(timer);
+                Calculo_nota();
+            }
+
+        }
+    }
+    </script>
+</body>
+
+</html>

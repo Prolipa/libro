@@ -1,0 +1,793 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 3</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/estilo_canvas.css" rel="stylesheet">
+    <link href="css/literallycanvas.css" rel="stylesheet" type="text/css">
+</head>
+<style type="text/css">
+.correcto {
+    color: #ffffff;
+    background-color: #a7d27d;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.respuesta_p1 {
+    width: 1.5cm;
+    height: 1.5cm;
+    border: 2px solid #a863a5;
+    border-radius: 20%;
+    font-size: 1.5em
+}
+
+.fontnu {
+    color: #005CA4;
+    font-size: 20px;
+}
+
+.imagenes1 img {
+    padding: 25px;
+    max-width: 200px;
+    display: inline-table;
+}
+
+.actividad1 {
+    background: #fff;
+}
+
+.cuadros {
+    margin-top: 20px;
+    margin-left: -4.8px;
+    border: 2px solid #009fe3;
+    width: 1.1cm;
+    height: 1.1cm;
+    display: inline-block;
+}
+
+.cuadros input {
+    max-width: 1cm;
+    min-height: 1cm;
+    text-align: center;
+    border: none;
+}
+
+.contenedor {
+    display: inline-block;
+    margin: 20px;
+}
+
+.contenedor img {
+    max-height: 150px;
+}
+
+.sel_p5 {
+    border: 2px solid;
+    min-width: 50px;
+    max-width: 100px;
+    padding: 15px;
+    display: inline-block;
+    font-size: 15px;
+}
+
+.pintarcorrecto {
+    background-color: #32a75b;
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.
+        <br>
+        <b>Pregunta 6</b>. Arrastra los elementos hacia la definición correspondiente
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button>
+                <br>
+                <br>
+                <img src="img/literatura.jpg" class="img img-responsive">
+                <!--  PREGUNTA 1-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta1">Pregunta 1</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-2">
+                                <span>1. <b>Lee</b> y <b>encierra</b> los trabalenguas. <b>Explica</b> cómo diferencias un trabalenguas de una adivinanza.</span>
+                            </section>
+                            <div class="contenido">
+                                <div class="imagenes1" align="center"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 2-->
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta2">Pregunta 2</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-3">
+                                <span>2. <b>Escribe</b> las características de un trabalenguas.</span>
+                            </section>
+                            <div align="center">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div style="border: 3px solid #f4e3c7; border-radius: 15px; padding: 5px">
+                                                    <textarea class="form-control fuente" style="width: 200px; resize: none"></textarea>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div style="border: 3px solid #f4e3c7; border-radius: 15px; padding: 5px">
+                                                    <textarea class="form-control fuente" style="width: 200px; resize: none"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <div style="background-color: #f4e3c7; border-radius: 15px; width: 250px">
+                                                    <p class="fuente2">Los trabalenguas</p>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div style="border: 3px solid #f4e3c7; border-radius: 15px; padding: 5px">
+                                                    <textarea class="form-control fuente" style="width: 200px; resize: none"></textarea>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div style="border: 3px solid #f4e3c7; border-radius: 15px; padding: 5px">
+                                                    <textarea class="form-control fuente" style="width: 200px; resize: none"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 3-->
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta3">Pregunta 3</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-3">
+                                <span>3. <b>Recuerda</b> y <b>escribe</b> una adivinanza. <b>Dibuja</b> su respuesta.</span>
+                            </section>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-lg-12">
+                                        <div class="my-drawing"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="padding-top: 70px ">
+                                    <div style="border: 2px solid #986fa6; border-radius: 15px; padding-top: 5px" align="center">
+                                        <textarea class="form-control fuente" style="width: 500px; height: 250px; resize: none"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 4-->
+                <img src="img/comunicacion.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#pregunta4">Pregunta 4</a>
+
+                        </h4>
+                    </div>
+                    <div id="pregunta4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-3">
+                                <span>3. <b>Recuerda</b> y <b>escribe</b> una adivinanza. <b>Dibuja</b> su respuesta.</span>
+                            </section>
+                            <div style="background-color: #e6e0ef; border: 4px dotted white; border-radius: 15px; padding: 5px">
+                                <div>
+                                    <input class="form-control fuente" placeholder="Ingresa aquí tu respuesta.">
+                                </div>
+                                <br>
+                                <div>
+                                    <input class="form-control fuente" placeholder="Ingresa aquí tu respuesta.">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 5-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta5">Pregunta 5</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">5. Selecciona y subraya las pautas para leer en público.</div>
+                            <section id="contenido-pregunta-6" class="text-center ancho-pregunta" style="text-align: left">
+                                <div class="contenedor"></div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <!-- INICIO PREGUNTA 6 -->
+                <img src="img/lectura.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta6">Pregunta 6</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta6" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>6. Une con líneas según corresponda.</span>
+                            </div>
+                            <div align="center">
+                                <table>
+                                    <tbody>
+                                        <tr class="contenido2">
+                                            <tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <table class="table table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td class="ds" style="border: 2px solid #74c0e3">
+                                                <div class="c3 destinos" style="height: 150px"></div>
+                                            </td>
+                                            <td class="ds" style="border: 2px solid #74c0e3">
+                                                <div class="c1 destinos" style="height: 150px"></div>
+                                            </td>
+                                            <td class="ds" style="border: 2px solid #74c0e3">
+                                                <div class="c2 destinos" style="height: 150px"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 2px solid #74c0e3">
+                                                <div>
+                                                    <p class="fuente">Estas señales brindan información para orientar al lector. Su forma es generalmente cuadrangular, con fondo azul, y su símbolo va en color blanco.</p>
+                                                </div>
+                                            </td>
+                                            <td style="border: 2px solid #74c0e3">
+                                                <div>
+                                                    <p class="fuente">Estas señales indican acciones que no se pueden realizar. En estas se utilizan principalmente la forma circular y los colores rojo, negro y blanco.</p>
+                                                </div>
+                                            </td>
+                                            <td style="border: 2px solid #74c0e3">
+                                                <div>
+                                                    <p class="fuente">Estas señales advierten sobre la existencia de algún peligro. Por lo general, tienen formas cuadrangulares o triangulares con fondo amarillo, y su símbolo va en color negro.</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 7-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta7">Pregunta 7</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta7" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>7. Identifica y escribe de qué tipo es cada una de las siguientes señales.</span>
+                            </div>
+                            <div>
+                                <table>
+                                    <tbody>
+                                        <tr class="contenedorpregunta7"></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 8-->
+                <img src="img/escritura.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta8">Pregunta 8</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta8" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>8. Observa los gráficos y escribe un sustantivo común y un sustantivo propio para cada uno.</span>
+                            </div>
+                            <div align="center">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <div><img class="img-responsive" src="img/i1_p82_act104.png" alt="" style="max-width: 200px"></div>
+                                            </td>
+                                            <td>
+                                                <div><img class="img-responsive" src="img/i2_p82_act104.png" alt="" style="max-width: 200px"></div>
+                                            </td>
+                                            <td>
+                                                <div><img class="img-responsive" src="img/i3_p82_act104.png" alt="" style="max-width: 200px"></div>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 10px"></tr>
+                                        <tr>
+                                            <td style="background-color: #cae3f3; border: 2px solid ">
+                                                <p class="fuente2">Común</p>
+                                            </td>
+                                            <td style="border: 2px solid">
+                                                <input class="form-control fuente2">
+                                            </td>
+                                            <td style="border: 2px solid">
+                                                <input class="form-control fuente2">
+                                            </td>
+                                            <td style="border: 2px solid">
+                                                <input class="form-control fuente2">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #fcf5da; border: 2px solid">
+                                                <p class="fuente2">Propio</p>
+                                            </td>
+                                            <td style="border: 2px solid">
+                                                <input class="form-control fuente2">
+                                            </td>
+                                            <td style="border: 2px solid">
+                                                <input class="form-control fuente2">
+                                            </td>
+                                            <td style="border: 2px solid">
+                                                <input class="form-control fuente2">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 9-->
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta9">Pregunta 9</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta9" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>9. Escribe los artículos que faltan en el siguiente texto. Luego, escribe de nuevo el texto, cambiando todos los sustantivos y los artículos al plural.</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="padding-top: 10px">
+                                    <div style="background-color: #e4dcd9; border: 4px dotted white; border-radius: 25px; padding: 5px">
+                                        <span class="fuente"><label><input class="form-control fuente2" style="width: 80px"></label><span> cangrejo se quedó perplejo, cuando vio su reflejo en <label><input class="form-control fuente2" style="width: 80px"></label> laguna.</span></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div style="background-color: #dbc4dd; border: 4px dotted white; border-radius: 25px; padding: 10px">
+                                        <textarea class="form-control fuente" style="width: 100%; max-height: 200px; resize: none; border: 4px dotted #edd1d6; border-radius: 15px"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 10-->
+                <img src="img/lengua.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta10">Pregunta 10</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta10" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>10.Escribe un nombre de persona en lengua kichwa y su significado. Luego represéntalo gráficamente.</span>
+                            </div>
+                            <div class="row" style="background-color: #e2e6f4; border: 6px dotted white; border-radius: 15px">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color: white; border: 6px dotted #e2e6f4; border-radius: 15px; margin-top: 65px; padding: 5px ">
+                                    <p class="fuente">Nombre:</p>
+                                    <input class="form-control fuente">
+                                    <p class="fuente">Significa:</p>
+                                    <div>
+                                        <textarea class="form-control fuente" cols="2" style="resize: none"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color: white; border: 6px dotted #e2e6f4; border-radius: 15px">
+                                    <div class="col-lg-12">
+                                        <div class="my-drawing"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script src="js/literallycanvas.min.js"></script>
+    <style type="text/css">
+    canvas {
+        display: block;
+        margin: 0 auto;
+        /*margin: calc(50vh - 150px) auto 0;
+    background-image: url('img/i2_p50_act25.jpg');
+    */
+        border-radius: 3px;
+        box-shadow: 0px 0px 15px 3px #ccc;
+        cursor: pointer;
+        background-repeat: no-repeat;
+        max-width: 100%;
+    }
+    </style>
+    <script>
+    $('.p_abierta').html('<span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"><input type="number" placeholder="1 punto" class="form-control calif"></span> ');
+
+    $("#n_pagina").html("84"); //impresion de pagina
+    var titulos = "evaluacion";
+    f_titulos();
+
+    f_canvas();
+
+    function f_canvas() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        var lc = LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas'
+            }
+        );
+        var lc = LC.init(
+            document.getElementsByClassName('my-drawing')[1], {
+                imageURLPrefix: 'imgcanvas'
+            }
+        );
+        lc.respondToSizeChange();
+    }
+    var ejer = 1,
+        itemsT = 13,
+        cont = 0,
+        tmp, cor = 0,
+        inc = 0,
+        calificacion = 4,
+        claseAnimada = 'animate bounceIn';
+    var totalC = 0,
+        total = 0,
+        totalFinal = 0; //variables de la calificacion
+    var contenido = ['<img class="img-responsive si" src="img/i1_p80_act104.png" alt="" style="max-width: 280px">',
+        '<img class="img-responsive no" src="img/i2_p80_act104.png" alt="" style="max-width: 280px">',
+        '<img class="img-responsive si" src="img/i3_p80_act104.png" alt="" style="max-width: 300px">',
+    ];
+    f_preg1();
+
+    function f_preg1() {
+        contenido.sort(f_randomico);
+        $(".imagenes1").append(contenido).addClass(claseAnimada);
+
+        $(".si").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(this).addClass("correcto");
+            cor++;
+        });
+        $(".no").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(this).addClass("incorrecto");
+            inc++;
+        });
+    }
+    var contenido1;
+
+    contenido1 = [
+        '<span class="fuentecolorlista">●</span>&emsp;<span class="fuente a0">Utilizar un lenguaje claro y un tono de voz que se pueda escuchar.</span><br><br>', '<span class="fuentecolorlista">●</span>&emsp;<span class="fuente a0">Modular la voz, hacer pausas y gestos con el cuerpo para llamar la atención de los oyentes.</span><br><br>', '<span class="fuentecolorlista">●</span>&emsp;<span class="fuente a0">Modular la voz (suave y fuerte) y hacer las pausas correspondientes en los signos de puntuación (punto y coma).</span><br><br>', '<span class="fuentecolorlista">●</span>&emsp;<span class="fuente b0">Mantener una postura informal y siempre mirando al suelo.</span><br><br>'
+    ];
+    contenido1.sort(f_randomico);
+    $(".contenedor").append(contenido1);
+
+    f_preg5();
+
+    function f_preg5() {
+        $('.a0').click(function() {
+            $(this).addClass("pintarcorrecto");
+            $(this).unbind("click");
+            cor++;
+        });
+        $('.b0').click(function() {
+            $(this).addClass("pintarincorrecto");
+            $(this).unbind("click");
+            inc++;
+        });
+    }
+
+    var resp2 = [],
+        pal2 = [],
+        pal3 = [],
+        cont_resp2 = [];
+    f_preg_6();
+
+    function f_preg_6() {
+        pal2 = ['<td style="padding-left: 15px"><div class="c1 arrastre" style="background-color: #dabfda; border-radius: 15px"><p class="fuente2">Señales de prohibición</p></div></td>',
+            '<td style="padding-left: 15px"><div class="c2 arrastre" style="background-color: #c4dfed; border-radius: 15px"><p class="fuente2">Señales de prevención</p></div></td>',
+            '<td style="padding-left: 15px"><div class="c3 arrastre" style="background-color: #f7e8bb; border-radius: 15px"><p class="fuente2">Señales de información</p></div></td>'
+        ];
+        pal2.sort(f_randomico);
+        console.log(pal2.length)
+        $(".contenido2").append(pal2);
+        $(".arrastre").css('cursor', 'move');
+        $(".arrastre").draggable({ //elementos a arrastrar
+            revert: "invalid",
+            zIndex: 5,
+            containment: "#pregunta6",
+            scroll: false,
+        });
+        $(".destinos").droppable({ //destinos
+            classes: {
+                "ui-droppable-active": "ui-state-active", //color azul al arrastrar el elemento
+                "ui-droppable-hover": "ui-state-hover"
+            },
+            drop: function(e, ui) {
+                for (i = 1; i < 6; i++) { //4 elementos
+                    var nn = 'c' + i; //obtenemos la clase
+                    if ($(ui.draggable).hasClass(nn)) { //comparamos la clase del arrastre
+
+                        if ($(this).hasClass(nn)) { //con la clase del destino q tienen el mismo nombre
+                            resp2.push('ok'); //guardamos ok si esta correcta
+                        } else {
+                            resp2.push('no');
+                        }
+                        console.log(resp2);
+                    }
+                }
+                $(ui.draggable).removeClass("bg_palabra"); //quitamos clase de background
+                ui.draggable.attr("style", "");
+                $(this).append(ui.draggable);
+            }
+        });
+    }
+    var contenidopregunta7;
+    contenidopregunta7 = [
+        '<td style="padding-left: 10px"><div align="center"><img class="img-responsive" src="img/i1_p81_act104.png" alt="" style="max-width: 150px"></div><div style="border-bottom: 2px solid #bc005c; padding: 1px"><input type="text" class="form-control respuestas fuente2" style="max-width: 100%"><input type="hidden" class="solucion" value="Prohibición"></div></td>', '<td style="padding-left: 10px"><div align="center"><img class="img-responsive" src="img/i2_p81_act104.png" alt="" style="max-width: 160px"></div><div style="border-bottom: 2px solid #bc005c; padding: 1px"><input type="text" class="form-control respuestas fuente2" style="max-width: 100%"><input type="hidden" class="solucion" value="Advertencia"></div></td>', '<td style="padding-left: 10px"><div align="center"><img class="img-responsive" src="img/i3_p81_act104.png" alt="" style="max-width: 163px"></div><div style="border-bottom: 2px solid #bc005c; padding: 1px"><input type="text" class="form-control respuestas fuente2" style="max-width: 100%"><input type="hidden" class="solucion" value="Información"></div></td>', '<td style="padding-left: 10px"><div align="center"><img class="img-responsive" src="img/i4_p81_act104.png" alt="" style="max-width: 150px"></div><div style="border-bottom: 2px solid #bc005c; padding: 1px"><input type="text" class="form-control respuestas fuente2" style="max-width: 100%"><input type="hidden" class="solucion" value="Prohibición"></div></td>', '<td style="padding-left: 10px"><div align="center"><img class="img-responsive" src="img/i5_p81_act104.png" alt="" style="max-width: 150px"></div><div style="border-bottom: 2px solid #bc005c; padding: 1px"><input type="text" class="form-control respuestas fuente2" style="max-width: 100%"><input type="hidden" class="solucion" value="Advertencia"></div></td>'
+    ];
+    contenidopregunta7.sort(f_randomico);
+    $(".contenedorpregunta7").append(contenidopregunta7);
+
+    $(".btnCalificar").bind("click", function() {
+        cont++;
+        $(this).unbind("click");
+        AgregaClase(".nota", claseAnimada);
+        QuitaClase(".actividad", claseAnimada);
+        temp = $(".destinos");
+
+        for (i = 0; i < resp2.length; i++) {
+            if (resp2.length == pal2.length && resp2[i] == 'ok') { //cantidad de elementos arrastrados
+                cor++;
+                f_ok(temp);
+            } else {
+                inc++;
+                f_no(temp);
+            }
+        }
+        $(".solucion").each(function(index) {
+            cont_resp2.push($(this).val());
+        });
+        console.log(cont_resp2);
+        $(".respuestas").each(function(index) {
+            tmp = $(this);
+            if (tmp.val() == cont_resp2[index]) { //comparamos las respuestas
+                cor++
+                f_ok(tmp);
+            } else {
+                inc++
+                f_no(tmp);
+            }
+        });
+        totalC = (cor * (calificacion / itemsT)).toFixed(2); //suma de calificacion cerrada
+        $('.calif').each(function() { //suma de puntajes en respuestas abiertas
+            if ($(this).val() != '') {
+                total += parseFloat($(this).val());
+                f_ok($(this));
+            } else {
+                inc++;
+                f_no($(this));
+            }
+        });
+        totalFinal = (parseFloat(total) + parseFloat(totalC)).toFixed(2);
+        // console.log(total,totalC,totalFinal);
+        if (totalFinal > 10) {
+            alert("Verifique su puntaje en las respuestas Abiertas, excede el limite de calificación");
+        } else {
+            $("#txtNota").html(totalFinal);
+        }
+
+    });
+    </script>
+</body>
+
+</html>

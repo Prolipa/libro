@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LENGUA 5</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+</head>
+<style type="text/css">
+	.cajas{
+		max-width: 95%;
+		max-height: 200px;
+		border: 1px #009277 solid;
+		border-radius: 5px;
+		padding: 15px;
+		margin: 5px;
+	}
+    .cajas1{
+       
+        border: 1px #009277 solid;
+        
+    }
+	.actividad1{
+		background: #fff;		
+	}
+	.correcto{
+        color: white;
+        background-color: #5cb85c;
+       
+    }
+    .incorrecto{
+        color: white;
+        background-color: #E76E80;
+        
+    }
+	.desactivar{
+		background-color: #444;
+		color: #888;
+		padding: 8px;
+	}
+	#cabecera .badge{
+		background-color: #232956;
+	}
+    .cajastxt1{
+       
+        border: 1px #009277 solid;
+       
+    }
+    .imagen44{
+        background-image: url('img/i1_p30_act44.png'); 
+        width: 1000px;
+        height: 500px;
+        display: flex;
+    }
+    .encierra {
+        padding: 1px;
+    border-radius: 15px;
+    border: 2px solid #555;
+    }
+    .subrayar {
+         padding: 1px;
+    border-radius: 15px;
+    border: 2px solid #555;
+        text-decoration: underline;
+    }
+    .vacio{
+
+    }
+
+</style>
+<body>
+<div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+         Encierra todos los verbos que encuentres en el siguiente diálogo. Luego, subraya los terminos en -ar, -er o -ir, lo puedes hacer haciendo clic en las palabras.<br> 
+        <span id="ayudas"></span>
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="letras()">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+	<div class="container espacio">
+		<div class="panel border-exploro" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-exploro">
+                    <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>                    
+                </div>
+                <div class="panel-body">
+                    
+                    <!--pregunats de la actividad-->
+					 <div class="text-question"> 
+                         <span><b>1.- Encierra </b>todos los verbos que encuentres en el siguiente diálogo. Luego, <b>subraya</b> los terminos en <span style="color:#00AEEF">-ar</span>, <span style="color:#00AEEF">-er</span> o <span style="color:#00AEEF">-ir</span>.</p></span>
+                    </div>
+                    <div class="actividad1">
+                    <div class="table-responsive">
+
+                    <div class="imagen44" >
+                        <div style="background-color:; float: left; width: 38%;" align="right">
+                        <div style="background-color:; float: left; width: 50%;" align="right"></div>
+                        <div style="background-color:; float: right; width: 50%;"><br>
+                        <br><h2 style="text-align: center;" >¿<span id="1" class="enc">Aló</span>, <span id="2" class="enc vacio">mamá</span>?<br>¿<span id="3" class="enc vacio">Ya</span> <span id="4" class="enc vacio">llegas</span>?<br><span id="5" class="enc vacio">Te</span> <span id="6" class="enc vacio">quiero</span> <span id="7" class="enc vacio">ver</span> <br><span id="8" class="enc vacio">antes</span> <span id="9" class="enc vacio">de</span> <br> <span id="10" class="enc vacio">dormir</span></h2></div>
+                        </div>
+                        <div style="background-color:; float: left; width: 26%;" align="right"><br><h2 style="text-align: center;">¡<span id="11" class="enc vacio">Abuelita</span>!<br>¿<span id="12" class="enc vacio">Tienes</span> <span id="13" class="enc vacio">algún</span> <br> <span id="14" class="enc vacio">cuento</span> <span id="15" class="enc vacio">para</span> <br> <span id="16" class="enc vacio">leer</span>?</h2></div>
+                        <div style="background-color:; float: left; width: 25%;" align="right"><br><h2 style="text-align: center;">¿<span id="17" class="enc vacio">Aló</span>, <span id="18" class="enc vacio">mamá</span>? <br>¿<span id="19" class="enc vacio">Qué</span> <span id="20" class="enc vacio">hago</span> <br> <span id="21" class="enc vacio">hoy</span> <span id="22" class="enc vacio">para</span> <br><span id="23" class="enc vacio">el</span> <span id="24" class="enc vacio">almuerzo</span>?</h2></div>
+                        <div style="background-color: ; float: left; width: 18%;" align="right"><br><br><h2 style="text-align: center;"><span id="25" class="enc vacio">Amiga</span>, <br> ¿<span id="26" class="enc vacio">qué</span> <br> <span id="27" class="enc vacio">teníamos</span>,<br><span id="28" class="enc vacio">que</span> <span id="29" class="enc vacio">estudiar</span>?</h2></div>
+                        
+                    </div>
+                </div>
+			</div>
+										
+							  
+                  
+                </div>
+
+            </div>		
+	</div>
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+        
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+		<script src="js/Utilitario.js"></script>
+        <script src="js/actividad44.js"></script>
+        <script type="text/javascript">
+            var titulos = "exploro";
+            $("#txtNota").html("0");
+            $("#n_pagina").html("30");
+
+        </script>
+</body>
+</html>

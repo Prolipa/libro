@@ -1,0 +1,681 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.caja {
+    display: inline-block;
+    max-width: 45px;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #a7d27d;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button>
+                <br>
+                <br>
+                <img src="img/literatura.jpg" class="img img-responsive">
+                <!--  PREGUNTA 1-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta1">Pregunta 1</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-2">
+                                <span>1. <b>Lee</b> e <b>identifica</b> las características de las siguientes composiciones poéticas y <b>completa</b> las tablas con los datos que se solicitan.</span>
+                            </section>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" align="center">
+                                    <img class="img-responsive" src="img/i1_p84_act46.png" alt="">
+                                </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <table class="table table-responsive">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border: 2px solid #824f94">
+                                                        <p class="fuente">Cantidad de versos</p>
+                                                    </td>
+                                                    <td style="border: 2px solid #824f94">
+                                                        <select class="opciones form-control">
+                                                            <option value="Seleccione">Seleccione...</option>
+                                                            <option value="Las virtudes de un territorio">Las virtudes de un territorio</option>
+                                                            <option value="Sí">Sí</option>
+                                                            <option value="10">10</option>
+                                                            <option value="Décima">Décima</option>
+                                                        </select>
+                                                        <input type="hidden" value="10" class="respuesta1">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border: 2px solid #824f94">
+                                                        <p class="fuente">¿Presenta rima?</p>
+                                                    </td>
+                                                    <td style="border: 2px solid #824f94">
+                                                        <select class="opciones form-control">
+                                                            <option value="Seleccione">Seleccione...</option>
+                                                            <option value="10">10</option>
+                                                            <option value="Las virtudes de un territorio">Las virtudes de un territorio</option>
+                                                            <option value="Décima">Décima</option>
+                                                            <option value="Sí">Sí</option>
+                                                        </select>
+                                                        <input type="hidden" value="Sí" class="respuesta1">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border: 2px solid #824f94">
+                                                        <p class="fuente">Tema</p>
+                                                    </td>
+                                                    <td style="border: 2px solid #824f94">
+                                                        <select class="opciones form-control">
+                                                            <option value="Seleccione">Seleccione...</option>
+                                                            <option value="Décima">Décima</option>
+                                                            <option value="10">10</option>
+                                                            <option value="Sí">Sí</option>
+                                                            <option value="Las virtudes de un territorio">Las virtudes de un territorio</option>
+                                                        </select>
+                                                        <input type="hidden" value="Las virtudes de un territorio" class="respuesta1">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border: 2px solid #824f94">
+                                                        <p class="fuente">Tipo de composición poética</p>
+                                                    </td>
+                                                    <td style="border: 2px solid #824f94">
+                                                        <select class="opciones form-control">
+                                                            <option value="Seleccione">Seleccione...</option>
+                                                            <option value="Sí">Sí</option>
+                                                            <option value="10">10</option>
+                                                            <option value="Las virtudes de un territorio">Las virtudes de un territorio</option>
+                                                            <option value="Décima">Décima</option>
+                                                        </select>
+                                                        <input type="hidden" value="Décima" class="respuesta1">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" align="center">
+                                        <img class="img-responsive" src="img/i2_p84_act46.png" alt="">
+                                </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <table class="table table-responsive">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824f94">
+                                                            <p class="fuente">Cantidad de versos</p>
+                                                        </td>
+                                                        <td style="border: 2px solid #824f94">
+                                                            <select class="opciones form-control">
+                                                                <option value="Seleccione">Seleccione...</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="4">4</option>
+                                                                <option value="Amorfino">Amorfino</option>
+                                                                <option value="El amor por el amorfino">El amor por el amorfino</option>
+                                                            </select>
+                                                            <input type="hidden" value="4" class="respuesta1">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824f94">
+                                                            <p class="fuente">¿Presenta rima?</p>
+                                                        </td>
+                                                        <td style="border: 2px solid #824f94">
+                                                            <select class="opciones form-control">
+                                                                <option value="Seleccione">Seleccione...</option>
+                                                                <option value="El amor por el amorfino">El amor por el amorfino</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="Amorfino">Amorfino</option>
+                                                                <option value="4">4</option>
+                                                            </select>
+                                                            <input type="hidden" value="Sí" class="respuesta1">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824f94">
+                                                            <p class="fuente">Tema</p>
+                                                        </td>
+                                                        <td style="border: 2px solid #824f94">
+                                                            <select class="opciones form-control">
+                                                                <option value="Seleccione">Seleccione...</option>
+                                                                <option value="Amorfino">Amorfino</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="4">4</option>
+                                                                <option value="El amor por el amorfino">El amor por el amorfino</option>
+                                                            </select>
+                                                            <input type="hidden" value="El amor por el amorfino" class="respuesta1">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824f94">
+                                                            <p class="fuente">Tipo de composición poética</p>
+                                                        </td>
+                                                        <td style="border: 2px solid #824f94">
+                                                            <select class="opciones form-control">
+                                                                <option value="Seleccione">Seleccione...</option>
+                                                                <option value="4">4</option>
+                                                                <option value="Amorfino">Amorfino</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="El amor por el amorfino">El amor por el amorfino</option>
+                                                            </select>
+                                                            <input type="hidden" value="Amorfino" class="respuesta1">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" align="center">
+                                            <img class="img-responsive" src="img/i3_p84_act46.png" alt="">
+                                </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <table class="table table-responsive">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="border: 2px solid #824f94">
+                                                                <p class="fuente">Cantidad de versos</p>
+                                                            </td>
+                                                            <td style="border: 2px solid #824f94">
+                                                                <select class="opciones form-control">
+                                                                    <option value="Seleccione">Seleccione...</option>
+                                                                    <option value="Sí">Sí</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="Copla">Copla</option>
+                                                                    <option value="El carnaval">El carnaval</option>
+                                                                </select>
+                                                                <input type="hidden" value="4" class="respuesta1">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="border: 2px solid #824f94">
+                                                                <p class="fuente">¿Presenta rima?</p>
+                                                            </td>
+                                                            <td style="border: 2px solid #824f94">
+                                                                <select class="opciones form-control">
+                                                                    <option value="Seleccione">Seleccione...</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="Copla">Copla</option>
+                                                                    <option value="El carnaval">El carnaval</option>
+                                                                    <option value="Sí">Sí</option>
+                                                                </select>
+                                                                <input type="hidden" value="Sí" class="respuesta1">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="border: 2px solid #824f94">
+                                                                <p class="fuente">Tema</p>
+                                                            </td>
+                                                            <td style="border: 2px solid #824f94">
+                                                                <select class="opciones form-control">
+                                                                    <option value="Seleccione">Seleccione...</option>
+                                                                    <option value="Sí">Sí</option>
+                                                                    <option value="Copla">Copla</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="El carnaval">El carnaval</option>
+                                                                </select>
+                                                                <input type="hidden" value="El carnaval" class="respuesta1">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="border: 2px solid #824f94">
+                                                                <p class="fuente">Tipo de composición poética</p>
+                                                            </td>
+                                                            <td style="border: 2px solid #824f94">
+                                                                <select class="opciones form-control">
+                                                                    <option value="Seleccione">Seleccione...</option>
+                                                                    <option value="El carnaval">El carnaval</option>
+                                                                    <option value="Sí">Sí</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="Copla">Copla</option>
+                                                                </select>
+                                                                <input type="hidden" value="Copla" class="respuesta1">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  PREGUNTA 2-->
+                            <img src="img/comunicacion.jpg" class="img img-responsive">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta2">Pregunta 2</a>
+                        </h4>
+                                </div>
+                                <div id="pregunta2" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <section class="titulo-pregunta p-titulo p-bg-titulo-3">
+                                            <span>2. <b>Escribe</b> las características de un trabalenguas.</span>
+                                        </section>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <div style="border: 2px solid #005ca4; border-radius: 20px">
+                                                    <p class="fuente2">Volumen</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <div style="border: 2px solid #98007f; border-radius: 20px">
+                                                    <p class="fuente2">Postura</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <div style="border: 2px solid #8eb666; border-radius: 20px">
+                                                    <p class="fuente2">Entonación</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <div style="border: 2px solid #3da2d8; border-radius: 20px">
+                                                    <p class="fuente2">Gestos</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p></p>
+                                        <div>
+                                            <table class="table table-responsive conte_dos">
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  PREGUNTA 3-->
+                            <img src="img/lectura.jpg" class="img img-responsive">
+                            <div class="panel panel-info">
+                                <span class="p_abierta"></span>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta3">Pregunta 3</a>
+                        </h4>
+                                </div>
+                                <div id="pregunta3" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <section class="titulo-pregunta p-titulo p-bg-titulo-3">
+                                            <span>3. <b>Lee</b> el siguiente folleto y <b>responde</b> las preguntas que están a continuación.</span>
+                                        </section>
+                                        <div>
+                                            <div align="center"><img class="img-responsive" src="img/i4_p85_act46.png" alt=""></div>
+                                                <div>
+                                                    <div>
+                                                        <p class="fuente"><span class="fuentecolorlista">a)</span> ¿Quién emite el mensaje? </p>
+                                                        <label>
+                                                            <input class="form-control fuente" style="width: 300px">
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <p class="fuente"><span class="fuentecolorlista">b)</span> ¿Qué intención tiene este folleto y qué tipo de folleto es? </p>
+                                                        <label>
+                                                            <textarea class="form-control fuente" style="width: 1050px; height: 100px; resize: none"></textarea>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <p class="fuente"><span class="fuentecolorlista">c)</span> ¿Qué cara del folleto es: el tiro o el retiro? ¿Cómo lo sabes? </p>
+                                                        <label>
+                                                            <input class="form-control fuente" style="width: 600px">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  PREGUNTA 4-->
+                                <img src="img/escritura.jpg" class="img img-responsive">
+                                <div class="panel panel-info">
+                                    <span class="p_abierta"></span>
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#pregunta4">Pregunta 4</a>
+
+                        </h4>
+                                    </div>
+                                    <div id="pregunta4" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <section class="titulo-pregunta p-titulo p-bg-titulo-3">
+                                                <span>4. Escribe una oración por cada núcleo del sujeto que se indica a continuación. Cada núcleo debe tener dos modificadores directos.</span>
+                                            </section>
+                                            <p class="fuente">
+                                                <label>
+                                                    <input class="form-control fuente" style="width: 55px">
+                                                </label>niña
+                                                <label>
+                                                    <input class="form-control fuente" style="width: 400px">
+                                                </label>
+                                            </p>
+                                            <p class="fuente">
+                                                <label>
+                                                    <input class="form-control fuente" style="width: 55px">
+                                                </label>gatos
+                                                <label>
+                                                    <input class="form-control fuente" style="width: 400px">
+                                                </label>
+                                            </p>
+                                            <p class="fuente">
+                                                <label>
+                                                    <input class="form-control fuente" style="width: 55px">
+                                                </label>tierna
+                                                <label>
+                                                    <input class="form-control fuente" style="width: 400px">
+                                                </label>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  PREGUNTA 5-->
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta5">Pregunta 5</a>
+                        </h4>
+                                    </div>
+                                    <div id="pregunta5" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="text-question">5. Completa las siguientes palabras con las letras correctas</div>
+                                            <section id="contenido-pregunta-6" class="text-center ancho-pregunta" style="text-align: left">
+                                                <div class="row div_conte5" align="center">
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- INICIO PREGUNTA 6 -->
+                                <div class="panel panel-info">
+                                    <span class="p_abierta"></span>
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta6">Pregunta 6</a>
+                        </h4>
+                                    </div>
+                                    <div id="pregunta6" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="text-question">
+                                                <span>6. Identifica el significado de las siguientes palabras a partir de su raíz y escríbelo en sobre la línea correspondiente</span>
+                                            </div>
+                                            <div>
+                                                <p class="fuente">Inamovible:
+                                                    <input class="form-control fuente"> </p>
+                                                <p class="fuente">Pacífico:
+                                                    <input class="form-control fuente">
+                                                </p>
+                                                <p class="fuente">Geografía:
+                                                    <input class="form-control fuente">
+                                                </p>
+                                                <p class="fuente">Dermatología:
+                                                    <input class="form-control fuente">
+                                                </p>
+                                                <p class="fuente">Bibliografía:
+                                                    <input class="form-control fuente">
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  PREGUNTA 7-->
+                                <img src="img/lengua.jpg" class="img img-responsive">
+                                <div class="panel panel-info">
+                                    <span class="p_abierta"></span>
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta7">Pregunta 7</a>
+                        </h4>
+                                    </div>
+                                    <div id="pregunta7" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="text-question">
+                                                <span>7. Escribe un párrafo de cinco líneas en el que expliques por qué el Ecuador es un país pluricultural.</span>
+                                            </div>
+                                            <div style="border: 4px dotted #98007f">
+                                                <textarea class="form-control fuente" style="max-width: 100%; height: 300px; resize: none"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal Guardar PDF-->
+                    <div class="modal fade animated pulse" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="modal_form" class="form-horizontal">
+                                        <div class="form-group ">
+                                            <div class="col-sm-2">
+                                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Por favor ingrese el nombre. Es obligatorio</div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                    <script src="js/jquery.min.js"></script>
+                    <script src="js/jquery-ui.js"></script>
+                    <script src="js/jquery.ui.touch-punch.min.js"></script>
+                    <!-- Include all compiled plugins (below), or include individual files as needed -->
+                    <script src="js/bootstrap.min.js"></script>
+                    <!--generador de pdf-->
+                    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+                    <script src="js/screenfull.js"></script>
+                    <script src="js/helper.js"></script>
+                    <script src="js/activities.js"></script>
+                    <script src="js/animate.css.min.js"></script>
+                    <script src="js/jquery.animate.css.js"></script>
+                    <script src="js/Utilitario.js"></script>
+                    <script>
+                    $('.p_abierta').html('<span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"><input type="number" placeholder="1 punto" class="form-control calif"></span> ');
+
+                    $("#n_pagina").html("95"); //impresion de pagina
+                    var titulos = "evaluacion";
+                    var ejer = 1,
+                        i,
+                        itemsT = 24 * ejer,
+                        tmp,
+                        cont = 0,
+                        cor = 0,
+                        inc = 0,
+                        calificacion = 6,
+                        claseAnimada = 'animate bounceIn';
+                    var totalC = 0,
+                        total = 0,
+                        totalFinal = 0; //variables de la calificacion
+                    f_titulos();
+                    var contenido2 = ['<tr> <td style="border: 2px solid #824f94"> <p class="fuente">El expositor modificaba el tono de su voz para dar énfasis a algunas palabras.</p> </td> <td style="border: 2px solid #824f94" width="20%"> <input type="text" class="form-control respuestas fuente2 " maxlength="20"> <input type="hidden" class="solucion" value="Entonación"> </td> </tr>', '<tr> <td style="border: 2px solid #824f94"> <p class="fuente">Lucía declamó un poema ayer. Cuando las palabras del poema expresaban furia, Lucía fruncía el ceño; y cuando expresaban amor cerraba los ojos y sonreía.</p> </td> <td style="border: 2px solid #824f94"> <input type="text" class="form-control respuestas fuente2 " maxlength="20"> <input type="hidden" class="solucion" value="Gestos"> </td> </tr>', '<tr> <td style="border: 2px solid #824f94"> <p class="fuente">Teresa expuso el tema del “El cóndor andino”. Tenía las piernas firmes, la es palabra recta y los brazos se movían naturalmente.</p> </td> <td style="border: 2px solid #824f94"> <input type="text" class="form-control respuestas fuente2 " maxlength="20"> <input type="hidden" class="solucion" value="Postura"> </td> </tr>', '<tr> <td style="border: 2px solid #824f94"> <p class="fuente">Cuando Wladimir expuso, el micrófono dejó de funcionar. Afortunadamente todos pudimos oírlo con claridad.</p> </td> <td style="border: 2px solid #824f94"> <input type="text" class="form-control respuestas fuente2 " maxlength="20"> <input type="hidden" class="solucion" value="Volumen"> </td> </tr>'];
+                    var contenido5 = ['<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"> <p class="fuente">a <label> <input type="text" class="form-control respuestas fuente2 caja"> <input type="hidden" class="solucion" value="cc"> </label>ión</p> </div>', '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"> <p class="fuente">e <label> <input type="text" class="form-control respuestas fuente2 caja"> <input type="hidden" class="solucion" value="x"> </label>presión</p> </div>', '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"> <p class="fuente">he <label> <input type="text" class="form-control respuestas fuente2 caja"> <input type="hidden" class="solucion" value="x"> </label>ágono</p> </div>', '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"> <p class="fuente">a <label> <input type="text" class="form-control respuestas fuente2 caja"> <input type="hidden" class="solucion" value="cc"> </label>eso</p> </div>', '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"> <p class="fuente">o <label> <input type="text" class="form-control respuestas fuente2 caja"> <input type="hidden" class="solucion" value="cc"> </label>iso</p> </div>', '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"> <p class="fuente">a <label> <input type="text" class="form-control respuestas fuente2 caja"> <input type="hidden" class="solucion" value="cc"> </label>idente</p> </div>', '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"> <p class="fuente">e <label> <input type="text" class="form-control respuestas fuente2 caja"> <input type="hidden" class="solucion" value="x"> </label>cavar</p> </div>', '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"> <p class="fuente">e <label> <input type="text" class="form-control respuestas fuente2 caja"> <input type="hidden" class="solucion" value="x"> </label>cursión</p> </div>'];
+                    var cont_resp1 = [],
+                        cont_resp2 = [];
+                    f_iniciar();
+
+                    function f_iniciar() {
+                        $('.btn_mostrar').on('click', function() { //mostrar todas las preguntas
+                            $(".panel-collapse").removeClass('in');
+                            $(".panel-collapse").addClass('in');
+                        });
+                        contenido2.sort(f_randomico);
+                        contenido5.sort(f_randomico);
+                        $(".conte_dos").append(contenido2);
+                        $(".div_conte5").append(contenido5);
+
+                        $(".btnCalificar").bind("click", function() { //click en el boton iniciar
+                            cont++;
+                            $(this).unbind("click");
+                            $(".respuesta1").each(function(index) {
+                                cont_resp1.push($(this).val());
+                            });
+                            console.log(cont_resp1);
+                            $(".opciones").each(function(index) {
+                                tmp = $(".opciones");
+                                if ($(this).val() == cont_resp1[index]) { //comparamos las respuestas
+                                    cor++
+                                    f_ok(tmp);
+                                } else {
+                                    inc++
+                                    f_no(tmp);
+                                }
+                            });
+                            $(".solucion").each(function(index) {
+                                cont_resp2.push($(this).val());
+                            });
+                            console.log(cont_resp2);
+                            $(".respuestas").each(function(index) {
+                                tmp = $(this);
+                                if (tmp.val() == cont_resp2[index]) { //comparamos las respuestas
+                                    cor++
+                                    f_ok(tmp);
+                                } else {
+                                    inc++
+                                    f_no(tmp);
+                                }
+                            });
+                            totalC = (cor * (calificacion / itemsT)).toFixed(2); //suma de calificacion cerrada
+                            $('.calif').each(function() { //suma de puntajes en respuestas abiertas
+                                if ($(this).val() != '') {
+                                    total += parseFloat($(this).val());
+                                    f_ok($(this));
+                                } else {
+                                    inc++;
+                                    f_no($(this));
+                                }
+                            });
+                            totalFinal = (parseFloat(total) + parseFloat(totalC)).toFixed(2);
+                            // console.log(total,totalC,totalFinal);
+                            if (totalFinal > 10) {
+                                alert("Verifique su puntaje en las respuestas Abiertas, excede el limite de calificación");
+                            } else {
+                                $("#txtNota").html(totalFinal);
+                            }
+
+                        });
+
+                    }
+                    </script>
+</body>
+
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MATEMÁTICA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #98007f solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.cajas1 {
+
+    border: 1px #98007f solid;
+}
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+
+.saltos {
+    text-align: center;
+    border: 1;
+    border-bottom: 1px solid #85BCEB;
+    width: 50px;
+}
+
+.posicion {
+    text-align: center;
+    border: 0;
+    border-bottom: 1px solid #85BCEB;
+    width: 30px;
+}
+
+.saltos2 {
+    text-align: center;
+    border: 1;
+    border-bottom: 1px solid #85BCEB;
+    border-radius: 15px;
+
+    width: 100px;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+
+.pasos {
+    background-color: #F9B000;
+    color: #ffffff;
+    text-align: center;
+    background: #F9B000;
+    margin: 0 0 15px;
+    overflow: hidden;
+    padding: 5px;
+    border-radius: 15px 0px 15px 0px;
+    -moz-border-radius: 15px 0px 15px 0px;
+    -webkit-border-radius: 15px 0px 15px 0px;
+    border: 2px solid #F9B000;
+}
+
+.inputEstilo {
+
+    text-align: center;
+    margin: 0 0 15px;
+    overflow: hidden;
+    padding: 5px;
+    border-radius: 15px 0px 15px 0px;
+    -moz-border-radius: 15px 0px 15px 0px;
+    -webkit-border-radius: 15px 0px 15px 0px;
+    border: 2px solid #F9B000;
+}
+
+.borderTable {
+    border: 1px #76B82A solid;
+}
+
+.borderTable2 {
+    border: 1px #85BCEB solid;
+}
+
+.sobrelinea {
+    text-decoration: overline;
+}
+
+.oval {
+
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 1px #FA97E9 solid;
+}
+
+.inputMult {
+    text-align: center;
+    border: 0;
+    width: 30px;
+}
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Escribe las respuesta correcta en los espacios en blanco.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="pregunta1()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="text-question" align="justify">
+                    <img class="img-responsive" src="img/practica_guiada.png"></img>
+                    En la clase de Nancy, la profesora les enseña a convertir grados a minutos y a segundos, y minutos a segundos y a grados. ¿Cuántos minutos hay en 10 grados? ¿Cuántos grados hay en 480 minutos?
+                    <br><br>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span class="pasos">Pasos 1</span> <br>
+                            <b>Analizamos</b> la situación planteada.
+                            <br>
+                            <b>Consideramos</b> que en un grado hay 60 minutos. Por lo tanto, para convertir los grados a minutos se debe
+                            multiplicar por 60, y para convertir de minutos a grados se debe dividir para 60.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span class="pasos">Pasos 2</span> <br>
+                            <div class="col-lg-6">
+                                <b>Realizamos</b> las operaciones indicadas.<br>
+                                <table style="text-align: center;">
+                                    <tr>
+                                        <td>Grados </td>
+                                        <td>&nbsp;&nbsp;a&nbsp;&nbsp;</td>
+                                        <td>minutos: </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1°</td>
+                                        <td></td>
+                                        <td>60'</td>
+                                        <td rowspan="2">
+                                            <p style="font-size: 70px;">}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10°</td>
+                                        <td></td>
+                                        <td>x</td>
+                                    </tr>
+                                </table>
+                                <div class="eq-c">
+                                    x =
+                                    <div class="fraction">
+                                        <span class="fup">10° . 60'</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn">1°</span>
+                                    </div>
+                                    =
+                                    <input class="inputfraccciones sinEspacios" id="act1num0"></input>'
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <br>
+                                <table style="text-align: center;">
+                                    <tr>
+                                        <td>Grados </td>
+                                        <td>&nbsp;&nbsp;a&nbsp;&nbsp;</td>
+                                        <td>minutos: </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1°</td>
+                                        <td></td>
+                                        <td>60'</td>
+                                        <td rowspan="2">
+                                            <p style="font-size: 70px;">}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>x</td>
+                                        <td></td>
+                                        <td>480'</td>
+                                    </tr>
+                                </table>
+                                <div class="eq-c">
+                                    x =
+                                    <div class="fraction">
+                                        <span class="fup">1° . 480'</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn">60'</span>
+                                    </div>
+                                    =
+                                    <input class="inputfraccciones sinEspacios" id="act1num1"></input>°
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span class="pasos">Pasos 3</span> <br>
+                            <b>Respondemos</b> las preguntas: en 10° hay <input class="inputfraccciones sinEspacios" id="act1num2"></input> minutos, y en 480’ hay <input class="inputfraccciones sinEspacios" id="act1num3"></input> grados.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    f_titulos();
+    $("#txtNota").html("0");
+    $("#n_pagina").html("160");
+
+    function validarN(inputs) {
+
+        $(inputs).on('keypress', function(e) {
+            tecla = document.all ? e.keyCode : e.which;
+            if (tecla == 8) return true;
+            patron = /[,qwertyuiopñlkvjhfgdsazcxbnmQWERTYFVUIOPÑLKJHGDSAZCBNM<>.;-_""]/;
+            te = String.fromCharCode(tecla);
+            if (patron.test(te)) {
+                //alert("INGRESE V(VERDADERO) O F(FALSO) ");
+                return false;
+            }
+
+        });
+    }
+
+    validarN(".posicion");
+
+    function pregunta1() {
+        var respact2 = ['600', '8', '600', '8', ];
+        var cont = 0;
+        for (var i = 0; i < 4; i++) {
+            var res = $('#act1num' + [i] + '').val().toUpperCase();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#act1num' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#act1num' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 10) / 4;
+        $('#txtNota').html(total.toFixed(2));
+        document.getElementById('bt_comprobar').disabled = true;
+        $('input').attr("disabled", true);
+        $('#txtAlumno').attr("disabled", false);
+
+    }
+    </script>
+</body>
+
+</html>

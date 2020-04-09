@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMÁTICA 7</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+    	<script src="js/react-with-addons.js"></script>
+    	<script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+</head>
+
+<style type="text/css">
+    input[type=number]::-webkit-outer-spin-button,
+
+    input[type=number]::-webkit-inner-spin-button {
+
+        -webkit-appearance: none;
+
+        margin: 0;
+
+    }
+
+     
+
+    input[type=number] {
+
+        -moz-appearance:textfield;
+
+    }
+
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+
+    .respuestas{
+        font-size: 16px;
+        color: #C96309;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .panel-sombra{
+        padding: 10px;
+        box-shadow: 5px 5px 5px #CFCDD3;
+        background-color: #FFC591;
+        border-radius: 7px;
+    }
+    
+    .btn-refuerzo{
+        background-color: #FFC591; 
+        color: #C96309; 
+        border: 2px solid; 
+        border-style: dashed; 
+        border-color: #C96309;
+    }
+
+    .panel-refuerzo {
+        border-radius: 9px;
+        border-color: #FFC591;
+    }
+    
+    .calificacion-refuerzo{
+        display: inline-block; 
+        width: 110px; 
+        margin-left: 20px; 
+        background-color: #F8E8D9; 
+        border-radius: 7px; 
+        border-left-color: #C96309; 
+        border-right-color: #C96309; 
+        border-top: none; 
+        border-bottom: none;
+    }
+
+    .fraction {
+        display: inline-block;
+        vertical-align: middle; 
+        margin: 0 0.2em 0.4ex;
+        text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid black;}
+    .fraction span.bar {display: none;}
+
+    .n1{
+        color: #2B1ECF;
+        font-size: 23px;
+    }
+
+    .n2{
+        color: #AC1ECF;
+        font-size: 23px;
+    }
+
+    .n3{
+        color: #CF1E3B;
+        font-size: 23px;
+    }
+
+    .n4{
+        color: #1EA7CF;
+        font-size: 23px;
+    }
+
+    .n5{
+        color: #1ECF87;
+        font-size: 23px;
+    }
+
+    .n6{
+        color: #79CF1E;
+        font-size: 23px;
+    }
+
+    .n7{
+        color: #B6A921;
+        font-size: 23px;
+    }
+
+    .n8{
+        color: #D15A1E;
+        font-size: 23px;
+    }
+
+    .num1{
+        border-top-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        text-align: center;
+        border-color: #E96F0A;
+    }
+
+    .num2{
+        border-color: #BB21D6;
+        width: 70px;
+    }
+
+    .pinta{
+        border-left: 4px solid #E2CC52;
+    }
+
+
+    .bien{
+        border-left: 4px solid #05D576;
+    }
+
+    .mal{
+        border-left: 4px solid #D50545;
+    }
+
+
+    .r_imgKg{
+                min-height: 40px;
+                border: 1px solid #F1DC84;
+                margin-bottom: 15px;
+                padding: 2px;
+            }
+            @media (max-width: 770px) {
+                .cajas {
+                    clear: left;
+                  }
+               .imgKg img{
+                    padding: 8px;
+                    max-width: 20%;
+                }
+                .r_imgKg{
+                    min-height: 30px;
+                    border: 1px solid #F1DC84;
+                }
+                .r_imgKg img{
+                    max-height: 30%;
+                }
+            }
+    .dest{
+        border: 1px solid;
+        border-color: #F1DC84;
+        background-color: #F1DC84;
+        border-top-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Ingresa tus respuestas en los cuadros de texto correspondientes, evita ingresar texto innecesario. Guíate por los ejemplos.<br>
+        <b>Ingresa</b> solamente <b>dos</b> decimales en tus respuestas.<br>
+        Actividad 2: Utiliza las herramientas de dibujo para esta actividad.<br>
+        Actividad 4: Da clic en el punto que desees pintar, para despintar puedes dar clic nuevamente. Tus errores se restarán de tus aciertos.<br>
+
+
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-refuerzo" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-refuerzo">
+                    <span class="titulo"><img src="img/icoR.png"> Refuerzo mis destrezas</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+	 <div class="panel-body">
+
+                <div class="panel panel-refuerzo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="btn btn-refuerzo">
+                            <b>Actividad 1</b>
+                        </button>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                        1. <b>Resuelve</b> el problema. <br><br>
+                        Rodrigo empieza a leer un libro de <span class="n1">324</span> páginas sobre la historia de los deportes. Al final del primer día ha leído <span class="n2">1/3</span> del total; al segundo, <span class="n4">1/3</span> de lo que leyó el primer día; y cada día lee <span class="n5">1/3</span> de la cantidad leída el día anterior.<br><br>
+
+                        a) ¿Cuál fue el patrón numérico que siguió Rodrigo? <br>
+                        b) ¿Cuántas páginas leerá el cuarto día?<br>
+                        c) ¿Cuántas páginas le faltarán por leer después del cuarto día?<br><br>
+
+                        <div style="margin-bottom: 20px;">
+                            <span style="padding: 5px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; background-color: #B9D8EE; margin-right: 40px;"> Sucesión: </span>
+                            <span style="margin-right: 40px;">324</span> 
+                            <input type="number" id="rRPR1" class="form-control respuestas input-sm" style="width: 50px; margin-right: 40px;">
+                            <input type="number" id="rRPR2" class="form-control respuestas input-sm" style="width: 50px; margin-right: 40px;">
+                            <input type="number" id="rRPR3" class="form-control respuestas input-sm" style="width: 50px; margin-right: 40px;">
+                            <input type="number" id="rRPR4" class="form-control respuestas input-sm" style="width: 50px; margin-right: 40px;">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <span style="padding: 5px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; background-color: #B9EECF; margin-right: 40px;"> Días: </span>
+                            <span style="margin-right: 120px;"></span>
+                            <span style="padding-right: 50px; margin-right: 22px;">1.°</span>
+                            <span style="padding-right: 50px; margin-right: 22px;">2.°</span>
+                            <span style="padding-right: 50px; margin-right: 22px;">3.°</span>
+                            <span style="margin-right: 32px;">4.°</span>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <span style="padding: 5px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; background-color: #ECB9EE; margin-right: 40px;"> Páginas leídas: </span>
+                            <span style="margin-right: 40px;"><input type="number" id="rRPR5" class="form-control respuestas input-sm" style="width: 60px;"></span>
+                        </div>
+
+                        <span class="n3">R.: </span>&nbsp;&nbsp; a) El patrón numérico que siguió Rodrigo fue &nbsp;
+                        <select class="form-control respuestas input-sm" id="rRPR6" style="width: 200px;">
+                            <option></option>
+                            <option>dividir por tres (÷ 2)</option>
+                            <option>dividir por tres (÷ 3)</option>
+                            <option>dividir por tres (÷ 5)</option>
+                        </select>. <br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b) El cuarto día leerá &nbsp;<input type="number" id="rRPR7" class="form-control respuestas" style="width: 35px;">&nbsp; páginas. <br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c) Después del cuarto día, le faltarán por leer &nbsp;<input type="number" id="rRPR8" class="form-control respuestas" style="width: 50px;">&nbsp; páginas. <br><br>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="panel panel-refuerzo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse2" class="btn btn-refuerzo">
+                            <b>Actividad 2</b>
+                        </button>
+                        <input type="number" id="calificacion2" class="form-control calificacion-refuerzo" placeholder="Puntaje/1">
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas">
+                            2. <b>Ubica</b> los puntos de los pares ordenados en el sistema de coordenadas rectangulares. <b>Luego</b>, <b>únelos</b> y <b>encierra</b> las palabras que se relacionan con la figura formada.<br><br>
+                            <div class="my-drawing img-responsive"></div>
+                            <br>
+                            <script>
+                                var backgroundImage = new Image()
+                                backgroundImage.src = 'img/i1_p196_act2.png';
+                                backgroundImage.class = 'img-responsive';
+                                var winHeight = $(window).height();
+                                var winWidth = $(window).width();
+                                var lc = LC.init(
+                                    document.getElementsByClassName('my-drawing')[0], { imageURLPrefix: 'imgcanvas',
+                                                backgroundShapes: [
+                                                LC.createShape(
+                                                'Image', {x: 0, y: 0, image: backgroundImage}),
+                                                ] }
+                                );
+                                lc.respondToSizeChange();
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-refuerzo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse3" class="btn btn-refuerzo">
+                            <b>Actividad 3</b>
+                        </button>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas">
+                            3. <b>Ordena</b> de menor a mayor los siguientes números, utilizando la simbología matemática.<br><br>
+                            
+                            <div align="center">
+                                <span style="border-top-right-radius: 15px; border-bottom-left-radius: 15px; background-color: #B9EED0; padding: 5px;">&nbsp;&nbsp;&nbsp;67,009&nbsp;&nbsp;&nbsp;&nbsp; 45,876&nbsp;&nbsp;&nbsp;&nbsp; 17,3 &nbsp;&nbsp;&nbsp;&nbsp;67,090&nbsp;&nbsp;&nbsp;&nbsp; 17,030&nbsp;&nbsp;&nbsp;&nbsp; 45,786&nbsp;&nbsp;&nbsp;&nbsp; 25,678&nbsp;&nbsp;&nbsp;</span><br><br>
+
+                                <input type="text" id="rONM1" class="form-control respuestas num1" style="width: 70%;" placeholder="Ej: 1 < 2 < 3"><br><br>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                
+                
+
+                <div class="panel panel-refuerzo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse4" class="btn btn-refuerzo">
+                            <b>Actividad 4</b>
+                        </button>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                            4. <b>Ubica</b> en la semirrecta las letras según correspondan a los números dados: 4,3 (A); 0,85 (B); 2,65 (C).<br><br>
+                            <div class="table-responsive" align="center">
+                                <table>
+                                    <tr style="border-bottom: 3px solid #0AA9E9;">
+                                        <td style="border-left: 3px solid #0F18A0; border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML4" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML5" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML6" style="border-right: 3px solid #0F18A0; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML7" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML8" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML9" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML1" style="border-right: 3px solid #0F18A0; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML10" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML11" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML12" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML13" style="border-right: 3px solid #0F18A0; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML14" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML15" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML16" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML17" style="border-right: 3px solid #0F18A0; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML18" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML19" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML20" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML21" style="border-right: 3px solid #0F18A0; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML22" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML23" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML24" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML2" style="border-right: 3px solid #0F18A0; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML25" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML26" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML27" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML28" style="border-right: 3px solid #0F18A0; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML29" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML30" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML31" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML32" style="border-right: 3px solid #0F18A0; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML33" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML3" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML34" style="border-right: 3px solid #0AA9E9; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                        <td id="uSML35" style="border-right: 3px solid #0F18A0; padding-right: 20px; cursor: pointer;">&nbsp;</td>
+                                    </tr>
+                                    <tr style="color: #0F18A0;">
+                                        <td>0</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>0,5</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>1</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>1.5</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>2</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>2.5</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>3</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>3.5</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>4</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>4.5</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-refuerzo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse5" class="btn btn-refuerzo">
+                            <b>Actividad 5</b>
+                        </button>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                            5. <b>Realiza</b> las siguientes operaciones.<br><br>
+                            <ol type="a" id="realiza"></ol>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-refuerzo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse6" class="btn btn-refuerzo">
+                            <b>Actividad 6</b>
+                        </button>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                            6. <b>Resuelve</b> el problema.<br>
+                            Jorge compró <span class="n1">10</span> pelotas de plástico: <span class="n1">5</span> medianas a <span class="n1">75</span> centavos cada una, y otras <span class="n1">5</span> más grandes a $ <span class="n1">1,05</span> cada una. ¿Cuánto dinero gastó en total?<br><br>
+
+                            <div align="center">
+                                <span class="n3">R.: &nbsp;&nbsp;</span> Jorge gastó en total $ <input type="number" id="rPJC1" class="form-control respuestas input-sm" style="width: 70px;">.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-refuerzo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse7" class="btn btn-refuerzo">
+                            <b>Actividad 7</b>
+                        </button>
+                    </div>
+                    <div id="collapse7" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                            7. <b>Ubica</b> las operaciones en forma vertical y <b>resuelve</b><br><br>
+                            
+                            <div class="col-sm-4">
+                                a) &nbsp;&nbsp;<span class="n1" id="nUOV1"></span>&nbsp;&nbsp; ÷ &nbsp;&nbsp;<span class="n1" id="nUOV2"></span>&nbsp;&nbsp;=&nbsp;&nbsp;<input type="number" id="rUOV1" class="form-control respuestas input-sm" style="width: 75px;"><br><br>
+                            </div>
+
+                            <div class="col-sm-4">
+                                b) &nbsp;&nbsp;<span class="n1" id="nUOV3"></span>&nbsp;&nbsp; ÷ &nbsp;&nbsp;<span class="n1" id="nUOV4"></span>&nbsp;&nbsp;=&nbsp;&nbsp;<input type="number" id="rUOV2" class="form-control respuestas input-sm" style="width: 75px;"><br><br>
+                            </div>
+
+                            <div class="col-sm-4">
+                                c) &nbsp;&nbsp;<span class="n1" id="nUOV5"></span>&nbsp;&nbsp; ÷ &nbsp;&nbsp;<span class="n1" id="nUOV6"></span>&nbsp;&nbsp;=&nbsp;&nbsp;<input type="number" id="rUOV3" class="form-control respuestas input-sm" style="width: 75px;"><br><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-refuerzo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse8" class="btn btn-refuerzo">
+                            <b>Actividad 8</b>
+                        </button>
+                    </div>
+                    <div id="collapse8" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                            8. Con la ayuda de la calculadora, <b>realiza</b> las siguientes operaciones.<br><br>
+                            
+                            <div class="col-sm-6" style="border-right: 1px solid #61D797; border-right-style: dashed;" align="center">
+                                a) &nbsp;&nbsp;<span class="n1" id="nCCR1"></span>&nbsp;&nbsp; - &nbsp;&nbsp;<span class="n1" id="nCCR2"></span>&nbsp;&nbsp;=&nbsp;&nbsp;<input type="number" id="rCCR1" class="form-control respuestas input-sm" style="width: 75px;"><br><br>
+
+                                b) &nbsp;&nbsp;<span class="n1" id="nCCR3"></span>&nbsp;&nbsp; + &nbsp;&nbsp;<span class="n1" id="nCCR4"></span>&nbsp;&nbsp;=&nbsp;&nbsp;<input type="number" id="rCCR2" class="form-control respuestas input-sm" style="width: 75px;"><br><br>
+
+                                c) &nbsp;&nbsp;<span class="n1" id="nCCR5"></span>&nbsp;&nbsp; + &nbsp;&nbsp;<span class="n1" id="nCCR6"></span>&nbsp;&nbsp;=&nbsp;&nbsp;<input type="number" id="rCCR3" class="form-control respuestas input-sm" style="width: 75px;"><br><br>
+                            </div>
+
+                            <div class="col-sm-6" align="center">
+                                d) &nbsp;&nbsp;<span class="n1" id="nCCR7"></span>&nbsp;&nbsp; x &nbsp;&nbsp;<span class="n1" id="nCCR8"></span>&nbsp;&nbsp;=&nbsp;&nbsp;<input type="number" id="rCCR4" class="form-control respuestas input-sm" style="width: 75px;"><br><br>
+
+                                e) &nbsp;&nbsp;<span class="n1" id="nCCR9"></span>&nbsp;&nbsp; ÷ &nbsp;&nbsp;<span class="n1" id="nCCR10"></span>&nbsp;&nbsp;=&nbsp;&nbsp;<input type="number" id="rCCR5" class="form-control respuestas input-sm" style="width: 75px;"><br><br>
+
+                                f) &nbsp;&nbsp;<span class="n1" id="nCCR11"></span>&nbsp;&nbsp; ÷ &nbsp;&nbsp;<span class="n1" id="nCCR12"></span>&nbsp;&nbsp;=&nbsp;&nbsp;<input type="number" id="rCCR6" class="form-control respuestas input-sm" style="width: 75px;"><br><br>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-refuerzo">
+                    <div class="panel-sombra">
+                        <button  data-toggle="collapse" data-parent="#accordion" href="#collapse9" class="btn btn-refuerzo">
+                            <b>Actividad 9</b>
+                        </button>
+                    </div>
+                    <div id="collapse9" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">
+                            9. <b>Resuelve</b> el problema.<br>
+                            Un bus escolar consumió combustible de la siguiente manera: el lunes, <span class="n5">11</span> galones; el martes, <span class="n5">13,6</span>; el miércoles, <span class="n5">13,9</span>; el jueves, <span class="n5">9,65</span>; y el viernes, <span class="n5">14,8</span>.<br><br>
+
+                            <div class="col-sm-6" style="border-right: 1px solid #61D797; border-right-style: dashed;" align="center">
+                                <span class="n3">R.:&nbsp;&nbsp; </span> a) El costo total fue de $<input type="number" id="rP1" class="form-control respuestas input-sm" style="width: 70px;">. 
+                            </div>
+
+                            <div class="col-sm-6" align="center">
+                                <span class="n3">R.:&nbsp;&nbsp; </span> b) El bus recorrió en total &nbsp;<input type="number" id="rP2" class="form-control respuestas input-sm" style="width: 80px;">&nbsp; kilómetros.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!--------------------------------------->
+    </div>
+</div>
+</div>
+
+
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog"d>
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+       
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/uni5activ10.js"></script>
+        <script type="text/javascript">
+            var titulos="refuerzo";
+                
+            $("#n_pagina").html('196');
+        </script>
+</body>
+</html>

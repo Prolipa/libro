@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Matemática 9</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <script src="js/65.js"></script>
+    <style>
+    hr {
+        border-color: black;
+        border-width: 2px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin: 3px;
+    }
+
+    .select {
+        background-color: green;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="Cargar()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"> / 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 52
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Evaluación Sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div class="container col-xs-12 col-md-12 col-lg-12">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Pregunta 1</a>
+                            <div style="float: right;position: relative;width: 40px;height: 40px;border-radius: 50%; border: solid #D1D1D1;bottom: 10px; background-color: white">
+                                <table class="notas">
+                                    <tr><td class="cal"><span class="calif" id="nota1">0.00</span></td></tr>
+                                <tr><td class="puntaje"><span>1</span></td></tr></table>
+                              
+                          </div>
+                      </h4>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <label><strong>Encierra</strong> la respuesta correcta.</label>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-md-9 col-lg-9">
+                                                <label>Si en la fracción m/n se duplica el valor de m y n se convierte en su mitad, ¿qué cambio se produce en el valor de la fracción?</label>
+                                            </div>
+                                            <div class="col-xs-9 col-md-9 col-lg-9">
+                                                <label>a) Queda igual.</label>
+                                                <br>
+                                                <label> b) Se duplica.</label>
+                                                <br>
+                                                <label>c) Se cuadruplica.</label>
+                                                <br>
+                                                <label>d) Se reduce a la mitad.</label>
+                                                <br>
+                                                <label>e) Se reduce a la cuarta parte.</label>
+                                                <br>
+                                                <textarea class="tAres1"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Pregunta 2</a>
+                              <div style="float: right;position: relative;width: 40px;height: 40px;border-radius: 50%; border: solid #D1D1D1;bottom: 10px; background-color: white">
+                              <table class="notas">
+                                    <tr><td class="cal"><span class="calif" id="nota2">0.00</span></td></tr>
+                                <tr><td class="puntaje"><span>1</span></td></tr></table>
+                            </div>
+                            </h4>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <strong>Transforma</strong> a fracciones y <strong>simplifica.</strong>
+                                        <br>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <div class="col-xs-12 col-md-12 col-lg-12" id="contenido2">
+                                                </div>
+                                                <textarea class="tAres2"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Pregunta 3</a>
+                              <div style="float: right;position: relative;width: 40px;height: 40px;border-radius: 50%; border: solid #D1D1D1;bottom: 10px; background-color: white">
+                              <table class="notas">
+                                    <tr><td class="cal"><span class="calif" id="nota3">0.00</span></td></tr>
+                                <tr><td class="puntaje"><span>1</span></td></tr></table>
+                            </div>
+                            </h4>
+                                </div>
+                                <div id="collapse3" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <span>Dados los números racionales, <strong>calcula</strong> y <strong>simplifica:</strong></span>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-md-9 col-lg-9">
+                                                <div class="col-xs-4 col-md-4 col-lg-4" id="contenido3A"></div>
+                                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                                    <textarea class="tAres2"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-md-9 col-lg-9">
+                                                <div class="col-xs-4 col-md-4 col-lg-4" id="contenido3B"></div>
+                                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                                    <textarea class="tAres2"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-md-9 col-lg-9">
+                                                <div class="col-xs-4 col-md-4 col-lg-4" id="contenido3C"></div>
+                                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                                    <textarea class="tAres2"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-md-9 col-lg-9">
+                                                <div class="col-xs-4 col-md-4 col-lg-4" id="contenido3D"></div>
+                                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                                    <textarea class="tAres2"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Pregunta 4</a>
+                              <div style="float: right;position: relative;width: 40px;height: 40px;border-radius: 50%; border: solid #D1D1D1;bottom: 10px; background-color: white">
+                              <table class="notas">
+                                    <tr><td class="cal"><span class="calif" id="nota4">0.00</span></td></tr>
+                                <tr><td class="puntaje"><span>1</span></td></tr></table>
+                            </div>
+                            </h4>
+                                </div>
+                                <div id="collapse4" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <span>Dados los números racionales:</span>
+                                        <br>
+                                        <span>A = 1/2 B=0,6 ; C = 1/19 y D = 4/7</span>
+                                        <br>
+                                        <span>a) Ordénalos de menor a mayor.</span>
+                                        <br>
+                                        <span>b) Halla la diferencia entre el mayor y el menor de los números dados.</span>
+                                        <br>
+                                        <span>c) ¿Cuál de los números, B, C o D, está más cercano al valor de A?</span>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-md-9 col-lg-9">
+                                                <br>
+                                                <br>|
+                                                <textarea class="tAres3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Pregunta 5</a>
+                              <div style="float: right;position: relative;width: 40px;height: 40px;border-radius: 50%; border: solid #D1D1D1;bottom: 10px; background-color: white">
+                             <table class="notas">
+                                    <tr><td class="cal"><span class="calif" id="nota5">0.00</span></td></tr>
+                                <tr><td class="puntaje"><span>1</span></td></tr></table>
+                            </div>
+                            </h4>
+                                </div>
+                                <div id="collapse5" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <span> Al desarrollar en dos dimensiones un cono circular recto, de 5 cm de generatriz, se comprobó que el ángulo central θ del sector circular tiene una amplitud de 288º.<strong>Calcula</strong> el radio de la base del cono.</span>
+                                        <br>
+                                        <br>
+                                        <div class="col-xs-12 col-md-12 col-lg-12">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <div class="col-xs-6 col-md-6 col-lg-6">
+                                                    <textarea class="tAres3"></textarea>
+                                                </div>
+                                                <div class="col-xs-6 col-md-6 col-lg-6"></div>
+                                            </div>
+                                        </div>
+                                        <!--Contenido 5-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Pregunta 6</a>
+                              <div style="float: right;position: relative;width: 40px;height: 40px;border-radius: 50%; border: solid #D1D1D1;bottom: 10px; background-color: white">
+                              <table class="notas">
+                                    <tr><td class="cal"><span class="calif" id="nota6">0.00</span></td></tr>
+                                <tr><td class="puntaje"><span>1</span></td></tr></table>
+                            </div>
+                            </h4>
+                                </div>
+                                <div id="collapse6" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <label><strong>Resuelve</strong> los siguientes problemas.</label>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <label>a) Una máquina de algodón de azúcar, en ½ minuto, realiza tres algodones de azúcar. ¿Cuántos puede realizar en un minuto?</label>
+                                                <br>
+                                                <textarea class="tAres2"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <label>b) Para pintar las paredes del dormitorio de José se necesitan 10 ½ litros de pintura; sin embargo, solo le alcanza para comprar 7/8 de esa cantidad.¿Cuántos litros de pintura puede comprar José?</label>
+                                                <br>
+                                                <textarea class="tAres2"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">Pregunta 7</a>
+                              <div style="float: right;position: relative;width: 40px;height: 40px;border-radius: 50%; border: solid #D1D1D1;bottom: 10px; background-color: white">
+                              <table class="notas">
+                                    <tr><td class="cal"><span class="calif" id="nota7">0.00</span></td></tr>
+                                <tr><td class="puntaje"><span>1</span></td></tr></table>
+                            </div>
+                            </h4>
+                                </div>
+                                <div id="collapse7" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <label><strong>Construye</strong> proposiciones compuestas y <strong>determina</strong> su valor de verdad.</label>
+                                        <br>
+                                        <label>p: 6 es un número primo. r: 5 es múltiplo de dos. q: 5 es un número impar.</label>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <label>Proposición conjuntiva</label>
+                                                <br>
+                                                <textarea class="tAres2"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <label>Negación</label>
+                                                <br>
+                                                <textarea class="tAres2"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <label>Proposición disyuntiva</label>
+                                                <br>
+                                                <textarea class="tAres2"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <label>Proposición condicional</label>
+                                                <br>
+                                                <textarea class="tAres2"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <label>Proposición bicondicional</label>
+                                                <br>
+                                                <textarea class="tAres2"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">Pregunta 8</a>
+                              <div style="float: right;position: relative;width: 40px;height: 40px;border-radius: 50%; border: solid #D1D1D1;bottom: 10px; background-color: white">
+                              <table class="notas">
+                                    <tr><td class="cal"><span class="calif" id="nota8">0.00</span></td></tr>
+                                <tr><td class="puntaje"><span>1</span></td></tr></table>
+                            </div>
+                            </h4>
+                                </div>
+                                <div id="collapse8" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <label><strong>Completa</strong> las tablas de verdad de las siguientes fórmulas e <strong>indica</strong> si son tautológicas, contingentes o contradictorias.</label>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <span>(∼ p ∨ q)   ∧ ​(∼ q ∨ p)</span>
+                                                <br>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style='text-align:center'><b>p</b></th>
+                                                            <th style='text-align:center'><b>q</b></th>
+                                                            <th style='text-align:center'><b>∼p</b></th>
+                                                            <th style='text-align:center'><b>∼ q</b></th>
+                                                            <th style='text-align:center'><b>(∼ p ∨ q)</b></th>
+                                                            <th style='text-align:center'><b>(∼ q ∨ p)</b></th>
+                                                            <th style='text-align:center'><b>(∼ p ∨ q)   ∧ ​(∼ q ∨ p)</b></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="contenido8A"></tbody>
+                                                </table>
+                                                <br>
+                                                <span>(∼ p ∨ q)   ∧ ​(∼ q ∨ p)</span>
+                                                <br>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style='text-align:center'><b>p</b></th>
+                                                            <th style='text-align:center'><b>q</b></th>
+                                                            <th style='text-align:center'><b>p ⇒ q</b></th>
+                                                            <th style='text-align:center'><b>∼ (p ⇒ q)</b></th>
+                                                            <th style='text-align:center'><b>∼ p</b></th>
+                                                            <th style='text-align:center'><b>(∼ p ∨ q)</b></th>
+                                                            <th style='text-align:center'><b>∼(p ⇒ q) ⇔ (∼ p ∨ q)</b></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="contenido8B"></tbody>
+
+                                                </table>
+                                                <br>
+                                                <span>(∼ p ∨ q)   ∧ ​(∼ q ∨ p)</span>
+                                                <br>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style='text-align:center'><b>p</b></th>
+                                                            <th style='text-align:center'><b>q</b></th>
+                                                            <th style='text-align:center'><b>p ⇒ q</b></th>
+                                                            <th style='text-align:center'><b>∼ (p ⇒ q)</b></th>
+                                                            <th style='text-align:center'><b>∼ p</b></th>
+                                                            <th style='text-align:center'><b>(∼ p ∨ q)</b></th>
+                                                            <th style='text-align:center'><b>∼(p ⇒ q) ⇔ (∼ p ∨ q)</b></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="contenido8C"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" class="lblnombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre" id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/export-data.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/alertify.js"></script>
+    <script src="js/alertify.min.js"></script>
+    <link rel="stylesheet" href="js/alertify.js-0.3.11/themes/alertify.core.css" />
+    <link rel="stylesheet" href="js/alertify.js-0.3.11/themes/alertify.default.css" id="toggleCSS" />
+    <script src="js/alertify.js-0.3.11/lib/alertify.min.js"></script>
+    <style type="text/css">
+    .tAres1 {
+        resize: none;
+        width: 250px;
+        height: 100px;
+        font-size: 20px;
+    }
+
+    .tAres2 {
+        resize: none;
+        width: 250px;
+        height: 100px;
+        font-size: 20px;
+    }
+
+    .tAres3 {
+        resize: none;
+        width: 350px;
+        height: 300px;
+        font-size: 20px;
+    }
+
+    .signo {
+        position: relative;
+        top: 2px;
+        font-size: 30px;
+    }
+
+    #activity .parentesis {
+        font-size: 50px;
+        position: relative;
+        top: 15px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    #activity .exp {
+        font-size: 20px;
+        position: absolute;
+        top: 16px;
+    }
+
+    .numerador {
+        border-bottom: 2px solid;
+        position: relative;
+        top: -8px;
+        font-size: 20px;
+    }
+
+    .periodo {
+        font-size: 20px;
+        border-top: 1px solid;
+    }
+
+    .denominador {
+        position: relative;
+        top: -8px;
+        font-size: 20px;
+    }
+
+    #activity input {
+        border: none;
+        width: 80px;
+        top: 15px;
+        text-align: right;
+        font-size: 20px;
+    }
+
+    #activity label {
+        font-size: 20px;
+    }
+
+    .resA {
+        width: 150px;
+    }
+
+    .patron {
+        width: 50px;
+        font-size: 20px
+    }
+
+    .Respuesta {
+        width: 50px;
+        font-size: 20px;
+    }
+
+    .rS {
+        border-bottom: 1px solid;
+    }
+
+    .cal {
+        position: relative;
+        left: 15px;
+        border-bottom: 1px solid;
+        width: 32px;
+    }
+
+    .puntaje {
+        position: relative;
+        left: 12px;
+    }
+
+    .patron {
+        width: 100px;
+        border: none;
+    }
+
+    .valorP1 {
+        border-bottom: 1px solid;
+        text-align: center;
+    }
+
+    .valorP2 {
+        width: 200px;
+        border-bottom: 1px solid;
+        text-align: right;
+    }
+
+    .calif {
+        position: relative;
+        left: -8px;
+        font-size: 12px;
+    }
+
+    tbody .con3 {
+        width: 120px;
+    }
+
+    tbody .con2 {
+        width: 25px;
+    }
+
+    tbody .pre10 {
+        border: 1px solid;
+    }
+
+    .inp10 {
+        width: 196px;
+        text-align: right;
+    }
+
+    .textopre3 {
+        border-bottom: 1px solid;
+        width: 80px;
+        text-align: center;
+    }
+
+    .textopre3B {
+        border-bottom: 1px solid;
+        width: 40px;
+    }
+
+    .textopre10 {
+        border-bottom: 1px solid;
+        width: 100px;
+    }
+
+    .textopreB10 {
+        border-bottom: 1px solid;
+        width: 300px;
+    }
+
+    .resA {
+        width: 150px;
+    }
+
+    .resPre7 {
+        border-bottom: 3px solid red;
+        border-right: 3px solid red;
+        width: 150px;
+        border-bottom-right-radius: 25px;
+    }
+
+    textarea {
+        resize: none;
+        width: 350px;
+        height: 100px;
+    }
+    </style>
+</body>
+</head>
+
+</html>

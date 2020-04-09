@@ -1,0 +1,796 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 9</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/lengu2.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Para mostrar los contenidos de manera secuencial pulsa sobre <span  class="glyphicon glyphicon-play help-ico biniciar" aria-hidden="true"></span><br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_4 btnIniciar mytooltip" data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip display-none" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span  class="notificacion nota display-none" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" >/ 10</span>
+                    </span>
+                    <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-comprendo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-comprendo">
+                <span class="titulo"><img src="img/icoC.png" alt="">Comprendo para saber</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--texto de ayuda de la actividad-->
+                <!--pregunats de la actividad-->
+                <div class="fondo">
+                    <p class="titulex anim">
+                        <font color="#5b2e91"><b>Las formas estróficas</b></font>
+                    </p>
+                    <p class="fuente anim">Están dadas por el número de versos que las componen. Todas estas formas han estado presentes en la historia de la poesía en español durante varios siglos y responden a la necesidad expresiva de quien lo escribe.</p>
+                    <p class="fuente anim">
+                        <font color="#5c339f"><b>Dos versos</b></font>
+                    </p>
+                    <br>
+                    <div class="row" style="overflow-x:auto;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <table align="center">
+                                <tbody>
+                                    <br>
+                                    <tr class="anim" style="background-color: white">
+                                        <td style="background-color: #0166b3; border: 2px solid #0166b3; width: 110px">
+                                            <p class="fuente2">
+                                                <font color="#ffffff"><b>n.° de versos </font></b>
+                                            </p>
+                                        </td>
+                                        <td style="background-color: #faaf18; border: 2px solid #faaf18; width: 110px">
+                                            <p class="fuente2">
+                                                <font color="#ffffff"><b>Nombre</font></b>
+                                            </p>
+                                        </td>
+                                        <td style="background-color: #0166b3; border: 2px solid #0166b3; width: 110px">
+                                            <p class="fuente2">
+                                                <font color="#ffffff"><b>Tipo de verso</font></b>
+                                            </p>
+                                        </td>
+                                        <td style="background-color: #faaf18; border: 2px solid #faaf18; width: 110px">
+                                            <p class="fuente2">
+                                                <font color="#ffffff"><b>Rima</font></b>
+                                            </p>
+                                        </td>
+                                        <td style="background-color: #0166b3; border: 2px solid #0166b3; width: 110px">
+                                            <p class="fuente2">
+                                                <font color="#ffffff"><b>Ejemplo</font></b>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="anim" style="background-color: white">
+                                        <td style="border: 3px solid #1a7bb0">
+                                            <p class="fuente2 ">2</p>
+                                        </td>
+                                        <td style="border: 3px solid #1a7bb0">
+                                            <p class="fuente2">Pareado</p>
+                                        </td>
+                                        <td style="border: 3px solid #1a7bb0">
+                                            <p class="fuente2">Arte menor </p>
+                                        </td>
+                                        <td style="border: 3px solid #1a7bb0">
+                                            <p class="fuente2">Asonante o consonante</p>
+                                        </td>
+                                        <td style="border: 3px solid #1a7bb0">
+                                            <p class="fuente2">El que a buen árbol se arrima buena sombra le cobija.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="fuente anim">Normalmente una estrofa pareada forma parte de un poema con otras formas estróficas. No es frecuente encontrar poemas con solo pareados, pero sí los hay. Muchos refranes populares o sentencias filosóficas están expresadas en forma de pareados:</p>
+                            <div class="row" style="overflow-x:auto;">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <table align="center">
+                                        <tbody>
+                                            <tr class="anim">
+                                                <td style="width: 350px; border: 3px solid #7bca7c; background-color: #ffffff">
+                                                    <p class="fuente2 ">Cuanto más tienes
+                                                        <br>más quieres.</p>
+                                                </td>
+                                                <td style="width: 350px; border: 3px solid #7bca7c; background-color: #ffffff">
+                                                    <p class="fuente2 ">Agua que no has de beber,
+                                                        <br>déjala correr.</p>
+                                                </td>
+                                                <td style="width: 350px; border: 3px solid #7bca7c; background-color: #ffffff">
+                                                    <p class="fuente2 ">Siempre el necio
+                                                        <br>confunde valor y precio.</p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <p class="fuente anim">
+                                <font color="#5c339f"><b>Tres versos</b></font>
+                            </p>
+                            <div class="row" style="overflow-x:auto;">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <table align="center">
+                                        <tbody>
+                                            <br>
+                                            <tr class="anim" style="background-color: white">
+                                                <td style="background-color: #faaf18; border: 2px solid #faaf18; width: 150px">
+                                                    <p class="fuente2">
+                                                        <font color="#ffffff"><b>Tipo de verso</font></b>
+                                                    </p>
+                                                </td>
+                                                <td style="background-color: #0166b3; border: 2px solid #0166b3; width: 150px">
+                                                    <p class="fuente2">
+                                                        <font color="#ffffff"><b>Nombre</font></b>
+                                                    </p>
+                                                </td>
+                                                <td style="background-color: #faaf18; border: 2px solid #faaf18; width: 120px">
+                                                    <p class="fuente2">
+                                                        <font color="#ffffff"><b>Rima</font></b>
+                                                    </p>
+                                                </td>
+                                                <td style="background-color: #0166b3; border: 2px solid #0166b3; width: 410px">
+                                                    <p class="fuente2">
+                                                        <font color="#ffffff"><b>Ejemplo</font></b>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr class="anim" style="background-color: white">
+                                                <td style="border: 3px solid #1a7bb0">
+                                                    <p class="fuente2 ">Arte menor</p>
+                                                </td>
+                                                <td style="border: 3px solid #1a7bb0">
+                                                    <p class="fuente2">Terceto</p>
+                                                </td>
+                                                <td style="border: 3px solid #1a7bb0">
+                                                    <p class="fuente2">aba</p>
+                                                </td>
+                                                <td style="border: 3px solid #1a7bb0">
+                                                    <p class="fuente2">“Cada canción
+                                                        <br>es un remanso
+                                                        <br>del amor.</p>
+                                                    <div align="right">
+                                                        <font size="2"><i>Federico García Lorca 
+                                                            <br>García Lorca, Federico. "Cada canción". Recuperado de <a href="https://goo.gl/F9WkGw">https://goo.gl/F9WkGw</a> </i></font>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="anim" style="background-color: white">
+                                                <td style="border: 3px solid #1a7bb0">
+                                                    <p class="fuente2 ">Arte mayor</p>
+                                                </td>
+                                                <td style="border: 3px solid #1a7bb0">
+                                                    <p class="fuente2">Tercerilla</p>
+                                                </td>
+                                                <td style="border: 3px solid #1a7bb0">
+                                                    <p class="fuente2">ABA</p>
+                                                </td>
+                                                <td style="border: 3px solid #1a7bb0">
+                                                    <p class="fuente2">“Ella, como un recuerdo, sonámbula, se aleja...
+                                                        <br>Y una dulzura triste como de pena vieja
+                                                        <br> naufraga en los otoños celestes de mi vida...”</p>
+                                                    <div align="right">
+                                                        <font size="2"><i>José María Egas. Bajo el otoño. 
+                                                            <br>Recuperado de <a href="https://goo.gl/ghfmrY">https://goo.gl/ghfmrY</a> </i></font>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="fuente anim">
+                                        <font color="#5c339f"><b>Cuatro versos</b></font>
+                                    </p>
+                                    <br>
+                                    <div class="row" style="overflow-x:auto;">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <table align="center">
+                                                <tbody>
+                                                    <br>
+                                                    <tr class="anim" style="background-color: white">
+                                                        <td style="background-color: #faaf18; border: 2px solid #faaf18; width: 150px">
+                                                            <p class="fuente2">
+                                                                <font color="#ffffff"><b>Tipo de verso</font></b>
+                                                            </p>
+                                                        </td>
+                                                        <td style="background-color: #0166b3; border: 2px solid #0166b3; width: 150px">
+                                                            <p class="fuente2">
+                                                                <font color="#ffffff"><b>Nombre</font></b>
+                                                            </p>
+                                                        </td>
+                                                        <td style="background-color: #faaf18; border: 2px solid #faaf18; width: 120px">
+                                                            <p class="fuente2">
+                                                                <font color="#ffffff"><b>Rima</font></b>
+                                                            </p>
+                                                        </td>
+                                                        <td style="background-color: #0166b3; border: 2px solid #0166b3; width: 410px">
+                                                            <p class="fuente2">
+                                                                <font color="#ffffff"><b>Ejemplo de serventesio</font></b>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="anim" style="background-color: white">
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2 ">Arte mayor</p>
+                                                        </td>
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2">Cuarteto</p>
+                                                        </td>
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2">ABBA – abrazada</p>
+                                                        </td>
+                                                        <td rowspan="4" style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2 anim">“Arquea la neblina, como un felino, el l<font color="#f15487"><b>omo</b></font>
+                                                                <br>bajo la mano suave del silencioso vi<font color="#98c891"><b>ento</b></font>,
+                                                                <br>y nos hace invisibles y misteriosos c<font color="#f15487"><b>omo</b></font>
+                                                                <br>personajes ambiguos de algún absurdo cu<font color="#98c891"><b>ento</b></font>”</p>
+                                                            <div align="right">Miguel Ángel León
+                                                                <br>León, Miguel Ángel (). "La neblina".
+                                                                <br>Recuperado de<a href="https://goo.gl/1rstXs">https://goo.gl/1rstXs</a> </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="anim" style="background-color: white">
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2 ">Arte mayor</p>
+                                                        </td>
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2">Serventesio</p>
+                                                        </td>
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2">ABAB – cruzada</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="anim" style="background-color: white">
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2 ">Arte menor</p>
+                                                        </td>
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2">Redondilla</p>
+                                                        </td>
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2">abba</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="anim" style="background-color: white">
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2 ">Arte menor</p>
+                                                        </td>
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2">Cuarteta</p>
+                                                        </td>
+                                                        <td style="border: 3px solid #1a7bb0">
+                                                            <p class="fuente2">abab</p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <p class="fuente anim">
+                                                <font color="#5c339f"><b>Cinco versos</b></font>
+                                            </p>
+                                            <div class="row" style="overflow-x:auto;">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <table align="center">
+                                                        <tbody>
+                                                            <br>
+                                                            <tr class="anim" style="background-color: white">
+                                                                <td style="background-color: #faaf18; border: 2px solid #faaf18; width: 150px">
+                                                                    <p class="fuente2">
+                                                                        <font color="#ffffff"><b>Tipo de verso</font></b>
+                                                                    </p>
+                                                                </td>
+                                                                <td style="background-color: #0166b3; border: 2px solid #0166b3; width: 150px">
+                                                                    <p class="fuente2">
+                                                                        <font color="#ffffff"><b>Nombre</font></b>
+                                                                    </p>
+                                                                </td>
+                                                                <td style="background-color: #0166b3; border: 2px solid #0166b3; width: 500px">
+                                                                    <p class="fuente2">
+                                                                        <font color="#ffffff"><b>Ejemplo de quintilla – 5 versos octosílabos</font></b>
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="anim" style="background-color: white">
+                                                                <td style="border: 3px solid #1a7bb0">
+                                                                    <p class="fuente2 ">Arte mayor</p>
+                                                                </td>
+                                                                <td style="border: 3px solid #1a7bb0">
+                                                                    <p class="fuente2">Quinteto</p>
+                                                                </td>
+                                                                <td rowspan="3" style="border: 3px solid #1a7bb0">
+                                                                    <div class="col-xs-9">
+                                                                        <p class="fuente2">
+                                                                            Hubo una selva y un nido
+                                                                            <br>y en ese nido un jilguero
+                                                                            <br>que alegre y estremecido,
+                                                                            <br>tras de un ensueño querido
+                                                                            <br>cruzó por el mundo entero.
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-xs-2"></div>
+                                                                    <p class="fuente anim">&emsp;&emsp;<font color="#87c44e"><b>a</b></font>
+                                                                        <br>&emsp;&emsp;<font color="#f7768a"><b>b</b></font>
+                                                                        <br>&emsp;&emsp;<font color="#87c44e"><b>a</b></font>
+                                                                        <br>&emsp;&emsp;<font color="#87c44e"><b>a</b></font>
+                                                                        <br>&emsp;&emsp;<font color="#f7768a"><b>b</b></font>
+                                                                    </p>
+                                                                    <div align="right">
+                                                                        <font size="2">Manuel Acuña
+                                                                            <br>Acuña, Manuel (s/f ). "AL ruiseñor mexicano". Ciudad Seva.
+                                                                            <br>Recuperado de<a href="https://goo.gl/dkuP3K">https://goo.gl/dkuP3K</a></font>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="anim" style="background-color: white">
+                                                                <td style="border: 3px solid #1a7bb0">
+                                                                    <p class="fuente2 ">Arte menor</p>
+                                                                </td>
+                                                                <td style="border: 3px solid #1a7bb0">
+                                                                    <p class="fuente2">Quintilla</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="anim" style="background-color: white">
+                                                                <td style="border: 3px solid #1a7bb0">
+                                                                    <p class="fuente2 ">Combinan arte mayor y menor</p>
+                                                                </td>
+                                                                <td style="border: 3px solid #1a7bb0">
+                                                                    <p class="fuente2">Lira</p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p class="fuente anim">
+                                                        <font color="#5c339f"><b>El soneto</b></font>
+                                                    </p>
+                                                    <p class="fuente anim">El soneto es una forma poética que consta de <span class="font263"><b> catorce versos</b></span> agrupados en<span class="font263"><b> dos cuartetos y dos tercetos</b></span>, escritos en endecasílabos y, en algunos casos, en alejandrinos, versos de catorce sílabas. En el<span class="font263"><b> soneto clásico</b></span> tenemos la siguiente combinación de rima: ABBA, ABBA, CDC, DCD; aunque hay ciertas variaciones. La rima en un soneto es siempre consonante. En cuanto a la composición semántica, los dos cuartetos presentan el argumento del poema y los dos tercetos el desenlace.<b>Observa</b> el ejemplo.</p>
+                                                    <div class="col-xs-12" style="background-color: #ffffff; border-radius: 20px">
+                                                        <p class="titulex anim">
+                                                            <font color="#05abe1"><b>No te quiero sino porque te quiero</b></font>
+                                                        </p>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 anim">
+                                                            <p class="fuente">No te quiero sino porque te quiero</p>
+                                                            <p class="fuente">y de quererte a no quererte llego</p>
+                                                            <p class="fuente">y de esperarte cuando no te espero </p>
+                                                            <p class="fuente">pasa mi corazón del frío al fuego.</p>
+                                                            <br>
+                                                            <p class="fuente">Te quiero sólo porque a ti te quiero,</p>
+                                                            <p class="fuente">te odio sin fin, y odiándote te ruego, </p>
+                                                            <p class="fuente">y la medida de mi amor viajero </p>
+                                                            <p class="fuente">es no verte y amarte como un ciego</p>
+                                                        </div>
+                                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 anim">
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <br>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 anim">
+                                                            <p class="fuente">
+                                                                <font color="#478de0">A</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">B</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">A</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">B</font>
+                                                            </p>
+                                                            <br>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">A</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">B</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">A</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">B</font>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 anim">
+                                                            <p class="fuente">Tal vez consumirá la luz de enero,</p>
+                                                            <p class="fuente">su rayo cruel, mi corazón entero, </p>
+                                                            <p class="fuente">robándome la llave del sosiego. </p>
+                                                            <br>
+                                                            <p class="fuente">En esta historia sólo yo me muero </p>
+                                                            <p class="fuente">y moriré de amor porque te quiero, </p>
+                                                            <p class="fuente">porque te quiero, amor, a sangre y fuego.</p>
+                                                        </div>
+                                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 anim">
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <br>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 anim">
+                                                            <p class="fuente">
+                                                                <font color="#478de0">A</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">A</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">B</font>
+                                                            </p>
+                                                            <br>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">A</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">A</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">B</font>
+                                                            </p>
+                                                        </div>
+                                                        <div class="anim" align="right">
+                                                            <font size="2"><i>Neruda, Pablo (s/f ). “Cien sonetos de amor – LXVI”.
+                                                                <br>Ciudad Seva. Recuperado de <a href="https://goo.gl/c4Xk8X">https://goo.gl/c4Xk8X</a> </i></font>
+                                                        </div>
+                                                    </div>
+                                                    <p class="fuente anim">
+                                                        <br><br>
+                                                        <font color="#5c339f"><b>El romance</b></font>
+                                                    </p>
+                                                    <p class="fuente anim">El<span class="font263"><b> romance</b></span> es una forma poética de una sola estrofa, escrita en octosílabos, con rima asonante en los versos pares. Si los versos son menores a ocho sílabas, se tiene un romancillo. Puede tener una cantidad indistinta de versos, pero siempre en número par. El poema Yo no volveré que has leído al principio de este tema es un claro ejemplo de romance. <b>Observa</b> otros ejemplos. </p>
+                                                    <div class="col-xs-12" style="background-color: #ffffff; border-radius: 20px">
+                                                        <p class="titulex anim">
+                                                            <font color="#05abe1"><b>Verde que te quiero verde</b></font>
+                                                        </p>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 anim">
+                                                            <p class="fuente">Verde que te quiero verde</p>
+                                                            <p class="fuente">verde viento. Verdes ramas.</p>
+                                                            <p class="fuente">El barco sobre la mar </p>
+                                                            <p class="fuente">y el caballo en la montaña. </p>
+                                                            <p class="fuente">Con la sombra en la cintura </p>
+                                                            <p class="fuente">ella sueña en su baranda, </p>
+                                                            <p class="fuente">verde carne, pelo verde, </p>
+                                                            <p class="fuente">con ojos de fría plata. </p>
+                                                            <p class="fuente">Verde que te quiero verde </p>
+                                                            <p class="fuente">bajo la plata gitana, </p>
+                                                            <p class="fuente">las cosas la están mirando </p>
+                                                            <p class="fuente">y ellas no puede mirarlas. </p>
+                                                        </div>
+                                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 anim">
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 anim">
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8-</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8a</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8-</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8a</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8-</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8a</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8-</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8a</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8- </font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8a</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8-</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">8a</font>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 anim">
+                                                            <br><br><br><br><br><br>
+                                                            <img src="img/i1_p144_ani41.png" style="max-width: 100%; width: 620px; height: 500px">
+                                                            <div align="right">
+                                                                <font size="2"><i>García, Federico (s/f ) “Romance Sonámbulo”. Poesi.as. 
+                                                                    <br>Recuperado de <a href="https://goo.gl/mPSZLs">https://goo.gl/mPSZLs</a></a> </i></font>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12" style="background-color: #ffffff; border-radius: 20px">
+                                                        <p class="titulex anim">
+                                                            <font color="#05abe1"><b>La plaza tiene una torre</b></font>
+                                                        </p>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 anim">
+                                                            <p class="fuente">La plaza tiene una torre,</p>
+                                                            <p class="fuente">la torre tiene un balcón, </p>
+                                                            <p class="fuente">el balcón tiene una dama, </p>
+                                                            <p class="fuente">la dama una blanca flor. </p>
+                                                            <p class="fuente">Ha pasado un caballero </p>
+                                                            <p class="fuente">-¡quién sabe por qué pasó!- </p>
+                                                            <p class="fuente">y se ha llevado la plaza, </p>
+                                                            <p class="fuente">con su torre y su balcón, </p>
+                                                            <p class="fuente">con su balcón y su dama, </p>
+                                                            <p class="fuente">su dama y su blanca flor. </p>
+                                                        </div>
+                                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 anim">
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font size="3" color="#ed028c"><b>→</b></font>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 anim">
+                                                            <p class="fuente">
+                                                                <font color="#478de0">-</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">a</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">-</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">a</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">-</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">a</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">-</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">a</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">-</font>
+                                                            </p>
+                                                            <p class="fuente">
+                                                                <font color="#478de0">a</font>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 anim">
+                                                            <br><br><br><br>
+                                                            <img src="img/i2_p144_ani41.png" style="max-width: 100%; width: 620px; height: 450px">
+                                                            <div align="right">
+                                                                <font size="2"><i>Machado, Antonio (2004). “La plaza tiene una torre”. Camino Latino.
+                                                                    <br>Recuperado de <a href="https://goo.gl/48FFuJ">https://goo.gl/48FFuJ</a>  </i></font>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal Guardar PDF-->
+                                        <div class="modal fade animated pulse" id="myModal" role="dialog">
+                                            <div class="modal-dialog">
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                                                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="modal_form" class="form-horizontal">
+                                                            <div class="form-group ">
+                                                                <div class="col-sm-2">
+                                                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                                        <script src="js/jquery.min.js"></script>
+                                        <script src="js/jquery-ui.js"></script>
+                                        <!-- Include all compiled plugins (below), or include individual files as needed -->
+                                        <script src="js/bootstrap.min.js"></script>
+                                        <!--generador de pdf-->
+                                        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+                                        <script src="js/screenfull.js"></script>
+                                        <script src="js/helper.js"></script>
+                                        <script src="js/activities.js"></script>
+                                        <script src="js/animate.css.min.js"></script>
+                                        <script src="js/jquery.animate.css.js"></script>
+                                        <script src="js/Utilitario.js"></script>
+                                        <script>
+                                        $("#n_pagina").html("143"); //impresion de pagina
+                                        </script>
+</body>
+
+</html>

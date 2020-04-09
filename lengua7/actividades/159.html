@@ -1,0 +1,1372 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <style>
+        table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1d1d1b;
+        color: #1d1d1b;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+    .correcto {
+    color: #ffffff;
+    background-color: #00e600;
+    }
+
+    .incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+    }
+
+
+    .subrayar {
+        border-bottom: 2px solid #005ca4;
+    }
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+
+
+    .pintar1 {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+    }
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 50px;
+    max-width: 100%;
+    margin-left: 1px;
+    width: auto;
+}
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 50px;
+    min-width: 120px;
+    width: auto;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>2. </b> Seleccionar una respuesta correcta.
+        <br>
+        <b>4. </b> Arrastra el recuadro amarillo a los recuadros en blanco que corresponda.
+        <br>
+        <b>7. </b> Seleccionar una respuesta correcta.
+        <br>
+        <b>8. </b> Arrastra el recuadro amarillo a los recuadros en blanco que corresponda.
+        <br>
+        <b>10. </b> Seleccionar varias respuestas haciendo click en los recuadros.
+        <br>
+        <b>11. </b> Haz click para seleccionar la respuesta correcta.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br>
+                    <img class="img-responsive" src="img/literatura.png"></img>
+                    <div class="text-question">
+                        <b>Lee</b> el siguiente texto y <b>realiza</b> las actividades.
+                        <img class="img-responsive" src="img/i1_p168_uni4Sumativa.jpg"></img>
+                    </div>
+                    <div class="panel panel-info" style="border: 1px solid #ffdab5;">
+                        <div class="panel-heading" role="tab" id="headingOne" style="background: #ffdab5;color: #f07c00;">
+                            <h4 class="panel-title" >
+                                    <input type="text" id="nota1" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
+                                        <b>1. Argumenta</b> <span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b style="color: #EC6608">1.-</b> ¿Qué función del lenguaje predomina en este texto? <b>Argumenta</b> tu respuesta.
+                                        <textarea name="" class="form-control" style="resize: none;"></textarea>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info" style="border: 1px solid #ffdab5;">
+                        <div class="panel-heading" role="tab" id="headingTwo" style="background: #ffdab5;color: #f07c00;">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota2" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <b>2. Selecciona</b> <span class="sobre">0.5 pts</span>
+                                        </a>
+                                        </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <span><b style="color: #EC6608">2.-</b> <b>Selecciona</b> la frase que sintetice mejor el tema de esta lectura.</span>
+                                        <table>
+                                            <tr id="R1">
+                                                <td><b>•</b> La soledad del hombre en el mundo.</td>
+                                                <td><b style="font-size: 50px;">→</b></td>
+                                                <td><input type="checkbox" id="check1"></td>
+                                            </tr>
+                                            <tr id="R2">
+                                                <td><b>•</b> La belleza del paisaje natural.</td>
+                                                <td><b style="font-size: 50px;">→</b></td>
+                                                <td><input type="checkbox" id="check2"></td>
+                                            </tr>
+                                            <tr id="R3">
+                                                <td><b>•</b> La alegría de los enamorados.</td>
+                                                <td><b style="font-size: 50px;">→</b></td>
+                                                <td><input type="checkbox" id="check3"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            </dv>
+                        </div>
+                        <div class="panel panel-info" style="border: 1px solid #ffdab5;">
+                            <div class="panel-heading" role="tab" id="headingThree" style="background: #ffdab5;color: #f07c00;">
+                                <h4 class="panel-title">
+                                    <input type="text" id="nota3" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <b>3. Pregunta</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    <div class="text-question">
+                                        <b>3. </b>¿Qué momento del día se describe?
+                                        <br><br>
+                                        <input class="form-control"></input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info" style="border: 1px solid #ffdab5;">
+                            <div class="panel-heading" role="tab" id="headingFour" style="background: #ffdab5;color: #f07c00;">
+                                <h4 class="panel-title">
+                                    <input type="text" id="nota4" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                       <b>4. Une</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>4. </b>Según el texto, ¿qué color corresponde a cada elemento?
+                                            <br>
+                                            <div class="textos" style="display: inline-block; text-align:center;"></div>
+                                            <div class="col-sm-12" align="">
+                                                <div class="table-responsive">
+                                                    <table class="table" style="width: 50%;">
+                                                        <tr>
+                                                            <td>
+                                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop3 p4im0"></div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p4cim11"><b></b></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop3 p4im1"></div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p4cim12"><b></b></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop3 p4im2"></div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p4cim13"><b></b></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info" style="border: 1px solid #ffdab5;">
+                            <div class="panel-heading" role="tab" id="headingFive" style="background: #ffdab5;color: #f07c00;">
+                                <h4 class="panel-title">
+                                    <input type="text" id="nota5" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                       <b>5. Explica</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>5. Explica</b> el significado de esta personificación: “las estrellas se morían”.
+                                            <br>
+                                            <input type="text" class="form-control"></input>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info" style="border: 1px solid #ffdab5;">
+                            <div class="panel-heading" role="tab" id="headingSix" style="background: #ffdab5;color: #f07c00;">
+                                <h4 class="panel-title">
+                                    <input type="text" id="nota6" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                       <b>6. Encuentra</b> <span class="sobre">1 pts</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>6. Encuentra</b>, en el texto, dos personificaciones más y <b>cópialas</b> a continuación.
+                                            <div class="row" align="center">
+                                                <div class="col-lg-6">
+                                                    <input class="" style="border: 0; border-bottom: 2px dotted #f07c00;"></input><br>
+                                                    <input class="" style="border: 0; border-bottom: 2px dotted #f07c00;"></input><br>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <input class="" style="border: 0; border-bottom: 2px dotted #f07c00;"></input><br>
+                                                    <input class="" style="border: 0; border-bottom: 2px dotted #f07c00;"></input><br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info" style="border: 1px solid #ffdab5;">
+                            <div class="panel-heading" role="tab" id="headingSeven" style="background: #ffdab5;color: #f07c00;">
+                                <h4 class="panel-title">
+                                <input type="text" id="nota7"  class="nota-abierta" style="text-align: center;" readonly></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                         <b>7. selecciona</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>7. </b>A más de las personificaciones, <b>selecciona</b> qué otro recurso se utiliza en el texto.
+                                            <br>
+                                            <table>
+                                                <tr id="Rt1">
+                                                    <td><b>•</b> Etopeya</td>
+                                                    <td><b style="font-size: 50px;">→</b></td>
+                                                    <td><input type="checkbox" id="checkb1"></td>
+                                                </tr>
+                                                <tr id="Rt2">
+                                                    <td><b>•</b> Prosopografía</td>
+                                                    <td><b style="font-size: 50px;">→</b></td>
+                                                    <td><input type="checkbox" id="checkb2"></td>
+                                                </tr>
+                                                <tr id="Rt3">
+                                                    <td><b>•</b> Topografía</td>
+                                                    <td><b style="font-size: 50px;">→</b></td>
+                                                    <td><input type="checkbox" id="checkb3"></td>
+                                                </tr>
+                                            </table>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="img-responsive" src="img/comunicacion.png"></img>
+                        <div class="panel panel-info" style="border: 1px solid #e2d1e8;">
+                            <div class="panel-heading" role="tab" id="headingEigth" style="background: #e2d1e8;color: #815da4;">
+                                <h4 class="panel-title">
+                                <input type="text" id="nota8"  class="nota-abierta" style="text-align: center;" readonly></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEigth" aria-expanded="false" aria-controls="collapseEigth">
+                                         <b>8. Identifica</b> <span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseEigth" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEigth">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>8. Identifica</b> el tipo de argumentos que sustentan este punto de vista.
+                                            <br>
+                                            <b style="color: #a863a4;">Punto de vista:</b> Las familias pueden tener diversas composiciones. <br>
+                                            <div class="textos8" style="display: inline-block; text-align:center;"></div>
+                                            <div class="col-sm-12" align="">
+                                                <div class="table-responsive">
+                                                    <table class="table" style="width: 50%;">
+                                                        <tr>
+                                                            <td>
+                                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im0"></div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim11"><b></b></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im1"></div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim12"><b></b></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im2"></div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim13"><b></b></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info" style="border: 1px solid #e2d1e8;">
+                            <div class="panel-heading" role="tab" id="headingNine" style="background: #e2d1e8;color: #815da4;">
+                                <h4 class="panel-title">
+                                <input type="text" id="nota9"  class="nota-abierta" style="text-align: center;background: white;"></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                         <b>9. Escribe</b><span class="sobre">0.5 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>9. Escribe</b> tres recomendaciones para participar en un debate.
+                                            <br>
+                                            <input type="text" class="" style="border:0;border-bottom: 2px dotted #815da4;"><br><br>
+                                            <input type="text" class="" style="border:0;border-bottom: 2px dotted #815da4;"><br><br>
+                                            <input type="text" class="" style="border:0;border-bottom: 2px dotted #815da4;"><br><br>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="img-responsive" src="img/lectura.png"></img>
+                        <div class="panel panel-info" style="border: 1px solid #f4c8cd;">
+                            <div class="panel-heading" role="tab" id="headingTen" style="background: #f4c8cd;color: #e8426c;">
+                                <h4 class="panel-title">
+                                <input type="text" id="nota10"  class="nota-abierta" style="text-align: center;" readonly></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                                         <b>10. Lee</b><span class="sobre">0.5 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>10. Lee</b> el siguiente retrato y <b>señala</b> qué elementos encuentras.
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-lg-6"><img class="img-responsive" src="img/i2_p168_uni4Sumativa.jpg"></img></div>
+                                                <div class="col-lg-6">
+                                                    <table>
+                                                        <tr id="box1">
+                                                            <td><b>•</b> Partes del cuerpo</td>
+                                                            <td><input type="checkbox" id="ch1"></td>
+                                                        </tr>
+                                                        <tr id="box2">
+                                                            <td><b>•</b> Edad</td>
+                                                            <td><input type="checkbox" id="ch2"></td>
+                                                        </tr>
+                                                        <tr id="box3">
+                                                            <td><b>•</b> Manera de vestir</td>
+                                                            <td><input type="checkbox" id="ch3"></td>
+                                                        </tr>
+                                                        <tr id="box4">
+                                                            <td><b>•</b> Gestos</td>
+                                                            <td><input type="checkbox" id="ch4"></td>
+                                                        </tr>
+                                                        <tr id="box5">
+                                                            <td><b>•</b> Hábitos</td>
+                                                            <td><input type="checkbox" id="ch5"></td>
+                                                        </tr>
+                                                        <tr id="box6">
+                                                            <td><b>•</b> Gustos</td>
+                                                            <td><input type="checkbox" id="ch6"></td>
+                                                        </tr>
+                                                        <tr id="box7">
+                                                            <td><b>•</b> Origen</td>
+                                                            <td><input type="checkbox" id="ch7"></td>
+                                                        </tr>
+                                                        <tr id="box8">
+                                                            <td><b>•</b> Ocupación</td>
+                                                            <td><input type="checkbox" id="ch8"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info" style="border: 1px solid #f4c8cd;">
+                            <div class="panel-heading" role="tab" id="headingLeven" style="background: #f4c8cd;color: #e8426c;">
+                                <h4 class="panel-title">
+                                <input type="text" id="nota11"  class="nota-abierta" style="text-align: center;" readonly></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseLeven" aria-expanded="false" aria-controls="collapseLeven">
+                                         <b>11. Selecciona</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseLeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingLeven">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>11. Selecciona</b> las respuestas correctas.
+                                            <br>
+                                            <div class="row">
+                                                <ol type="a">
+                                                    <div class="col-lg-6">
+                                                        <table>
+                                                            <tr>
+                                                                <td colspan="2">El retrato corresponde a:</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td><span class="1 enc1">una actriz argentina.</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td><span class="1 enc2">una periodista argentina.</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td><span class="1 enc3">una periodista boliviana.</span></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </ol>
+                                                <ol type="a">
+                                                    <div class="col-lg-6">
+                                                        <table>
+                                                            <tr>
+                                                                <td colspan="2">El cabello de Leila es:</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td><span class="2 enci1">rubio y lacio.</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td><span class="2 enci2">rizado y vaporoso.</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b style="color: #005ca4;"><li></li></b></td>
+                                                                <td><span class="2 enci3">pelirrojo y corto.</span></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </ol>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info" style="border: 1px solid #f4c8cd;">
+                            <div class="panel-heading" role="tab" id="headingTwelve" style="background: #f4c8cd;color: #e8426c;">
+                                <h4 class="panel-title">
+                                <input type="text" id="nota12"  class="nota-abierta" style="text-align: center;background: white;"></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+                                         <b>12. Identifica</b> <span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseTwelve" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwelve">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>12. Identifica</b> un símil utilizado en el retrato.
+                                            <br>
+                                            <input class="form-control" style="border:0;border-bottom: 2px dotted #e8426c;"></input>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="img-responsive" src="img/escritura.png"></img>
+                        <div class="panel panel-info" style="border: 1px solid #bee3f0;">
+                            <div class="panel-heading" role="tab" id="headingThirteen" style="background: #bee3f0;color: #009cc5;">
+                                <h4 class="panel-title">
+                                <input type="text" id="nota13"  class="nota-abierta" style="text-align: center;background: white;"></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThirteen" aria-expanded="false" aria-controls="collapseThirteen">
+                                         <b>13. Observa</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseThirteen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThirteen">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>13. Observa</b> este personaje y <b>escribe</b> su retrato. <b>Inventa</b> las características internas.
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <img src="img/i3_p168_uni4Sumativa.jpg" alt="" class="img-responsive"></img>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="background: #6bc6e0; color: white;">Nombre:</td>
+                                                            <td><textarea class="form-control" style="resize: none;"></textarea></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="background: #acdced; color: white;">Prosopografía</td>
+                                                            <td><textarea class="form-control" style="resize: none;" rows="5"></textarea></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="background: #6bc6e0; color: white;">Etopeya</td>
+                                                            <td><textarea class="form-control" style="resize: none;" rows="5"></textarea></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info" style="border: 1px solid #bee3f0;">
+                            <div class="panel-heading" role="tab" id="headingFourteen" style="background: #bee3f0;color: #009cc5;">
+                                <h4 class="panel-title">
+                                <input type="text" id="nota14"  class="nota-abierta" style="text-align: center;background: white;"></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFourteen" aria-expanded="false" aria-controls="collapseFourteen">
+                                         <b>14. Describe</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseFourteen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFourteen">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>14. Describe</b> los gestos del personaje utilizando tres adverbios de modo.
+                                            <br>
+                                            <textarea class="form-control" style="resize: none;"></textarea>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info" style="border: 1px solid #bee3f0;">
+                            <div class="panel-heading" role="tab" id="headingFiveteen" style="background: #bee3f0;color: #009cc5;">
+                                <h4 class="panel-title">
+                                <input type="text" id="nota15"  class="nota-abierta" style="text-align: center;background: white;"></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFiveteen" aria-expanded="false" aria-controls="collapseFiveteen">
+                                         <b>15. Explica</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseFiveteen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFiveteen">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>15. Explica</b> el error en el uso de estas abreviaturas.
+                                            <br>
+                                            <b style="color: #005ca4">a.</b> Aquel Sr. es el mejor amigo de mi padre. <br>
+                                            <input class="form-control"></input>
+                                            <b style="color: #005ca4">b.</b> Para entrar me cobraron unos diez cent. <br>
+                                            <input class="form-control"></input>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="img-responsive" src="img/lengua.png"></img>
+                        <div class="panel panel-info" style="border: 1px solid #cfdbf1;">
+                            <div class="panel-heading" role="tab" id="headingSixteen" style="background: #cfdbf1;color: #005caa;">
+                                <h4 class="panel-title">
+                                <input type="text" id="nota16"  class="nota-abierta" style="text-align: center;background: white;"></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSixteen" aria-expanded="false" aria-controls="collapseSixteen">
+                                         <b>16. Escribe</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                            </h4>
+                            </div>
+                            <div id="collapseSixteen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSixteen">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <b>16. Escribe</b> dos razones por las que es importante que se conozca la poesía en lenguas nativas.
+                                            <br>
+                                            <input type="text" class="form-control" style="background: #dfe3f2;border:3px dotted #dfe3f2;">
+                                            <br>
+                                            <input type="text" class="form-control" style="background: #dfe3f2;border:3px dotted #dfe3f2;">
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script type="text/javascript">
+        var titulos = "evaluacion";
+        $("#txtNota").html("0");
+        $("#n_pagina").html("168");
+        $('.btnGuardar').removeClass('disabled');
+        /*$(document).ready(function() {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            //var imageSize = { width: winHeight , height: winHeight };
+            //var watermarkImage = new Image();
+            ///watermarkImage.src = 'img/i1_p170_actpreparo.jpg';
+            //var watermarkImage2 = new Image();
+            //watermarkImage2.src = 'img/i7_p98_act100.jpg';
+
+            LC.init(
+                document.getElementsByClassName('my-drawing')[0], {
+                    imageURLPrefix: 'imgcanvas',
+
+                    //watermarkImage: watermarkImage,
+                    watermarkScale: 0.8, // you can scale it
+                    //imageSize: imageSize
+                    backgroundColor: 'white'
+
+                });
+
+
+
+        });*/
+        function pregunta2() {
+            var nt1 = 0,
+                nt2 = 0,
+                nt3 = 0;
+            if ($("#check2:checked").prop('checked')) {
+                nt1 = 0.5;
+                $('#R2').css("background", "#00e600");
+            }
+            ////////////////////////////////////////////
+            if ($("#check1:checked").prop('checked')) {
+                $('#R1').css("background", "#ff6666");
+                nt2 = 0.25
+            } else {
+
+            }
+            ///////////////////////////////////////////////////
+            if ($("#check3:checked").prop('checked')) {
+                $('#R3').css("background", "#ff6666");
+                nt3 = 0.25
+            } else {
+
+            }
+            var total = parseFloat(nt1) - parseFloat(nt2) - parseFloat(nt3);
+            if (total < 0) {
+                total = 0;
+                $('#nota2').val(parseFloat(total).toFixed(2));
+                $('input').attr("disabled", true);
+            } else {
+                $('#nota2').val(parseFloat(total).toFixed(2));
+                $('input').attr("disabled", true);
+            }
+
+        }
+
+        $('.enc').click(function() {
+
+            if ($(this).hasClass('subrayar')) {
+                $(this).removeClass('subrayar')
+            } else {
+                $(this).addClass('subrayar')
+            }
+        })
+
+        var pal1 = ['<p class="bg_palabra drag3 c1">Verde</p>',
+            '<p class="bg_palabra drag3 c2" >Rosado</p>',
+            '<p class="bg_palabra drag3 c3" >Dorado</p>',
+        ];
+        var pal2 = ['<p>Río</p>', '<p>Pinos</p>','<p>Mañana</p>',];
+        var p4aux1 = ['Dorado', 'Verde', 'Rosado', ];
+        var p4aux2 = [];
+
+        pal1.sort(f_randomico);
+        $(".textos").append(pal1);
+        var myArray1 = ['0', '1', '2', ];
+        var i, j, k;
+        for (i = myArray1.length; i; i--) {
+            j = Math.floor(Math.random() * i);
+            k = myArray1[i - 1];
+            myArray1[i - 1] = myArray1[j];
+            myArray1[j] = k;
+        }
+        //aleatorio literal 1
+        for (var i = 1; i < 4; i++) {
+            var c = myArray1[i - 1];
+            $(".p4cim1" + i).html(pal2[c]);
+            p4aux2.push(p4aux1[c]);
+        };
+        $(".drag3").draggable({
+            revert: "invalid",
+            zIndex: 5,
+            containment: "",
+            scroll: false,
+        });
+
+        $(".drop3").droppable({
+            accept: ".drag3",
+            /*classes: {
+                            "ui-droppable-active": "ui-state-active", //color azul al arrastrar el elemento
+                            "ui-droppable-hover": "ui-state-hover"
+                        },*/
+
+            drop: function(e, ui) {
+                $(ui.draggable).removeClass("drag3");
+                $(ui.draggable).removeClass("bg_palabra");
+                ui.draggable.attr("style", "");
+                $(this).append(ui.draggable);
+
+            }
+        });
+
+        function pregunta4() {
+            var cont = 0;
+            for (var i = 0; i < 3; i++) {
+                var res = $('.p4im' + [i] + ' p').text();
+                if (p4aux2[i] == res) {
+                    cont = cont + 1;
+                    $('.p4im' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('.p4im' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 0.5) / 3;
+            $('#nota4').val(parseFloat(total).toFixed(2));
+
+
+
+        }
+
+        function pregunta7() {
+            var nt1 = 0,
+                nt2 = 0,
+                nt3 = 0;
+            if ($("#checkb3:checked").prop('checked')) {
+                nt1 = 0.5;
+                $('#Rt3').css("background", "#00e600");
+            }
+            ////////////////////////////////////////////
+            if ($("#checkb1:checked").prop('checked')) {
+                $('#Rt1').css("background", "#ff6666");
+                nt2 = 0.25;
+            } else {
+
+            }
+            ///////////////////////////////////////////////////
+            if ($("#checkb2:checked").prop('checked')) {
+                $('#Rt2').css("background", "#ff6666");
+                nt3 = 0.25;
+            } else {
+
+            }
+
+
+            var total = parseFloat(nt1) - parseFloat(nt2) - parseFloat(nt3);
+            if (total < 0) {
+                total = 0;
+                $('#nota7').val(parseFloat(total).toFixed(2));
+                $('input').attr("disabled", true);
+            } else {
+                $('#nota7').val(parseFloat(total).toFixed(2));
+                $('input').attr("disabled", true);
+            }
+
+
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        var pal1 = ['<p class="bg_palabra drag8 c1">Autoridad</p>',
+            '<p class="bg_palabra drag8 c2" >Hechos</p>',
+            '<p class="bg_palabra drag8 c3" >Datos</p>',
+        ];
+        var pal2 = ['<p>En tiempos de guerras, muchas madres han tenido que criar solas a sus hijos, con el apoyo de hermanas, abuelas y otras mujeres.</p>',
+            '<p>El 32 % de las madres en Ecuador son viudas, divorciadas o madres solteras.</p>',
+            '<p>Graciela Castelo, directora del Centro Integral de la Familia' +
+            'en Quito, considera que sería contraproducente pensar en' +
+            'que la familia “ideal” es la única que existe. “La diversidad' +
+            'es la característica de estas nuevas modalidades de hogares' +
+            'que siguen siendo familias y así se les debe reconocer”.</p>',
+
+        ];
+        var p8aux1 = ['Hechos', 'Datos', 'Autoridad', ];
+        var p8aux2 = [];
+
+        pal1.sort(f_randomico);
+        $(".textos8").append(pal1);
+        var myArray1 = ['0', '1', '2', ];
+        var i, j, k;
+        for (i = myArray1.length; i; i--) {
+            j = Math.floor(Math.random() * i);
+            k = myArray1[i - 1];
+            myArray1[i - 1] = myArray1[j];
+            myArray1[j] = k;
+        }
+        //aleatorio literal 1
+        for (var i = 1; i < 4; i++) {
+            var c = myArray1[i - 1];
+            $(".p8cim1" + i).html(pal2[c]);
+            p8aux2.push(p8aux1[c]);
+        };
+        $(".drag8").draggable({
+            revert: "invalid",
+            zIndex: 5,
+            containment: "",
+            scroll: false,
+        });
+
+        $(".drop8").droppable({
+            accept: ".drag8",
+            /*classes: {
+                            "ui-droppable-active": "ui-state-active", //color azul al arrastrar el elemento
+                            "ui-droppable-hover": "ui-state-hover"
+                        },*/
+
+            drop: function(e, ui) {
+                $(ui.draggable).removeClass("drag8");
+                $(ui.draggable).removeClass("bg_palabra");
+                ui.draggable.attr("style", "");
+                $(this).append(ui.draggable);
+
+            }
+        });
+
+
+
+        function pregunta8() {
+            var cont = 0;
+            for (var i = 0; i < 3; i++) {
+                var res = $('.p8im' + [i] + ' p').text();
+                if (p8aux2[i] == res) {
+                    cont = cont + 1;
+                    $('.p8im' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('.p8im' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 3;
+            $('#nota8').val(parseFloat(total).toFixed(2));
+
+
+
+        }
+
+        function pregunta10() {
+            var nt1 = 0,
+                nt2 = 0;
+            if ($("#ch1:checked").prop('checked')) {
+                nt1 = 0.1;
+                $('#box1').css("background", "#00e600");
+            }
+            ////////////////////////////////////////////
+            if ($("#ch2:checked").prop('checked')) {
+                $('#box2').css("background", "#ff6666");
+                nt2 = 0.15;
+            } else {
+
+
+            }
+            if ($("#ch3:checked").prop('checked')) {
+                $('#box3').css("background", "#ff6666");
+                nt2 = nt2 + 0.15;
+            } else {
+
+            }
+            if ($("#ch4:checked").prop('checked')) {
+                $('#box4').css("background", "#ff6666");
+                nt2 = nt2 + 0.15;
+            } else {
+
+            }
+            if ($("#ch5:checked").prop('checked')) {
+                nt1 = nt1 + 0.1;
+                $('#box5').css("background", "#00e600");
+            }
+            if ($("#ch6:checked").prop('checked')) {
+                nt1 = nt1 + 0.1;
+                $('#box6').css("background", "#00e600");
+            }
+            if ($("#ch7:checked").prop('checked')) {
+                nt1 = nt1 + 0.1;
+                $('#box7').css("background", "#00e600");
+            }
+            if ($("#ch8:checked").prop('checked')) {
+                nt1 = nt1 + 0.1;
+                $('#box8').css("background", "#00e600");
+            }
+            ///////////////////////////////////////////////////
+            var total = parseFloat(nt1) - parseFloat(nt2);
+            if (total < 0) {
+                total = 0;
+                $('#nota10').val(parseFloat(total).toFixed(2));
+                $('input').attr("disabled", true);
+            } else {
+                $('#nota10').val(parseFloat(total).toFixed(2));
+                $('input').attr("disabled", true);
+            }
+
+
+        }
+
+        /////////////////pregunta11////////////////////
+        $('.1').click(function() {
+            switch ($(this).attr('class')) {
+                case '1 enc1':
+                    $('.enc1').addClass('pintar1');
+                    $('.enc2').removeClass('pintar1');
+                    $('.enc3').removeClass('pintar1');
+                    break;
+                case '1 enc2':
+                    $('.enc2').addClass('pintar1');
+                    $('.enc1').removeClass('pintar1');
+                    $('.enc3').removeClass('pintar1');
+                    break;
+                case '1 enc3':
+                    $('.enc3').addClass('pintar1');
+                    $('.enc1').removeClass('pintar1');
+                    $('.enc2').removeClass('pintar1');
+                    break;
+
+
+            }
+        });
+        $('.2').click(function() {
+            switch ($(this).attr('class')) {
+                case '2 enci1':
+                    $('.enci1').addClass('pintar1');
+                    $('.enci2').removeClass('pintar1');
+                    $('.enci3').removeClass('pintar1');
+                    break;
+                case '2 enci2':
+                    $('.enci2').addClass('pintar1');
+                    $('.enci1').removeClass('pintar1');
+                    $('.enci3').removeClass('pintar1');
+                    break;
+                case '2 enci3':
+                    $('.enci3').addClass('pintar1');
+                    $('.enci1').removeClass('pintar1');
+                    $('.enci2').removeClass('pintar1');
+                    break;
+
+
+            }
+        });
+
+        function pregunta11() {
+            var nt1 = 0,
+                nt2 = 0,
+                nt3 = 0;
+            if ($('.enc2').hasClass('pintar1') == true) {
+                nt1 = 1;
+
+                $('.enc2').addClass('correcto');
+
+
+            } else if ($('.enc1').hasClass('pintar1') == true) {
+                $('.enc1').addClass('incorrecto');
+
+
+            } else if ($('.enc3').hasClass('pintar1') == true) {
+                $('.enc3').addClass('incorrecto');
+
+
+            }
+            ////////////////////////////////////////////
+            if ($('.enci2').hasClass('pintar1') == true) {
+                nt2 = 1;
+
+                $('.enci2').addClass('correcto');
+
+
+            } else if ($('.enci1').hasClass('pintar1') == true) {
+                $('.enci1').addClass('incorrecto');
+
+
+            } else if ($('.enci3').hasClass('pintar1') == true) {
+                $('.enci3').addClass('incorrecto');
+            }
+            ////////////////////////////////////////////
+
+            $('.1').off('click');
+            $('.2').off('click');
+            var subtotal = parseFloat(nt1) + parseFloat(nt2);
+            var total = (subtotal * 0.5) / 2;
+            $('#nota11').val(parseFloat(total).toFixed(2));
+        }
+
+        document.getElementById('nota1').addEventListener('keypress', () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById('nota1').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota1'), 1)
+        });
+        document.getElementById('nota3').addEventListener('keypress', () => {
+            validNumero(0, 0.5, 1);
+        });
+        document.getElementById('nota3').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota3'), 0.5)
+        });
+        document.getElementById('nota5').addEventListener('keypress', () => {
+            validNumero(0, 0.5, 1);
+        });
+        document.getElementById('nota5').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota5'), 0.5)
+        });
+        document.getElementById('nota6').addEventListener('keypress', () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById('nota6').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota6'), 1)
+        });
+        document.getElementById('nota9').addEventListener('keypress', () => {
+            validNumero(0, 0.5, 1);
+        });
+        document.getElementById('nota9').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota9'), 0.5)
+        });
+        document.getElementById('nota12').addEventListener('keypress', () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById('nota12').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota12'), 1)
+        });
+        document.getElementById('nota13').addEventListener('keypress', () => {
+            validNumero(0, 0.5, 1);
+        });
+        document.getElementById('nota13').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota13'), 0.5)
+        });
+        document.getElementById('nota14').addEventListener('keypress', () => {
+            validNumero(0, 0.5, 1);
+        });
+        document.getElementById('nota14').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota14'), 0.5)
+        });
+        document.getElementById('nota15').addEventListener('keypress', () => {
+            validNumero(0, 0.5, 1);
+        });
+        document.getElementById('nota15').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota15'), 0.5)
+        });
+        document.getElementById('nota16').addEventListener('keypress', () => {
+            validNumero(0, 0.5, 1);
+        });
+        document.getElementById('nota16').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota16'), 0.5)
+        });
+
+        function NotaFinal() {
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var nota5 = document.getElementById('nota5').value;
+            var nota6 = document.getElementById('nota6').value;
+            var nota7 = document.getElementById('nota7').value;
+            var nota8 = document.getElementById('nota8').value;
+            var nota9 = document.getElementById('nota9').value;
+            var nota10 = document.getElementById('nota10').value;
+            var nota11 = document.getElementById('nota11').value;
+            var nota12 = document.getElementById('nota12').value;
+            var nota13 = document.getElementById('nota13').value;
+            var nota14 = document.getElementById('nota14').value;
+            var nota15 = document.getElementById('nota15').value;
+            var nota16 = document.getElementById('nota16').value;
+            if ((nota1 == "") || (nota3 == "") || (nota5 == "") || (nota6 == "") || (nota9 == "") || (nota12 == "") || (nota13 == "") || (nota14 == "") || (nota15 == "") || (nota16 == "")) {
+                alert("Debe ingresar la calificación de la pregunta 1, 3, 5, 6, 9, 12, 13, 14, 15 ó 16")
+            } else {
+                pregunta2();
+                pregunta4();
+                pregunta7();
+                pregunta8();
+                pregunta10();
+                pregunta11();
+                var nota1 = document.getElementById('nota1').value;
+                var nota2 = document.getElementById('nota2').value;
+                var nota3 = document.getElementById('nota3').value;
+                var nota4 = document.getElementById('nota4').value;
+                var nota5 = document.getElementById('nota5').value;
+                var nota6 = document.getElementById('nota6').value;
+                var nota7 = document.getElementById('nota7').value;
+                var nota8 = document.getElementById('nota8').value;
+                var nota9 = document.getElementById('nota9').value;
+                var nota10 = document.getElementById('nota10').value;
+                var nota11 = document.getElementById('nota11').value;
+                var nota12 = document.getElementById('nota12').value;
+                var nota13 = document.getElementById('nota13').value;
+                var nota14 = document.getElementById('nota14').value;
+                var nota15 = document.getElementById('nota15').value;
+                var nota16 = document.getElementById('nota16').value;
+                var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4) + parseFloat(nota5) + parseFloat(nota6) + parseFloat(nota7) + parseFloat(nota8) + parseFloat(nota9) + parseFloat(nota10) + parseFloat(nota11) + parseFloat(nota12) + parseFloat(nota13) + parseFloat(nota14) + parseFloat(nota15) + parseFloat(nota16);
+                $('#txtNota').html(parseFloat(total).toFixed(2));
+                document.getElementById('bt_comprobar').disabled = true;
+                $('input').attr("disabled", true);
+                $('textarea').attr("disabled", true);
+                $('#txtAlumno').attr("disabled", false);
+            }
+        }
+        </script>
+</body>
+
+</html>

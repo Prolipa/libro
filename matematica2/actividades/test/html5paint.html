@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="tr">
+	<head>
+		<meta charset="utf-8">
+		<title>HTML5 Paint</title>
+		
+		<link rel="stylesheet" href="html5reset-1.6.1.css">
+		<style>/*tools*/
+			#tools{
+				float:left;
+				width:80px;
+				padding:15px;
+			}
+		</style>
+		<style>/*color palette*/
+			#colorPalette div{
+				width:50px;
+				height:50px;
+				margin-bottom:4px;
+			}
+			#red{
+				background-color:red;
+			}
+			#green{
+				background-color:green;
+			}
+			#blue{
+				background-color:blue;
+			}
+		</style>
+		<style>/*body*/
+		body{
+			background-color:#ccc;
+			overflow:hidden;
+		}
+		</style>
+		<style>/*paint area*/
+		#paintArea{
+			width:900px;
+			height:600px;
+			background-color:#fff;
+			float:left;
+			position:relative;
+		}
+		#paintArea canvas{
+			position:absolute;
+			top:0px;
+			left:0px;
+			cursor:crosshair;
+		}
+		</style>
+		
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+		<!--<script type="text/javascript" src="canvasPaint.js"></script>-->
+		<script type="text/javascript">
+			var selectedColor = "red";
+			
+			$(document).ready(function(){
+				$("#colorPalette div").click(function(){
+					selectedColor = this.id;
+				});
+			});
+			
+			function kaydet(){
+				var paintCanvas = document.getElementById("paintCanvas");
+				window.open(paintCanvas.toDataURL("image/png"), "sonDurum");
+			}
+		</script>
+	</head>
+	
+	<body>
+		<header>
+			<hgroup>
+				<h1>HTML Paint</h1>
+			</hgroup>
+		</header>
+		<section id="tools">
+			<section id="colorPalette">
+				<div id="red"></div>
+				<div id="green"></div>
+				<div id="blue"></div>
+			</section>
+			<section id="toolBox">
+				<input type="checkbox" id="kare"><label for="kare">Kare</label>
+				<input type="button" value="kaydet" onclick="kaydet()">
+			</section>
+		</section>
+		<section id="paintArea">
+			<canvas id="paintCanvas" width="900" height="600"></canvas>
+			<canvas id="hintCanvas" width="900" height="600"></canvas>
+		</section>
+	</body>
+	
+	<script type="text/javascript">
+	
+	var paintCanvas = document.getElementById("paintCanvas");
+	var paintContext = paintCanvas.getContext("2d");
+	var hintCanvas = document.getElementById("hintCanvas");
+	var hintContext = hintCanvas.getContext("2d");
+	
+	var kareMi = false;
+	
+	var isDragging = false;
+	var startPoint = { x:0, y:0 };
+	
+	
+	function canvasReady(){
+		hintCanvas.onmousedown = paintMouseDown;
+		hintCanvas.onmouseup = paintMouseUp;
+		hintCanvas.onmousemove = paintMouseMove;
+	}
+	
+	function paintMouseDown(e){
+		isDragging = true;
+		kareMi = document.getElementById("kare").checked;
+		startPoint.x = e.offsetX;
+		startPoint.y = e.offsetY;
+		paintContext.beginPath();
+		paintContext.moveTo(startPoint.x, startPoint.y);
+		paintContext.strokeStyle = selectedColor;
+	}
+	function paintMouseUp(e){
+		isDragging = false;
+		if(kareMi){
+			hintCanvas.width = hintCanvas.width;
+			var width = e.offsetX - startPoint.x;
+			var height = e.offsetY - startPoint.y;
+			
+			paintContext.beginPath();
+			paintContext.fillStyle = selectedColor;
+			paintContext.fillRect(startPoint.x, startPoint.y, width, height);
+		}
+	}
+	function paintMouseMove(e){
+		if(isDragging){
+			console.log(kareMi);
+			if(kareMi){
+				hintCanvas.width = hintCanvas.width;
+				var width = e.offsetX - startPoint.x;
+				var height = e.offsetY - startPoint.y;
+				hintContext.strokeRect(startPoint.x, startPoint.y, width, height);
+			}
+			else{
+				paintContext.lineTo(e.offsetX, e.offsetY);
+				paintContext.stroke();
+			}
+		}
+	}
+	
+	canvasReady();
+	</script>
+</html>

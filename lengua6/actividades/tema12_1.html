@@ -1,0 +1,641 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <style>
+        table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+
+
+    .subrayar {
+        border-bottom: 2px solid #000000;
+    }
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br> <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <img src="img/planificotxt.png" alt="" class="img-responsive">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota1" class="nota-abierta" style="background: white;text-align: center;"></input>
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <b>1. Planifico mi texto</b> <span class="sobre">2.5 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>1. Selecciona</b> uno de los siguientes temas para tu relato histórico. Marca el que elijas con una <b style="color: #009cde;">X</b>
+                                        <table>
+                                            <tr>
+                                                <td style="background: #d7edf5;">La historia de la pelota de fútbol</td>
+                                                <td><input class="inputfraccciones" maxlength="1"></input></td>
+                                                <td style="background: #fdf1d7;">Historia del rock</td>
+                                                <td><input class="inputfraccciones" maxlength="1"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background: #eaf2db;">Historia del avión</td>
+                                                <td><input class="inputfraccciones" maxlength="1"></input></td>
+                                                <td style="background: #efe7f3;">El voto femenino en el Ecuador</td>
+                                                <td><input class="inputfraccciones" maxlength="1"></input></td>
+                                            </tr>
+                                        </table>
+                                        <br>
+                                        <b>2. Busca</b> información sobre el tema que elegiste en la biblioteca de tu escuela y en Internet. <b>Debes</b> elegir al menos tres fuentes. Entre ellas incluye un libro y una página web; la tercera es opcional y puede ser un artículo de revista histórica o un documental.
+                                        <br><br>
+                                        <b>3. Define</b> las fuentes que utilizarás para tu relato histórico. Escribe los datos de las fuentes en los siguientes recuadros.
+                                        <table class="table table-bordered">
+                                            <tr style="text-align: center;">
+                                                <td style="background: #005da8;color: white;" colspan="2">Libro</td>
+                                                <td style="background: #eb7500;color: white;" colspan="2">Página web</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Autor</td>
+                                                <td><input class="form-control"></input></td>
+                                                <td>Autor</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Año de publicación</td>
+                                                <td><input class="form-control"></input></td>
+                                                <td>Fecha de publicación</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Título del libro</td>
+                                                <td><input class="form-control"></input></td>
+                                                <td>Título del artículo</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Editorial</td>
+                                                <td><input class="form-control"></input></td>
+                                                <td>Nombre de la página web</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Páginas consultadas</td>
+                                                <td><input class="form-control"></input></td>
+                                                <td>URL</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr style="text-align: center;">
+                                                <td style="background: #7eb61f;color: white;" colspan="2">Artículo de revista histórica</td>
+                                                <td style="background: #934d97;color: white;" colspan="2">Documental</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Autor</td>
+                                                <td><input class="form-control"></input></td>
+                                                <td>Nombre del director</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Año de publicación</td>
+                                                <td><input class="form-control"></input></td>
+                                                <td>Año de producción del documental</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Título del artículo</td>
+                                                <td><input class="form-control"></input></td>
+                                                <td>Título del documental</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nombre de la revista</td>
+                                                <td><input class="form-control"></input></td>
+                                                <td>Nombre de la productora que realizó la cinta.</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Páginas consultadas</td>
+                                                <td><input class="form-control"></input></td>
+                                                <td>País en el que se produjo.</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                        </table>
+                                        <b>4. Toma</b> apuntes de los datos más importantes que incluirás en tu relato y <b>elabora</b> una línea de tiempo con los hechos más relevantes del proceso histórico que estás investigando.
+                                        <div class="row">
+                                            <div class="col-lg-3"><b>Fechas:</b><textarea name="" class="form-control" style="resize: none;border: 2px solid #005da8"></textarea></div>
+                                            <div class="col-lg-3"><b>Fechas:</b><textarea name="" class="form-control" style="resize: none;border: 2px solid #eb7500"></textarea></div>
+                                            <div class="col-lg-3"><b>Fechas:</b><textarea name="" class="form-control" style="resize: none;border: 2px solid #7eb61f"></textarea></div>
+                                            <div class="col-lg-3"><b>Fechas:</b><textarea name="" class="form-control" style="resize: none;border: 2px solid #934d97"></textarea></div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="img/redactartxt.png" alt="" class="img-responsive">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota2" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <b>2.  Redacto mi texto</b> <span class="sobre">2,5 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>Redacta</b> un texto breve sobre el tema que elegiste. <b>Recuerda</b> colocar la información en orden cronológico y escribir en tiempo pasado.
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" style="text-align: justify;">
+                                                <tr>
+                                                    <td><textarea name="" class="form-control" style="resize: none;border: 2px solid #934d97;"></textarea></td>
+                                                    <td style="width: 30%;"><b style="color: #934d97;">Introducción:</b><br> Establece el tema y ubícalo en un lugar y tiempo determinados.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><textarea name="" class="form-control" style="resize: none;border: 2px solid #0099c4;"></textarea></td>
+                                                    <td><b style="color: #0099c4;">Desarrollo:</b><br> Menciona y describe los hechos históricos más relevantes. En caso de que existan varias versiones puedes contrastarlas.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><textarea name="" class="form-control" style="resize: none;border: 2px solid #7eb61f;"></textarea></td>
+                                                    <td><b style="color: #7eb61f;">Conclusión:</b><br> Define las características esenciales de tu investigación. En caso de haber varias versiones aclara con cuál te identificas y por qué.</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="img/revisotxt.png" alt="">
+                    <div class="panel panel-default">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota3" class="nota-abierta" style="background: white; text-align: center;" >
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <b>3. Reviso mi texto</b> <span class="sobre">2,5 pts</span>
+                                        </a>
+                                        </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="text-question">
+                                        <b>Verifica</b> que tu texto cumpla los siguientes parámetros.
+                                        <table>
+                                            <tr>
+                                                <td style="background: #b20082;color: white;">Criterios para la revisión de tu relato histórico</td>
+                                                <td style="background: #009acb;color: white;">Sí</td>
+                                                <td style="background: #ee8600;color: white;">No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Utilizaste al menos tres fuentes para escribir tu relato.</td>
+                                                <td><input type="radio" name="gender" value="male"></td>
+                                                <td><input type="radio" name="gender" value="female"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>El lenguaje es claro y transmite el mensaje adecuadamente.</td>
+                                                <td><input type="radio" name="1" value=""></td>
+                                                <td><input type="radio" name="1" value=""></td>
+                                            </tr>
+                                            <tr>
+                                                <td>El relato establece el tema y lo ubica en un espacio y tiempo determinados.</td>
+                                                <td><input type="radio" name="2" value=""></td>
+                                                <td><input type="radio" name="2" value=""></td>
+                                            </tr>
+                                            <tr>
+                                                <td>El relato ordena los acontecimientos de forma cronológica.</td>
+                                                <td><input type="radio" name="3" value=""></td>
+                                                <td><input type="radio" name="3" value=""></td>
+                                            </tr>
+                                            <tr>
+                                                <td>El texto utiliza el modo y las conjugaciones verbales correspondientes al tiempo histórico del que se habla.</td>
+                                                <td><input type="radio" name="4" value=""></td>
+                                                <td><input type="radio" name="4" value=""></td>
+                                            </tr>
+                                            <tr>
+                                                <td>El texto cuida la ortografía.</td>
+                                                <td><input type="radio" name="5" value=""></td>
+                                                <td><input type="radio" name="5" value=""></td>
+                                            </tr>
+                                            <tr>
+                                                <td>El texto cuida la puntuación.</td>
+                                                <td><input type="radio" name="6" value=""></td>
+                                                <td><input type="radio" name="6" value=""></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Escribiste las referencias bibliográficas según las normas APA.</td>
+                                                <td><input type="radio" name="7" value=""></td>
+                                                <td><input type="radio" name="7" value=""></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="img/publicotxt.png" alt="">
+                    <div class="panel panel-default">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota4" class="nota-abierta" style="background: white; text-align: center;" >
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        <b>4. Publico mi texto</b> <span class="sobre">2,5 pts</span>
+                                        </a>
+                                        </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="text-question">
+                                        <b>Elige</b> una de estas posibilidades para publicar tu trabajo final.
+                                        <table>
+                                            <tr>
+                                                <td><b style="color: #005da8;">a)</b></td>
+                                                <td><span class="enc">La cartelera de la escuela</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b style="color: #005da8;">b)</b></td>
+                                                <td><span class="enc">Un lugar especial en tu casa</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b style="color: #005da8;">c)</b></td>
+                                                <td><span class="enc">Un blog de la clase</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b style="color: #005da8;">d)</b></td>
+                                                <td><span class="enc">La página web de tu escuela</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b style="color: #005da8;">e)</b></td>
+                                                <td><span class="enc">Otra forma que tú propongas</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="guardar()">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper1.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("114");
+    $('.btnGuardar').removeClass('disabled');
+    $('.enc').click(function() {
+
+        if ($(this).hasClass('subrayar')) {
+            $(this).removeClass('subrayar')
+        } else {
+            $(this).addClass('subrayar')
+        }
+    });
+
+    $('.enc1').click(function() {
+
+        if ($(this).hasClass('encierra')) {
+            $(this).removeClass('encierra')
+        } else {
+            $(this).addClass('encierra')
+        }
+    });
+    document.getElementById('nota1').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota1').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1'), 2.5)
+    });
+    document.getElementById('nota2').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota2').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota2'), 2.5)
+    });
+    document.getElementById('nota3').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota3').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota3'), 2.5)
+    });
+    document.getElementById('nota4').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota4').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota4'), 2.5)
+    });
+
+
+
+    function pregunta1() {
+        var nt1 = 0,
+            nt2 = 0,
+            nt3 = 0,
+            nt4 = 0,
+            nt5 = 0;
+
+        if ($('.2').hasClass('subrayar') == true) {
+            nt1 = 1;
+            $('.2').addClass('correcto');
+        }
+        if ($('.6').hasClass('subrayar') == true) {
+            nt2 = 1;
+            $('.6').addClass('correcto');
+        }
+        if ($('.4').hasClass('subrayar') == true) {
+            nt3 = 1;
+            $('.4').addClass('correcto');
+        }
+        if ($('.1').hasClass('subrayar') == true) {
+            nt4 = 1;
+            $('.1').addClass('incorrecto');
+        }
+        if ($('.3').hasClass('subrayar') == true) {
+            nt5 = 1;
+            $('.3').addClass('incorrecto');
+        }
+        if ($('.5').hasClass('subrayar') == true) {
+            nt5 = 1;
+            $('.5').addClass('incorrecto');
+        }
+
+        $('.enc').off('click');
+        var subtotal = parseFloat(nt1) + parseFloat(nt2) + parseFloat(nt3) - parseFloat(nt4) - parseFloat(nt5) - parseFloat(nt5);
+        var total = (subtotal * 5) / 3;
+        if (total < 0) {
+            total = 0;
+            $('#nota1').val(parseFloat(total).toFixed(2));
+        } else {
+            $('#nota1').val(parseFloat(total).toFixed(2));
+        }
+
+    }
+
+    function pregunta2() {
+        var respact2 = ['2', '4', '5', '1', '3', '6', ];
+        var cont = 0;
+        for (var i = 0; i < 6; i++) {
+            var res = $('#act2num' + [i] + '').val().toLowerCase();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#act2num' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#act2num' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 2.5) / 6;
+        $('#nota2').val(parseFloat(total).toFixed(2));
+    }
+
+
+    function NotaFinal() {
+
+        var nota1 = document.getElementById('nota1').value;
+        var nota2 = document.getElementById('nota2').value;
+        var nota3 = document.getElementById('nota3').value;
+        var nota4 = document.getElementById('nota4').value;
+
+        if ((nota1 == "") || (nota2 == "")||(nota3 == "") || (nota4 == "")) {
+            alert("Calificar la pregunta 1, 2, 3 o 4.")
+        } else {
+
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4);
+            $('#txtNota').html(parseFloat(total).toFixed(2));
+            document.getElementById('bt_comprobar').disabled = true;
+            $('input').attr("disabled", true);
+            $('textarea').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+
+        }
+    }
+    </script>
+</body>
+
+</html>

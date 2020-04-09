@@ -1,0 +1,353 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.pintarcorrecto {
+
+    background-color: #32a75b;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+
+}
+
+.pintar1 {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.letraAzul {
+    color: #005ca4;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+
+.subrayar {
+    border-bottom: 5px solid #008FFF;
+}
+
+textarea {
+    resize: none;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>Pregunta 1.</b> Hacer click en la frase para subrayar.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="pregunta3()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-aplico" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico">
+                <span class="titulo"><img src="img/icoE.png" alt="">Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--texto de ayuda de la actividad-->
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12">
+                    <div class="text-question">
+                        <br>
+                        <b style="color: #005da8;">1. </b><b>Lee</b> las dos anécdotas y <b>subraya</b> los elementos que pudieron haber cambiado la vida de estos personajes. <b>Nárralas</b> en voz alta, en la clase.<i><b>(10 pts.)</b></i>
+                        <br>
+                        <div style="text-align: justify;">
+                            <b style="color: #00b1d9;">J. R. R. Tolkien</b>
+                            <br>
+                            <span class="1 enc1">Curiosamente, J. R. R. Tolkien, autor de El señor de los anillos, descubrió su pasión por los mundos fantásticos a los seis años.</span> <span class="1 enc2">A esa edad le picó una tarántula que le dejó al borde de la muerte.</span> <span class="1 enc3">El futuro escritor pasó su convalecencia leyendo una enciclopedia sobre criaturas mitológicas, que años después formarían su universo literario.</span>
+                        </div>
+                        <br><br>
+                        <div style="text-align: justify;">
+                            <b style="color: #00b1d9;">Albert Einstein</b>
+                            <br>
+                            <span class="2 enci1">Einstein nació con una cabeza tan grande que su madre pensó que había alumbrado a un bebé deforme.</span> <span class="2 enci2">Fueron temores infundados, ya que la cabeza del niño adquirió un volumen normal al desarrollarse.</span> <span class="2 enci3">En cambio, varios biógrafos creen que el científico sufrió alguna especie de autismo, ya que no habló con fluidez hasta los cinco años.</span> <span class="2 enci4">El historiador Otto Neugenbauer cuenta que la pasión de Einstein por la ciencia se despertó a los seis años, cuando estaba convaleciente de una enfermedad.</span> <span class="2 enci5">Su padre le regaló una brújula y el chico, fascinado al ver cómo la aguja siempre señalaba al mismo punto por mucho que la moviera, no paró hasta comprender su funcionamiento.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script>
+        $("#n_pagina").html("173"); //impresion de pagina
+        var titulos = 'aplico';
+        f_titulos();
+        var cont = 1,
+            ejer = 1,
+            itemsT = 10,
+            cor = 0,
+            inc = 0,
+            calificacion = 10;
+
+        /*document.getElementById('nota1').addEventListener('keypress', () => {
+            validNumero(0, 10, 1);
+        });
+        document.getElementById('nota1').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota1'), 10)
+        });*/
+
+        $('.1').click(function() {
+            switch ($(this).attr('class')) {
+                case '1 enc1':
+                    $('.enc1').addClass('subrayar');
+                    $('.enc2').removeClass('subrayar');
+                    $('.enc3').removeClass('subrayar');
+                    break;
+                case '1 enc2':
+                    $('.enc2').addClass('subrayar');
+                    $('.enc1').removeClass('subrayar');
+                    $('.enc3').removeClass('subrayar');
+                    break;
+                case '1 enc3':
+                    $('.enc3').addClass('subrayar');
+                    $('.enc1').removeClass('subrayar');
+                    $('.enc2').removeClass('subrayar');
+                    break;
+
+            }
+        });
+
+        $('.2').click(function() {
+            switch ($(this).attr('class')) {
+                case '2 enci1':
+                    $('.enci1').addClass('subrayar');
+                    $('.enci2').removeClass('subrayar');
+                    $('.enci3').removeClass('subrayar');
+                    $('.enci4').removeClass('subrayar');
+                    $('.enci5').removeClass('subrayar');
+
+
+                    break;
+                case '2 enci2':
+                    $('.enci2').addClass('subrayar');
+                    $('.enci1').removeClass('subrayar');
+                    $('.enci3').removeClass('subrayar');
+                    $('.enci4').removeClass('subrayar');
+                    $('.enci5').removeClass('subrayar');
+
+                    break;
+                case '2 enci3':
+                    $('.enci3').addClass('subrayar');
+                    $('.enci1').removeClass('subrayar');
+                    $('.enci2').removeClass('subrayar');
+                    $('.enci4').removeClass('subrayar');
+                    $('.enci5').removeClass('subrayar');
+
+
+                    break;
+                case '2 enci4':
+                    $('.enci4').addClass('subrayar');
+                    $('.enci1').removeClass('subrayar');
+                    $('.enci2').removeClass('subrayar');
+                    $('.enci3').removeClass('subrayar');
+                    $('.enci5').removeClass('subrayar');
+
+                    break;
+                case '2 enci5':
+                    $('.enci5').addClass('subrayar');
+                    $('.enci1').removeClass('subrayar');
+                    $('.enci2').removeClass('subrayar');
+                    $('.enci3').removeClass('subrayar');
+                    $('.enci4').removeClass('subrayar');
+
+                    break;
+
+
+            }
+        });
+
+
+        function pregunta3() {
+            var nt1 = 0,
+                nt2 = 0,
+                nt3 = 0;
+            if ($('.enc3').hasClass('subrayar') == true) {
+                nt1 = 5;
+
+                $('.enc3').addClass('correcto');
+
+
+            } else if ($('.enc1').hasClass('subrayar') == true) {
+                $('.enc1').addClass('incorrecto');
+
+
+            } else if ($('.enc2').hasClass('subrayar') == true) {
+                $('.enc2').addClass('incorrecto');
+            }
+            ////////////////////////////////////////////
+            if ($('.enci5').hasClass('subrayar') == true) {
+                nt2 = 5;
+
+                $('.enci5').addClass('correcto');
+
+
+            } else if ($('.enci2').hasClass('subrayar') == true) {
+                $('.enci2').addClass('incorrecto');
+
+
+            } else if ($('.enci4').hasClass('subrayar') == true) {
+                $('.enci4').addClass('incorrecto');
+
+
+            } else if ($('.enci3').hasClass('subrayar') == true) {
+                $('.enci3').addClass('incorrecto');
+
+            } else if ($('.enci1').hasClass('subrayar') == true) {
+                $('.enci1').addClass('incorrecto');
+            }
+
+            ////////////////////////////////////////////
+
+            $('.1').off('click');
+            $('.2').off('click');
+
+            cor = parseFloat(nt1) + parseFloat(nt2);
+            Calculo_nota();
+            $('#bt_comprobar').attr("disabled", true);
+            $('input').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+        }
+        </script>
+</body>
+
+</html>

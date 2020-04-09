@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MATEMATICA 3</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/estilo_canvas.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+</head>
+<style type="text/css">
+.cajas {}
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.t1 {
+    max-width: 180px;
+    display: inline-block;
+    text-align: center;
+    font-size: 22px;
+}
+
+.txt_tit {
+    color: #009DCC;
+    font-size: 18px;
+}
+
+.col_div {
+    width: 48%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.txt_cont {
+    font-size: 18px;
+    margin-top: -8px;
+    padding-top: 18px;
+    border-right: 3px dashed #76B82A;
+    border-bottom: 3px dashed #76B82A;
+    margin-bottom: 20px;
+}
+
+.bg_titu {
+    z-index: 999px;
+    padding: 12px;
+    background-color: #F9B000;
+    border-radius: 18px 0px;
+    max-width: 90px;
+    color: #fff;
+    font-size: 18px;
+}
+
+@media (max-width: 770px) {
+    .cajas {
+        clear: left;
+    }
+}
+
+.encierra {
+    border: 2px solid #9B8600;
+    border-radius: 40%;
+
+}
+
+.pinta {
+    background: #DBCD9E;
+}
+
+.pinta1 {
+    background: #DBCD9E;
+}
+
+.pinta2 {
+    background: #DBCD9E;
+}
+
+.pinta3 {
+    background: #DBCD9E;
+}
+
+.c_destino2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 70px;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 50px;
+    max-width: 100%;
+    margin-left: 1px;
+}
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 180px;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 16px;
+    display: inline-block;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1:</b> Calcula el doble y el triple.
+        <br>
+        <b>Pregunta 2:</b>  Con los datos del problema, calcula el doble y el triple.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                         <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-reflexiono" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-reflexiono">
+                <span class="titulo"><img src="img/icoR.png" alt="Reflexiono para avanzar"> Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/practica_individual.png" class="img-responsive" alt="">
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a" readonly>&nbsp; <b style="color: #005CA4">1.</b> <b> Calcula </b> el doble y el triple. <b>Observa</b> el ejemplo.<b>(7 pts.)</b></p>
+                </div>
+                <div class="actividad115 text-question">
+                    <div class="table-responsive" align="center">
+                        <table>
+                            <tr align="center">
+                                <td style="background: #86CBE2; color: white; border: 2px solid #86CBE2;"><b>Número</b></td>
+                                <td style="background: #B4D49F; color: white; border: 2px solid #86CBE2;"><b>Doble</b></td>
+                                <td style="background: #C09BC5; color: white; border: 2px solid #86CBE2;"><b>Triple</b></td>
+                            </tr>
+                            <tr align="center">
+                                <td id="p1im1" style="border: 2px solid #86CBE2;"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon1">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon2">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon3"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon4">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon5">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon6">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon7"></td>
+                            </tr>
+                            <tr align="center">
+                                <td id="p1im2" style="border: 2px solid #86CBE2;"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon11">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon12">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon13"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon14">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon15">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon16">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon17"></td>
+                            </tr>
+                            <tr align="center">
+                                <td id="p1im3" style="border: 2px solid #86CBE2;"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon21">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon22">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon23"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon24">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon25">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon26">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon27"></td>
+                            </tr>
+                            <tr align="center">
+                                <td id="p1im4" style="border: 2px solid #86CBE2;"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon31">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon32">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon33"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon34">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon35">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon36">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon37"></td>
+                            </tr>
+                            <tr align="center">
+                                <td id="p1im5" style="border: 2px solid #86CBE2;"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon41">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon42">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon43"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon44">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon45">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon46">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p1dcon47"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                
+                <img src="img/problema.png" class="img-responsive" alt="">
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a" readonly>&nbsp; <b style="color: #005CA4">2.</b> La familia Castro gasta mensualmente $ <span id="p2im1"></span> en servicios básicos, pero en el mes de agosto gastó el doble y en el mes de diciembre gastó el triple. <b>(3 pts.)</b> <br>¿Cuánto dinero gastó la familia Castro en los meses de agosto y de diciembre? <br><b>Completa</b> el cuadro.</p>
+                </div>
+                <div class="actividad115 text-question">
+                    <div class="col-sm-8">
+                        <div class="table-responsive" align="center">
+                        <table>
+                            <tr align="center">
+                                <td style="background: #86CBE2; color: white; border: 2px solid #86CBE2;"><b></b></td>
+                                <td style="background: #B4D49F; color: white; border: 2px solid #86CBE2;"><b>Agosto</b></td>
+                                <td style="background: #C09BC5; color: white; border: 2px solid #86CBE2;"><b>Diciembre</b></td>
+                            </tr>
+                            <tr align="center">
+                                <td style="border: 2px solid #86CBE2;">La familia Castro gasta</td>
+                                <td style="border: 2px solid #86CBE2;">Doble</td>
+                                <td style="border: 2px solid #86CBE2;">Triple</td>
+                            </tr>
+                            <tr align="center">
+                                <td id="p2im2" style="border: 2px solid #86CBE2;"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p2dcon1">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p2dcon2">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p2dcon3"></td>
+                                <td style="border: 2px solid #86CBE2;"><input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p2dcon4">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p2dcon5">+<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p2dcon6">=<input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p2dcon7"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <p><b style="color: #005CA4">R.</b> En agosto la familia Castro gastó $ <input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p2dcon8"> y en el mes de diciembre gastó $ <input type="text" style="border-radius: 10px; width: 50px; border: 2px solid #C4A1C8; text-align: center;" onkeypress="return soloNumeros1(event)" maxlength="3" id="p2dcon9"></p>
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="img/i1_p191_u5a12.jpg" class="img-responsive">
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--<p id="trace" class="alert alert-warning display-none"></p>-->
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni5act12.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    f_titulos();
+    $("#n_pagina").html('191');
+    $(".oculta").hide();
+
+    $("#myImg1").click(function() {
+        $(".oculta").hide(1000);
+        $("#myImg").show();
+    });
+    $("#myImg").click(function() {
+        $(".oculta").show(1000);
+        $("#myImg").hide();
+    });
+
+    //Solo permite introducir numeros.
+    function soloNumeros1(e) {
+        var key = window.event ? e.which : e.keyCode;
+        if (key < 48 || key > 57) {
+            e.preventDefault();
+        }
+    }
+
+    function onlyOne(checkbox) {
+        var checkboxes = document.getElementsByName('check')
+        checkboxes.forEach((item) => {
+            if (item !== checkbox) item.checked = false
+        })
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Matemática 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <script src="js/123.js"></script>
+    <!-- copy these lines to your document head: -->
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <!-- end copy -->
+    <style>
+        .fraction {
+    display: inline-block;
+    vertical-align: middle; 
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid black;}
+    .fraction span.bar {display: none;}
+    .paso{
+        width: 80px;
+        background: #f0c22a;
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso2{
+        width: 150px;
+        background: #a8e6b6;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso3{
+        width: 150px;
+        background: #88d7f7;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso4{
+        width: 150px;
+        background: #eeda81;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso5{
+        width: 150px;
+        background: #eaacec;
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso6{
+        width: 150px;
+        background: #81cbee;
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .caja1{
+        width: 20%;
+        text-align: center;
+    }
+    .caja{
+        width: 100%;
+        text-align: center;
+    }
+
+    .correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+        margin: 2px;
+        padding: 5px;
+        border: #8FB435;
+
+        }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700px;
+        margin: 20px;
+        padding: 5px;
+        border: #E76E80;
+        }
+    .imagenes1 img{
+        padding: 5px;
+        max-width: 200px;
+        display: inline-table;
+    }
+    .respuestas{
+        width: 60%;
+        display: inline-table;
+
+    }
+    .respuestas1{
+        width: 30%;
+        display: inline-table;
+
+    }
+    .recta{
+        padding: 5px;
+        display: inline-table;
+        max-width: 200px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee el problema atentamente y responde en los espacios en blanco según los valores presentados
+        <br><span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled
+                        data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload(true);">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> /
+                        <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"> / 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag 155
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoE.png" alt="">Prueba Diagnóstica</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="col col-md-12 space"><span class="text-question">
+                        <img src="img/pguiada.png" alt="">
+                        <p></p>
+                        <div class="col col-md-12">
+                            <span>Expresa la fracción decimal como número decimal: <div class="fraction">
+                                    <span class="fup">61</span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn">100</span>
+                                </div></span>
+                        </div>
+
+                        <div class="col col-md-6">
+                            <p>Identificamos la cantidad de ceros que tiene el denominador.</p>
+                            <div class="fraction">
+                                <span class="fup">61</span>
+                                <span class="bar">/</span>
+                                <span class="fdn">100</span>
+                            </div> → El denominador es 100; por lo tanto,
+                            tiene dos ceros.
+
+                        </div>
+                        <div class="col col-md-6">
+                            <p>Escribimos el número decimal contando dos
+                                lugares a partir de la coma decimal. </p>
+                            <div class="fraction">
+                                <span class="fup">61</span>
+                                <span class="bar">/</span>
+                                <span class="fdn">100</span>
+                            </div> = 0.61
+                        </div>
+                        <div class="col col-md-12">
+                            <img src="img/pindividual.png" alt="">
+                            <ol>
+                                <li>Escribe los números como fracción decimal o como número decimal</li>
+                                <ol type="a">
+                                    <div class="col col-md-6">
+                                        <li></li>
+                                        <div class="fraction">
+                                            <span class="fup">148</span>
+                                            <span class="bar">/</span>
+                                            <span class="fdn">1000</span>
+                                        </div> = <input type="number" class="form-control respuestas" id="a0">
+                                        <li></li>
+                                        <div class="fraction">
+                                            <span class="fup">3</span>
+                                            <span class="bar">/</span>
+                                            <span class="fdn">10</span>
+                                        </div> = <input type="number" class="form-control respuestas" id="a1">
+                                        <li></li>
+                                        <div class="fraction">
+                                            <span class="fup">430</span>
+                                            <span class="bar">/</span>
+                                            <span class="fdn">1000</span>
+                                        </div> = <input type="number" class="form-control respuestas" id="a2">
+                                        <li></li>
+                                        <div class="fraction">
+                                            <span class="fup">223</span>
+                                            <span class="bar">/</span>
+                                            <span class="fdn">100</span>
+                                        </div> = <input type="number" class="form-control respuestas" id="a3">
+                                        <li></li>
+                                        <div class="fraction">
+                                            <span>7,6</span>
+                                        </div> = <div class="fraction respuestas1">
+                                                <span class="fup"><input type="number" class="form-control" id="a4"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input type="number" class="form-control" id="a5"></span>
+                                            </div>
+                                       
+                                         
+
+                                    </div>
+                                    <div class="col col-md-6">
+                                        <li></li>
+                                        <div class="fraction">
+                                            <span>0,25</span>
+                                        </div> = <div class="fraction respuestas1">
+                                                <span class="fup"><input type="number" class="form-control" id="a6"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input type="number" class="form-control" id="a7"></span>
+                                            </div>
+                                        <li></li>
+                                        <div class="fraction">
+                                            <span>0,19</span>
+                                        </div> = <div class="fraction respuestas1">
+                                                <span class="fup"><input type="number" class="form-control" id="a8"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input type="number" class="form-control" id="a9"></span>
+                                            </div>
+                                        <li></li>
+                                        <div class="fraction">
+                                            <span>0,015</span>
+                                        </div> = <div class="fraction respuestas1">
+                                                <span class="fup"><input type="number" class="form-control" id="a10"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input type="number" class="form-control" id="a11"></span>
+                                            </div>
+                                        <li></li>
+                                        <div class="fraction">
+                                            <span>0,8</span>
+                                        </div> = <div class="fraction respuestas1">
+                                                <span class="fup"><input type="number" class="form-control" id="a12"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input type="number" class="form-control" id="a13"></span>
+                                            </div>
+                                        <li></li>
+                                        <div class="fraction">
+                                            <span>0,04</span>
+                                        </div> = <div class="fraction respuestas1">
+                                                <span class="fup"><input type="number" class="form-control" id="a14"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input type="number" class="form-control" id="a15"></span>
+                                            </div>
+
+                                    </div>
+                                    
+                                </ol>
+                                <div class="col col-md-12">
+                                    <li>Según el gráfico, escribe la fracción decimal y el número decimal.</li>
+                                </div>
+                                <table class="table table-border">
+                                    <tr>
+                                        <td class="text-center">Grafico</td>
+                                        <td class="text-center"><img src="img/i1_p155_act123.png" alt=""></td>
+                                        <td class="text-center"><img src="img/i2_p155_act123.png" alt=""></td>
+                                        <td class="text-center"><img src="img/i3_p155_act123.png" alt=""></td>
+                                        <td class="text-center"><img src="img/i4_p155_act123.png" alt=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fracción decimal</td>
+                                        <td class="text-center">
+                                            <div class="fraction respuestas1">
+                                                <span class="fup"><input type="number" class="form-control" id="a16"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input type="number" class="form-control" id="a17"></span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="fraction respuestas1">
+                                                <span class="fup"><input type="number" class="form-control" id="a18"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input type="number" class="form-control" id="a19"></span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="fraction respuestas1">
+                                                <span class="fup"><input type="number" class="form-control" id="a20"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input type="number" class="form-control" id="a21"></span>
+                                                        
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="fraction respuestas1">
+                                                <span class="fup"><input type="number" class="form-control"
+                                                        id="a22"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input type="number" class="form-control"
+                                                        id="a23"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Número decimal</td>
+                                        <td>
+                                            <input type="number" class="form-control" id="a24">
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" id="a25">
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" id="a26">
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" id="a27">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ol>
+                        </div>
+                        <img src="img/i5_p155_act123.png" alt="">
+                        <div class="col col-md-12">
+                            <div class="col col-md-2">
+                                <p class="text-justify">En grupos de cuatro
+                                        compañeros, resuelvan el
+                                        ejercicio en una hoja. Cada
+                                        uno haga el ejercicio solo,
+                                        luego, compártanlo con el
+                                        grupo y analicen procesos. </p>
+                                <p class="text-justify">Completen el cuadro
+                                        y elaboren un gráfico para
+                                        representar cada número.</p>
+                            </div>
+                            <div class="col col-md-5">
+                                <table class="table table-border">
+                                    <tr>
+                                        <td class="bg bg-info">Número</td>
+                                        <td class="bg bg-danger">Fracción</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg bg-success">Cinco décimos</td>
+                                        <td><div class="fraction respuestas">
+                                            <span class="fup"><input type="number" class="form-control"
+                                                    id="a28"></span>
+                                            <span class="bar">/</span>
+                                            <span class="fdn"><input type="number" class="form-control"
+                                                    id="a29"></span>
+                                        </div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg bg-success">Veinticinco centésimos</td>
+                                        <td><div class="fraction respuestas">
+                                            <span class="fup"><input type="number" class="form-control"
+                                                    id="a30"></span>
+                                            <span class="bar">/</span>
+                                            <span class="fdn"><input type="number" class="form-control"
+                                                    id="a31"></span>
+                                        </div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg bg-success">Doscientos veinticinco
+                                                milésimos</td>
+                                        <td><div class="fraction respuestas">
+                                            <span class="fup"><input type="number" class="form-control"
+                                                    id="a32"></span>
+                                            <span class="bar">/</span>
+                                            <span class="fdn"><input type="number" class="form-control"
+                                                    id="a33"></span>
+                                        </div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg bg-success">Seis centésimos</td>
+                                        <td><div class="fraction respuestas">
+                                            <span class="fup"><input type="number" class="form-control"
+                                                    id="a34"></span>
+                                            <span class="bar">/</span>
+                                            <span class="fdn"><input type="number" class="form-control"
+                                                    id="a35"></span>
+                                        </div></td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <div class="col col-md-5">
+                                <table class="table table-border">
+                                        <tr>
+                                                <td class="bg bg-info">Número</td>
+                                                <td class="bg bg-danger">Decimal</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bg bg-success">Cinco décimos</td>
+                                                <td><input type="number" class="form-control respuestas"
+                                                    id="a36"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bg bg-success">Veinticinco centésimos</td>
+                                                <td><input type="number" class="form-control respuestas"
+                                                    id="a37"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bg bg-success">Doscientos veinticinco
+                                                        milésimos</td>
+                                                <td><input type="number" class="form-control respuestas"
+                                                    id="a38"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bg bg-success">Seis centésimos</td>
+                                                <td><input type="number" class="form-control respuestas"
+                                                    id="a39"></td>
+                                            </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')"
+                                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/highcharts.js"></script>
+        <script src="js/exporting.js"></script>
+        <script src="js/export-data.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+</body>
+<script>
+
+
+    f_iniciar();
+    function f_iniciar() {
+        //console.log(itemsT);
+        $(".si").bind("click", function () { //click en el boton iniciar
+            $(".si").removeClass("correcto");
+            $(".no").removeClass("correcto");
+            $(this).addClass("correcto");
+        });
+        $(".no").bind("click", function () { //click en el boton iniciar
+            $(".si").removeClass("correcto");
+            $(".no").removeClass("correcto");
+            $(this).addClass("correcto");
+        });
+
+    }   
+</script>
+
+</html>

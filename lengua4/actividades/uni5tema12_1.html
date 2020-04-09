@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.pintarcorrecto {
+
+    background-color: #32a75b;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+
+}
+
+.pintar1 {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.subrayar {
+    border: 0;
+    border-bottom: 2px solid #008FFF;
+
+}
+
+.letraAzul {
+    color: #005ca4;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+
+textarea {
+    resize: none;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="calificar_abierta()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-aplico" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico">
+                <span class="titulo"><img src="img/icoE.png" alt="">Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--texto de ayuda de la actividad-->
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12">
+                    <img src="img/planificotxt.png" alt="" class="img-responsive"></img>
+                    <div class="text-question" style="text-align: justify;">
+                        <br>
+                        <input type="text" maxlength="4" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota1"><b>1. Lee</b> el siguiente diario. Luego, <b>escribe</b> los días, las horas y el acontecimiento más importante de cada hora. <i><b>(5 pts.)</b></i>
+                        <div class="row">
+                            <div class="col-lg-12 table-responsive">
+                                <div style="background: url('img/i1_p186_uni5Tema12_1.jpg');width: 877px;height: 707px;">
+                                    <textarea class="form-control" rows="20" placeholder="Escribe" style="position: absolute;top: 150px; left:500px; width: 300px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <b>2. Lee</b> las ideas sobre cómo escribir un diario.
+                        <div style="text-align: justify;">
+                            <br>
+                            <b class="letraAzul">•</b> La rutina es muy importante. Puedes elegir un horario para escribir en tu diario, o llevarlo contigo y escribir cada vez que deseas. Para comenzar, registra los acontecimientos diariamente aunque solo sean algunas líneas. No olvides poner la fecha en cada entrada a tu diario.
+                            <br><br>
+                            <b class="letraAzul">•</b> Hay beneficios al escribir un diario personal:
+                            <br>- Evaluar tus progresos.
+                            <br>- Expresar tus emociones.
+                            <br>- Escribir tus metas.
+                            <br>- Reflexionar sobre lo que te sucede.
+                            <br>- Resolver problemas.
+                        </div>
+                        <br>
+                        <b>3. Planifica</b> tus ideas para iniciar la escritura de tu diario.
+                        <br><b style="color: #8e4a9d;">¿Qué escribir?</b>
+                        <br><br><b class="letraAzul">•</b> Piensa en tu día: ¿Qué ha sucedido? ¿Qué has aprendido? ¿Qué experiencia nueva has vivido? ¿Has tenido algún problema? ¿Cómo te has sentido? ¿Cómo lo puedes solucionar? ¿Qué quieres hacer mañana o en el futuro?
+                        <br><br><b class="letraAzul">•</b> Deja fluir las ideas. Incorpora fotos, dibujos, canciones o poemas.
+                        <br><br><b class="letraAzul">•</b> Este diario es un espacio ideal para reflejar quién eres.
+                        <br><br><b class="letraAzul">•</b> Ensaya el primer escrito para tu diario personal.
+                        <br><br>
+                        <b>4. Piensa</b> sobre lo que vas a escribir y cómo lo vas hacer. Siéntete libre.
+                        <img src="img/redactartxt.png" alt="" class="img-responsive"></img>
+                        <input type="text" maxlength="4" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota2"><b>Redacta</b>. Aquí no hay borradores. <b>Desafíate</b> para mejorar tu redacción, gramática, ortografía, vocabulario y caligrafía. <b>Incorpora</b> todos los elementos que consideres interesantes. <i><b>(5 pts.)</b></i>
+                        <div class="row">
+                            <div class="col-lg-12 table-responsive">
+                                <div style="background: url('img/i2_p186_uni5Tema12_1.jpg');width: 804px;height: 443px;">
+                                    <textarea class="form-control" rows="16" placeholder="Escribe" style="position: absolute;top: 50px; left:80px; width: 630px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="img/publicotxt.png" alt="" class="img-responsive"></img>
+                        <b>1.</b> Publica. ¿Te animas a compartir tu diario con tu mejor amigo o con un miembro de tu familia, o prefieres guardarlo solo para ti?
+                        <br><br>
+                        <b>2.</b> Si deseas publicarlo, elige uno de los siguientes momentos:
+                        <table style="border: 1px solid #8e4a9d;">
+                            <tr>
+                                <td style="border: 1px solid #8e4a9d;">Una reunión familiar</td>
+                                <td style="border: 1px solid #8e4a9d;"><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #8e4a9d;">El cumpleaños de un familiar o el tuyo</td>
+                                <td style="border: 1px solid #8e4a9d;"><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #8e4a9d;">La visita de tu mejor amigo</td>
+                                <td style="border: 1px solid #8e4a9d;"><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #8e4a9d;">Un paseo del colegio</td>
+                                <td style="border: 1px solid #8e4a9d;"><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #8e4a9d;">Otra ocasión que tú elijas</td>
+                                <td style="border: 1px solid #8e4a9d;"><input type="checkbox"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script>
+        $("#n_pagina").html("185"); //impresion de pagina
+        var titulos = 'aplico';
+        f_titulos();
+        var cont = 1,
+            ejer = 1,
+            itemsT = 10,
+            cor = 0,
+            inc = 0,
+            calificacion = 10;
+
+        $('.enc').click(function() {
+
+            if ($(this).hasClass('pintar1')) {
+                $(this).removeClass('pintar1')
+            } else {
+                $(this).addClass('pintar1')
+            }
+        });
+
+        document.getElementById('nota1').addEventListener('keypress', () => {
+            validNumero(0, 5, 1);
+        });
+        document.getElementById('nota1').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota1'), 5)
+        });
+        document.getElementById('nota2').addEventListener('keypress', () => {
+            validNumero(0, 5, 1);
+        });
+        document.getElementById('nota2').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota2'), 5)
+        });
+        </script>
+</body>
+
+</html>

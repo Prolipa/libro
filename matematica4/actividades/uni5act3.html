@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Matemática 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {}
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.t1 {
+    max-width: 180px;
+    display: inline-block;
+    text-align: center;
+    font-size: 22px;
+}
+
+.txt_tit {
+    color: #009DCC;
+    font-size: 18px;
+}
+
+.col_div {
+    width: 48%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.txt_cont {
+    font-size: 18px;
+    margin-top: -8px;
+    padding-top: 18px;
+    border-right: 3px dashed #76B82A;
+    border-bottom: 3px dashed #76B82A;
+    margin-bottom: 20px;
+}
+
+.bg_titu {
+    z-index: 999px;
+    padding: 12px;
+    background-color: #F9B000;
+    border-radius: 18px 0px;
+    max-width: 90px;
+    color: #fff;
+    font-size: 18px;
+}
+
+@media (max-width: 770px) {
+    .cajas {
+        clear: left;
+    }
+}
+
+.encierra {
+    border: 2px solid #9B8600;
+    border-radius: 40%;
+
+}
+
+.pinta {
+    background: #DBCD9E;
+}
+
+.pinta1 {
+    background: #DBCD9E;
+}
+
+.pinta2 {
+    background: #DBCD9E;
+}
+
+.pinta3 {
+    background: #DBCD9E;
+}
+
+.c_destino2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 70px;
+}
+.c_destino1{
+            padding: 5px;
+            border:1px solid #CCAE69;
+            border-radius: 10px;
+            min-height: 70px;
+            min-width: 100px;
+        }
+.c_origen {
+
+            border: 1px solid #009BDB;
+            border-radius: 10px;
+            min-height: auto;
+            max-width: 100%;
+            margin-left: 1px;
+            min-width: 100%;
+
+        }
+.bg_palabra{
+                
+            border-radius: 10px;
+            background: #4EB399;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1:</b> Arrastra un número igual de cucharas para cada plato en los recuadros. Arrastra un número igual de mariposas para cada flor en los recuadros.
+        <br>
+        <b>Pregunta 2:</b> Completa las operaciones.
+        <br>
+        <b>Pregunta 3:</b> Escribe cada división.
+        <br>
+        <b>Pregunta 4:</b> Resuelve el problema.
+        <br>
+        <b>Pregunta 5:</b> Da click sobre los recuadros de la parte inferior para pintar la respuesta correcta.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                         <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-reflexiono" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-reflexiono">
+                <span class="titulo"><img src="img/icoR.png" alt="Reflexiono para avanzar"> Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/practica_individual.png" class="img-responsive" alt="">
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a" readonly>&nbsp; <b style="color: #005CA4">1.</b> <b> Reparte </b> un número igual de cucharas para cada plato, Luego <b>completa</b> los datos que te piden. <b>(2 pts.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <div id="p1act1">
+                        <p><b style="color: #005CA4;">a)</b></p>
+                        <div class="textos" style="display: inline-block;" ></div>
+                        <div class="table-responsive">
+                            <table>
+                                <tr align="center">
+                                    <td><div class="c_destino1 drop1" id="p1a1" style="display:inline-block;"></div></td>
+                                    <td></td>
+                                    <td><div class="c_destino1 drop1" id="p1a2" style="display:inline-block;"></div></td>
+                                    <td></td>
+                                    <td><div class="c_destino1 drop1" id="p1a3" style="display:inline-block;"></div></td>
+                                    <td></td>
+                                    <td><div class="c_destino1 drop1" id="p1a4" style="display:inline-block;"></div></td>
+                                    <td></td>
+                                    <td><div class="c_destino1 drop1" id="p1a5" style="display:inline-block;"></div></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><img src="img/i1_p181_u5a3.jpg" class="img-responsive"></td>
+                                    <td></td>
+                                    <td><img src="img/i1_p181_u5a3.jpg" class="img-responsive"></td>
+                                    <td></td>
+                                    <td><img src="img/i1_p181_u5a3.jpg" class="img-responsive"></td>
+                                    <td></td>
+                                    <td><img src="img/i1_p181_u5a3.jpg" class="img-responsive"></td>
+                                    <td></td>
+                                    <td><img src="img/i1_p181_u5a3.jpg" class="img-responsive"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon1"></td>
+                                    <td>+</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon2"></td>
+                                    <td>+</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon3"></td>
+                                    <td>+</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon4"></td>
+                                    <td>+</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon5"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table>
+                                <tr align="center">
+                                    <td>15&nbsp;</td>
+                                    <td>&nbsp;dividido por&nbsp;</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon6"></td>
+                                    <td>&nbsp;es igual a&nbsp; </td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon7"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td>15&nbsp;</td>
+                                    <td>&nbsp;÷&nbsp;</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon8"></td>
+                                    <td>&nbsp;=&nbsp; </td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon9"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="p1act2">
+                        <p><b style="color: #005CA4;">b)</b> Si hay 10 mariposas en un jardín, pero solo dos flores, ¿cuántas mariposas van en cada flor?</p>
+                        <div class="textos1" style="display: inline-block;" ></div>
+                        <div class="table-responsive" >
+                            <table>
+                                <tr align="center">
+                                    <td><div class="c_destino1 drop2" id="p11a1" style="display:inline-block;"></div></td>
+                                    <td></td>
+                                    <td><div class="c_destino1 drop2" id="p11a2" style="display:inline-block;"></div></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><img src="img/i3_p181_u5a3.jpg" class="img-responsive"></td>
+                                    <td></td>
+                                    <td><img src="img/i3_p181_u5a3.jpg" class="img-responsive"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p11dcon1"></td>
+                                    <td>+</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p11dcon2"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table>
+                                <tr align="center">
+                                    <td>10&nbsp;</td>
+                                    <td>&nbsp;dividido por&nbsp;</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p11dcon3"></td>
+                                    <td>&nbsp;es igual a&nbsp; </td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p11dcon4"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td>10&nbsp;</td>
+                                    <td>&nbsp;÷&nbsp;</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p11dcon5"></td>
+                                    <td>&nbsp;=&nbsp; </td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p11dcon6"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a" readonly>&nbsp; <b style="color: #005CA4">2.</b> <b>Encierra</b> en grupos iguales según se indica. Luego <b>completa</b> las operaciones. <b>(2 pts.)</b></p>
+                </div>
+                <div class="actividad115 text-question">
+                    <div class="col-sm-6" align="center">
+                        <img src="img/i5_p181_u5a3.jpg" class="img-responsive" alt="">
+                        <div class="table-responsive">
+                            <table>
+                                <tr>
+                                    <td>18</td>
+                                    <td>&nbsp;÷&nbsp;</td>
+                                    <td>9</td>
+                                    <td>&nbsp;=&nbsp;</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p2dcon1"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" align="center">
+                        <img src="img/i6_p181_u5a3.jpg" class="img-responsive" alt="">
+                        <div class="table-responsive">
+                            <table>
+                                <tr>
+                                    <td>24</td>
+                                    <td>&nbsp;÷&nbsp;</td>
+                                    <td>6</td>
+                                    <td>&nbsp;=&nbsp;</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p2dcon2"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a" readonly>&nbsp; <b style="color: #005CA4">3.</b> <b>Resuelve</b> las siguientes situaciones encerrando en cantidades iguales y <b>escribe</b> cada división. <b>(2 pts.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <p><b style="color: #005CA4;">a)</b> Sandra coloca 20 manzanas en 4 fuentes formando grupos iguales. ¿Cuántas manzanas coloca en cada fuente?</p>
+                    <div class="col-sm-8">
+                        <img src="img/i7_p181_u5a3.jpg" class="img-responsive">
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="img/i8_p181_u5a3.jpg" class="img-responsive">
+                    </div>
+                    <div class="row"></div>
+                    <p>División: <input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p3dcon1">&nbsp;÷&nbsp;<input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p3dcon2">&nbsp;=&nbsp;<input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p3dcon3"></p>
+                    <p>Respuesta: Sandra coloca <input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p3dcon4"> manzanas en cada fuente.</p>
+                    <p><b style="color: #005CA4;">b)</b> José reparte 36 adhesivos a 6 amigos en cantidades iguales.</p>
+                    <img src="img/i9_p181_u5a3.jpg" class="img-responsive">
+                    <p>División: <input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p31dcon1">&nbsp;÷&nbsp;<input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p31dcon2">&nbsp;=&nbsp;<input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p31dcon3"></p>
+                    <p><b style="color: #005CA4;">c)</b> Jairo reparte 45 libros en cantidades iguales a 9 estudiantes.</p>
+                    <img src="img/i10_p181_u5a3.jpg" class="img-responsive">
+                    <p>División: <input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p32dcon1">&nbsp;÷&nbsp;<input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p32dcon2">&nbsp;=&nbsp;<input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p32dcon3"></p>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a" readonly>&nbsp; <b style="color: #005CA4">4.</b> <b>Representa</b> gráficamente, <b>escribe</b> la división y <b>resuelve</b> el siguiente problema: <b>(2 pts.)</b></p>
+                </div>
+                <div class="col-sm-12 text-question">
+                    <p>Enrique compra 42 chocolates para repartir en partes iguales entre él y sus 6 amigos. ¿Cuántos chocolates le toca a cada uno?</p>
+                    <p>División: <input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p4dcon1">&nbsp;÷&nbsp;<input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p4dcon2">&nbsp;=&nbsp;<input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p4dcon3"></p>
+                    <p>Respuesta: A cada uno le tocan <input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p4dcon4"> chocolates.</p>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre5a" readonly>&nbsp; <b style="color: #005CA4">5.</b> <b>Divide y pinta</b> la respuesta en cada caso. <b>(2 pts.)</b></p>
+                </div>
+                <div class="actividad115 text-question">
+                    <div class="col-sm-2">
+                        <p><b style="color: #005CA4;">a)</b> <span id="p5im1"></span></p>
+                        <div id="p5cim1"></div>
+                        
+                    </div>
+                    <div class="col-sm-2">
+                        <p><b style="color: #005CA4;">b)</b> <span id="p5im2"></span></p>
+                        <div id="p5cim2"></div>
+                    </div>
+                    <div class="col-sm-2">
+                        <p><b style="color: #005CA4;">c)</b> <span id="p5im3"></span></p>
+                        <div id="p5cim3"></div>
+                    </div>
+                    <div class="col-sm-2">
+                        <p><b style="color: #005CA4;">d)</b> <span id="p5im4"></span></p>
+                        <div id="p5cim4"></div>
+                    </div>
+                    <div class="col-sm-2">
+                        <p><b style="color: #005CA4;">e)</b> <span id="p5im5"></span></p>
+                        <div id="p5cim5"></div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--<p id="trace" class="alert alert-warning display-none"></p>-->
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/export-data.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/numPaginas.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni5act3.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    $("#n_pagina").html('181');
+    $(".oculta").hide();
+
+    $("#myImg1").click(function() {
+        $(".oculta").hide(1000);
+        $("#myImg").show();
+    });
+    $("#myImg").click(function() {
+        $(".oculta").show(1000);
+        $("#myImg").hide();
+    });
+
+    //Solo permite introducir numeros.
+    function soloNumeros1(e) {
+        var key = window.event ? e.which : e.keyCode;
+        if (key < 48 || key > 57) {
+            e.preventDefault();
+        }
+    }
+    </script>
+</body>
+
+</html>

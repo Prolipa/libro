@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MATEMÁTICA 9</title>
+    <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link href="css/estilo_canvas.css" rel="stylesheet">
+
+</head>
+<style type="text/css">
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+    .n1{
+        color: #D44B0B;
+        font-size: 23px;
+    }
+
+    .n2{
+        color: #3768F7;
+        font-size: 23px;
+    }
+
+    .np0{
+        color: #25B48B;
+        font-size: 23px;
+    }
+
+    .np1{
+        color: #EF435B;
+        font-size: 23px;
+    }
+
+    .linea{
+        text-decoration:overline; 
+        text-decoration-color: #D44B0B;
+        border: none;
+    }
+
+    .linea1{
+        text-decoration:overline; 
+        text-decoration-color: #3768F7;
+        border: none;
+    }
+
+    .num{
+        background-color: #F9C797;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .num1{
+        background-color: #E2C2F3;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .num2{
+        background-color: #C2F3CB;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .encabezados{
+        color: white;
+        font-size: 23px;
+    }
+
+    .actividad1{
+        background: #fff;       
+    }
+    .correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+    @media (max-width: 770px) {
+      .cajas {
+        clear: left;
+      }      
+
+    }
+
+
+    /*ESTILO DEL CANVAS PARA MODIFICAR IMAGEN*/
+      #prueba {
+        margin-top: 2rem;
+        display: block;
+        box-sizing: border-box;
+        padding: 0px;
+        transition: all .3s linear 0s;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color:#e5e5e5; 
+        /*background-color:rgba(212,185,186,0.2); */
+        background-image: url(img/i1_p62_act3.jpg); /* SI SE NECESITA UNA IMAGEN DE FONDO */
+        background-size: 100% 100%;
+      }
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Responde en los espacios en blanco según se solicita<br>
+        Actividad 1: Paso 1: Escribe los números enteros como raíces exactas en los cuadros de texto correspondientes.<br>
+        Paso 2: Encuentra los números racionales e irracionales que faltan y escribelos en forma ordenada en los cuadros de texto correspondientes. Ej: √1 < √2 < √3 ...<br>
+        Actividad 2: Ordena los números racionales e irracionales planteados de menor a mayor en los cuadros de texto correspondientes. Ej: -√2 < -√1 < √1 ...<br>
+        Actividad 3: Dibuja en la recta numérica los números irracionales planteados. Esta actividad debe ser calificada manualmente sobre 2 puntos.<br>
+        Actividad 4: Escribe en el cuadro de texto correspondiente el número irracional que está representado en cada imagen.<br>
+        Actividad 5: Resuelve las preguntas planteadas e ingresa tus resultados en los cuadros de texto correspondientes.<br>
+        Actividad 6: Usa el programa GeoGebra para graficar los números irracionales planteados. Sigue los pasos indicados. Esta actividad debe ser calificada manualmente sobre 2 puntos.<br>
+
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-aplico" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-aplico">
+                    <span class="titulo"><img src="img/icoA.png" alt="Aplico para Aprender"> Aplico para Aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+
+                <div class="panel-body"> 
+            <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+        <div class="row">
+            <div class="col-sm-8"><img src="img/practica_individual.jpg"></div>           
+         </div> 
+                <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                             
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                           <div class="panel-body preguntas">
+                           <span>1. Se conoce que las raíces cuadradas exactas determinan el resultado aproximado de las raíces que son números irracionales. ¿Qué números irracionales se encuentran entre los siguientes pares de números?</span>
+                            <br>
+                             <div class="form-inline form-group">
+                                a)&nbsp;&nbsp;&nbsp;&nbsp; <span class="n1" id="nIrr0"></span> &nbsp;&nbsp;y&nbsp;&nbsp; <span class="n1" id="nIrr1"></span><br>
+                                b)&nbsp;&nbsp;&nbsp;&nbsp; <span class="n1" id="nIrr2"></span> &nbsp;&nbsp;y&nbsp;&nbsp; <span class="n1" id="nIrr3"></span><br><br>
+                                <span style="font-size: 23px; color: #86DA67;">Paso 1</span><br>
+                                <b>Escribe</b> los números enteros como raíces exactas.<br>
+                                a)&nbsp;&nbsp;&nbsp;&nbsp; <span class="n1">√</span><input type="number" id="nR0" class="form-control respuestas" style="width: 70px;">&nbsp;&nbsp;y&nbsp;&nbsp; 
+                                <span class="n1">√</span><input type="number" id="nR1" class="form-control respuestas" style="width: 70px;"><br>
+                                b)&nbsp;&nbsp;&nbsp;&nbsp; <span class="n1">-√</span><input type="number" id="nR2" class="form-control respuestas" style="width: 70px;"> &nbsp;&nbsp;y&nbsp;&nbsp;
+                                <span class="n1">-√</span><input type="number" id="nR3" class="form-control respuestas" style="width: 70px;"><br><br>
+
+
+                                <span style="font-size: 23px; color: #86DA67;">Paso 2</span><br>
+                                <b>Encuentra</b> los números racionales e irracionales que faltan.<br>
+                                a)&nbsp;&nbsp;&nbsp;&nbsp; <span class="n1">√</span><span class="n1" id="nF0"></span> &nbsp;&nbsp;<&nbsp;&nbsp; 
+                                 <span class="n1">√</span><span class="n1" id="nF1"></span>&nbsp;&nbsp;<&nbsp;&nbsp; 
+                                 <textarea id="rPs2_0" class="form-control respuestas" style="width: 80%;"></textarea><br><br>
+                                b)&nbsp;&nbsp;&nbsp;&nbsp; <span class="n1">-√</span><span class="n1" id="nF2"></span> &nbsp;&nbsp;<&nbsp;&nbsp; 
+                                 <span class="n1">-√</span><span class="n1" id="nF3"></span>&nbsp;&nbsp;<&nbsp;&nbsp;
+                                 <textarea id="rPs2_1" class="form-control respuestas" style="width: 80%;"></textarea><br><br>
+
+
+                            </div>
+
+                     </div>
+                    </div>
+
+            </div>
+
+            <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                             
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                           <div class="panel-body preguntas">
+                            <span>2. <b>Ordena</b> los siguientes números racionales e irracionales de menor a mayor.</span>
+                            <br>
+                            <div class="form-inline form-group">                     
+
+                                <div class="col-sm-6"><br>
+                                    a)&nbsp;&nbsp;&nbsp;&nbsp; <span class="n1" id="onR0"></span><br><br>
+                                    <input type="text" id="ronR0" class="form-control respuestas" style="width: 80%;">
+                                </div>
+
+                                <div class="col-sm-6"><br>
+                                    b)&nbsp;&nbsp;&nbsp;&nbsp; <span class="np0" id="onR1"></span><br><br>
+                                    <input type="text" id="ronR1" class="form-control respuestas" style="width: 80%;">
+                                    <br><br>
+                                </div>
+
+                                <div class="col-sm-6"><br>
+                                    c)&nbsp;&nbsp;&nbsp;&nbsp; <span class="np0" id="onR2"></span><br><br>
+                                    <input type="text" id="ronR2" class="form-control respuestas" style="width: 80%;">
+                                </div>
+
+                                <div class="col-sm-6"><br>
+                                    d)&nbsp;&nbsp;&nbsp;&nbsp; <span class="n1" id="onR3"></span><br><br>
+                                    <input type="text" id="ronR3" class="form-control respuestas" style="width: 80%;">
+                                </div>
+
+                            </div>
+                          </div>
+                    </div>
+             </div>
+
+
+            <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                             
+                              <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                               <input type="number" id="calificacion0" placeholder="Puntaje/2" style="width: 110px;" class="form-control">      
+                              </div>
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse3" style="margin-left: 70px;">Actividad 3</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                           <div class="panel-body preguntas">  
+                            <span>3. <b>Representa</b> en la recta numérica los siguientes números irracionales.</span><br><br>
+                          <main>
+        <canvas id="prueba">Este navegador no soporta canvas, visualice la web con un navegador actualizado.</canvas>
+        <div id="paleta" class="mi_canvas">
+            <div id="contenedoropciones">
+                <table width="auto">
+                    <tbody>
+                        <tr>
+                            <td colspan="9" class="titulotabla">Color</td>
+                        </tr>
+                        <tr>
+                            <td class="celdascoloresdefondo" data-color="red">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="pink">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="orange">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="yellow">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="magenta">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="MEDIUMSEAGREEN">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="green">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="DARKCYAN">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="cyan">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td class="celdascoloresdefondo" data-color="blue">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="wheat">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="brown">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="white">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="LIGHTGRAY">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="gray">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="LIGHTSLATEGRAY">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="DARKSLATEGRAY">&nbsp;</td>
+                            <td class="celdascoloresdefondo" data-color="black">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table width="auto" id="opcionesdedibujo">
+                    <tbody>
+                        <tr>
+                            <td colspan="5" class="bg-info">Opciones de dibujo</td>
+                        </tr>
+                        <tr>
+                            <td>Grosor pincel:
+                                <input onChange="cambiagrosor(this)" name="grosor" type="number" id="grosor" max="100" min="3" step="1" title="Grosor del cursor" value="5">
+                            </td>
+                            <td onClick="cambiapincel(this)" id="celdapincelcuadrado" style="cursor:pointer;border:solid 1px black;background-color: white;">Pincel cuadrado</td>
+                            <td onClick="cambiaaccion(this)" id="xpintar" class="celdaaccion" style="cursor:pointer;border:solid 1px black;background-color: white;">Pintar</td>
+                            <td rowspan="2" onClick="borrartodo()"><span class="btn btn-danger">Borrar todo</span></td>
+                        </tr>
+                        <tr>
+                            <td>Grosor borrar:
+                                <input onChange="cambiagrosorborrador(this)" name="grosorborrar" type="number" id="grosorborrar" max="100" min="3" step="1" title="Grosor del borrardor" value="10">
+                            </td>
+                            <td onClick="cambiapincel(this)" id="celdapincelredondo" style="cursor:pointer;border:solid 1px transparent">Pincel redondo</td>
+                            <td onClick="cambiaaccion(this)" id="xborrar" class="celdaaccion" style="cursor:pointer;border:solid 1px transparent">Borrar</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+                          </div>
+                    </div>
+             </div>                                                                                                                  
+            
+
+
+
+            <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">                             
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Actividad 4</a>
+                            </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                           <div class="panel-body preguntas form-inline form-group">  
+                            <span>4. <b>Escribe</b> en cada gráfico el número irracional que está representado.</span><br><br>
+                            
+                            <ol type="a" id="nRep0"></ol>
+
+                          </div>
+                    </div>
+             </div>
+
+
+
+
+            <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Actividad 5</a>
+                        </h4>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">  
+                            <span>5. <b>Analiza</b> y <b>responde</b> las siguientes preguntas.</span>
+                            <br><br>
+                            <div class="form-inline form-group">                     
+                                a) &nbsp;&nbsp;¿Cuánto mide la hipotenusa de un triángulo rectángulo si los catetos tienen una longitud de <span class="np1" id="cat0"></span> cm y <span class="np1" id="cat1"></span> cm, respectivamente?&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="np1">R. &nbsp;&nbsp;√ </span><input type="number" id="rHip0" class="form-control respuestas" style="width: 80px;">
+
+                                <br><br>
+
+                                b) &nbsp;&nbsp;¿Cuánto mide la hipotenusa de un triángulo rectángulo cuyos lados miden <span class="np1">√</span><span class="np1" id="cat2"></span> cm y <span class="np1" id="cat3"></span> cm?&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="np1">R. &nbsp;&nbsp;√ </span><input type="number" id="rHip1" class="form-control respuestas" style="width: 80px;">
+
+                                <br><br>
+
+                                c) &nbsp;&nbsp;Una persona camina <span class="np1" id="cat4"></span> veces por los lados de una cancha rectangular que mide <span class="np1" id="cat5"></span> m y <span class="np1" id="cat6"></span> m, respectivamente, mientras que otra camina <span class="np1" id="cat7"></span> veces por la diagonal de la cancha rectangular. ¿Qué persona recorre más distancia?<br><br>
+                                <span class="np1">R. &nbsp;&nbsp;</span>La primera persona recorre <input type="number" id="rHip2" class="form-control respuestas" style="width: 70px;">m y la segunda, <input type="number" id="rHip3" class="form-control respuestas" style="width: 70px;">m.
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-8"><img src="img/practiquemos_juntos.jpg" width="250px;"></div>           
+            </div> 
+
+            <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                               <input type="number" id="calificacion1" placeholder="Puntaje/2" style="width: 110px;" class="form-control">      
+                            </div>                        
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6" style="margin-left: 70px;">Actividad 6</a>
+                        </h4>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse">
+                        <div class="panel-body preguntas">  
+                            <span>Usen el programa GeoGebra para graficar números irracionales comprendidos entre <span class="np1">√2 y √9</span>.     Sigan estos pasos.</span>
+                            <br><br>
+                            <div class="form-inline form-group">                     
+                                <div class="col-sm-6" align="justify">
+                                    <span style="font-size: 25px; color: #438AEF;">a) </span> <b>Ingresen</b> al programa GeoGebra y <b>marquen</b> los puntos:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="np1">(0, 0), (1, 0) y (1, 1)</span>.<br><br><br><br>
+                                    <div align="center"><img src="img/i1_p63_act6.jpg" width="400px;" class="img-responsive"></div>
+                                </div>
+
+                                <div class="col-sm-6" align="justify">
+                                    <span style="font-size: 25px; color: #438AEF;">b) </span> Con el comando Segmento, <b>tracen</b> los segmentos que unen los puntos anteriores, y con el comando Distancia o Longitud, <b>obtengan</b> el valor de los catetos y el de la hipotenusa del triángulo rectángulo formado.<br><br>
+                                    <div align="center"><img src="img/i2_p63_act6.jpg" width="400px;" class="img-responsive"></div><br><br>
+                                </div>
+
+                                <div class="col-sm-6" align="justify">
+                                    <span style="font-size: 25px; color: #438AEF;">c) </span> Con la herramienta Compás, <b>marquen</b> el punto A y el punto C. <b>Tracen</b> una circunferencia y <b>arrastren</b> de tal manera que el radio sea AC. Con la herramienta Segmento <b>tracen</b> uno de A a D, y con la de Distancia o Longitud <b>midan</b> la longitud de AD. Este segmento debe medir la misma longitud de la hipotenusa (1,41...), que corresponde a <span class="np1">√2</span>.<br><br>
+                                    <div align="center"><img src="img/i3_p63_act6.jpg" width="400px;" class="img-responsive"></div>
+                                </div>
+
+                                <div class="col-sm-6"  align="justify">
+                                    <span style="font-size: 25px; color: #438AEF;">d) </span> Para trazar <span class="np1">√3</span>, <b>tracen</b> un segmento perpendicular al eje x y que pase por el punto D. <b>Marquen</b> el punto <span class="np1">E ( √2, 1)</span> y <b>repitan</b> el proceso anterior. Obtendrán el gráfico que se muestra a continuación, que corresponde a <span class="np1">√3</span>.<br><br>
+                                    <div align="center"><img src="img/i4_p63_act6.jpg" width="400px;" class="img-responsive"></div><br><br>
+                                </div>
+
+                                <div class="col-sm-6"  align="justify">
+                                    <span style="font-size: 25px; color: #438AEF;">e) </span> Continúen el proceso hasta graficar <span class="np1">√9</span>.<br><br>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+
+
+
+    </div>
+
+    <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/dibujarCANVAS.js"></script>
+        <script src="js/68.js"></script>
+        <script type="text/javascript">
+
+            $("#n_pagina").html('62');
+            $( ".btnCalificar" ).bind( "click", function() {
+                CalificacionAbierta();
+            });
+        </script>
+</body>
+</html>

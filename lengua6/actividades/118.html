@@ -1,0 +1,641 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <style>
+        table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+    .correcto {
+    color: #ffffff;
+    background-color: #00e600;
+    }
+
+    .incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+    }
+
+
+    .subrayar {
+        border-bottom: 2px solid #005ca4;
+    }
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+
+
+    .pintar {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+    }
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 50px;
+    max-width: 100%;
+    margin-left: 1px;
+    width: auto;
+}
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 50px;
+    min-width: 120px;
+    width: auto;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>8. </b> Debes seleccionar el significado.
+        <br>
+        <b>9. </b> Seleccionar la palabra que corresponde.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <img class="img-responsive" src="img/literatura.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota1" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
+                                        <b>1. Responde</b> <span class="sobre">0.75 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b style="color: #EC6608">1.-</b> <b>Responde</b>. ¿Qué es la canción y de qué partes se compone su estructura?
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota2" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <b>2. Lee</b> <span class="sobre">1.25 pts</span>
+                                        </a>
+                                        </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <span><b style="color: #EC6608">2.-</b> <b>Lee</b> la siguiente canción y completa la siguiente tabla.</span>
+                                        <div class="row">
+                                            <div class="col-lg-6"> <img class="img-responsive" src="img/i1_p168_actsumativa.jpg"></img></div>
+                                            <div class="col-lg-6">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <td style="background: #b20082;color: white;">Sentimientos que expresa</td>
+                                                        <td colspan="6"><input class="form-control"></input></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background: #009377;color: white;">Tema</td>
+                                                        <td colspan="6"><input class="form-control"></input></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background: #ee8600;color: white;">Coro</td>
+                                                        <td colspan="6"> <textarea name="" class="form-control" style="resize: none;"></textarea></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background: #009acb;color: white;">Tipo de canción</td>
+                                                        <td>pasillo</td>
+                                                        <td><input type="checkbox"></td>
+                                                        <td>cumbia</td>
+                                                        <td><input type="checkbox"></td>
+                                                        <td>ranchera</td>
+                                                        <td><input type="checkbox"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="html2pdf__page-break"></div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/comunicacion.png"></img>
+                    <div class="panel panel-info">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota3" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <b>3. Escribe</b> <span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>3. Escribe</b> una regla para cada uno de las personas que intervienen en una mesa redonda, para asegurar el respeto entre todos los participantes.
+                                    <br><br>
+                                    <b style="color: #005ca4;">a)</b> <b>Para los panelistas</b>
+                                    <input class="form-control"></input>
+                                    <br>
+                                    <b style="color: #005ca4;">b)</b> <b>Para el relator</b>
+                                    <input class="form-control"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota4" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                       <b>4. Elabora</b> <span class="sobre">1 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>4. Elabora</b> una lista de 4 términos para pedir la palabra de forma respetuosa en una mesa redonda.
+                                        <br><br>
+                                        <b style="color: #005ca4;">a)</b> <input class="form-control"></input><br>
+                                        <b style="color: #005ca4;">b)</b> <input class="form-control"></input><br>
+                                        <b style="color: #005ca4;">c)</b> <input class="form-control"></input><br>
+                                        <b style="color: #005ca4;">d)</b><input class="form-control"></input><br>
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/lectura.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota5" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                       <b>5. Lee</b> <span class="sobre">1.5 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>5. Lee</b> el siguiente texto. Subraya las ideas más importantes. Elabora un breve resumen.
+                                        <br>
+                                        <div style="background: #fef9e9;">
+                                            <h3 style="color: #009acb;text-align: center;">Un gigante dormido</h3>
+                                            <h5 style="color: #009acb;text-align: center;">(Adaptación)</h5>
+                                            <span class="enc">El Cotopaxi es uno de los volcanes más famosos de América del Sur.</span> <span class="enc">Su majestuosa figura es un referente para los andinistas de todo el mundo</span>. <span class="enc">Tiene una altura de 5 911 m y se encuentra entre los 26 volcanes activos más altos del mundo.</span>
+                                            <br><br>
+                                            <span class="enc">Este gigante ha erupcionado más de 50 veces desde 1738.</span> <span class="enc">En el año de 1907, se produjo la última erupción con explosiones de ceniza y flujos piroclásticos pequeños, pero no hubo lava.</span> <span class="enc">El 26 septiembre 1903, empezó una erupción de tamaño mediano que duró hasta diciembre de 1904.</span>
+                                            <h6 style="text-align: right;">S/A (s/f ). “Volcán Cotopaxi”. Volcano Discovery. Recuperado de https://goo.gl/srZHGd</h6>
+                                        </div>
+                                        <b>Resumen:</b>
+                                        <textarea name="" class="form-control" style="resize: none;"></textarea>
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingSix">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota6" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                       <b>6. Responde</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>6. Responde</b>. ¿Qué es parafrasear y qué recomendación hay que seguir para respetar el derecho de autor del texto original?
+                                        <input class="form-control"></input>
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/escritura.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingSeven">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota7"  class="nota-abierta" style="text-align: center;" readonly></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                         <b>7. Completa</b><span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>7. Completa</b> las siguientes oraciones con el verbo señalado conjugado en el tiempo correcto.
+                                        <br>
+                                        <br>
+                                        <table>
+                                            <tr class="act7class" id="act07Txt0">
+                                            </tr>
+                                            <tr class="act7class" id="act07Txt1">
+                                            </tr>
+                                            <tr class="act7class" id="act07Txt2">
+                                            </tr>
+                                            <tr class="act7class" id="act07Txt3">
+                                            </tr>
+                                            <tr class="act7class" id="act07Txt4">
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info actividadSuma">
+                        <div class="panel-heading" role="tab" id="headingEigth">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota8"  class="nota-abierta" style="text-align: center;" readonly></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEigth" aria-expanded="false" aria-controls="collapseEigth">
+                                         <b>8. Identifica</b><span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEigth" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEigth">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>8. Identifica</b> el significado de las siguientes palabras por los sufijos y prefijos que utilizan. <b>Escribe</b> su significado en el recuadro.
+                                        <br>
+                                        <table class="table table-bordered" style="text-align: center;">
+                                            <tr>
+                                                <td style="background: #b20082;color: white;">Palabra</td>
+                                                <td style="background: #32b5d5;color: white;">Significado</td>
+                                            </tr>
+                                            <tr class="act8class" id="act08Txt0">
+                                            </tr>
+                                            <tr class="act8class" id="act08Txt1">
+                                            </tr>
+                                            <tr class="act8class" id="act08Txt2">
+                                            </tr>
+                                            <tr class="act8class" id="act08Txt3">
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/lengua.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingNine">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota9"  class="nota-abierta" style="text-align: center;" readonly></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                         <b>9. Crea</b><span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>9. Observa</b> las imágenes y <b>escribe</b> el quichuismo que representa.
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-lg-6 act9class" id="act09Txt0" align="center">
+                                            </div>
+                                            <div class="col-lg-6 act9class" id="act09Txt1" align="center">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 act9class" id="act09Txt2" align="center">
+                                            </div>
+                                            <div class="col-lg-6 act9class" id="act09Txt3" align="center">
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTen">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota10"  class="nota-abierta" style="background: white;text-align: center;"></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                                         <b>10. Completa</b><span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>10. Completa</b> el siguiente cuadro con las características de la bomba y la marimba.
+                                        <br>
+                                        <table class="table">
+                                            <tr>
+                                                <td style="background: #7ab860; color: white;">bomba</td>
+                                                <td>
+                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background: #b182b6; color: white;">marimba</td>
+                                                <td>
+                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/actividadsumativa4.js"></script>
+    <script type="text/javascript">
+    var titulos = "evaluacion";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("168");
+    $('.btnGuardar').removeClass('disabled');
+    /*$(document).ready(function() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        //var imageSize = { width: winHeight , height: winHeight };
+        //var watermarkImage = new Image();
+        ///watermarkImage.src = 'img/i1_p170_actpreparo.jpg';
+        //var watermarkImage2 = new Image();
+        //watermarkImage2.src = 'img/i7_p98_act100.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+
+                //watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+
+            });
+
+
+
+    });*/
+    $('.enc').click(function() {
+
+        if ($(this).hasClass('subrayar')) {
+            $(this).removeClass('subrayar')
+        } else {
+            $(this).addClass('subrayar')
+        }
+    })
+    </script>
+</body>
+
+</html>

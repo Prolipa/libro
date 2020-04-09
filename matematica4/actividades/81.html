@@ -1,0 +1,895 @@
+    <!DOCTYPE HTML>
+    <html>
+
+    <head>
+        <title>Matemática 4</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/icomoon.css" rel="stylesheet">
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 5px;
+            width: auto;
+            height: 100px
+    
+        }
+        #caja_res, #caja_res1,#caja_res2{
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+        .respuestas{
+                width: 80%;
+                border: none;
+                border-bottom: 1px solid #005ca4;
+            }
+        .c_imagenes{
+            padding: 10px;
+        }
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 140px;
+            height: 30px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 140px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+        .correcto{
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+        
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+        .encierra{
+            border: 2px solid blue;
+            border-radius: 40%;
+            
+        }
+        .respuesta {
+    text-align: center;
+    border: 0;
+    border-top: 2px solid #393939;
+    border-bottom: 1px solid #85BCEB;
+    width: 50px;
+}
+.bordeT {
+    border: 1px #76B82A solid;
+}
+
+
+
+.bordeT2 {
+    border: 1px #76B82A solid;
+    text-align: center;
+}
+
+.paso {
+    background-color: #F9B000;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+}
+        </style>
+    </head>
+
+    <body>
+        <div id="nota-informativa" class="nota-ayuda">
+            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            <b>Pregunta 1 </b>  Coloca en los recuadros la relación de contenencia (⊂) o no contenencia (⊄). <b>Pregunta 2</b> forma pares ordenados de acuerdo al enunciado. <b>Pregunta 3 </b> coloca el patrón y completa las suceciones. <b>Pregunta 4</b> ubica verticalmente los sumandos y resuelve. <b>Pregunta 5</b> utiliza la propiedad asociativa y resuelve las operaciones. <b>Pregunta 6 </b> resuelve las sustracciones. <b>Pregunta 7 </b> resuelve las opercaiones combinadas. <b>Pregunta 8</b> descompon las cifras por centenas, decenas e unidades y resuelve las operaciones.<br>
+            <span id="ayudas"></span>
+        </div>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" >
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span class="notificacion actividad ">
+                                <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                        </span>
+                        <span class="btn notificacion nota">
+                                <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span>/ 10
+                        </span>
+                        <span class="notificacion pagina">
+                                <span class="glyphicon glyphicon-bookmark"></span> Pag 76
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--FIN DE NAVBAR QUE SE AÑADE-->
+        <!--contenedor de la actividad-->
+        <div class="container space" style="margin-top: 30px;">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-preparo" id="activity">
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-preparo">
+                    <span class="titulo"><img src="img/icoPRE.png" alt="">Refuerzo mis destrezas</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+                </div>
+                <div class="panel-body">
+                    <!--pregunats de la actividad-->
+                        <div class="text-question"><p><b style="color: blue;">1. </b><b> Establece </b> la relación de contenencia <b>(⊂)</b> o no contenencia <b>(⊄)</b> según corresponda.</p></div>
+                        <div class="actividad76 row">
+                            <div align="center">
+                                <img class="img-responsive" src="img/i1_p76_act81.jpg" alt="">
+                            </div>
+                            <div class="col-sm-4">
+                                <table class="table-responsive">
+                                    <tr>
+                                        <td><b> A= </b> <span style="background:#84D6E5; border-radius: 5px;">{19, 18, 17, 16, 15}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b> B= </b> <span style="background:#84E5A9; border-radius: 5px;">{25, 35, 45}</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <table class="table-responsive">
+                                    <tr>
+                                        <td><b> D= </b> <span style="background:#F6D0AF; border-radius: 5px;">{41, 42, 43, 44}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b> E= </b> <span style="background:#D5C4F8; border-radius: 5px;">{55, 60, 65, 70}</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <table class="table-responsive">
+                                    <tr>
+                                        <td><b> F= </b> <span style="background:#84E5A9; border-radius: 5px;">{32, 34, 36, 38, 40}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b> G= </b> <span style="background:#84D6E5; border-radius: 5px;">{29, 31, 33, 37}</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <p id="conten1"></p>
+                                <p id="conten2"></p>
+                            </div>
+                            <div class="col-sm-4">
+                                <p id="conten3"></p>
+                                <p id="conten4"></p>
+                            </div>
+                            <div class="col-sm-4">
+                                <p id="conten5"></p>
+                                <p id="conten6"></p>
+                            </div>
+                            
+                        </div>
+                        <!--pregunats de la actividad-->
+                        <div class="text-question"><p><b style="color: blue;">2. </b><b> Completa </b> el conjunto C formado por todos los pares ordenados determinados por la siguiente relación: “A cada color secundario le corresponden dos colores primarios según su origen”.</p></div>
+                        <div class="actividad81 row">
+                            <div align="center">
+                                <img class="img-responsive" src="img/i2_p76_act81.jpg" alt="">
+                            </div>
+                            <div class="col-sm-12">
+                            <p><b> C= {( </b> violeta, azul <b>) ; ( </b> violeta, rojo <b> ) ; ( </b><input onkeyup="mayus(this);" id="secup1" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"> , <input onkeyup="mayus(this);" id="secup2" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"> <b> ) ; ( </b><input onkeyup="mayus(this);" id="secup3" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"> , <input onkeyup="mayus(this);" id="secup4" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"><b> ) ; ( </b><input onkeyup="mayus(this);" id="secup5" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"> , <input onkeyup="mayus(this);" id="secup6" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"> <b> ) ; ( </b><input onkeyup="mayus(this);" id="secup7" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"> , <input onkeyup="mayus(this);" id="secup8" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"><b> ) ; } </b></p></div>
+                        </div>
+                        <!--pregunats de la actividad-->
+                        <div class="text-question"><p><b style="color: blue;">3. </b><b> Descubre </b> el patrón, <b> completa </b> las sucesiones y <b> calcula </b> el valor de a + b.</p></div>
+                        <div class="actividad81 row">
+                            <div class="col-sm-6" style="border-right: 2px dashed orange;">
+                                <p><b style="color: blue;">a)</b> <span style=" border-radius: 5px; border-bottom: 3px solid #55F6BB; border-top: 3px solid #55F6BB; border-left: 1px solid #55F6BB;"><b style="color:#55C3F6;">Sucesión:</b> <b id="suc1"></b></span></p>
+                                <p><b style="color: purple;">Patrón: </b><b id="pat1"></b></p>
+                                <p><b>a= </b> <input id="sua1" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)" > <b> y b= </b> <input id="sub1" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)" ></p>
+                                <p><b> a + b = </b> <input id="totab1" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"></p>
+                                <br>
+                                <p><b style="color: blue;">b)</b> <span style="border-radius: 5px; border-bottom: 3px solid #F6D155; border-top: 3px solid #F6D155; border-left: 1px solid #F6D155;"><b style="color:#55C3F6;">Sucesión:</b> <b id="suc2"></b></span></p>
+                                <p><b style="color: purple;">Patrón: </b> <input id="pa1" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"><b>&nbsp;&nbsp;&nbsp;&nbsp;</b> <input id="pa2" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"></p>
+                                <p><b>a= </b> <input id="sua2" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"> <b> y b= </b> <input id="sub2" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"></p>
+                                <p><b> a + b = </b> <input id="totab2" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"></p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p><b style="color: blue;">c)</b> <span style="border-radius: 5px; border-bottom: 3px solid #6D55F6; border-top: 3px solid #6D55F6; border-left: 1px solid #6D55F6;"><b style="color:#55C3F6;">Sucesión:</b> <b id="suc3"></b></span></p>
+                                <p><b style="color: purple;">Patrón: </b> <input id="pa3" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"></p>
+                                <p><b>a= </b> <input id="sua3" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"> <b> y b= </b> <input id="sub3" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"></p>
+                                <p><b> a + b = </b> <input id="totab3" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"></p>
+                                <br>
+                                <p><b style="color: blue;">d)</b> <span style="border-radius: 5px; border-bottom: 3px solid #55F6BB; border-top: 3px solid #55F6BB; border-left: 1px solid #55F6BB;"><b style="color:#55C3F6;">Sucesión:</b> <b id="suc4"></b></span></p>
+                                <p><b style="color: purple;">Patrón: </b> <b id="pat2"></b></p>
+                                <p><b>a= </b> <input id="sua4" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"> <b> y b= </b> <input id="sub4" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"></p>
+                                <p><b> a + b = </b> <input id="totab4" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros(event)"></p>
+                            </div>
+                        </div>
+                        <!--pregunats de la actividad-->
+                        <div class="text-question"><p><b style="color: blue;">4. </b><b> Ubica </b> los sumandos en forma vertical y <b>resuelve:</b></p></div>
+                        <div class="actividad81 row">
+                            <div class="col-sm-3" style="border-right: 2px solid #E4E3E8;">
+                                <p><b style="color: blue;">a)</b> <b id="sumver1"></b></p>
+                                <table>
+                                    <tr>
+                                        <td></td>
+                                        <td ><input id="nsum1" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum2" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum3" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum4" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b> + </b></td>
+                                        <td ><input id="nsum5" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum6" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum7" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum8" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black;">
+                                        <td></td>
+                                        <td><input id="res4sum1" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum2" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum3" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum4" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-3" style="border-right: 2px solid #E4E3E8;">
+                                <p><b style="color: blue;">b)</b> <b id="sumver2"></b></p>
+                                <table>
+                                    <tr>
+                                        <td></td>
+                                        <td ><input id="nsum11" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum12" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum13" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum14" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b> + </b></td>
+                                        <td ><input id="nsum15" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum16" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum17" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum18" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black;">
+                                        <td></td>
+                                        <td><input id="res4sum11" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum12" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum13" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum14" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-3" style="border-right: 2px solid #E4E3E8;">
+                                <p><b style="color: blue;">c)</b> <b id="sumver3"></b></p>
+                                <table>
+                                    <tr>
+                                        <td></td>
+                                        <td ><input id="nsum21" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum22" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum23" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum24" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td ><input id="nsum25" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum26" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum27" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum28" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b> + </b></td>
+                                        <td ><input id="nsum45" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum46" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum47" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum48" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black;">
+                                        <td></td>
+                                        <td><input id="res4sum21" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum22" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum23" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum24" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-3" style="border-right: 2px solid #E4E3E8;">
+                                <p><b style="color: blue;">d)</b> <b id="sumver4"></b></p>
+                                <table>
+                                    <tr>
+                                        <td></td>
+                                        <td ><input id="nsum31" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum32" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum33" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum34" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td ><input id="nsum35" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum36" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum37" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum38" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b> + </b></td>
+                                        <td ><input id="nsum41" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum42" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum43" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td ><input id="nsum44" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black;">
+                                        <td></td>
+                                        <td><input id="res4sum31" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum32" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum33" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4sum34" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!--pregunats de la actividad-->
+                        <div class="text-question"><p><b style="color: blue;">5. </b><b> Aplica </b> la propiedad asociativa en las siguientes adiciones: </p></div>
+                        <div class="actividad81 row">
+                            <div class="col-sm-4">
+                                <p><b style="color: blue;">a)</b> <b id="oprasoc1"></b></p>
+                                <table>
+                                    <tr align="center">
+                                        <td><b> ( </b></td>
+                                        <td><input id="asc1" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><b> + </b></td>
+                                        <td><input id="asc2" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><b> ) </b></td>
+                                        <td><b> + </b></td>
+                                        <td><input id="asc3" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr><td><br></td></tr>
+                                    <tr align="center">
+                                        <td colspan="5"> <input id="asc4" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><b> + </b></td>
+                                        <td><input id="asc5" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr><td><br></td></tr>
+                                    <tr align="center">
+                                        <td colspan="7"><input id="asc6" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <p><b style="color: blue;">b)</b> <b id="oprasoc2"></b></p>
+                                <table>
+                                    <tr align="center">
+                                        <td><input id="asc11" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><b> + </b></td>
+                                        <td><b> ( </b></td>
+                                        <td><input id="asc12" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><b> + </b></td>
+                                        <td><input id="asc13" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><b> ) </b></td>
+                                    </tr>
+                                    <tr><td><br></td></tr>
+                                    <tr align="center">
+                                        <td><input id="asc14" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><b> + </b></td>
+                                        <td colspan="5"> <input id="asc15" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>                               
+                                    </tr>
+                                    <tr><td><br></td></tr>
+                                    <tr align="center">
+                                        <td colspan="7"><input id="asc16" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <p><b style="color: blue;">c)</b> <b id="oprasoc3"></b></p>
+                                <table>
+                                    <tr align="center">
+                                        <td><b> ( </b></td>
+                                        <td><input id="asc21" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><b> + </b></td>
+                                        <td><input id="asc22" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><b> ) </b></td>
+                                        <td><b> + </b></td>
+                                        <td><input id="asc23" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr><td><br></td></tr>
+                                    <tr align="center">
+                                        <td colspan="5"> <input id="asc24" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><b> + </b></td>
+                                        <td><input id="asc25" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr><td><br></td></tr>
+                                    <tr align="center">
+                                        <td colspan="7"><input id="asc26" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!--pregunats de la actividad-->
+                        <div class="text-question"><p><b style="color: blue;">6. </b><b> Resuelve </b> las siguientes sustracciones:</p></div>
+                        <div class="actividad81 row">
+                            <div class="col-sm-3" style="border-right: 2px solid #E4E3E8;">
+                                <p><b style="color: blue;">a)</b> </p>
+                                <table>
+                                    <tr align="center">
+                                        <td></td>
+                                        <td id="nres1"></td>
+                                        <td id="nres2"></td>
+                                        <td id="nres3"></td>
+                                        <td id="nres4"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td><b> - </b></td>
+                                        <td id="nres5"></td>
+                                        <td id="nres6"></td>
+                                        <td id="nres7"></td>
+                                        <td id="nres8"></td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black;">
+                                        <td></td>
+                                        <td><input id="res4res1" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res2" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res3" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res4" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-3" style="border-right: 2px solid #E4E3E8;">
+                                <p><b style="color: blue;">b)</b> </p>
+                                <table>
+                                    <tr align="center">
+                                        <td></td>
+                                        <td id="nres11"></td>
+                                        <td id="nres12"></td>
+                                        <td id="nres13"></td>
+                                        <td id="nres14"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td><b> - </b></td>
+                                        <td id="nres15"></td>
+                                        <td id="nres16"></td>
+                                        <td id="nres17"></td>
+                                        <td id="nres18"></td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black;">
+                                        <td></td>
+                                        <td><input id="res4res11" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res12" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res13" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res14" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-3" style="border-right: 2px solid #E4E3E8;">
+                                <p><b style="color: blue;">c)</b> </p>
+                                <table>
+                                    <tr align="center">
+                                        <td></td>
+                                        <td id="nres21"></td>
+                                        <td id="nres22"></td>
+                                        <td id="nres23"></td>
+                                        <td id="nres24"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td><b> - </b></td>
+                                        <td id="nres25"></td>
+                                        <td id="nres26"></td>
+                                        <td id="nres27"></td>
+                                        <td id="nres28"></td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black;">
+                                        <td></td>
+                                        <td><input id="res4res21" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res22" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res23" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res24" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-3" style="border-right: 2px solid #E4E3E8;">
+                                <p><b style="color: blue;">d)</b></p>
+                                <table>
+                                    <tr align="center">
+                                        <td></td>
+                                        <td id="nres31"></td>
+                                        <td id="nres32"></td>
+                                        <td id="nres33"></td>
+                                        <td id="nres34"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td><b> - </b></td>
+                                        <td id="nres35"></td>
+                                        <td id="nres36"></td>
+                                        <td id="nres37"></td>
+                                        <td id="nres38"></td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black;">
+                                        <td></td>
+                                        <td><input id="res4res31" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res32" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res33" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                        <td><input id="res4res34" type="text" style="text-align:center; width:  60px;" maxlength="1" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!--pregunats de la actividad-->
+                        <div class="text-question"><p><b style="color: blue;">7. </b><b> Completa y resuelve </b> las siguientes operaciones combinadas:</p></div>
+                        <div class="actividad81 row">
+                            <div class="col-sm-4">
+                                <p><b style="color: blue;">a) </b> <span id="opcomb1" style="border-radius: 5px; background: #8FD8F3;"></span></p>
+                                <table>
+                                    <tr>
+                                        <td><input id="scombi1" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black;" onkeypress="return soloNumeros1(event)"></td>
+                                        <td> <b> - </b> </td>
+                                        <td><input id="scombi2" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black;" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td colspan="3"> <input id="rcombi1" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black;" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-4" style="border-left: 2px dashed orange; ">
+                                <p><b style="color: blue;">b) </b> <span id="opcomb2" style="border-radius: 5px; background: #A9A3F5;"></span></p>
+                                <table>
+                                    <tr>
+                                        <td><input id="scombi11" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black;" onkeypress="return soloNumeros1(event)"></td>
+                                        <td> <b> + </b> </td>
+                                        <td><input id="scombi12" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black;" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td colspan="3"> <input id="rcombi11" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black;" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-4" style="border-left: 2px dashed orange; ">
+                                <p><b style="color: blue;">c) </b> <span id="opcomb3" style="border-radius: 5px; background: #F5D2A3;"></span></p>
+                                <table>
+                                    <tr>
+                                        <td><input id="scombi21" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black;" onkeypress="return soloNumeros1(event)"></td>
+                                        <td> <b> - </b> </td>
+                                        <td><input id="scombi22" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black;" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td colspan="3"> <input id="rcombi21" type="text" style="text-align:center; width:  60px; border:none; border-bottom: 1px dashed black;" onkeypress="return soloNumeros1(event)"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!--pregunats de la actividad-->
+                        <div class="text-question"><p><b style="color: blue;">8. </b><b> Resuelve </b> las operaciones descomponiendo las cantidades:</p></div>
+                        <div class="actividad81 row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-4">
+                                <p><b style="color: blue;">a)</b> <span id="des8com1" style="border-radius: 5px; background: #8FD8F3; "></span><b> = </b></p>
+                                </div>
+                                <div class="col-sm-8 table-responsive">
+                                    <table>
+                                        <tr align="center">
+                                            <td colspan="5"><b> C </b></td>
+                                            <td></td>
+                                            <td colspan="5"><b> D </b></td>
+                                            <td></td>
+                                            <td colspan="5"><b> U </b></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr><td><br></td></tr>
+                                        <tr>
+                                            <td><b> ( </b> </td>
+                                            <td><input id="opdesc1" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black;"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> - </b></td>
+                                            <td><input id="opdesc2" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black;"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> ) </b></td>
+                                            <td><b> + </b></td>
+                                            <td><b> ( </b></td>
+                                            <td><input id="opdesc3" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black;"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> - </b></td>
+                                            <td><input id="opdesc4" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black;"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> ) </b></td>
+                                            <td><b> + </b></td>
+                                            <td><b> ( </b></td>
+                                            <td><input id="opdesc5" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black;"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> - </b></td>
+                                            <td><input id="opdesc6" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black;"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> ) </b></td>
+                                            <td><b> = </b></td>
+                                            <td><input id="opdesc7" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black;"  onkeypress="return soloNumeros1(event)"></td>
+                                        </tr>
+                                        <tr><td><br></td></tr>
+                                        <tr align="center">
+                                            <td colspan="5"><input id="opdesc8" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black;"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> + </b></td>
+                                            <td colspan="5"><input id="opdesc9" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black;"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> + </b></td>
+                                            <td colspan="5"><input id="opdesc10" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black;"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr><td><br></td></tr>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-12" style="border-top: 1px dashed orange;">
+                                <div class="col-sm-4">
+                                <p><b style="color: blue;">b)</b> <span id="des8com2" style="border-radius: 5px; background: #8FF3CA;"></span> <b> = </b></p>
+                                </div>
+                                <div class="col-sm-8 table-responsive">
+                                    <table>
+                                        <tr align="center">
+                                            <td colspan="5"><b> C </b></td>
+                                            <td></td>
+                                            <td colspan="5"><b> D </b></td>
+                                            <td></td>
+                                            <td colspan="5"><b> U </b></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr><td><br></td></tr>
+                                        <tr>
+                                            <td><b> ( </b> </td>
+                                            <td><input id="opdesc12" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> + </b></td>
+                                            <td><input id="opdesc13" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> ) </b></td>
+                                            <td><b> + </b></td>
+                                            <td><b> ( </b></td>
+                                            <td><input id="opdesc14" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> + </b></td>
+                                            <td><input id="opdesc15" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> ) </b></td>
+                                            <td><b> + </b></td>
+                                            <td><b> ( </b></td>
+                                            <td><input id="opdesc16" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> + </b></td>
+                                            <td><input id="opdesc17" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> ) </b></td>
+                                            <td><b> = </b></td>
+                                            <td><input id="opdesc18" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                        </tr>
+                                        <tr><td><br></td></tr>
+                                        <tr align="center">
+                                            <td colspan="5"><input id="opdesc19" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> + </b></td>
+                                            <td colspan="5"><input id="opdesc20" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td><b> + </b></td>
+                                            <td colspan="5"><input id="opdesc21" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                         <!--pregunats de la actividad-->
+                        <div class="text-question"><p><b style="color: blue;">9. </b>A una papelería llegaron las siguientes cantidades de cuadernos: 4 cajas de 100, 9 cajas de 10 y 7 cuadernos a granel. <br>Del total entregaron a una sucursal 2 cajas de 100 cuadernos, 6 cajas de 10, y 4 unidades. <br>¿Cuántos cuadernos quedan en la papelería?</p></div>
+                        <div class="actividad81 row">
+                            <div class="col-sm-12 table-responsive">
+                            <table>
+                                <tr>
+                                    <td> <b> ( </b> </td>
+                                    <td><input id="prbl1" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                    <td><b> - </b></td>
+                                    <td><input id="prbl2" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                    <td><b> ) </b></td>
+                                    <td><b> + </b></td>
+                                    <td><b> ( </b></td>
+                                    <td><input id="prbl3" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                    <td><b> - </b></td>
+                                    <td><input id="prbl4" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                    <td><b> ) </b></td>
+                                    <td><b> + </b></td>
+                                    <td><b> ( </b></td>
+                                    <td><input id="prbl5" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                    <td><b> - </b></td>
+                                    <td><input id="prbl6" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                    <td><b> ) </b></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr><td><br></td></tr>
+                                <tr align="center">
+                                    <td colspan="5"><input id="prbl7" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                    <td><b> + </b></td>
+                                    <td colspan="5"><input id="prbl8" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                    <td><b> + </b></td>
+                                    <td colspan="5"><input id="prbl9" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                    <td><b> = </b></td>
+                                    <td><input id="prbl10" type="text" style="text-align:center; width:  40px; border:none; border-bottom: 1px dashed black"  onkeypress="return soloNumeros1(event)"></td>
+                                </tr>
+                            </table>
+                            </div>
+                            <div class="col-sm-12">
+                                <br>
+                            <p><b style="color: blue;">R. </b> <input id="rprl1" type="text" style="width: 70%;  border:none; border-bottom: 1px dashed black"  ></p>
+                            </div>
+                        </div>
+                        <p id="trace" class="alert alert-warning display-none"></p>      
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class=form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/highcharts.js"></script>
+        <script src="js/exporting.js"></script>
+        <script src="js/export-data.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad81.js"></script>
+        
+        <!--<script src="js/activities.js"></script>-->
+        <script>
+        var titulos = 'refuerzo'
+        //Solo permite introducir numeros.
+        function soloNumeros(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 42 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+        //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+        </script>
+        
+    </body>
+
+    </html>

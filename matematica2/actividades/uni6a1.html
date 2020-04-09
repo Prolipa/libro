@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Matemática 2</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #9600a4 solid;
+            border-radius: 5px;
+            text-align: center;
+
+        }
+
+        #caja_res,
+        #caja_res1,
+        #caja_res2 {
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+
+        .respuestas {
+            width: 80%;
+            border: none;
+            border-bottom: 1px solid #005ca4;
+        }
+
+        .c_imagenes {
+            padding: 10px;
+        }
+
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 100px;
+            height: 155px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 180px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .correcto {
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+
+        .incorrecto {
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+
+        
+
+        .respuesta {
+            text-align: center;
+            border: 0;
+            border-top: 2px solid #393939;
+            border-bottom: 1px solid #85BCEB;
+            width: 50px;
+        }
+
+        .bordeT {
+            border: 1px #76B82A solid;
+        }
+
+
+
+        .bordeT2 {
+            border: 1px #76B82A solid;
+            text-align: center;
+        }
+
+        .paso {
+            background-color: #F9B000;
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 5px;
+        }
+
+        .pinta {
+            background: #9B8600;
+
+        }
+
+        .c_destino {
+            padding: 0.5px;
+            border: 3px dotted #7899CC;
+            border-radius: 10px;
+            min-height: 212px;
+        }
+
+        .c_destino1 {
+            padding: 0.5px;
+            border: 3px dotted #7899CC;
+            border-radius: 10px;
+            min-height: 212px;
+        }
+
+        .c_destino2 {
+            padding: 0.5px;
+            border: 3px dotted #7899CC;
+            border-radius: 10px;
+            min-height: 212px;
+        }
+
+        .c_destinos {
+            padding: 0.5px;
+            border: 3px dotted #7899CC;
+            border-radius: 10px;
+            min-height: 212px;
+        }
+
+        .c_destinos1 {
+            padding: 0.5px;
+            border: 3px dotted #7899CC;
+            border-radius: 10px;
+            min-height: 212px;
+        }
+
+        .c_destinos2 {
+            padding: 5px;
+            border: 1px solid #CCAE69;
+            border-radius: 10px;
+            min-height: 70px;
+            min-width: 120px;
+        }
+
+        .c_origen {
+
+            border: 1px solid #009BDB;
+            border-radius: 10px;
+            min-height: 110px;
+            max-width: 24%;
+            margin-left: 1px;
+            min-width: 100px;
+
+        }
+        .subrayar
+        {
+            background: orange;
+            color:white;
+        }
+
+        .subrayar1 {
+            background: green;
+            color:white;
+        }
+        .subrayar2 {
+            background: #D81B60;
+            color:white;
+        }
+        .subrayar3 {
+            background: #2E86C1;
+            color:white;
+        }
+
+        .correctoi {
+            color: #ffffff;
+            background-color: #8FB435;
+        }
+
+        .incorrectoi {
+            color: #ffffff;
+            background-color: #E76E80;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1:</b> Pinta color verder la serie (52 -72), 2 click y de amarillo la serie (73-91),3 click <br>
+        <b>Pregunta 2:</b> Pinta color rosado los pares y de color azul los impares.<br>
+        <b>Pregunta 3:</b> Escribe la respuesta correcta en los recuadros respectivos. <br>
+        <b>Pregunta 4:</b> Escribe la respuesta correcta en los recuadros respectivos. <br>
+        <b>Pregunta 5:</b> Escribe la respuesta correcta en los recuadros respectivos. <br>
+        <b>Pregunta 6:</b> Dibuja lo requerido. <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> /
+                    <span id='act_total'>1</span>
+                    </span>
+                    <span class="btn notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span>/ 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag 214
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio" style="margin-top: 30px;">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-preparo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-preparo">
+                <span class="titulo"><img src="img/icoPRE.png" alt="">Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a" readonly>&nbsp;
+                                    Álgebra y funciones: <b>1. Pinto</b> <span class="sobre">(<b>2</b> pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <span class="text-question">
+                                    <b>1. Observo</b> la tabla de números y <b>pinto</b> de diferente color las secuencias numéricas de acuerdo con el patrón indicado.
+                                </span><br>
+                                <div class="col-sm-12">
+                                    <div class="col-sm-4 text-question">
+                                        <ol type="a">
+                                            <li>Inicio en el 52 hasta el 72 y utilizo el patrón + 2.</li>
+                                            <li>Inicio en el 73 hasta el 91 y utilizo el patrón + 3.</li>
+                                        </ol>
+                                    </div>
+                                    <div class="col-sm-8 text-question table-responsive"><br>
+                                        <h2><table class="table" border="1" bordercolor="black" style="text-align: center;">
+                                            <tr>
+                                                <td><span id="1" class="enc1">51</span></td>
+                                                <td><span id="2" class="enc1">52</span></td>
+                                                <td><span id="3" class="enc1">53</span></td>
+                                                <td><span id="4" class="enc1">54</span></td>
+                                                <td><span id="5" class="enc1">55</span></td>
+                                                <td><span id="6" class="enc1">56</span></td>
+                                                <td><span id="7" class="enc1">57</span></td>
+                                                <td><span id="8" class="enc1">58</span></td>
+                                                <td><span id="9" class="enc1">59</span></td>
+                                                <td><span id="10" class="enc1">60</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span id="11" class="enc1">61</span></td>
+                                                <td><span id="12" class="enc1">62</span></td>
+                                                <td><span id="13" class="enc1">63</span></td>
+                                                <td><span id="14" class="enc1">64</span></td>
+                                                <td><span id="15" class="enc1">65</span></td>
+                                                <td><span id="16" class="enc1">66</span></td>
+                                                <td><span id="17" class="enc1">67</span></td>
+                                                <td><span id="18" class="enc1">68</span></td>
+                                                <td><span id="19" class="enc1">69</span></td>
+                                                <td><span id="20" class="enc1">70</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span id="21" class="enc1">71</span></td>
+                                                <td><span id="22" class="enc1">72</span></td>
+                                                <td><span id="23" class="enc1">73</span></td>
+                                                <td><span id="24" class="enc1">74</span></td>
+                                                <td><span id="25" class="enc1">75</span></td>
+                                                <td><span id="26" class="enc1">76</span></td>
+                                                <td><span id="27" class="enc1">77</span></td>
+                                                <td><span id="28" class="enc1">78</span></td>
+                                                <td><span id="29" class="enc1">79</span></td>
+                                                <td><span id="30" class="enc1">80</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span id="31" class="enc1">81</span></td>
+                                                <td><span id="32" class="enc1">82</span></td>
+                                                <td><span id="33" class="enc1">83</span></td>
+                                                <td><span id="34" class="enc1">84</span></td>
+                                                <td><span id="35" class="enc1">85</span></td>
+                                                <td><span id="36" class="enc1">86</span></td>
+                                                <td><span id="37" class="enc1">87</span></td>
+                                                <td><span id="38" class="enc1">88</span></td>
+                                                <td><span id="39" class="enc1">89</span></td>
+                                                <td><span id="40" class="enc1">90</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span id="41" class="enc1">91</span></td>
+                                                <td><span id="42" class="enc1">92</span></td>
+                                                <td><span id="43" class="enc1">93</span></td>
+                                                <td><span id="44" class="enc1">94</span></td>
+                                                <td><span id="45" class="enc1">95</span></td>
+                                                <td><span id="46" class="enc1">96</span></td>
+                                                <td><span id="47" class="enc1">97</span></td>
+                                                <td><span id="48" class="enc1">98</span></td>
+                                                <td><span id="49" class="enc1">99</span></td>
+                                                <td><span id="50" class="enc1">100</span></td>
+                                            </tr>
+                                        </table></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a" readonly>&nbsp;
+                                    Álgebra y funciones: <b>2. Pinto</b> <span class="sobre">(<b>2</b> pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <span class="text-question">
+                                    <b>2. Pinto</b> los números pares y <b>marco</b> con x los impares.
+                                </span><br>
+                                <div class="col-sm-12  text-question">
+                                    <h2>
+                                        <div class="col-sm-1" style="border: solid 1px #5DADE2;border-radius: 10px;text-align: center;"><span id="num0" class="enc2"></span></div><div class="col-sm-1"></div>
+                                        
+                                        <div class="col-sm-1" style="border: solid 1px #5DADE2;border-radius: 10px;text-align: center;"><span id="num1" class="enc2"></span></div><div class="col-sm-1"></div>
+                                        
+                                        <div class="col-sm-1" style="border: solid 1px #5DADE2;border-radius: 10px;text-align: center;"><span id="num2" class="enc2"></span></div><div class="col-sm-1"></div>
+                                        
+                                        <div class="col-sm-1" style="border: solid 1px #5DADE2;border-radius: 10px;text-align: center;"><span id="num3" class="enc2"></span></div><div class="col-sm-1"></div>
+                                        
+                                        <div class="col-sm-1" style="border: solid 1px #5DADE2;border-radius: 10px;text-align: center;"><span id="num4" class="enc2"></span></div><div class="col-sm-1"></div><br><br>
+                                        <div class="col-sm-1"></div>
+                                        <div class="col-sm-1" style="border: solid 1px #5DADE2;border-radius: 10px;text-align: center;"><span id="num5" class="enc2"></span></div><div class="col-sm-1"></div>
+                                        
+                                        <div class="col-sm-1" style="border: solid 1px #5DADE2;border-radius: 10px;text-align: center;"><span id="num6" class="enc2"></span></div><div class="col-sm-1"></div>
+                                        
+                                        <div class="col-sm-1" style="border: solid 1px #5DADE2;border-radius: 10px;text-align: center;"><span id="num7" class="enc2"></span></div><div class="col-sm-1"></div>
+                                        
+                                        <div class="col-sm-1" style="border: solid 1px #5DADE2;border-radius: 10px;text-align: center;"><span id="num8" class="enc2"></span></div><div class="col-sm-1"></div>
+                                        
+                                        <div class="col-sm-1" style="border: solid 1px #5DADE2;border-radius: 10px;text-align: center;"><span id="num9" class="enc2"></span></div><div class="col-sm-1"></div>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a" readonly >&nbsp;
+                                    Álgebra y funciones: <b>3. Resuelvo</b> <span class="sobre">(<b>2</b> pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <span class="text-question">
+                                    <b>3. Resuelvo</b>  las siguientes operaciones:
+                                </span><br>
+                                <div class="col-md-12">
+                                    <div class="col-md-12 text-question">
+                                        <ol type="a" id="li3">
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+                                    aria-controls="collapseFour">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a" readonly>&nbsp;
+                                    Álgebra y funciones: <b>4. Resuelvo </b> <span class="sobre">(<b>2</b> pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <span class="text-question">
+                                    <b>4. Resuelvo</b> los siguientes problemas:
+                                </span><br><br>
+                                <div class="col-sm-12 text-question">
+                                    <ol type="a">
+                                        <li>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-6">
+                                                    <p class="text-question">
+                                                        Alicia cosechó 67 manzanas en su huerta y regaló 45 a su vecina.<br>
+                                                        ¿Cuántas manzanas le quedan?
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-6 table-responsive">
+                                                    <img src="img/i1_p214_act4.jpg"><br><br>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <table class="table" style="text-align: center" border="1">
+                                                        <tr>
+                                                            <td width="33%" style="color:white;" bgcolor="#4279B9"><b>1. Comprendo</b> el problema.</td>
+                                                            <td width="33%" style="color:white;" bgcolor="#89C6E9"><b>2. Hago un plan.</b></td>
+                                                            <td width="33%" style="color:white;" bgcolor="#009AD2"><b>3. Ejecuto</b> el plan.</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Cosechó <input type="text" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="67"> manzanas<br><br>
+                                                                Regaló <input type="text" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="45"> manzanas.
+                                                            </td>
+                                                            <td>Debo realizar una <input type="text" size="1" style="width:100px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="resta"><br><br>
+                                                                <input type="text" size="1" style="width:100px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="67-45"></td>
+                                                            <td>
+                                                                <table class="table-bordered" style="text-align: center">
+                                                                    <tr>
+                                                                        <td width="4%"></td>
+                                                                        <td width="48%"> <h4>                <font color="#EC407A"><b>D</b></font>            </h4>
+                                                                        </td>
+                                                                        <td width="48%"> <h4>                <font color="#2196F3"><b>U</b></font>            </h4>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td><h4><b><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="6"></b></h4>
+                                                                        </td>
+                                                                        <td><h4><b><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="7"></b></h4>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><h4><b><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="-"></b></h4>
+                                                                        </td>
+                                                                        <td><h4><b><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="4"></b></h4>
+                                                                        </td>
+                                                                        <td><h4><b><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="5"></b></h4>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="border-top:2px solid #303F9F">
+                                                                        <td></td>
+                                                                        <td><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="2"></td>
+                                                                        <td><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="2"></td>
+                                                                    </tr>
+                                                                </table><br>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-6">
+                                                    <p class="text-question">
+                                                        Milton y Felipe colocan en el camión 27 cajas con manzanas y 12 cajas con uvas. ?<br>
+                                                        ¿Cuántas cajas colocan en total en el camión
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-6 table-responsive">
+                                                    <img src="img/i2_p214_act4.jpg"><br><br>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <table class="table" style="text-align: center" border="1">
+                                                        <tr>
+                                                            <td width="33%" style="color:white;" bgcolor="#C363A2"><b>1. Comprendo</b> el problema.</td>
+                                                            <td width="33%" style="color:white;" bgcolor="#CB89B8"><b>2. Hago un plan.</b></td>
+                                                            <td width="33%" style="color:white;" bgcolor="#927AB2"><b>3. Ejecuto</b> el plan.</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Manuel y Felipe colocan: <input type="text" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="27"> cajas con manzanas.<br><br>
+                                                                <input type="text" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="12"> cajas con uvas.
+                                                            </td>
+                                                            <td>Debo realizar una <input type="text" size="1" style="width:100px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="suma"><br><br>
+                                                                <input type="text" size="1" style="width:100px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="27+12"></td>
+                                                            <td>
+                                                                <table class="table-bordered" style="text-align: center">
+                                                                    <tr>
+                                                                        <td width="4%"></td>
+                                                                        <td width="48%"> <h4>                <font color="#EC407A"><b>D</b></font>            </h4>
+                                                                        </td>
+                                                                        <td width="48%"> <h4>                <font color="#2196F3"><b>U</b></font>            </h4>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td><h4><b><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="2"></b></h4>
+                                                                        </td>
+                                                                        <td><h4><b><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="7"></b></h4>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><h4><b><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="+"></b></h4>
+                                                                        </td>
+                                                                        <td><h4><b><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="1"></b></h4>
+                                                                        </td>
+                                                                        <td><h4><b><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="2"></b></h4>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="border-top:2px solid #303F9F">
+                                                                        <td></td>
+                                                                        <td><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="3"></td>
+                                                                        <td><input type="text" maxlength="1" size="1" style="width:50px" class="border-blue respuestas4"><input type="hidden" style="color:blue" class="solucion4" value="9"></td>
+                                                                    </tr>
+                                                                </table><br>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false"
+                                    aria-controls="collapseFive">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre5a" readonly>&nbsp;
+                                    Geometría y medida: <b>5. Completo</b> <span class="sobre">(<b>1</b> pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <span class="text-question">
+                                    <b>5. Completo</b>  los meses del año.
+                                </span><br><br>
+                                <div class="col-sm-12 text-question">
+                                    <h1><table class="table-responsive text-question" style="text-align: center;">
+                                        <tr>
+                                            <td><b>Enero</b><br><img src="img/i1_p214_act5.jpg"></td>
+                                            <td><input type="text"  size="1" style="width:100px;border: solid 1px #2E86C1" class="border-blue respuestas5"><input type="hidden" style="color:blue" class="solucion5" value="Febrero"><br><img src="img/i2_p214_act5.jpg"></td>
+                                            <td><br><br><br><b>marzo</b><br><img src="img/i3_p214_act5.jpg"></td>
+                                            <td><input type="text"  size="1" style="width:100px;border: solid 1px #2E86C1" class="border-blue respuestas5"><input type="hidden" style="color:blue" class="solucion5" value="abril"><br><img src="img/i4_p214_act5.jpg"></td>
+                                            <td><b>mayo</b><br><br><br><img src="img/i2_p214_act5.jpg"></td>
+                                            <td><input type="text"  size="1" style="width:100px;border: solid 1px #2E86C1" class="border-blue respuestas5"><input type="hidden" style="color:blue" class="solucion5" value="junio"><br><img src="img/i3_p214_act5.jpg"></td>
+                                            <td rowspan="2">
+                                                <img src="img/i5_p214_act5.jpg">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><br><br><br><input type="text"  size="1" style="width:100px;border: solid 1px #2E86C1" class="border-blue respuestas5"><input type="hidden" style="color:blue" class="solucion5" value="diciembre"><br><img src="img/i3_p214_act5.jpg"></td>
+                                            <td><input type="text"  size="1" style="width:100px;border: solid 1px #2E86C1" class="border-blue respuestas5"><input type="hidden" style="color:blue" class="solucion5" value="noviembre"><br><img src="img/i2_p214_act5.jpg"></td>
+                                            <td><br><br><b>octubre</b><br><img src="img/i4_p214_act5.jpg"></td>
+                                            <td><input type="text"  size="1" style="width:100px;border: solid 1px #2E86C1" class="border-blue respuestas5"><input type="hidden" style="color:blue" class="solucion5" value="septiembre"><br><img src="img/i3_p214_act5.jpg"></td>
+                                            <td><br><br><br><b>agosto</b><br><img src="img/i2_p214_act5.jpg"></td>
+                                            <td><br><br><input type="text"  size="1" style="width:100px;border: solid 1px #2E86C1" class="border-blue respuestas5"><input type="hidden" style="color:blue" class="solucion5" value="julio"><br><img src="img/i4_p214_act5.jpg"></td>
+                                        </tr>
+                                        
+                                    </table>
+                                </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingSix">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false"
+                                    aria-controls="collapseSix">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre6a">&nbsp;
+                                    Geometría y medida: <b>6. Dibujo </b> <span class="sobre">(<b>1</b> pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="panel-body">
+                                <span class="text-question">
+                                    <b>6. Dibujo </b> un objeto más liviano o más pesado según corresponda.
+                                </span><br><br>
+                                <div class="col-sm-12 text-question">
+                                    <div class="col-sm-4 table-responsive"><div class="my-drawing"></div></div>
+                                    <div class="col-sm-4 table-responsive"><div class="my-drawing"></div></div>
+                                    <div class="col-sm-4 table-responsive"><div class="my-drawing"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+<script src="js/activities.js"></script>
+    
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/export-data.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/uni6a1.js"></script>
+    <script>
+    var winHeight = $(window).height();
+    var winWidth = $(window).width();
+    $(document).ready(function() {
+        var watermarkImage = new Image();
+        var watermarkImage1 = new Image();
+        var watermarkImage2 = new Image();
+
+        watermarkImage.src = 'img/i1_p215_act6.jpg';
+        watermarkImage1.src = 'img/i2_p215_act6.jpg';
+        watermarkImage2.src = 'img/i3_p215_act6.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage,
+                watermarkScale: 0.9 // you can scale it
+
+            });
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[1], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage1,
+                watermarkScale: 0.9 // you can scale it
+
+            });
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[2], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage2,
+                watermarkScale: 0.9 // you can scale it
+
+            });
+    });
+    </script>
+</body>
+
+</html>

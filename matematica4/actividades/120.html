@@ -1,0 +1,1190 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Matemática 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 5px;
+            width: auto;
+            height: 100px
+    
+        }
+        #caja_res, #caja_res1,#caja_res2{
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+        .respuestas{
+                width: 80%;
+                border: none;
+                border-bottom: 1px solid #005ca4;
+            }
+        .c_imagenes{
+            padding: 10px;
+        }
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 140px;
+            height: 30px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 140px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+        .correcto{
+            color: white;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: white;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+        
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+        .encierra{
+            border: 1px solid blue;
+            border-radius: 40%;
+            
+        }
+        .respuesta {
+    text-align: center;
+    border: 0;
+    border-top: 2px solid #393939;
+    border-bottom: 1px solid #85BCEB;
+    width: 50px;
+}
+.bordeT {
+    border: 1px #76B82A solid;
+}
+
+
+
+.bordeT2 {
+    border: 1px #76B82A solid;
+    text-align: center;
+}
+
+.paso {
+    background-color: #F9B000;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+}
+.c_destino{
+        padding: 5px;
+        border:1px solid #CCAE69;
+        border-radius: 10px;
+        min-height: 100px;
+        min-width: 100px;
+    }
+.bg_palabra{
+            
+            border-radius: 10px;
+            background: #F6E7CF;
+            border: 2px solid #8EC3DC;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+        </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1:</b> Plantea dos multiplicaciones a partir de cada gráfico y resuelve. <br>
+        <b>Pregunta 2:</b> Resuelve las operaciones aplicando la propiedad conmutativa. <br>
+        <b>Pregunta 3:</b> Completa utilizando la propiedad asociativa. <br>
+        <b>Pregunta 4:</b> Completa el factor que falta y une con el nombre de la propiedad de la multiplicación. Desplaza la propiedad hacia el recuadro según corresponda. <br>
+        <b>Pregunta 5:</b> Colorea las parejas de operaciones conmutativas que tengan el color del producto correspondiente. Para colorear da click sobre el recuadro de la respuesta y da click en los recuadros que deseas pintar.<br>
+        <b>Pregunta 6:</b> Escribe cada multiplicación aplicando la propiedad asociativa. <br>
+        
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                                <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="btn notificacion nota">
+                                <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> / 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                                <span class="glyphicon glyphicon-bookmark"></span> Pag 152
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container space" style="margin-top: 30px;">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-preparo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-preparo">
+                <span class="titulo"><img src="img/icoPRE.png" alt="">Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/practica_individual.png" class="img-responsive">
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">1. </b> <b>Plantea</b> dos multiplicaciones a partir de cada gráfico y <b>resuelve.</b></p>
+                </div>
+                <div class="actividad120 text-question">
+                    <div class="col-sm-6">
+                        <p><b style="color: #005CA4;">a)</b></p>
+                        <div class="table-responsive" align="center">
+                            <table id="p1im1">
+                            </table>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p1dcon1">
+                                    </td>
+                                    <td><b>x</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p1dcon2">
+                                    </td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p1dcon3">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p1dcon4">
+                                    </td>
+                                    <td><b>x</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p1dcon5">
+                                    </td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p1dcon6">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <p><b style="color: #005CA4;">b)</b></p>
+                        <div class="table-responsive" align="center">
+                            <table id="p1im2">
+                            </table>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 30px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p2dcon1">
+                                    </td>
+                                    <td><b>x</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 30px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p2dcon2">
+                                    </td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p2dcon3">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p2dcon4">
+                                    </td>
+                                    <td><b>x</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p2dcon5">
+                                    </td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p2dcon6">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">2. </b> <b>Resuelve</b> las operaciones aplicando la propiedad conmutativa.</p>
+                </div>
+                <div class="actividad120 text-question">
+                    <div class="col-sm-4">
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td><b style="color: #005CA4;">a)</b></td>
+                                    <td id="p10i1"></td>
+                                    <td><b>x</b></td>
+                                    <td id="p10ci1"></td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd2con1">
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td id="p1i2"></td>
+                                    <td><b>x</b></td>
+                                    <td id="p1ci2"></td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd2con2">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td><b style="color: #005CA4;">b)</b></td>
+                                    <td id="p11i1"></td>
+                                    <td><b>x</b></td>
+                                    <td id="p11ci1"></td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd21con1">
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd21con2">
+                                    </td>
+                                    <td><b>x</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd21con3">
+                                    </td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd21con4">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td><b style="color: #005CA4;">c)</b></td>
+                                    <td id="p12i1"></td>
+                                    <td><b>x</b></td>
+                                    <td id="p12ci1"></td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd22con1">
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd22con2">
+                                    </td>
+                                    <td><b>x</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd22con3">
+                                    </td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd22con4">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td><b style="color: #005CA4;">d)</b></td>
+                                    <td id="p13i1"></td>
+                                    <td><b>x</b></td>
+                                    <td id="p13ci1"></td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd23con1">
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd23con2">
+                                    </td>
+                                    <td><b>x</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd23con3">
+                                    </td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd23con4">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td><b style="color: #005CA4;">e)</b></td>
+                                    <td id="p14i1"></td>
+                                    <td><b>x</b></td>
+                                    <td id="p14ci1"></td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd24con1">
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd24con2">
+                                    </td>
+                                    <td><b>x</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd24con3">
+                                    </td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd24con4">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td><b style="color: #005CA4;">f)</b></td>
+                                    <td id="p15i1"></td>
+                                    <td><b>x</b></td>
+                                    <td id="p15ci1"></td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd25con1">
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd25con2">
+                                    </td>
+                                    <td><b>x</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd25con3">
+                                    </td>
+                                    <td><b>=</b></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="pd25con4">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">3. </b> <b>Completa</b> utilizando la propiedad asociativa. Recuerda, primero <b>resolver</b> la operación del paréntesis.</p>
+                </div>
+                <div class="actividad120 text-question">
+                    <div class="col-sm-4" style="border-bottom: 2px dashed orange; border-right: 2px dashed orange;">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td><b style="color: #005CA4;">a)</b></td>
+                                    <td id="p3im1">5</td>
+                                    <td>x</td>
+                                    <td>(</td>
+                                    <td id="p3im2">7</td>
+                                    <td>x</td>
+                                    <td id="p3im3">3</td>
+                                    <td>)</td>
+                                    <td>=</td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="3">
+                                        <img src="img/i3_p152_act120.jpg">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p3dcon1">
+                                    </td>
+                                    <td>x</td>
+                                    <td colspan="5">
+                                        <input type="text" style="text-align:center; width: 60px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p3dcon2">
+                                    </td>
+                                    <td>=</td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p3dcon3">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td></td>
+                                    <td>(</td>
+                                    <td id="p3im4"></td>
+                                    <td>x</td>
+                                    <td id="p3im5"></td>
+                                    <td>)</td>
+                                    <td>x</td>
+                                    <td id="p3im6"></td>
+                                    <td>=</td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="3">
+                                        <img src="img/i3_p152_act120.jpg">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td colspan="5">
+                                        <input type="text" style="text-align:center; width: 60px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p3dcon4">
+                                    </td>
+                                    <td>x</td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p3dcon5">
+                                    </td>
+                                    <td>=</td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p3dcon6">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" style="border-bottom: 2px dashed orange; border-right: 2px dashed orange;">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td><b style="color: #005CA4;">b)</b></td>
+                                    <td>(</td>
+                                    <td id="p31im1"></td>
+                                    <td>x</td>
+                                    <td id="p31im2"></td>
+                                    <td>)</td>
+                                    <td>x</td>
+                                    <td id="p31im3"></td>
+                                    <td>=</td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="3">
+                                        <img src="img/i3_p152_act120.jpg">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td colspan="5">
+                                        <input type="text" style="text-align:center; width: 60px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p31dcon1">
+                                    </td>
+                                    <td>x</td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p31dcon2">
+                                    </td>
+                                    <td>=</td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p31dcon3">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td></td>
+                                    <td id="p31im4"></td>
+                                    <td>x</td>
+                                    <td>(</td>
+                                    <td id="p31im5"></td>
+                                    <td>x</td>
+                                    <td id="p31im6"></td>
+                                    <td>)</td>
+                                    <td>=</td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="3">
+                                        <img src="img/i3_p152_act120.jpg">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p31dcon4">
+                                    </td>
+                                    <td>x</td>
+                                    <td colspan="5">
+                                        <input type="text" style="text-align:center; width: 60px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p31dcon5">
+                                    </td>
+                                    <td>=</td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p31dcon6">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" style="border-bottom: 2px dashed orange; border-right: 2px dashed orange;">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td><b style="color: #005CA4;">c)</b></td>
+                                    <td id="p32im1"></td>
+                                    <td>x</td>
+                                    <td>(</td>
+                                    <td id="p32im2"></td>
+                                    <td>x</td>
+                                    <td id="p32im3"></td>
+                                    <td>)</td>
+                                    <td>=</td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="3">
+                                        <img src="img/i3_p152_act120.jpg">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p32dcon1">
+                                    </td>
+                                    <td>x</td>
+                                    <td colspan="5">
+                                        <input type="text" style="text-align:center; width: 60px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p32dcon2">
+                                    </td>
+                                    <td>=</td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p32dcon3">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td></td>
+                                    <td>(</td>
+                                    <td id="p32im4"></td>
+                                    <td>x</td>
+                                    <td id="p32im5"></td>
+                                    <td>)</td>
+                                    <td>x</td>
+                                    <td id="p32im6"></td>
+                                    <td>=</td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="3">
+                                        <img src="img/i3_p152_act120.jpg">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td colspan="5">
+                                        <input type="text" style="text-align:center; width: 60px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p32dcon4">
+                                    </td>
+                                    <td>x</td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p32dcon5">
+                                    </td>
+                                    <td>=</td>
+                                    <td>
+                                        <input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p32dcon6">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">4. </b> <b>Completa</b> el factor que falta y <b>une</b> con el nombre de la propiedad de la multiplicación que se aplica en cada ejercicio.</p>
+                </div>
+                <div class="actividad120 text-question" id="p4c1">
+                    <div align="center">
+                        <div class="bg_palabra drag1"><span>Propiedad conmutativa</span></div>
+                        <div class="bg_palabra drag1"><span>Propiedad asociativa</span></div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr align="center">
+                                <td>
+                                    <div class="c_destino drop1 p4res1"></div>
+
+                                </td>
+                                <td id="p4cim1">
+                                    
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <div class="c_destino drop1 p4res2"></div>
+                                </td>
+                                <td id="p4cim2">
+                                    
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <div class="c_destino drop1 p4res3"></div>
+                                </td>
+                                <td id="p4cim3">
+                                    
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <div class="c_destino drop1 p4res4"></div>
+                                </td>
+                                <td id="p4cim4">
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">5. </b> <b>Resuelve</b> las multiplicaciones empleando cálculo mental y <b>colorea</b> las parejas de operaciones conmutativas que tengan el color del producto correspondiente.</p>
+                </div>
+                <div class="actividad120 text-question">
+                    <div class="col-sm-12" align="center">
+                        <div id="color1" style="width: 70px; height: 70px; border-radius: 40%; background: #8CC0F2; padding: 20px; margin: 8px;font-size: 20px; display: inline-block;">
+                         120                                         
+                        </div>
+                        <div id="color2" style="width: 70px; height: 70px; border-radius: 40%; background: #D58B97; padding: 20px; margin: 8px;font-size: 20px; display: inline-block;">
+                         710                                         
+                        </div>
+                        <div id="color3" style="width: 70px; height: 70px; border-radius: 40%; background: #E6ECBD; padding: 20px; margin: 8px;font-size: 20px; display: inline-block;">
+                         720                                         
+                        </div>
+                        <div id="color4" style="width: 70px; height: 70px; border-radius: 40%; background: #D7DDEF; padding: 20px; margin: 8px;font-size: 20px; display: inline-block;">
+                         60                                         
+                        </div>
+                        <div id="color5" style="width: 70px; height: 70px; border-radius: 40%; background: #F4E1C8; padding: 20px; margin: 8px;font-size: 20px; display: inline-block;">
+                         300                                         
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                    </div>
+                    <div class="col-sm-12" align="center">
+                        <table class="table">
+                            <tr align="center">
+                                <td><b>Color Seleccionado</b></td>
+                            </tr>
+                            <tr align="center">
+                                <td><div style="width: 30px; height: 30px; border-radius: 40%; " id="cols1">
+                                        </div></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row">
+                        
+                    </div>
+                    <div class="col-sm-6" align="center" id="p5im1">
+                    </div>
+                    <div class="col-sm-6" align="center" id="p5im2">
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">6. </b> <b>Escribe</b> cada multiplicación aplicando la propiedad asociativa.</p>
+                </div>
+                <div class="actividad120 text-question">
+                    <div class="col-sm-6">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td rowspan="2" style="vertical-align: middle;"><b style="color: #005CA4;">a)</b></td>
+                                    <td rowspan="2" style="vertical-align: middle;">
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td id="p6im1"></td>
+                                                <td>x</td>
+                                                <td id="p6im2"></td>
+                                                <td>x</td>
+                                                <td id="p6im3"></td>
+                                                <td>=</td>
+                                                <td id="p6im4"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td rowspan="2" style="vertical-align: middle;">
+                                        <img src="img/i4_p152_act120.jpg" alt="">
+                                    </td>
+                                    <td>
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td>(</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p6dcon1"></td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p6dcon2"></td>
+                                                <td>)</td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p6dcon3"></td>
+                                                <td>=</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p6dcon4"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td>
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td>(</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p6dcon5"></td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p6dcon6"></td>
+                                                <td>)</td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p6dcon7"></td>
+                                                <td>=</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p6dcon8"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td rowspan="2" style="vertical-align: middle;"><b style="color: #005CA4;">b)</b></td>
+                                    <td rowspan="2" style="vertical-align: middle;">
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td id="p61im1"></td>
+                                                <td>x</td>
+                                                <td id="p61im2"></td>
+                                                <td>x</td>
+                                                <td id="p61im3"></td>
+                                                <td>=</td>
+                                                <td id="p61im4"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td rowspan="2" style="vertical-align: middle;">
+                                        <img src="img/i4_p152_act120.jpg" alt="">
+                                    </td>
+                                    <td>
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td>(</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p61dcon1"></td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p61dcon2"></td>
+                                                <td>)</td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p61dcon3"></td>
+                                                <td>=</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p61dcon4"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td>
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td>(</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p61dcon5"></td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p61dcon6"></td>
+                                                <td>)</td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p61dcon7"></td>
+                                                <td>=</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p61dcon8"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td rowspan="2" style="vertical-align: middle;"><b style="color: #005CA4;">c)</b></td>
+                                    <td rowspan="2" style="vertical-align: middle;">
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td id="p62im1"></td>
+                                                <td>x</td>
+                                                <td id="p62im2"></td>
+                                                <td>x</td>
+                                                <td id="p62im3"></td>
+                                                <td>=</td>
+                                                <td id="p62im4"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td rowspan="2" style="vertical-align: middle;">
+                                        <img src="img/i4_p152_act120.jpg" alt="">
+                                    </td>
+                                    <td>
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td>(</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p62dcon1"></td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p62dcon2"></td>
+                                                <td>)</td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p62dcon3"></td>
+                                                <td>=</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p62dcon4"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td>
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td>(</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p62dcon5"></td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p62dcon6"></td>
+                                                <td>)</td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p62dcon7"></td>
+                                                <td>=</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p62dcon8"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr align="center">
+                                    <td rowspan="2" style="vertical-align: middle;"><b style="color: #005CA4;">d)</b></td>
+                                    <td rowspan="2" style="vertical-align: middle;">
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td id="p63im1"></td>
+                                                <td>x</td>
+                                                <td id="p63im2"></td>
+                                                <td>x</td>
+                                                <td id="p63im3"></td>
+                                                <td>=</td>
+                                                <td id="p63im4"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td rowspan="2" style="vertical-align: middle;">
+                                        <img src="img/i4_p152_act120.jpg" alt="">
+                                    </td>
+                                    <td>
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td>(</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p63dcon1"></td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p63dcon2"></td>
+                                                <td>)</td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p63dcon3"></td>
+                                                <td>=</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p63dcon4"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td>
+                                        <table class="table-responsive">
+                                            <tr align="center">
+                                                <td>(</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p63dcon5"></td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p63dcon6"></td>
+                                                <td>)</td>
+                                                <td>x</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p63dcon7"></td>
+                                                <td>=</td>
+                                                <td><input type="text" style="text-align:center; width: 40px; border: 2px solid #8DB5E0; border-radius: 5px;" onkeypress="return soloNumeros(event)" id="p63dcon8"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--<p id="trace" class="alert alert-warning display-none"></p>-->
+            </div>
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+            <!--generador de pdf-->
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/highcharts.js"></script>
+            <script src="js/exporting.js"></script>
+            <script src="js/export-data.js"></script>
+            <script src="js/animate.css.min.js"></script>
+            <script src="js/jquery.animate.css.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/Utilitario.js"></script>
+            <script src="js/actividad120.js"></script>
+            <!--<script src="js/activities.js"></script>-->
+            <script>
+            var titulos = 'aplico'
+            //Solo permite introducir numeros.
+            function soloNumeros(e) {
+                var key = window.event ? e.which : e.keyCode;
+                if (key < 48 || key > 57) {
+                    e.preventDefault();
+                }
+            }
+            </script>
+</body>
+
+</html>

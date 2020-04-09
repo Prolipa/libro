@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MATEMÁTICA 7</title>
+    <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <script src="js/highcharts.js"></script>
+        <script src="js/highcharts-3d.js"></script>
+    <script src="js/data.js"></script>
+
+</head>
+<style type="text/css">
+    .n0{
+        background-color: #B5E8F0;
+        border-radius: 5px;
+    }
+    .n1{
+        background-color: #D3E6AB;
+        border-radius: 5px;
+    }
+    .n2{
+        background-color: #D0C0E1;
+        border-radius: 5px;
+    }
+    .n3{
+        background-color: #F3F1D3;
+        border-radius: 5px;
+    }
+
+    .num0{
+        font-size: 23px;
+        color: #4E44CB;
+    }
+    .num1{
+        font-size: 23px;
+        color: #CB4488;
+    }
+    .num2{
+        font-size: 23px;
+        color: #9E9402;
+    }
+
+    .tabla0{
+        background-color: #FFD2F5;
+        text-align: center;
+    }
+
+    .tabla1{
+        background-color: #CBF2F3;
+        text-align: center;
+    }
+
+    .tabla2{
+        background-color: #CBF3CD;
+        text-align: center;
+    }
+
+    .actividad1{
+        background: #fff;       
+    }
+    .correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+    @media (max-width: 770px) {
+      .cajas {
+        clear: left;
+      }
+    }
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Actividad 1: Responde los literales a, b, c en os cuadros correspondientes en base a la tabla planteada, esta actividad debe ser calificada manualmente sobre 5 puntos.<br>
+        Actividad 2: Calcula el Promedio ó Media de los datos planteados en la Tabla, sigue el contexto de la frase.<br> Escribe únicamente 2 decimales y aproxímalos. Ej: 1.527 = 1.53;   1.567 = 1.57;<br>  
+        Actividad 3: Encuentra la Mediana del conjunto de datos de pacientes y días de hospitalización, escribe tu respuesta en los cuadros de texto correspondientes.<br>
+        Actividad 4: Identifica la Moda del conjunto de datos de pacientes y días de hospitalización, escribe tu respuesta en los cuadros de texto correspondientes.<br>
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-reflexiono" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-reflexiono">
+                    <span class="titulo"><img src="img/icoR.png" alt="Reﬂexiono para avanzar"> Reﬂexiono para avanzar</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+        <div class="panel-body preguntas">  
+                    <!--preguntas de la actividad-->
+            <div class="col-sm-4">                        
+                <p><img src="img/i1_p84_act1.jpg" class="img-responsive center-block"></p>
+            </div>
+        <br>
+            <div class="col-sm-8">
+              <div class="table-responsive">
+                <table id="tablePreview" class="table table-bordered table-hover table-sm">
+                    <tr>
+                      <td style="background-color: #BC65AD; color: white; font-size: 17px; text-align: center;">Día</td>
+                      <td class="tabla0">Lunes</td>
+                      <td class="tabla0">Martes</td>
+                      <td class="tabla0">Miércoles</td>
+                      <td class="tabla0">Jueves</td>
+                      <td class="tabla0">Viernes</td>
+                      <td class="tabla0">Sábado</td>
+                      <td class="tabla0">Domingo</td>
+                    </tr>
+                    <tr>
+                      <td style="background-color: #5AA9B8; color: white; font-size: 17px; text-align: center;">N° de pacientes</td>
+                      <td class="tabla1" id="np0"></td>
+                      <td class="tabla1" id="np1"></td>
+                      <td class="tabla1" id="np2"></td>
+                      <td class="tabla1" id="np3"></td>
+                      <td class="tabla1" id="np4"></td>
+                      <td class="tabla1" id="np5"></td>
+                      <td class="tabla1" id="np6"></td>
+                    </tr>
+                    <tr>
+                      <td style="background-color: #5AB85E; color: white; font-size: 17px; text-align: center;">Días hospitalizados</td>
+                      <td class="tabla2" id="dh0"></td>
+                      <td class="tabla2" id="dh1"></td>
+                      <td class="tabla2" id="dh2"></td>
+                      <td class="tabla2" id="dh3"></td>
+                      <td class="tabla2" id="dh4"></td>
+                      <td class="tabla2" id="dh5"></td>
+                      <td class="tabla2" id="dh6"></td>
+                    </tr>
+                </table>
+                </div>
+                <br>
+             <div class="row col-sm-9"><span>A partir del análisis de los datos de la tabla, <b>responde</b>.</span></div>
+                  <div class="col-sm-3"><input type="number" class="form-control" placeholder="Puntaje/5" style="width: 110px;" id ="calificacion0" data-toggle="tooltip" title="Puntaje sólo para preguntas escritas"></div>
+                    
+                    <label style="padding-top: 35px;">a) ¿Qué día ingresaron el mayor número de pacientes?</label>
+                    <input type="text"  class="form-control respuestas">
+
+                    <label style="padding-top: 35px;">b) ¿De cuántos días fue el máximo de permanencia de los pacientes en el hospital?</label>
+                    <input type="text"  class="form-control respuestas">
+
+                    <label style="padding-top: 35px;">c) ¿Cuántos pacientes permanecieron hospitalizados un día?</label>
+                    <input type="text"  class="form-control respuestas">                
+            </div>
+            
+            <div class="col-sm-12 form-inline form-group">
+                <hr style="border-width: 2px; border-color: #D3E6AB;">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                     <span>El <b style="color: #EC3C71;">promedio</b> de pacientes que fueron hospitalizados durante la semana fue de <input type="number" class="form-control respuestas" id="media0"> y el <b style="color: #EC3C71;">promedio</b> de días que permanecieron en el hospital fue de <input type="number" class="form-control respuestas" id="media1">.</span> 
+
+                     <br><br>
+
+                      <span>La <b style="color: #EC3C71;">mediana</b> es el valor que se ubica en el centro de una distribución ordenada de forma creciente o decreciente.</span> <br>
+                      <div class="col-sm-6">
+                           <span class="n0">Pacientes: </span>
+                           <span class="num1" id="conjuntoOrden0"></span>
+                      </div>
+                      <div class="col-sm-6">
+                          <span class="glyphicon glyphicon-play" style="color: #9644CB;"></span>
+                          <span class="n2">El valor central o mediana es </span>
+                          <input type="number" id="rMediana0" class="form-control" style="width: 70px;">
+                      </div>
+                     <br><br>
+                      <div class="col-sm-6">
+                           <span class="n1">Días hospitalizados: </span>
+                           <span class="num2" id="conjuntoOrden1"></span>
+                      </div>
+                      <div class="col-sm-6">
+                          <span class="glyphicon glyphicon-play" style="color: #F5C619;"></span>
+                          <span class="n3">El valor central o mediana es </span>
+                          <input type="number" id="rMediana1" class="form-control" style="width: 70px;">
+                      </div>
+
+
+
+                     <br><br><br>
+
+                      <span>La <b style="color: #EC3C71;">moda</b> es el valor que se presenta con mayor frecuencia en una distribución, es decir, el valor que más se repite.</span> <br>
+                      <div class="col-sm-6">
+                           <span class="n0">Pacientes: </span>
+                           <span class="num1" id="conjuntoOrden2"></span>
+                      </div>
+                      <div class="col-sm-6">
+                          <span class="glyphicon glyphicon-play" style="color: #9644CB;"></span>
+                          <span class="n2">El valor qué más se repite es </span> 
+                          <input type="number" id="rModa0" class="form-control" style="width: 70px;">
+                      </div>
+                     <br><br>
+                      <div class="col-sm-6">
+                           <span class="n1">Días hospitalizados: </span>
+                           <span class="num2" id="conjuntoOrden3"></span>
+                      </div>
+                      <div class="col-sm-6">
+                          <span class="glyphicon glyphicon-play" style="color: #F5C619;"></span>
+                          <span class="n3">El valor qué más se repite es </span> 
+                          <input type="number" id="rModa1" class="form-control" style="width: 70px;">
+                      </div>
+
+
+                </div>
+                 
+            </div>
+        </div>      
+    </div>
+
+    <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad68.js"></script>
+        <script type="text/javascript">
+            var titulos="reflexiono";
+            f_titulos();
+            $("#n_pagina").html('84');
+            $( ".btnCalificar" ).bind( "click", function() {
+                CalificacionAbierta();
+            });
+        </script>
+</body>
+</html>

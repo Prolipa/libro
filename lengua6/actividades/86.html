@@ -1,0 +1,476 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <style>
+        table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+    .correcto {
+    color: #ffffff;
+    background-color: #00e600;
+    }
+
+    .incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+    }
+
+
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+
+
+    .pintar {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+.subrayar {
+        border-bottom: 2px solid #000000;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>1. </b>Encierra haciendo un click en la respuesta correcta.
+        <br> <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota1" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <b>1. Lee</b> <span class="sobre">4 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>1. Lee</b> las siguientes estrofas de canciones y encierra los versos que contengan anáforas.
+                                        <div class="row" align="center">
+                                            <div class="col-lg-6" style="background: #faf7fb;border: 1px solid #5a1281;">
+                                                <div class="1 enc0">
+                                                    “Gracias a la vida que me ha dado tanto; <br>
+                                                    me dio dos luceros que cuando los abro, <br>
+                                                    perfecto distingo lo negro del blanco <br>
+                                                </div>
+                                                <div class="1 enc1">y en el alto cielo su fondo estrellado <br>
+                                                    y en las multitudes el hombre que yo amo” <br></div>
+                                                <h6 style="text-align: right;">Parra, Violeta (s/f ). “Gracias a la vida”. Poeticous. Recuperado de https://goo.gl/uU6YwJ</h6>
+                                            </div>
+                                            <div class="col-lg-6" style="background: #fef4ea;border: 1px solid #ee8600;">
+                                                <div class="1 enc2">Dos besos llevo en el alma, llorona, <br></div>
+                                                que no se apartan de mí. <br>
+                                                <div class="1 enc3">Dos besos llevo en el alma, llorona, <br></div>
+                                                que no se apartan de mí. <br>
+                                                <div class="1 enc4">El último de mi madre, y el primero que te di. <br></div>
+                                                <h6 style="text-align: right;">Vargas, Chabela (s/f ). “Llorona”. La cuerda. Recuperado de https://goo.gl/bHacB4</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row" align="center">
+                                            <div class="col-lg-6" style="background: #f4f8ee;border: 1px solid #7eb61f;">
+                                                <div class="1 enc5">Si los guambritos sienten que <br>
+                                                    sus ojos se quieren cerrar <br></div>
+                                                <div class="1 enc6">es porque pronto llegará <br>
+                                                    trotando el caballito azul <br></div>
+                                                <h6 style="text-align: right;">Alvear, Álex (2012). “Caballito azul”. Musicafusión. Recuperado de https://goo.gl/Z8FXp4</h6>
+                                            </div>
+                                            <div class="col-lg-6" style="background: #f5f6fb;border: 1px solid #005da8;">
+                                                <div class="1 enc7">Canto a ver si al llanto se lo lleva el aire <br>
+                                                    Canto a ver si acaso los cielos se nublan <br>
+                                                    Canto a ver si acaso hay un dios que me escucha <br></div>
+                                                <div class="1 enc8">Ese Dios dormido que no piensa en mí <br></div>
+                                                <h6 style="text-align: right;">Gómez, Marta (s/f ). “Canción de cuna”. Música.com. Recuperado de https://goo.gl/knVgTg</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota2" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <b>2. Escribe</b> <span class="sobre">3 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>2. Escribe</b> las partes de tu canción favorita, según se indica.
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td colspan="3">Título:<input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Primera estrofa: <textarea name="" class="form-control" style="resize: none;"></textarea></td>
+                                                <td>Estribillo: <textarea name="" class="form-control" style="resize: none;"></textarea></td>
+                                                <td>Segunda estrofa: <textarea name="" class="form-control" style="resize: none;"></textarea></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="html2pdf__page-break"></div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota3" class="nota-abierta" style="background: white;text-align: center;" >
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <b>3. Completa</b> <span class="sobre">3 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>3. Completa</b> el estribillo de la siguiente canción para crear anáforas.
+                                    <br>
+                                    Mi verso al valiente agrada:
+                                    <input class="form-control"></input>
+                                    <br>
+                                    es el verso de la caña y del acero:
+                                    <input class="form-control"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("139");
+    $('.btnGuardar').removeClass('disabled');
+
+
+    $('.1').click(function() {
+
+        if ($(this).hasClass('pintar')) {
+            $(this).removeClass('pintar')
+        } else {
+            $(this).addClass('pintar')
+        }
+    });
+
+
+    document.getElementById('nota2').addEventListener('keypress', () => {
+        validNumero(0, 3, 1);
+    });
+    document.getElementById('nota2').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota2'), 3)
+    });
+    document.getElementById('nota3').addEventListener('keypress', () => {
+        validNumero(0, 3, 1);
+    });
+    document.getElementById('nota3').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota3'), 3)
+    });
+
+    function pregunta1() {
+        var nt1 = 0,
+            nt2 = 0,
+            nt3 = 0;
+        if ($('.enc1').hasClass('pintar') == true) {
+            nt1 = 1;
+            $('.enc1').addClass('correcto');
+        }
+        if ($('.enc0').hasClass('pintar') == true) {
+            $('.enc0').addClass('incorrecto');
+            nt1 = nt1 - 1;
+        }
+        if ($('.enc2').hasClass('pintar') == true) {
+            nt1 = nt1 + 1;
+            $('.enc2').addClass('correcto');
+        }
+        if ($('.enc3').hasClass('pintar') == true) {
+            nt1 = nt1 + 1;
+            $('.enc3').addClass('correcto');
+        }
+        if ($('.enc4').hasClass('pintar') == true) {
+            $('.enc4').addClass('incorrecto');
+            nt1 = nt1 - 1;
+        }
+        if ($('.enc5').hasClass('pintar') == true) {
+            $('.enc5').addClass('incorrecto');
+            nt1 = nt1 - 1;
+        }
+        if ($('.enc6').hasClass('pintar') == true) {
+            $('.enc6').addClass('incorrecto');
+            nt1 = nt1 - 1;
+        }
+
+        if ($('.enc7').hasClass('pintar') == true) {
+            nt1 = nt1 + 1;
+            $('.enc7').addClass('correcto');
+
+        }
+        if ($('.enc8').hasClass('pintar') == true) {
+            $('.enc8').addClass('incorrecto');
+            nt1 = nt1 - 1;
+
+        }
+
+        $('.1').off('click');
+        var total = (nt1 * 4) / 4;
+
+        ///var subtotal = parseFloat(nt1) + parseFloat(nt2) + parseFloat(nt3);
+        if (total < 0) {
+            total = 0;
+            $('#nota1').val(parseFloat(total).toFixed(2));
+        } else {
+            $('#nota1').val(parseFloat(total).toFixed(2));
+        }
+
+
+        /*$('#txtNota').html(parseFloat(total).toFixed(2));
+        document.getElementById('bt_comprobar').disabled = true;
+        $('input').attr("disabled", true);
+        $('#txtAlumno').attr("disabled", false);**/
+    }
+
+
+
+    function NotaFinal() {
+        var nota1 = document.getElementById('nota1').value;
+        var nota2 = document.getElementById('nota2').value;
+        var nota3 = document.getElementById('nota3').value;
+
+        if ((nota2 == "") || (nota3 == "")) {
+            alert("Debe ingresar la calificación de la pregunta 2 ó 3.")
+        } else {
+            pregunta1();
+
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3);
+            $('#txtNota').html(parseFloat(total).toFixed(2));
+            document.getElementById('bt_comprobar').disabled = true;
+            $('input').attr("disabled", true);
+            $('textarea').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+        }
+    }
+    </script>
+</body>
+
+</html>

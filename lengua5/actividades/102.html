@@ -1,0 +1,788 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/stylesopa.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+</head>
+<style type="text/css">
+.caja {
+    display: inline-block;
+    max-width: 120px;
+}
+
+.pintarcorrecto {
+
+    background-color: #32a75b;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+
+}
+
+.tilde {
+
+    background-color: #32a75b;
+
+}
+
+.sintilde {
+
+    background-color: #F97591;
+
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/literatura.jpg" class="img img-responsive">
+                <!--  PREGUNTA 1-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <input type="text" maxlength="4" size="" style="text-align:center;background: white;" class="nota-abierta" min="0" max="1" id="nota1" placeholder="0"></input><a data-toggle="collapse" data-parent="#aion" href="#pregunta1">Pregunta 1</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta1" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-2">
+                                <span>1. <b>Crea</b> un acróstico con el nombre de tu país. Con cada letra <b>escribe</b> palabras o frases completas.</span>
+                            </section>
+                            <div class="contenido">
+                                <p class="fuente"><span style="color: #E40521">E</span> <label><input class="form-control fuente" style="width: 350%"></label></p>
+                                <p class="fuente"><span style="color: #005CA9">C</span> <label><input class="form-control fuente" style="width: 350%"></label></p>
+                                <p class="fuente"><span style="color: #FFCC00">U</span> <label><input class="form-control fuente" style="width: 350%"></label></p>
+                                <p class="fuente"><span style="color: #E40521">A</span> <label><input class="form-control fuente" style="width: 350%"></label></p>
+                                <p class="fuente"><span style="color: #005CA9">D</span> <label><input class="form-control fuente" style="width: 350%"></label></p>
+                                <p class="fuente"><span style="color: #FFCC00">O</span> <label><input class="form-control fuente" style="width: 350%"></label></p>
+                                <p class="fuente"><span style="color: #E40521">R</span> <label><input class="form-control fuente" style="width: 350%"></label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 2-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <input type="text" maxlength="4" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota2" placeholder="0" readonly></input><a data-toggle="collapse" data-parent="#aion" href="#pregunta2">Pregunta 2</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-3">
+                                <span>2. <b>Pinta</b> las características que describen al personaje de la historia.</span>
+                            </section>
+                            <div style="background-color: #FCE8EA">
+                                <p class="fuente391"><span>El maíz</span> <span class="a0">colorado</span></p>
+                                <p class="fuente">Alfonso Rochac</p>
+                                <p class="fuente"><span class="b0">Los indios lanzaron unos granos de maíz tan</span> <span class="a0">blancos</span> <span class="b0">como dientes de muchacha sobre la tierra bien arada. A los pocos días, el suelo se cubrió de hojitas verdes, que de beber agua crecieron y crecieron. La diosa Sucuxi, tan</span> <span class="a0">bella</span>,<span class="b0"> tan</span> <span class="a0">pura</span>, <span class="b0">tan</span> <span class="a0">buena</span>, <span class="b0">desde aquella loma contemplaba el trabajo de los indios y en premio por sus afanes quiso darles una cosecha más grande. Sucuxi bajó de la loma a los maizales, cuyas ramas eran movidas por el viento. La espina hirió las plantas de Sucuxi y de sus piecitos brotaron</span> <span class="a0">rojas</span> <span class="b0">gotas de sangre. La diosa voló a su cabaña, dejando la sangre sobre los granos de una mazorca. Los granos bebieron la sangre y se tornaron</span> <span class="a0">rojos</span>, <span class="b0">tan rojos como la sangre que habían bebido. Pasaron los días y los indios encontraron una mazorca de granos rojos</span>.</p>
+                                <cite>Rochac, Alfonso (2016). El maíz colorado. Lengua y Literatura 5. Quito: Ministerio de Educación, p.33.</cite>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 3-->
+                <img src="img/comunicacion.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <input type="text" maxlength="4" size="" style="text-align:center;background: white;" class="nota-abierta" min="0" max="1" id="nota3" placeholder="0"></input><a data-toggle="collapse" data-parent="#aion" href="#pregunta3">Pregunta 3</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-4">
+                                <span>3. <b>Elabora</b> un guion de entrevista para tu maestro. <b>Completa</b> el esquema.</span>
+                            </section>
+                            <div>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 2px solid #B80E80; width: 400px">
+                                                <p class="fuente">Propósito de la entrevista: <label><input class="form-control fuente" style="width: 100%"></label></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 2px solid #B80E80; width: 100%">
+                                                <p class="fuente">Nombre del profesor/a: <label><input class="form-control fuente" style="width: 100%"></label></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 2px solid #B80E80; width: 100%">
+                                                <p class="fuente">Guion de entrevista: <label><input class="form-control fuente" style="width: 100%"></label></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 2px solid #B80E80; width: 100%">
+                                                <p class="fuente">1. <label><input class="form-control fuente" style="width: 200%"></label></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 2px solid #B80E80; width: 100%">
+                                                <p class="fuente">2. <label><input class="form-control fuente" style="width: 200%"></label></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 2px solid #B80E80; width: 100%">
+                                                <p class="fuente">3. <label><input class="form-control fuente" style="width: 200%"></label></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 2px solid #B80E80; width: 100%">
+                                                <p class="fuente">Nombre del entrevistador: <label><input class="form-control fuente" style="width: 100%"></label></p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 4-->
+                <img src="img/lectura.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <input type="text" maxlength="4" size="" style="text-align:center;background: white;" class="nota-abierta" min="0" max="1" id="nota4" placeholder="0"></input><a data-toggle="collapse" data-parent="#aion" href="#pregunta4">Pregunta 4</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span>4. <b>Lee</b> el texto y <b>responde</b> las preguntas.</span>
+                            <p class="fuente">Las especies muchas veces cambian para adaptarse al ambiente y poder sobrevivir.<br>Estas adaptaciones pueden ser cambios físicos y/o de comportamiento. Pero los ambientes también cambian con el tiempo y las especies necesitan continuar adaptándose. Por ejemplo, puede llover menos cada año, el clima puede volverse más frío o caliente… Si una especie no logra adaptarse al nuevo ambiente, puede desaparecer. Los científicos creen que la extinción de algunas especies se ha debido a que no lograron adaptarse a las nuevas condiciones ambientales.<br>Un ejemplo es el mamut lanudo de Norteamérica, que no pudo enfrentar el clima más cálido y el suelo pantanoso de las praderas, que antes eran muy frías.</p>
+                            <cite>S/A (s/f ). “Las partes de la evolución”. Biblioteca digital del ILCE. Recuperado de https://bit.ly/2mkUf3x</cite>
+                            <p class="fuente">¿Qué título pondrías al texto?</p>
+                            <input class="form-control fuente">
+                            <p class="fuente">¿Cuáles serán las adaptaciones físicas para sobrevivir si el clima se vuelve frío?</p>
+                            <input class="form-control fuente">
+                            <p class="fuente">¿Qué crees que le pasó al mamut lanudo?</p>
+                            <input class="form-control fuente">
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 5-->
+                <img src="img/escritura.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <input type="text" maxlength="4" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota5" placeholder="0" readonly></input><a data-toggle="collapse" data-parent="#aion" href="#pregunta5">Pregunta 5</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">5. <b>Completa</b> la conjugación del verbo en tercera persona del plural para saber lo que los niños hacen en la hora de recreo. <b>Observa</b> el ejemplo.</div>
+                            <section id="contenido-pregunta-6" class="ancho-pregunta">
+                                <div align=" table-responsive">
+                                    <table class="">
+                                        <tbody>
+                                            <tr>
+                                                <td style="background-color: #B27AB3">
+                                                    <p class="fuente30">Pretérito</p>
+                                                </td>
+                                                <td style="background-color: #75BA5A">
+                                                    <p class="fuente30">Presente</p>
+                                                </td>
+                                                <td style="background-color: #F49533">
+                                                    <p class="fuente30">Futuro</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente2">escucharon</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente2">escuchan</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente2">escucharán</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 2px solid #B27AB3"><input type="text" id="act5num0" class="form-control text-lowercase sinEspacios respuestas fuente2"><input type="hidden" class="solucion" value="trotaron"></td>
+                                                <td style="border: 2px solid #B27AB3"><input type="text" id="act5num1" class="form-control text-lowercase sinEspacios respuestas fuente2"><input type="hidden" class="solucion" value="trotan"></td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente2">trotarán</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 2px solid #B27AB3"><input type="text" id="act5num2" class="form-control text-lowercase sinEspacios respuestas fuente2"><input type="hidden" class="solucion" value="buscaron"></td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente2">buscan</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3"><input type="text" id="act5num3" class="form-control text-lowercase sinEspacios respuestas fuente2"><input type="hidden" class="solucion" value="buscarán"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente2">encontraron</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3"><input type="text" id="act5num4" class="form-control text-lowercase sinEspacios respuestas fuente2"><input type="hidden" class="solucion" value="encuentran"></td>
+                                                <td style="border: 2px solid #B27AB3"><input type="text" id="act5num5" class="form-control text-lowercase sinEspacios respuestas fuente2"><input type="hidden" class="solucion" value="encontrarán"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <!-- INICIO PREGUNTA 6 -->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <input type="text" maxlength="4" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota6" placeholder="0" readonly></input><a data-toggle="collapse" data-parent="#aion" href="#pregunta6">Pregunta 6</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta6" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>6. <b>Lee</b> los párrafos y <b>escribe</b> el tipo al que corresponde: descriptivo, expositivo o causa-efecto.</span>
+                            </div>
+                            <div>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 2px solid #05A9CE">
+                                                <p class="fuente">El armadillo es un mamífero grande. Mide de 1,5 a 1,6 metros de largo, incluyendo la cola. Llega a pesar hasta 60 kilogramos. Su caparazón está cubierto por numerosas placas; las más pequeñas están en la cola y en las patas.</p>
+                                            </td>
+                                            <td style="border: 2px solid #05A9CE">
+                                                <p class="fuente">Salinas y Cojimíes son dos destinos que atraen cada año a miles de turistas nacionales y extranjeros por su agradable clima, la belleza de sus playas y una deliciosa gastronomía. Sin embargo, ambos lugares son también muy distintos.</p>
+                                            </td>
+                                            <td style="border: 2px solid #05A9CE">
+                                                <p class="fuente">Cada día mueren en el mundo más de 4 000 niñas y niños menores de cinco años por enfermedades vinculadas a la falta de saneamiento y agua potable. Millones de casos de diarrea se producen en el mundo cada año.</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 2px solid #05A9CE"><input id="act6num0" type="text" class="form-control text-lowercase respuestas fuente2"><input type="hidden" class="solucion" value="Párrafo descriptivo*párrafo descriptivo"></td>
+                                            <td style="border: 2px solid #05A9CE"><input id="act6num1" type="text" class="form-control text-lowercase respuestas fuente2"><input type="hidden" class="solucion" value="Párrafo expositivo*párrafo expositivo"></td>
+                                            <td style="border: 2px solid #05A9CE"><input id="act6num2" type="text" class="form-control text-lowercase respuestas fuente2"><input type="hidden" class="solucion" value="Párrafo de causa-efecto*párrafo de causa-efecto"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- INICIO PREGUNTA 7 -->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <input type="text" maxlength="4" size="" style="text-align:center;background: white;" class="nota-abierta" min="0" max="1" id="nota7" placeholder="0"></input><a data-toggle="collapse" data-parent="#aion" href="#pregunta7">Pregunta 7</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta7" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>7. Escribe un párrafo descriptivo. Utiliza las ideas del recuadro.</span>
+                            </div>
+                            <div align="center">
+                                <img class="img-responsive" src="img/i1_p120_act102.jpg" alt="">
+                            </div>
+                                <div align="center">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td style="background-color: #F7ECF5; border: 2px solid #B27AB3">
+                                                    <p class="fuente">Tipo de animal</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente">perro</p>
+                                                </td>
+                                                <td style="background-color: #DDECD3; border: 2px solid #B27AB3">
+                                                    <p class="fuente">Orejas</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente">largas</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #F7ECF5; border: 2px solid #B27AB3">
+                                                    <p class="fuente">Color</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente">negro azabache</p>
+                                                </td>
+                                                <td style="background-color: #DDECD3; border: 2px solid #B27AB3">
+                                                    <p class="fuente">Hocico</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente">afilado</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #F7ECF5; border: 2px solid #B27AB3">
+                                                    <p class="fuente">Pelaje</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente">abundante</p>
+                                                </td>
+                                                <td style="background-color: #DDECD3; border: 2px solid #B27AB3">
+                                                    <p class="fuente">Frente</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente">mancha de color blanco</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color: #F7ECF5; border: 2px solid #B27AB3">
+                                                    <p class="fuente">Patas</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente">anchas y robustas</p>
+                                                </td>
+                                                <td style="background-color: #DDECD3; border: 2px solid #B27AB3">
+                                                    <p class="fuente">Cuerpo</p>
+                                                </td>
+                                                <td style="border: 2px solid #B27AB3">
+                                                    <p class="fuente">alargado y muy fuerte</p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p></p>
+                                <div>
+                                    <textarea class="form-control fuente" style="height: 100px; resize: none"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- INICIO PREGUNTA 8 -->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                            <input type="text" maxlength="4" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota8" placeholder="0" readonly></input><a data-toggle="collapse" data-parent="#aion" href="#pregunta8">Pregunta 8</a>
+                        </h4>
+                        </div>
+                        <div id="pregunta8" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <span>8. <b>Encierra</b> las palabras que tienen tilde diacrítica en el extracto de la biografía.</span>
+                                </div>
+                                <div style="background-color: #FFF0DF; border-radius: 70px 0px">
+                                    <p class="fuente391">La vida de un científico</p>
+                                    <p class="fuente"><span class="b0">Mi nombre es Charles Darwin y trabajo como científico. Para</span> <span class="c0">mí</span> <span class="d0">es un placer contarles algo de mi vida</span>.</p>
+                                    <p class="fuente"><span class="d0">Nací en Inglaterra, el 12 de febrero de 1809. En octubre de 1825, ingresé a la universidad para estudiar Medicina, por decisión de mi padre, aunque a</span> <span class="c0">mí</span> <span class="d0">no me interesaba</span>.</p>
+                                    <p class="fuente"><span class="c0">Sé</span> <span class="d0">que todo padre busca lo mejor para sus hijos, por eso</span> <span class="c0">él</span> <span class="d0">me motivó luego para que estudiara Teología</span>.</p>
+                                    <p class="fuente"><span class="d0">En la universidad asistí voluntariamente a las clases del botánico John Henslow.</span> <span class="d0">Fue</span> <span class="c0">él</span> <span class="d0">quien me dio la oportunidad de hacer un viaje por el mundo</span>.</p>
+                                    <p class="fuente"><span class="d0">Ahí fue cuando visité las islas Galápagos</span>.</p>
+                                    <p class="fuente"><span class="d0">Te dejo porque ya es hora de mi</span> <span class="c0">té</span>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- INICIO PREGUNTA 9 -->
+                    <img src="img/lengua.jpg" class="img img-responsive">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                             <input type="text" maxlength="4" size="" style="text-align:center;background: white;" class="nota-abierta" min="0" max="1" id="nota9" placeholder="0"></input><a data-toggle="collapse" data-parent="#aion" href="#pregunta9">Pregunta 9</a>
+                        </h4>
+                        </div>
+                        <div id="pregunta9" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <span>9. <b>Selecciona</b> una de las palabras de los dialectos del Ecuador y <b>escribe</b> una oración.</span>
+                                </div>
+                                <div align="center">
+                                    <table>
+                                        <tr>
+                                            <td style="border: 2px solid #B27AB3">
+                                                <p class="fuente2">achachay</p>
+                                            </td>
+                                            <td style="border: 2px solid #B27AB3">
+                                                <p class="fuente2">pana</p>
+                                            </td>
+                                            <td style="border: 2px solid #B27AB3">
+                                                <p class="fuente2">guagua</p>
+                                            </td>
+                                            <td style="border: 2px solid #B27AB3">
+                                                <p class="fuente2">caleta</p>
+                                            </td>
+                                            <td style="border: 2px solid #B27AB3">
+                                                <p class="fuente2">chiro</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <p></p>
+                                <input class="form-control fuente">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/jquery.ui.touch-punch.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/react-with-addons.js"></script>
+        <script src="js/literallycanvas.min.js"></script>
+        <script>
+        document.getElementById('nota1').addEventListener('keypress', () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById('nota1').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota1'), 1)
+        });
+        document.getElementById('nota3').addEventListener('keypress', () => {
+            validNumero(0, 1.25, 1);
+        });
+        document.getElementById('nota3').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota3'), 1.25)
+        });
+        document.getElementById('nota4').addEventListener('keypress', () => {
+            validNumero(0, 0.75, 1);
+        });
+        document.getElementById('nota4').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota4'), 0.75)
+        });
+        document.getElementById('nota7').addEventListener('keypress', () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById('nota7').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota7'), 1)
+        });
+        document.getElementById('nota9').addEventListener('keypress', () => {
+            validNumero(0, 2, 1);
+        });
+        document.getElementById('nota9').addEventListener('keyup', () => {
+            validMaxIngreso(document.getElementById('nota9'), 2)
+        });
+
+        function validNumero(num1, num2, allowFloat = 0) {
+            if (allowFloat == 1) {
+                var regex = new RegExp("^.|[" + num1 + "-" + num2 + "]+$");
+            } else {
+                var regex = new RegExp("^[" + num1 + "-" + num2 + "]+$");
+            }
+
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                event.preventDefault();
+                return false;
+            }
+        }
+
+        function validMaxIngreso(elemento, num) {
+            if (elemento.value > num) {
+                alert('La calificación no puede ser mayor a ' + num)
+                elemento.value = "";
+                return 1;
+            } else {
+
+                return 0;
+
+            }
+        }
+
+        function separateString(stringToSeparate) {
+            var separator = " ";
+            var stringSplited = [];
+            stringSplited = stringToSeparate.split(separator);
+            return stringSplited;
+        }
+        var nota = 0,
+            cor = 0,
+            inc = 0,
+            itemsT = 5,
+            calificacion = 10,
+            cont = 0,
+            ejer = 1;
+        f_pregunta1();
+
+        function f_pregunta1() {
+            $('.a0').click(function() {
+                $(this).addClass("pintarcorrecto");
+                $(this).unbind("click");
+                cor++;
+            });
+            $('.b0').click(function() {
+                $(this).addClass("pintarincorrecto");
+                $(this).unbind("click");
+                inc++;
+
+            });
+            $('.c0').click(function() {
+                $(this).addClass("tilde");
+                $(this).unbind("click");
+                cor++;
+            });
+            $('.d0').click(function() {
+                $(this).addClass("sintilde");
+                $(this).unbind("click");
+                inc++;
+
+            });
+            /* $(".btnCalificar").bind("click", function() { //click en el boton iniciar
+                 cont++;
+                 $(this).unbind("click");
+                 Calculo_notaCI();
+             });*/
+        }
+
+        function pregunta2() {
+            var pintado = $('.pintarcorrecto').length;
+            var nopintado = $('.pintarincorrecto').length;
+            var subtotal = pintado - nopintado;
+            var total = (subtotal * 1) / 7;
+            if (total < 0) {
+                total = 0;
+                $('#nota2').val(parseFloat(total).toFixed(2));
+
+            } else {
+                $('#nota2').val(parseFloat(total).toFixed(2));
+            }
+
+
+        }
+
+        function pregunta5() {
+            var respact2 = ['trotaron', 'trotan', 'buscaron', 'buscarán', 'encuentran', 'encontrarán', ];
+            var cont = 0;
+            for (var i = 0; i < 6; i++) {
+                var res = $('#act5num' + [i] + '').val().toLowerCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act5num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act5num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1.25) / 6;
+            $('#nota5').val(parseFloat(total).toFixed(2));
+        }
+
+        function pregunta6() {
+            var respact2 = ['párrafo descriptivo', 'párrafo expositivo', 'párrafo de causa-efecto', ];
+            var cont = 0;
+            for (var i = 0; i < 3; i++) {
+                var res = $('#act6num' + [i] + '').val().toLowerCase();
+                if (respact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act6num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act6num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 0.75) / 3;
+            $('#nota6').val(parseFloat(total).toFixed(2));
+        }
+
+        function pregunta8() {
+            var pintado = $('.tilde').length;
+            var nopintado = $('.sintilde').length;
+            var sin = (nopintado * 6) / 10;
+
+            var subtotal = pintado - sin;
+            var total = (subtotal * 1) / 6;
+            if (total < 0) {
+                total = 0;
+                $('#nota8').val(parseFloat(total).toFixed(2));
+
+            } else {
+                $('#nota8').val(parseFloat(total).toFixed(2));
+            }
+
+
+        }
+
+
+
+        function sinEspacios(inputs) {
+            $(inputs).on('keypress', function(e) {
+                if (e.which == 32)
+                    return false;
+            });
+        }
+        sinEspacios(".sinEspacios");
+
+
+        function NotaFinal() {
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var nota5 = document.getElementById('nota5').value;
+            var nota6 = document.getElementById('nota6').value;
+            var nota7 = document.getElementById('nota7').value;
+            var nota8 = document.getElementById('nota8').value;
+            var nota9 = document.getElementById('nota9').value;
+            if ((nota1 == "") || (nota3 == "") || (nota4 == "") || (nota7 == "") || (nota9 == "")) {
+                alert("Calificar la pregunta 1, 3, 4, 7 o 9")
+            } else {
+                //pregunta1();
+                pregunta2();
+                //pregunta3();
+                // pregunta4();
+                pregunta5();
+                pregunta6();
+                //pregunta7();
+                pregunta8();
+
+                var nota1 = document.getElementById('nota1').value;
+                var nota2 = document.getElementById('nota2').value;
+                var nota3 = document.getElementById('nota3').value;
+                var nota4 = document.getElementById('nota4').value;
+                var nota5 = document.getElementById('nota5').value;
+                var nota6 = document.getElementById('nota6').value;
+                var nota7 = document.getElementById('nota7').value;
+                var nota8 = document.getElementById('nota8').value;
+                var nota9 = document.getElementById('nota9').value;
+                var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4) + parseFloat(nota5) + parseFloat(nota6) + parseFloat(nota7) + parseFloat(nota8) + parseFloat(nota9);
+                $('#txtNota').html(parseFloat(total).toFixed(2));
+                document.getElementById('bt_comprobar').disabled = true;
+                $('input').attr("disabled", true);
+                $('#txtAlumno').attr("disabled", false);
+            }
+
+
+        }
+        </script>
+        <script>
+        $('.p_abierta').html('<span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"><input type="number" placeholder="0" class="form-control calif"></span> ');
+
+        $("#n_pagina").html("118"); //impresion de pagina
+        var titulos = "evaluacion";
+        f_titulos();
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lengua y Literatura 9</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <style>
+        hr {
+            border-color: black;
+            border-width: 2px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin: 3px;
+        }
+
+        .txt5 {
+            font-size: 16px;
+        }
+
+        .subrayar {
+            text-decoration: underline;
+        }
+
+        .pintarcorrecto {
+            background-color: #32a75b;
+        }
+
+        .pintarincorrecto {
+            background-color: #F97591;
+            text-decoration: line-through;
+        }
+
+        .correcto {
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+
+        .incorrecto {
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+        }
+
+
+        .calif {
+            position: relative;
+            font-size: 15px;
+        }
+
+        .textarea {
+            resize: none;
+            width: 350px;
+            height: 100px;
+        }
+
+            .subrayar {
+        text-decoration: underline;
+        background-color: #8FB435;
+
+    }
+
+    .subrayar1 {
+        text-decoration: underline;
+        color: #0938cf;
+        max-width: 95%;
+        border: 1px #0938cf solid;
+        border-radius: 5px;
+        margin: 5px;
+
+    }
+
+    .vacio {}
+    .seleccionCajai {
+        background-color: #ffffff;
+        color: white;
+
+        border: 10px rgb(34, 197, 29) solid;
+        border-radius: 25px;
+        margin: 5px;
+
+    }
+
+    .correctoi {
+        border: 10px rgb(34, 197, 29) solid;
+        border-radius: 25px;
+        margin: 5px;
+    }
+
+    .incorrectoi {
+        height: 115px;
+        border: 10px rgb(231, 16, 16) solid;
+        border-radius: 25px;
+        margin: 5px;
+    }
+
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Lee cuidadosamente la pregunta y contesta.<br>
+        2. Lee cuidadosamente la pregunta y contesta.<br> 
+        3. Lee cuidadosamente la pregunta y contesta.<br> 
+        4. Da clic sobre la opcion que quieres subrayar.<br> 
+        5. Lee cuidadosamente la pregunta y contesta.<br> 
+        6. Da clic sobre la opcion que quieres subrayar.<br> 
+        7. Da (2 clic) -> subrayar. (3 clis) -> encerrar sobre la opción.<br> 
+        8. Da clic sobre la palabra que quieres subrayar que quieres subrayar.<br>
+        9. Lee cuidadosamente la pregunta y contesta.<br> 
+        10. Lee cuidadosamente la pregunta y contesta.<br>
+        11. Encierra la imagen correcta.<br>
+        12. Selecciona la respuesta correcta.<br> 
+        13. Da clic sobre la opción que quieres subrayar..<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled
+                        data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar"
+                        onClick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="act_actual">1</span> /
+                        <span id="act_total">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Evaluación Sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                    aria-expanded="true" aria-controls="collapseOne">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0"
+                                        max="10" id="pre1a">&nbsp;
+                                    Literatura: <b>Pregunta 1.</b> <span class="sobre">(2 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div>
+                                        <div class="text-question">
+                                            <span><b>1. Lee </b> la selección de versos de José Martí e <b>identifica</b>
+                                                la figura literaria presente. Luego, <b>escribe</b> la parte
+                                                que corresponde a la figura que has encontrado.</span></div><br>
+                                        <table class="table">
+                                            <tr>
+                                                <td><img src="img/i1_p88_act1.jpg" class="img-responsive"></td>
+                                                <td>
+                                                    <textarea class="form-control text-question no-redimensionar" cols="60"
+                                                        rows="5" placeholder="Texto"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="img/i2_p88_act1.jpg" class="img-responsive"></td>
+                                                <td>
+                                                    <textarea class="form-control text-question no-redimensionar" cols="60"
+                                                        rows="5" placeholder="Texto"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="img/i3_p88_act1.jpg" class="img-responsive"></td>
+                                                <td>
+                                                    <textarea class="form-control text-question no-redimensionar" cols="60"
+                                                        rows="5" placeholder="Texto"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="img/i4_p88_act1.jpg" class="img-responsive"></td>
+                                                <td><textarea class="form-control text-question no-redimensionar" cols="60"
+                                                        rows="5" placeholder="Texto"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="img/i5_p88_act1.jpg" class="img-responsive"></td>
+                                                <td><textarea class="form-control text-question no-redimensionar" cols="60"
+                                                        rows="5" placeholder="Texto"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="img/i6_p88_act1.jpg" class="img-responsive"></td>
+                                                <td><textarea class="form-control text-question no-redimensionar" cols="60"
+                                                        rows="5" placeholder="Texto"></textarea>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0"
+                                        max="10" id="pre2a">&nbsp;
+                                    Comunicación oral: <b>Pregunta 2.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <span><b>2. Escribe </b> tres rasgos específicos de la charla informal.</span></div><br>
+                                    <table class="table" style="text-align: center" border="1" bordercolor="#1ABC9C">
+
+                                        <tr>
+                                            <td WIDTH="33%"><textarea class="form-control text-question no-redimensionar"
+                                                    cols="60" rows="5" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="33%"><textarea class="form-control text-question no-redimensionar"
+                                                    cols="60" rows="5" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="33%"><textarea class="form-control text-question no-redimensionar"
+                                                    cols="60" rows="5" placeholder="Texto"></textarea></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+                                    aria-expanded="false" aria-controls="collapseThree">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0"
+                                        max="10" id="pre3a">&nbsp;
+                                    Comunicación oral: <b>Pregunta 3.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="col-md-12" style="padding-top: 20px">
+                                    <div class="text-question">
+                                        <span><b>3. Escribe</b> dos rasgos específicos de la charla formal.</div><br>
+                                    <table class="table" style="text-align: center" border="1" bordercolor="blue">
+
+                                        <tr>
+                                            <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar"
+                                                    cols="60" rows="5" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="50%"><textarea class="form-control text-question no-redimensionar"
+                                                    cols="60" rows="5" placeholder="Texto"></textarea></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour"
+                                    aria-expanded="false" aria-controls="collapseFour">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0"
+                                        max="10" id="pre4a" readonly>&nbsp;
+                                    Lectura: <b>Pregunta 4.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>4. </b> De los siguientes elementos, <b>señala</b> el que constituye
+                                            un criterio para la búsqueda de información actualizada.</span></div><br>
+                                    <table class="table">
+                                        <tr>
+                                            <td><span><b>a)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen4  " id="rancuatro1"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>b)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen4  " id="rancuatro2"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>c)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen4  " id="rancuatro3"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>d)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen4  " id="rancuatro4"></div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive"
+                                    aria-expanded="false" aria-controls="collapseFive">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre5a">&nbsp;
+                                    Lectura: <b>Pregunta 5.</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>5. </b> Uno de los pasos para realizar consultas es comprender. <b>Explica</b>
+                                            en qué consiste.</span></div><br>
+                                    <textarea class="form-control text-question no-redimensionar" cols="60" rows="3"
+                                        placeholder="Texto"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingSix">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix"
+                                    aria-expanded="false" aria-controls="collapseSix">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre6a" readonly>&nbsp;
+                                    Lectura: <b>Pregunta 6.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>6. </b> ¿Cuál de las siguientes acciones corresponde a la
+                                            recapitulación como uno de los pasos en el proceso de
+                                            una consulta?</span></div><br>
+                                    <table class="table">
+                                        <tr>
+                                            <td><span><b>a)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen6  " id="ranseis1"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>b)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen6  " id="ranseis2"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>c)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen6  " id="ranseis3"></div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>d)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen6  " id="ranseis4"></div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingSeven">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven"
+                                    aria-expanded="false" aria-controls="collapseSeven">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre7a" readonly>&nbsp;
+                                    Escritura: <b>Pregunta 7.</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>7. Lee </b> las siguientes oraciones y <b>reconoce</b> las
+                                            subordinadas adjetivas. <b>Subraya</b> las explicativas. <b>Encierra</b> en
+                                            paréntesis las especificativas.</div><br>
+
+                                    <table class="table">
+                                        <tr>
+                                            <td><span><b>a)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen7  " id="ransiete1"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>b)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen7  " id="ransiete2"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>c)</b></span></td>
+                                            <td>
+
+                                                <div class="col-lg-12  imagen7  " id="ransiete3"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span><b>d)</b></span></td>
+                                            <td>
+                                                <div class="col-lg-12  imagen7  " id="ransiete4"></div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingEight">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight"
+                                    aria-expanded="false" aria-controls="collapseEight">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre8a" readonly>&nbsp;
+                                    Escritura: <b>Pregunta 8.</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>8. Subraya </b> todas las sustituciones pronominales que encuentres en
+                                            el siguiente texto.</div><br>
+
+                                    <div class="text-question">
+                                        <span><span class="enc8" id="21">A </span><span class="enc8" id="22">la</span>
+                                            <span class="enc8" id="23">vuelta</span> <span class="enc8" id="24">de</span>
+                                            <span class="enc8" id="25">un</span> <span class="enc8" id="26">viaje</span>
+                                            <span class="enc8" id="27">de</span> <span class="enc8" id="28">negocios,</span>
+                                            <span class="enc8" id="29">un</span> <span class="enc8" id="30">hombre</span>
+                                            <span class="enc8" id="31">compró</span> <span class="enc8" id="32">en</span>
+                                            <span class="enc8" id="33">la</span> <span class="enc8" id="34">ciudad</span>
+                                            <span class="enc8" id="35">un</span> <span class="enc8" id="36">espejo,</span>
+                                            <span class="enc8" id="37">objeto</span> <span class="enc8" id="38">que</span>
+                                            <span class="enc8" id="39">hasta
+                                            </span> <span class="enc8" id="40">entonces</span> <span class="enc8" id="41">nunca</span>
+                                            <span class="enc8" id="42">había</span> <span class="enc8" id="43">visto,</span>
+                                            <span class="enc8" id="44">ni</span> <span class="enc8" id="45">sabía</span>
+                                            <span class="enc8" id="46">lo</span> <span class="enc8" id="47">que</span>
+                                            <span class="enc8" id="48">era.</span> <span class="enc8" id="49">Pero</span>
+                                            <span class="enc8" id="50">precisamente</span> <span class="enc8" id="51">esa</span>
+                                            <span class="enc8" id="52">ignorancia</span> <span class="enc8" id="53">le</span>
+                                            <span class="enc8" id="54">hizo</span> <span class="enc8" id="55">sentir
+                                            </span> <span class="enc8" id="56">atracción</span> <span class="enc8" id="57">hacia</span>
+                                            <span class="enc8" id="58">ese</span> <span class="enc8" id="59">espejo,</span>
+                                            <span class="enc8" id="60">pues</span> <span class="enc8" id="61">creyó</span>
+                                            <span class="enc8" id="62">reconocer</span> <span class="enc8" id="63">en</span>
+                                            <span class="enc8" id="64">él</span> <span class="enc8" id="65">la</span>
+                                            <span class="enc8" id="66">cara</span> <span class="enc8" id="67">de</span>
+                                            <span class="enc8" id="68">su</span> <span class="enc8" id="69">padre.</span>
+                                            <span class="enc8" id="70">Maravillado,</span> <span class="enc8" id="71">lo</span>
+                                            <span class="enc8" id="72">compró
+                                            </span> <span class="enc8" id="73">y,</span> <span class="enc8" id="74">sin</span>
+                                            <span class="enc8" id="75">decir</span> <span class="enc8" id="76">nada</span>
+                                            <span class="enc8" id="77">a</span> <span class="enc8" id="78">su</span>
+                                            <span class="enc8" id="79">mujer,</span> <span class="enc8" id="80">lo</span>
+                                            <span class="enc8" id="81">guardó</span> <span class="enc8" id="82">en</span>
+                                            <span class="enc8" id="83">un</span> <span class="enc8" id="84">cofre</span>
+                                            <span class="enc8" id="85">que</span> <span class="enc8" id="86">tenían</span>
+                                            <span class="enc8" id="87">en</span> <span class="enc8" id="88">el</span>
+                                            <span class="enc8" id="89">desván</span> <span class="enc8" id="90">de</span>
+                                            <span class="enc8" id="91">la</span> <span class="enc8" id="92">casa.</span>
+                                            <span class="enc8" id="93">De</span> <span class="enc8" id="94">tanto</span>
+                                            <span class="enc8" id="95">en
+                                            </span> <span class="enc8" id="96">tanto,</span> <span class="enc8" id="97">cuando</span>
+                                            <span class="enc8" id="98">se</span> <span class="enc8" id="99">sentía</span>
+                                            <span class="enc8" id="100">triste</span> <span class="enc8" id="101">y</span>
+                                            <span class="enc8" id="102">solitario,</span> <span class="enc8" id="103">iba</span>
+                                            <span class="enc8" id="104">a</span> <span class="enc8" id="105">“ver</span>
+                                            <span class="enc8" id="106">a</span> <span class="enc8" id="107">su</span>
+                                            <span class="enc8" id="108">padre”.</span></div><br>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingNine">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine"
+                                    aria-expanded="false" aria-controls="collapseNine">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre9a">&nbsp;
+                                    Escritura: <b>Pregunta 9.</b> <span class="sobre">(1 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>9.</b> A partir del ejercicio anterior, <b>identifica</b> a qué o a
+                                            quién se hace la sustitución pronominal.</span></div><br>
+
+                                    <table class="table" style="text-align: center">
+                                        <tr>
+                                            <td WIDTH="25%" bgcolor="#2E86C1" style="color: #FFFFFF"><b>Sustitución
+                                                    pronominal</b></td>
+                                            <td WIDTH="25%" bgcolor="#E3751F" style="color: #FFFFFF"><b>A quién o a qué
+                                                    sustituye</b></td>
+                                            <td WIDTH="25%" bgcolor="#2E86C1" style="color: #FFFFFF"><b>Sustitución
+                                                    pronominal</b></td>
+                                            <td WIDTH="25%" bgcolor="#E3751F" style="color: #FFFFFF"><b>A quién o a qué
+                                                    sustituye</b></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea>
+                                            </td>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        </tr>
+                                        <tr>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        </tr>
+                                        <tr>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                            <td WIDTH="25%"><textarea class="form-control text-question no-redimensionar "
+                                                    cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        </tr>
+
+
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTen">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen"
+                                    aria-expanded="false" aria-controls="collapseTen">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre10a">&nbsp;
+                                    Lengua y Cultura: <b>Pregunta 10.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>10. </b>¿Por qué se le llama “cuneiforme” a la escritura de los
+                                            sumerios?</span>
+                                    </div><br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="3"
+                                        placeholder="Texto"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingEleven">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven"
+                                    aria-expanded="false" aria-controls="collapseEleven">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre11a" readonly>&nbsp;
+                                    Lengua y Cultura: <b>Pregunta 11.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEleven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEleven">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>11. Pinta </b> el círculo que corresponde a la gráfica de la escritura
+                                            sumeria.</span></div><br> 
+                                            <table class="table">
+                                                    <tr>
+                                                        
+                                                        <td>
+                                                            <div class="col-lg-12  imagen11 enc11 " id="ranonce1"></div>
+                                                        </td>
+                                                    
+                                                        
+                                                        <td>
+                                                            <div class="col-lg-12  imagen11 enc11 " id="ranonce2"></div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        
+                                                        <td>
+            
+                                                            <div class="col-lg-12  imagen11  enc11" id="ranonce3"></div>
+                                                        </td>
+                                                    
+                                                        
+                                                        <td>
+                                                            <div class="col-lg-12  imagen11 enc11 " id="ranonce4"></div>
+            
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwelve">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve"
+                                    aria-expanded="false" aria-controls="collapseTwelve">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre12a" readonly>&nbsp;
+                                    Lengua y Cultura: <b>Pregunta 12.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwelve" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwelve">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>12. Escoge </b> la palabra que completa el siguiente enunciado: <font
+                                                color="#2E86C1">palabras caracteres letras grafías</font></span></div><br>
+
+                                    <div class="text-question">
+                                        <span>La escritura sumeria estaba conformada por </span><select
+                                            id="cbodocea">
+                                            <option value="1">Seleccione</option>
+                                            <option value="2">caracteres</option>
+                                            <option value="3">grafías</option>
+                                            <option value="4">letras</option>
+                                            <option value="5">palabras</option>
+                                        </select></div><br>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThirteen">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThirteen"
+                                    aria-expanded="false" aria-controls="collapseThirteen">
+                                    <input type="text" maxlength="3" size="2" style="text-align:center" class="nota-abierta"
+                                        min="0" max="10" id="pre13a" readonly>&nbsp;
+                                    Lengua y Cultura: <b>Pregunta 13.</b> <span class="sobre">(0,5 pts)</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThirteen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThirteen">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>13. </b>El tema principal de La epopeya del Gilgamesh es:</div><br>
+                                            <table class="table">
+                                                    <tr>
+                                                        <td><span><b>a)</b></span></td>
+                                                        <td>
+                                                            <div class="col-lg-12  imagen13" id="rantrece1"></div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span><b>b)</b></span></td>
+                                                        <td>
+                                                            <div class="col-lg-12  imagen13" id="rantrece2"></div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span><b>c)</b></span></td>
+                                                        <td>
+            
+                                                            <div class="col-lg-12  imagen13" id="rantrece3"></div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span><b>d)</b></span></td>
+                                                        <td>
+                                                            <div class="col-lg-12  imagen13" id="rantrece4"></div>
+            
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" class="lblnombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre" id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')"
+                                        aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/numPaginas.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/actividad64.js"></script>
+
+
+</body>
+
+</html>

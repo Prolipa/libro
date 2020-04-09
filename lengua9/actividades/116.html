@@ -1,0 +1,536 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 9</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <style>
+        table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+    .correcto {
+    color: #ffffff;
+    background-color: #00e600;
+    }
+
+    .incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+    }
+
+
+    .subrayar {
+        border-bottom: 2px solid #005ca4;
+    }
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+
+
+    .pintar {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+    }
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 50px;
+    max-width: 100%;
+    margin-left: 1px;
+    width: auto;
+}
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 50px;
+    min-width: 120px;
+    width: auto;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>8. </b> Debes seleccionar el significado.
+        <br>
+        <b>9. </b> Seleccionar la palabra que corresponde.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="calificar_abierta()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <h3><b>Escribe</b> un editorial en el que expreses tu pensamiento a tus compañeros.</h3>
+                    <img class="img-responsive" src="img/planificotxt.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota1" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
+                                        <b>1. Planifico mi texto</b> <span class="sobre">2.50 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>1. Elige</b> el tema.<br><br>
+                                        <b>2. Haz</b> una lluvia de ideas sobre algunos hechos o situaciones que ocurren en tu entorno: tu barrio, tu ciudad, tu institución educativa, tu aula de clases. <b>Ten</b> presente que el editorial es siempre sobre un tema actual. <b>Anota</b> algunos temas que te interesen.
+                                        <table class="table table-bordered" style="text-align: center;">
+                                            <tr>
+                                                <td style="color: #0095da;">Tema 1</td>
+                                                <td style="color: #90489c;">Tema 2</td>
+                                                <td style="color: #4db848;">Tema 3</td>
+                                            </tr>
+                                            <tr>
+                                                <td><textarea name="" class="form-control" style="resize: none;"></textarea></td>
+                                                <td><textarea name="" class="form-control" style="resize: none;"></textarea></td>
+                                                <td><textarea name="" class="form-control" style="resize: none;"></textarea></td>
+                                            </tr>
+                                        </table>
+                                        <br><br>
+                                        <b>3. Busca</b> información confiable sobre cada uno de los temas que has elegido, según lo que te parezca más importante.
+                                        <br>
+                                        <br>
+                                        <b>4. Define</b> el tema. <b>Considera</b> los siguientes criterios a la hora de definir tu tema.
+                                        <table class="table table-bordered" style="text-align: justify;">
+                                            <tr>
+                                                <td style="background: #ed1165;color: white;">Criterio</td>
+                                                <td style="background: #0066b3;color: white;">Preguntas</td>
+                                                <td style="background: #00a77e;color: white;">Alta</td>
+                                                <td style="background: #b41d8d;color: white;">Media</td>
+                                                <td style="background: #5c2e91;color: white;">Baja</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Actualidad: vigencia del suceso, hecho, acontecimiento</td>
+                                                <td>¿Es actual?, ¿pasó hace poco?, ¿está sucediendo hoy?</td>
+                                                <td><input type="checkbox"></input></td>
+                                                <td><input type="checkbox"></input></td>
+                                                <td><input type="checkbox"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Importancia: el hecho, situación, noticia, debe ser relevante para muchos.</td>
+                                                <td>¿Para quién? ¿Quiénes son afectados? ¿Quiénes son beneficiados?</td>
+                                                <td><input type="checkbox"></input></td>
+                                                <td><input type="checkbox"></input></td>
+                                                <td><input type="checkbox"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Impacto: No basta que sea relevante para muchos, sino que incida con fuerza.</td>
+                                                <td>¿Afecta la calidad de vida y el bienestar de las personas? ¿La vida de las personas puede cambiar si se hace algo al respecto?</td>
+                                                <td><input type="checkbox"></input></td>
+                                                <td><input type="checkbox"></input></td>
+                                                <td><input type="checkbox"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Conocimiento o dominio que puedo tener sobre el tema. Ten presente que lo que expreses en tu editorial no puede ser algo superficial o que contenga información básica.</td>
+                                                <td>¿Cuánto conozco? ¿Debo investigar o averiguar más? ¿Tengo acceso a la información más relevante sobre lo que ha pasado o apenas conozco lo superficial?</td>
+                                                <td><input type="checkbox"></input></td>
+                                                <td><input type="checkbox"></input></td>
+                                                <td><input type="checkbox"></input></td>
+                                            </tr>
+                                        </table>
+                                        <br><br>
+                                        <b>5. Determina</b> qué tipo de artículo de editorial vas a redactar: argumentación, interpretación, de acción o explicación.
+                                        <br><br>
+                                        <b>6. </b>Una vez elegido el tema, <b>ten</b> a mano los contenidos trabajados sobre los artículos de editorial. <b>Revisa</b> las características generales, las partes que lo constituyen, la forma cómo se escribe y otros aspectos.
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/redactartxt.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota2" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <b>2. Redacto mi texto</b> <span class="sobre">2.50 pts</span>
+                                        </a>
+                                        </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>7. Empieza</b> a escribir tu artículo de editorial. <b>Redacta</b> primero un borrador. Puedes utilizar un procesador de textos. <b>Recuerda</b> que en este tipo de textos utilizas mayoritariamente los párrafos narrativos, explicativos y argumentativos.
+                                        <br><br>
+                                        <b>8. Utiliza</b> en tu escrito, al menos en tres ocasiones, las oraciones subordinadas adverbiales. <b>Realiza</b> las mejoras que sean necesarias mientras lo escribes. <b>Ten</b> presente que este producto es obra de tu talento y de tu esfuerzo. <b>Disfrútalo</b> mientras lo haces. <b>Imprime</b> o <b>ten</b> a mano una versión final.
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="html2pdf__page-break"></div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/revisotxt.png"></img>
+                    <div class="panel panel-info">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota3" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <b>3. Reviso mi texto</b> <span class="sobre">2.50 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>9. </b>Una vez que has concluido, <b>lee</b> despacio tu escrito. <b>Revísalo</b> para realizar las correcciones que hagan falta. Puedes darlo a otra persona para que lo lea y así saber que lo entiende.
+                                    <br><br>
+                                    <b>10. Verifica</b>, luego de terminar el trabajo, si contiene los siguientes elementos.
+                                    <table>
+                                        <tr>
+                                            <td style="background: #cdb4d7">Aspectos a revisar</td>
+                                            <td style="background: #fff0c7">Sí</td>
+                                            <td style="background: #">No</td>
+                                            <td style="background: #fff0c7">¿Qué se debe mejorar?</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #ede6f2">Tiene un título llamativo.</td>
+                                            <td style="background: #"><input type="checkbox"></input></td>
+                                            <td style="background: #"><input type="checkbox"></input></td>
+                                            <td style="background: #"><input class="form-control"></input></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #fff0c7">La introducción es breve y describe en pocas palabras el tema.</td>
+                                            <td style="background: #"><input type="checkbox"></input></td>
+                                            <td style="background: #"><input type="checkbox"></input></td>
+                                            <td style="background: #"><input class="form-control"></input></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #ede6f2">El cuerpo o desarrollo sigue una secuencia lógica.</td>
+                                            <td style="background: #"><input type="checkbox"></input></td>
+                                            <td style="background: #"><input type="checkbox"></input></td>
+                                            <td style="background: #"><input class="form-control"></input></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #fff0c7">La conclusión deja inquietudes, preguntas para la reflexión o impulsa a la acción.</td>
+                                            <td style="background: #"><input type="checkbox"></input></td>
+                                            <td style="background: #"><input type="checkbox"></input></td>
+                                            <td style="background: #"><input class="form-control"></input></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #ede6f2">El lenguaje utilizado es claro y accesible. Los términos son de uso cotidiano.</td>
+                                            <td style="background: #"><input type="checkbox"></input></td>
+                                            <td style="background: #"><input type="checkbox"></input></td>
+                                            <td style="background: #"><input class="form-control"></input></td>
+                                        </tr>
+                                    </table>
+                                    <br><br>
+                                    <b>11. Realiza</b> las últimas mejoras en caso de ser necesario.
+                                    <br><br>
+                                    <b>12. Pásalo</b> a limpio en el siguiente espacio, o si lo prefieres y lo has hecho en versión digital, <b>imprímelo</b> y <b>pégalo</b>.
+                                    <div class="row">
+                                        <div class="col-lg-6"><textarea name="" class="form-control" rows="10" style="resize: none;"></textarea></div>
+                                        <div class="col-lg-6"><img class="img-responsive" src="img/i1_p165_uni4tema10_1.jpg"></img></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/publicotxt.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota4" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                       <b>4. Publico mi texto</b> <span class="sobre">2.50 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>Comparte</b> tu artículo editorial con tus compañeros y, de ser posible, con estudiantes menores de tu institución educativa. Puedes también compartirlo con los miembros de tu familia enviándolo por correo electrónico.
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+
+    $("#txtNota").html("0");
+    $("#n_pagina").html("164");
+    $('.btnGuardar').removeClass('disabled');
+    /*$(document).ready(function() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        //var imageSize = { width: winHeight , height: winHeight };
+        //var watermarkImage = new Image();
+        ///watermarkImage.src = 'img/i1_p170_actpreparo.jpg';
+        //var watermarkImage2 = new Image();
+        //watermarkImage2.src = 'img/i7_p98_act100.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+
+                //watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+
+            });
+
+
+
+    });*/
+    $('.enc').click(function() {
+
+        if ($(this).hasClass('pintar')) {
+            $(this).removeClass('pintar')
+        } else {
+            $(this).addClass('pintar')
+        }
+    })
+
+    document.getElementById('nota1').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota1').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1'), 2.5)
+    });
+    document.getElementById('nota2').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota2').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota2'), 2.5)
+    });
+    document.getElementById('nota3').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota3').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota3'), 2.5)
+    });
+    document.getElementById('nota4').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota4').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota4'), 2.5)
+    });
+    </script>
+</body>
+
+</html>

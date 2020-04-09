@@ -1,0 +1,167 @@
+<style type="text/css">
+  .mi_canvas {
+    min-width: 320px;
+  }
+  #prueba {
+    margin-top: 2rem;
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    transition: all .3s linear 0s;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#e5e5e5; 
+    /*background-color:rgba(212,185,186,0.2); 
+    background-image: url(imagenes/fondo.jpg);*/ /* SI SE NECESITA UNA IMAGEN DE FONDO */
+    background-size: 100% 100%;
+  }
+  #logo {
+    display: block;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    z-index: 1;
+    width: 30%;
+    height: auto;
+    max-width: 350px;
+    min-width: 100px;
+  }
+  #contenedoropciones {
+    margin-top: 2rem;
+    padding: 2px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #contenedoropciones table {
+  background-color: rgba(220,220,220,1.00);
+  border: .25rem solid rgba(188,185,185,1.00);
+  margin-bottom: .5rem;
+  border-spacing: 5px;
+  border-collapse: separate;
+  }
+  #contenedoropciones table:nth-of-type(2) {
+    border-spacing: 5px;
+  }
+  #contenedoropciones table:nth-of-type(2) td {
+    width: 1px;
+    white-space: nowrap;
+  }
+  #contenedoropciones table:nth-of-type(1) td {
+    cursor: pointer;
+  }
+  #contenedoropciones .titulotabla {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color:rgba(103,103,103,1.00)
+  }
+  #contenedoropciones table {
+    display: inline-table;
+  }
+  
+  .celdascoloresdefondo {
+    width: 20px;
+    height: 10px;
+    border: solid 1px transparent;
+  }
+  @media (max-width: 890px) {
+    /*.mi_canvas {
+      font-size: .750rem;
+    }*/
+    #contenedoropciones, #prueba {
+      width: 98%
+    }
+    #contenedoropciones {
+      margin-left: 1%;
+    }
+  }
+  @media (max-width: 450px) {
+    /*.mi_canvas {
+      font-size: .75rem;
+    }*/
+  }
+  @media (max-width: 1px) {
+    #contenedoropciones #opcionesdedibujo {
+      display: table;
+      width: 100%;
+    }
+    #contenedoropciones #opcionesdedibujo td {
+      display: block;
+      width: auto;
+      text-align: left;
+      margin-top: 5px;    
+    }
+  }
+</style>
+
+
+
+
+<body>
+<main>
+	<canvas id="prueba">Este navegador no soporta canvas, visualice la web con un navegador actualizado.</canvas>
+    <div id="paleta" class="mi_canvas">
+    	<div id="contenedoropciones">
+          <table width="auto">
+              <tbody>
+                <tr>
+                  <td colspan="9" class="titulotabla">Color</td>
+                </tr>
+                <tr>
+                  
+                  <td class="celdascoloresdefondo" data-color="red">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="pink">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="orange">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="yellow">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="magenta">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="MEDIUMSEAGREEN">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="green">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="DARKCYAN">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="cyan">&nbsp;</td>
+                </tr>
+                <tr>
+                
+                  <td class="celdascoloresdefondo" data-color="blue">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="wheat">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="brown">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="white">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="LIGHTGRAY">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="gray">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="LIGHTSLATEGRAY">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="DARKSLATEGRAY">&nbsp;</td>
+                  <td class="celdascoloresdefondo" data-color="black">&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+            <table width="auto" id="opcionesdedibujo">
+              <tbody>
+                <tr>
+                  <td colspan="5" class="bg-info">Opciones de dibujo</td>
+                </tr>
+                <tr>
+                  <td>Grosor pincel: <input onChange="cambiagrosor(this)" name="grosor" type="number" id="grosor" max="100" min="3" step="1" title="Grosor del cursor" value="5"></td>
+                  <td onClick="cambiapincel(this)" id="celdapincelcuadrado" style="cursor:pointer;border:solid 1px black;background-color: white;">Pincel cuadrado</td>
+                  <td onClick="cambiaaccion(this)" id="xpintar"class="celdaaccion" style="cursor:pointer;border:solid 1px black;background-color: white;">Pintar</td>
+                  <td rowspan="2"  onClick="borrartodo()"><span class="btn btn-danger">Borrar todo</span></td>
+                </tr>
+                <tr>
+                  <td>Grosor borrar: <input onChange="cambiagrosorborrador(this)" name="grosorborrar" type="number" id="grosorborrar" max="100" min="3" step="1" title="Grosor del borrardor" value="10"></td>
+                  <td onClick="cambiapincel(this)" id="celdapincelredondo" style="cursor:pointer;border:solid 1px transparent">Pincel redondo</td>
+                  <td onClick="cambiaaccion(this)" id="xborrar" class="celdaaccion" style="cursor:pointer;border:solid 1px transparent">Borrar</td>
+                </tr>
+              </tbody>
+            </table>
+
+        </div>
+    
+    </div>
+</main>
+
+</body>
+
+
+
+<script src="dibujarCANVAS.js"></script>

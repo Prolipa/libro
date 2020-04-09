@@ -1,0 +1,671 @@
+    <!DOCTYPE HTML>
+    <html>
+
+    <head>
+        <title>Matemática 2</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/icomoon.css" rel="stylesheet">
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas1.css" />
+        <style type="text/css">
+  .mi_canvas {
+    min-width: 320px;
+  }
+  #prueba {
+    margin-top: 2rem;
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    transition: all .3s linear 0s;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#e5e5e5; 
+    /*background-color:rgba(212,185,186,0.2); */
+    background-image: url(img/i1_p82_act84.jpg); /* SI SE NECESITA UNA IMAGEN DE FONDO */
+    background-size: 100% 100%;
+  }
+  #logo {
+    display: block;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    z-index: 1;
+    width: 30%;
+    height: auto;
+    max-width: 350px;
+    min-width: 100px;
+  }
+  #contenedoropciones {
+    margin-top: 2rem;
+    padding: 2px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #contenedoropciones table {
+  background-color: rgba(220,220,220,1.00);
+  border: .25rem solid rgba(188,185,185,1.00);
+  margin-bottom: .5rem;
+  border-spacing: 5px;
+  border-collapse: separate;
+  }
+  #contenedoropciones table:nth-of-type(2) {
+    border-spacing: 5px;
+  }
+  #contenedoropciones table:nth-of-type(2) td {
+    width: 1px;
+    white-space: nowrap;
+  }
+  #contenedoropciones table:nth-of-type(1) td {
+    cursor: pointer;
+  }
+  #contenedoropciones .titulotabla {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color:rgba(103,103,103,1.00)
+  }
+  #contenedoropciones table {
+    display: inline-table;
+  }
+  
+  .celdascoloresdefondo {
+    width: 20px;
+    height: 10px;
+    border: solid 1px transparent;
+  }
+  @media (max-width: 890px) {
+    /*.mi_canvas {
+      font-size: .750rem;
+    }*/
+    #contenedoropciones, #prueba {
+      width: 98%
+    }
+    #contenedoropciones {
+      margin-left: 1%;
+    }
+  }
+  @media (max-width: 450px) {
+    /*.mi_canvas {
+      font-size: .75rem;
+    }*/
+  }
+  @media (max-width: 1px) {
+    #contenedoropciones #opcionesdedibujo {
+      display: table;
+      width: 100%;
+    }
+    #contenedoropciones #opcionesdedibujo td {
+      display: block;
+      width: auto;
+      text-align: left;
+      margin-top: 5px;    
+    }
+  }
+</style>
+        <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 5px;
+            width: auto;
+            height: 100px
+    
+        }
+        #caja_res, #caja_res1,#caja_res2{
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+        .respuestas{
+                width: 80%;
+                border: none;
+                border-bottom: 1px solid #005ca4;
+            }
+        .c_imagenes{
+            padding: 10px;
+        }
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 140px;
+            height: 30px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 140px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+        .correcto{
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+        
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+        .encierra{
+            border: 2px solid #9B8600;
+            border-radius: 40%;
+            
+        }
+        .respuesta {
+    text-align: center;
+    border: 0;
+    border-top: 2px solid #393939;
+    border-bottom: 1px solid #85BCEB;
+    width: 50px;
+}
+.bordeT {
+    border: 1px #76B82A solid;
+}
+
+
+
+.bordeT2 {
+    border: 1px #76B82A solid;
+    text-align: center;
+}
+
+.paso {
+    background-color: #F9B000;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+}
+.pinta{
+            background: #E5E1D7;
+            
+        }
+        .contenedor{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+ 
+.texto-encima{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+        </style>
+    </head>
+
+    <body onresize="myFunction()">
+        <div id="nota-informativa" class="nota-ayuda">
+            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            <b>Pregunta 1: </b> Pinta de amarillo el interior de los círculos, de verde el interior de los triángulos y de café la frontera de los cuadrados y rectángulos.<br>
+            <b>Pregunta 2: </b> Escribe las palabras “interior”, “exterior” y “frontera” corresponda.<br>
+            <b>Pregunta 3: </b> Dibuja lo solicitado en la pregunta.<br>
+            <b>Pregunta 4: </b> Ordena la secuencia gráfica de acuerdo con la historia.<br>
+            <b>Pregunta 5: </b> Dibuja una actividad que realizas en la mañana, en la tarde o en la noche.<br>
+            <b>Pregunta 6: </b> Encierra la respuesta correcta. Para encerrar dar click sobre las opciones.<br>
+            <span id="ayudas"></span>
+        </div>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" >
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span class="notificacion actividad ">
+                                <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                        </span>
+                        <span class="btn notificacion nota">
+                                <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span>/ 10
+                        </span>
+                        <span class="notificacion pagina">
+                                <span class="glyphicon glyphicon-bookmark"></span> Pag 82
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--FIN DE NAVBAR QUE SE AÑADE-->
+        <!--contenedor de la actividad-->
+        <div class="container space" style="margin-top: 30px;">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-preparo" id="activity">
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-preparo">
+                    <span class="titulo"><img src="img/icoPRE.png" alt="">Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+                </div>
+                <div class="panel-body">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                      Geometría y Medida (click aqui)
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 text-question">
+                                            <input type="text" class="nota-abierta calif" id="nota1_1" ><span class="space"><strong style="color: #E66B83">1.</strong><strong> Pinto</strong> de <strong style="color: #F4B505;">amarillo</strong> el interior de los círculos, de <strong style="color: green;">verde</strong> el interior de los triángulos y de <strong style="color: #966445;">café</strong> la frontera de los cuadrados y rectángulos.</span>
+                                        </div>
+                                        <div>
+                                            <main>
+                                <canvas id="prueba">Este navegador no soporta canvas, visualice la web con un navegador actualizado.</canvas>
+                                <div class="table-responsive">
+                                <div id="paleta" class="mi_canvas">
+                                    <div id="contenedoropciones">
+                                      <table width="auto">
+                                          <tbody>
+                                            <tr>
+                                              <td colspan="9" class="titulotabla">Color</td>
+                                            </tr>
+                                            <tr>
+                                              
+                                              <td class="celdascoloresdefondo" data-color="red">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="pink">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="orange">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="yellow">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="magenta">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="MEDIUMSEAGREEN">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="green">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="DARKCYAN">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="cyan">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                            
+                                              <td class="celdascoloresdefondo" data-color="blue">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="wheat">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="brown">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="white">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="LIGHTGRAY">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="gray">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="LIGHTSLATEGRAY">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="DARKSLATEGRAY">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="black">&nbsp;</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                        <table width="auto" id="opcionesdedibujo">
+                                          <tbody>
+                                            <tr>
+                                              <td colspan="5" class="bg-info">Opciones de dibujo</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Grosor pincel: <input onChange="cambiagrosor(this)" name="grosor" type="number" id="grosor" max="100" min="3" step="1" title="Grosor del cursor" value="5"></td>
+                                              <td onClick="cambiapincel(this)" id="celdapincelcuadrado" style="cursor:pointer;border:solid 1px black;background-color: white;">Pincel cuadrado</td>
+                                              <td onClick="cambiaaccion(this)" id="xpintar"class="celdaaccion" style="cursor:pointer;border:solid 1px black;background-color: white;">Pintar</td>
+                                              <td rowspan="2"  onClick="borrartodo()"><span class="btn btn-danger">Borrar todo</span></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Grosor borrar: <input onChange="cambiagrosorborrador(this)" name="grosorborrar" type="number" id="grosorborrar" max="100" min="3" step="1" title="Grosor del borrardor" value="10"></td>
+                                              <td onClick="cambiapincel(this)" id="celdapincelredondo" style="cursor:pointer;border:solid 1px transparent">Pincel redondo</td>
+                                              <td onClick="cambiaaccion(this)" id="xborrar" class="celdaaccion" style="cursor:pointer;border:solid 1px transparent">Borrar</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+
+                                    </div>
+                                
+                                </div>
+                                </div>
+                            </main>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-question">
+                                            <span class="space"><strong style="color: #E66B83">2.</strong><strong> Completo</strong> las frases con las palabras “interior”, “exterior” y “frontera”.</span>
+                                        </div>
+                                        <div>
+                                            <div class="col-sm-6">
+                                                <img src="img/i2_p82_act84.jpg" class="img-responsive">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div style="border-radius: 0px 20px 0px 20px; background: #EAF2DC;">
+                                                    <p align="justify"><b style="color: #628CC4;"> a) </b><span id="p2im1"> </span></p>
+                                                </div>
+                                                <div style="border-radius: 0px 20px 0px 20px; background: #FBECD7;">
+                                                    <p align="justify"><b style="color: #628CC4;"> b) </b> <span id="p2im2"> </span></p>
+                                                </div>
+                                                <div style="border-radius: 0px 20px 0px 20px; background: #F9F5FA;">
+                                                    <p align="justify"><b style="color: #628CC4;"> c) </b> <span id="p2im3"> </span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-question">
+                                            <input type="text" class="nota-abierta calif" id="nota1_2" ><span class="space"><strong style="color: #E66B83">3.</strong><strong> Dibujo</strong> mariposas en el exterior del cuadrado y círculo y <strong> repaso </strong> con rojo los lados de las figuras formadas con líneas rectas; y con color azul, la frontera del círculo.</span>
+                                        </div>
+                                        <div class="row"></div>
+                                        <div class="col-md-12">
+                                            <div class="my-drawing" ></div>    
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-question">
+                                            <span class="space"><strong style="color: #E66B83">4.</strong><strong> Ordeno</strong> con números la secuencia gráfica de acuerdo con la historia que aparece a continuación.</span>
+                                        </div>
+                                        <div>
+                                            <div class="col-sm-12">
+                                            <p>Por su cumpleaños, Karina quiere un nuevo vestido; compran la tela junto con su madre, van a la costurera y ahora Karina luce un lindo vestido el día de su cumpleaños.</p></div>
+                                            <div class="col-md-4">
+                                            <div class="contenedor">
+                                              <img src="img/i7_p82_act84.jpg" class="img-responsive">
+                                              <div class="texto-encima"><input type="text" onkeypress="return soloNumeros1(event)" maxlength="1" id="a84dcon4" style=" text-align:center; width:  40px; height: 40px; border-radius: 50px; border: 2px solid blue;"></div>
+                                              
+                                            </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                            <div class="contenedor">
+                                              <img src="img/i8_p82_act84.jpg" class="img-responsive">
+                                              <div class="texto-encima"><input type="text" onkeypress="return soloNumeros1(event)" maxlength="1" id="a84dcon5" style=" text-align:center; width:  40px; height: 40px; border-radius: 50px; border: 2px solid blue;"></div>
+                                              
+                                            </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                            <div class="contenedor">
+                                              <img src="img/i9_p82_act84.jpg" class="img-responsive">
+                                              <div class="texto-encima"><input type="text" onkeypress="return soloNumeros1(event)" maxlength="1" id="a84dcon6" style=" text-align:center; width:  40px; height: 40px; border-radius: 50px; border: 2px solid blue;"></div>
+                                              
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-question">
+                                            <input type="text" class="nota-abierta calif" id="nota1_3" ><span class="space"><strong style="color: #E66B83">5.</strong><strong> Dibujo</strong> una actividad que realizo en la mañana, en la tarde o en la noche.</span>
+                                        </div>
+                                        <div>
+                                            <div class="col-md-4">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td style="background: #7897C9; color: white;"><b>Mañana</b> <img src="img/i10_p82_act84.jpg" class="img-responsive" style="mix-blend-mode: multiply; display: inline-block;"></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td>
+                                                            <div class="my-drawing" ></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                
+                                            </div>
+                                            <div class="col-md-4">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td style="background: #006299; color: white;"><b>Tarde</b><br><br></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td>
+                                                            <div class="my-drawing" ></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td style="background: #A5B9DD; color: white;"><b>Noche</b><img src="img/i11_p82_act84.jpg" class="img-responsive" style="mix-blend-mode: multiply; display: inline-block;"></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td>
+                                                            <div class="my-drawing" ></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-question">
+                                            <span class="space"><strong style="color: #E66B83">6.</strong><strong> Encierro</strong> la respuesta correcta.</span>
+                                        </div>
+                                        <div>
+                                            <div class="col-md-6">
+                                                <div class="col-sm-12" style="background: #FEF7ED;">
+                                                    <p><b style="color: #E66B83;">a) </b> ¿Qué actividad se realiza en la mañana?</p>
+                                                    <div class="col-sm-12 p6res1" >
+                                                    <p><span class="enc1"><b style="color: #F29800;">a)</b> <span id="p6im1">aaa</span></span></p>
+                                                    <p><span class="enc2"><b style="color: #F29800;">b)</b> <span id="p6im2">aaa</span></span></p>
+                                                    <p><span class="enc3"><b style="color: #F29800;">c)</b> <span id="p6im3">aaa</span></span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="col-sm-12" style="background: #FEFCEE;">
+                                                    <p><b style="color: #E66B83;">b) </b> La mayoría de las personas duermen</p>
+                                                    <div class="col-sm-12 p6res2" >
+                                                    <p><span class="enc4"><b style="color: #F29800;">a)</b> <span id="p6im11">aaa</span></span></p>
+                                                    <p><span class="enc5"><b style="color: #F29800;">b)</b> <span id="p6im12">aaa</span></span></p>
+                                                    <p><span class="enc6"><b style="color: #F29800;">c)</b> <span id="p6im13">aaa</span></span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/react-with-addons.js"></script>
+        <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+<script src="js/activities.js"></script>
+        
+        <script src="js/highcharts.js"></script>
+        <script src="js/exporting.js"></script>
+        <script src="js/export-data.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/dibujarCANVAS.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad84.js"></script>
+
+        
+        <!---->
+        <script>
+        var titulos = 'refuerzo'
+           
+            
+        //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+        </script>
+        <script>
+            
+            scale = 1
+            var winWidth = $(window).width();
+            window.backgroundImage = new Image();
+            window.backgroundImage.src = 'img/i6_p82_act84.jpg';
+            
+            var lc = LC.init(
+                document.getElementsByClassName('my-drawing')[0], {
+                    imageURLPrefix: 'imgcanvas',
+                    backgroundShapes: [ LC.createShape( 'Image', {x: 0, y: 100, image: window.backgroundImage,scale:(1*(winWidth/2000).toFixed(3))})]
+                });
+
+            var lc = LC.init(
+                document.getElementsByClassName('my-drawing')[1], {
+                    imageURLPrefix: 'imgcanvas'
+                });
+            var lc = LC.init(
+                document.getElementsByClassName('my-drawing')[2], {
+                    imageURLPrefix: 'imgcanvas'
+                });
+            var lc = LC.init(
+                document.getElementsByClassName('my-drawing')[3], {
+                    imageURLPrefix: 'imgcanvas'
+                });
+            lc.respondToSizeChange();
+            
+        </script>
+    </body>
+
+    </html>

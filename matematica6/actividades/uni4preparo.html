@@ -1,0 +1,1210 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>MATEMATICA 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            min-width: 150px;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 1px;
+            margin: 5px;
+            width: auto;
+            height: 80px;
+    
+        }
+        .cajas1 {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 1px;
+            margin: 5px;
+            width: auto;
+            height: 80px;
+    
+        }
+        .cajas2 {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 1px;
+            margin: 5px;
+            width: auto;
+            height: 80px;
+            
+        }
+    .tab {
+        margin: 5px auto;
+        border: 1px solid #FAC183;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    .ancho {
+        width: 100px;
+    }
+
+    .mark {
+        width: 80%;
+        height: 150px;
+        border-style: dashed;
+        border-width: 1px;
+        border-radius: 15px;
+        border-color: #2eb8b8;
+        background-color: transparent
+    }
+
+    .img {
+        margin-left: 14px;
+    }
+
+    .heart {
+        padding-right: 10px;
+    }
+
+    .cross {
+        padding-left: 10px;
+    }
+
+    .mark1 {
+        width: 80%;
+        height: 210px;
+        border-style: dashed;
+        border-width: 1px;
+        border-radius: 15px;
+        border-color: #2eb8b8;
+        background-color: transparent
+    }
+
+    .img1 {
+        margin-left: 14px;
+    }
+
+    .heart1 {
+        padding-right: 10px;
+    }
+
+    .cross1 {
+        padding-left: 10px;
+    }
+    .correcto{
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+        #caja_res, #caja_res1,#caja_res2,#caja_res3,#caja_res4{
+            padding: 5px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 90px;
+        }
+    .notain {
+    background: white;
+}
+.c_destino1 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 150px;
+    min-width: 100px;
+}
+.c_destino2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 100px;
+    min-width: 100px;
+}
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+.pintar {
+    background: #94851C;
+}
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b> Pregunta 1</b> Compara y ordena las fracciones según indica. <br>
+        <b> Pregunta 2</b> Suma la fracciones y pinta con los colores indicados. <br>
+        <b> Pregunta 3</b> Resuelve las operaciones con fracciones. Para pintar da click sobre las opciones que se encuentran en la parte inferior. <br>
+        <b> Pregunta 4</b> Escribe unicamente los colores de todas las combinaciones posibles. <br>
+        <b> Pregunta 5</b> Resuelve lo solicitado en el problema.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="btn notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span>/ 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 170
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container space" style="margin-top: 30px;">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-preparo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-preparo">
+                <span class="titulo"><img src="img/icoPRE.png" alt="">Prueba Diagnóstica</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--preguntas de la actividad-->
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button>
+                <br>
+                <br>
+                <div><img src="img/algebra_funciones.jpg" class="img img-responsive"></div>
+                    <div class="actividad1">
+                        <!--PREGUNTA 1-->
+                        <div class="panel panel-info">
+                            <span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"></span>
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#aion" href="#pregunta1"> Pregunta 1 <b>(2 pt.)</b></a>
+                            </h4>
+                            </div>
+                            <div id="pregunta1" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="text-question"><b>Observa</b> las barras de fracciones. Luego, <b>compara y ordena</b> las fracciones según se indica.</div>
+                                    <div class="row text-question">
+                                        <div class="col-sm-6">
+                                            <div style="border-radius: 10px 0px 10px 0px; background: #ECCA9B; display: inline-block; padding: 10px;">
+                                                De mayor a menor
+                                            </div>
+                                            <div class="row"></div>
+                                            <div>
+                                                <p><b style="color: #005CA4">a)</b></p>
+                                                <div class="col-sm-12" id="p1im1">
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p1dcon1">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p1dcon2">
+                                                        </span>
+                                                    </div>
+                                                    <b>></b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p1dcon3">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p1dcon4">
+                                                        </span>
+                                                    </div>
+                                                    <b>></b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p1dcon5">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p1dcon6">
+                                                        </span>
+                                                    </div>
+                                                    <b>></b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p1dcon7">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p1dcon8">
+                                                        </span>
+                                                    </div>
+                                                    <b>></b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p1dcon9">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p1dcon10">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p><b style="color: #005CA4">b)</b></p>
+                                                <div class="col-sm-12" id="p1im2">
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p11dcon1">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p11dcon2">
+                                                        </span>
+                                                    </div>
+                                                    <b>></b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p11dcon3">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p11dcon4">
+                                                        </span>
+                                                    </div>
+                                                    <b>></b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p11dcon5">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p11dcon6">
+                                                        </span>
+                                                    </div>
+                                                    <b>></b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p11dcon7">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p11dcon8">
+                                                        </span>
+                                                    </div>
+                                                    <b>></b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p11dcon9">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p11dcon10">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="border-radius: 10px 0px 10px 0px; background: #DBC4DD; display: inline-block; padding: 10px;">
+                                                De menor a mayor
+                                            </div>
+                                            <div class="row"></div>
+                                            <div>
+                                                <p><b style="color: #005CA4">c)</b></p>
+                                                <div class="col-sm-12" id="p1im3">
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p12dcon1">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p12dcon2">
+                                                        </span>
+                                                    </div>
+                                                    <b><</b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p12dcon3">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p12dcon4">
+                                                        </span>
+                                                    </div>
+                                                    <b><</b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p12dcon5">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p12dcon6">
+                                                        </span>
+                                                    </div>
+                                                    <b><</b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p12dcon7">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p12dcon8">
+                                                        </span>
+                                                    </div>
+                                                    <b><</b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p12dcon9">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p12dcon10">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p><b style="color: #005CA4">d)</b></p>
+                                                <div class="col-sm-12" id="p1im4">
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p13dcon1">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p13dcon2">
+                                                        </span>
+                                                    </div>
+                                                    <b><</b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p13dcon3">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p13dcon4">
+                                                        </span>
+                                                    </div>
+                                                    <b><</b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p13dcon5">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p13dcon6">
+                                                        </span>
+                                                    </div>
+                                                    <b><</b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p13dcon7">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p13dcon8">
+                                                        </span>
+                                                    </div>
+                                                    <b><</b>
+                                                    <div class="fraction">
+                                                        <span class="fup">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p13dcon9">
+                                                        </span>
+                                                        <span class="bar">/</span>
+                                                        <span class="fdn">
+                                                            <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p13dcon10">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <img src="img/i1_p170_act1.jpg" class="img-responsive">
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--PREGUNTA 2-->
+                            <div class="panel panel-info">
+                                <span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"><input type="text" class="nota-abierta form-control calif notain" id="nota1_2" style="display: none;" disabled></span>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta2">Pregunta 2 <b>(2 pt.)</b></a>
+                            </h4>
+                                </div>
+                                <div id="pregunta2" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="text-question"><b>Pinta</b> con los colores indicados, <b>escribe</b> las fracciones correspondientes y luego <b>suma.</b></div>
+                                        <div class="row text-question">
+                                            <div class="col-sm-4">
+                                                <div class="my-drawing">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <div>
+                                                    <div style="display: inline-block; border-radius: 10px 0px 10px 0px; background: #DAE7C6; padding: 5px;">
+                                                        Verde
+                                                    </div>
+                                                    <div style="display: inline-block; border-radius: 10px; border:2px solid #8EB666; padding: 5px;">
+                                                        <div class="fraction">
+                                                            <span class="fup">3</span>
+                                                            <span class="bar">/</span>
+                                                            <span class="fdn">10</span>
+                                                        </div>
+                                                    </div>
+                                                    <div style="display: inline-block; border-radius: 10px 0px 10px 0px; background: #F2DCBB; padding: 5px;">
+                                                        Anaranjado
+                                                    </div>
+                                                    <div style="display: inline-block; border-radius: 10px; border:2px solid #D68500; padding: 5px;">
+                                                        <div class="fraction">
+                                                            <span class="fup">2</span>
+                                                            <span class="bar">/</span>
+                                                            <span class="fdn">10</span>
+                                                        </div>
+                                                    </div>
+                                                    <div style="display: inline-block; border-radius: 10px 0px 10px 0px; background: #E9C5B4; padding: 5px;">
+                                                        Rojo
+                                                    </div>
+                                                    <div style="display: inline-block; border-radius: 10px; border:2px solid #BF0026; padding: 5px;">
+                                                        <div class="fraction">
+                                                            <span class="fup">4</span>
+                                                            <span class="bar">/</span>
+                                                            <span class="fdn">10</span>
+                                                        </div>
+                                                    </div>
+                                                    <div style="display: inline-block; border-radius: 10px 0px 10px 0px; background: #CAE2EF; padding: 5px;">
+                                                        Celeste
+                                                    </div>
+                                                    <div style="display: inline-block; border-radius: 10px; border:2px solid #6DB4D3; padding: 5px;">
+                                                        <div class="fraction">
+                                                            <span class="fup">1</span>
+                                                            <span class="bar">/</span>
+                                                            <span class="fdn">10</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div>
+                                                    <div style="display: inline-block; border-radius: 10px 0px 10px 0px; background: #DBC4DD; padding: 5px;">
+                                                        Suma:
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <br>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <div style="display: inline-block; border-radius: 10px; border:2px solid #7B087E; padding: 5px;">
+                                                                        <div class="fraction">
+                                                                            <span class="fup">
+                                                                                <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p2dcon1">
+                                                                            </span>
+                                                                            <span class="bar">/</span>
+                                                                            <span class="fdn">
+                                                                                <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p2dcon2">
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><b>+</b></td>
+                                                                <td>
+                                                                    <div style="display: inline-block; border-radius: 10px; border:2px solid #7B087E; padding: 5px;">
+                                                                        <div class="fraction">
+                                                                            <span class="fup">
+                                                                                <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p2dcon3">
+                                                                            </span>
+                                                                            <span class="bar">/</span>
+                                                                            <span class="fdn">
+                                                                                <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p2dcon4">
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><b>+</b></td>
+                                                                <td>
+                                                                    <div style="display: inline-block; border-radius: 10px; border:2px solid #7B087E; padding: 5px;">
+                                                                        <div class="fraction">
+                                                                            <span class="fup">
+                                                                                <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p2dcon5">
+                                                                            </span>
+                                                                            <span class="bar">/</span>
+                                                                            <span class="fdn">
+                                                                                <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p2dcon6">
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><b>+</b></td>
+                                                                <td>
+                                                                    <div style="display: inline-block; border-radius: 10px; border:2px solid #7B087E; padding: 5px;">
+                                                                        <div class="fraction">
+                                                                            <span class="fup">
+                                                                                <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p2dcon7">
+                                                                            </span>
+                                                                            <span class="bar">/</span>
+                                                                            <span class="fdn">
+                                                                                <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p2dcon8">
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><b>=</b></td>
+                                                                <td>
+                                                                    <div style="display: inline-block; border-radius: 10px; border:2px solid #7B087E; padding: 5px;">
+                                                                        <div class="fraction">
+                                                                            <span class="fup">
+                                                                                <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p2dcon9">
+                                                                            </span>
+                                                                            <span class="bar">/</span>
+                                                                            <span class="fdn">
+                                                                                <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p2dcon10">
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- pregunta 3-->
+                            <div class="panel panel-info">
+                                <span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"><input type="text" class="nota-abierta form-control calif notain" id="nota1_3" style="display: none;" disabled></span>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta3">Pregunta 3 <b>(2 pt.)</b></a>
+                            </h4>
+                                </div>
+                                <div id="pregunta3" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="text-question"><b>Pinta</b> el <b style="color: #0097C1;">MCM</b> de los denominadores de las siguientes fracciones; <b>resuelve y simplifica,</b> si es posible.</div>
+                                        <br>
+                                        <div class="row text-question">
+                                            <div class="col-sm-6">
+                                                <br>
+                                                <div class="table-responsive">
+                                                    <table>
+                                                        <tr>
+                                                            <td><b style="color: #005CA4;">a)</b></td>
+                                                            <td>
+                                                                <div class="fraction">
+                                                                    <span class="fup">4</span>
+                                                                    <span class="bar">/</span>
+                                                                    <span class="fdn">9</span>
+                                                                </div>
+                                                            </td>
+                                                            <td><b>-</b></td>
+                                                            <td>
+                                                                <div class="fraction">
+                                                                    <span class="fup">2</span>
+                                                                    <span class="bar">/</span>
+                                                                    <span class="fdn">7</span>
+                                                                </div>
+                                                            </td>
+                                                            <td><b>=</b></td>
+                                                            <td>
+                                                                <div class="fraction">
+                                                                    <span class="fup">
+                                                                        <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p3dcon1">
+                                                                    </span>
+                                                                    <span class="bar">/</span>
+                                                                    <span class="fdn">
+                                                                        <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p3dcon2">
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div id="p3im1">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <br>
+                                                <div class="table-responsive">
+                                                    <table>
+                                                        <tr>
+                                                            <td><b style="color: #005CA4;">b)</b></td>
+                                                            <td>
+                                                                <div class="fraction">
+                                                                    <span class="fup">9</span>
+                                                                    <span class="bar">/</span>
+                                                                    <span class="fdn">14</span>
+                                                                </div>
+                                                            </td>
+                                                            <td><b>-</b></td>
+                                                            <td>
+                                                                <div class="fraction">
+                                                                    <span class="fup">5</span>
+                                                                    <span class="bar">/</span>
+                                                                    <span class="fdn">12</span>
+                                                                </div>
+                                                            </td>
+                                                            <td><b>=</b></td>
+                                                            <td>
+                                                                <div class="fraction">
+                                                                    <span class="fup">
+                                                                        <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p3dcon3">
+                                                                    </span>
+                                                                    <span class="bar">/</span>
+                                                                    <span class="fdn">
+                                                                        <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p3dcon4">
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div id="p3im2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <img src="img/estadistica_probabilidad.jpg" class="img-responsive">
+                            <!-- pregunta 4-->
+                            <div class="panel panel-info">
+                                <span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"><input type="text" class="nota-abierta form-control calif notain" id="nota1_4" style="display: none;" disabled></span>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta4">Pregunta 4 <b>(2 pt.)</b></a>
+                            </h4>
+                                </div>
+                                <div id="pregunta4" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="text-question"><b>Realiza</b> una tabla de doble entrada y <b>escribe</b> las combinaciones posibles entre las tres camisas y las cuatro corbatas.</div>
+                                        <br>
+                                        <div class="row text-question">
+                                            <div class="col-sm-12" align="center">
+                                                <img src="img/i3_p170_act1.jpg" class="img-responsive">
+                                            </div>
+                                                <div class="col-sm-12" align="center">
+                                                    <div class="table-responsive">
+                                                        <table>
+                                                            <tr align="center">
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <img src="img/i4_p170_act1.jpg">
+                                                            </td>
+                                                                <td style="border: 2px solid #8B79AF;">Anaranjado</td>
+                                                                <td style="border: 2px solid #8B79AF;">Rojo</td>
+                                                                <td style="border: 2px solid #8B79AF;">Verde</td>
+                                                                <td style="border: 2px solid #8B79AF;">Celeste</td>
+                                                            </tr>
+                                                            <tr align="center">
+                                                                <td style="border: 2px solid #8B79AF;">Azul</td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon1" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon2" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon3" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon4" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon5" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon6" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon7" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon8" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr align="center">
+                                                                <td style="border: 2px solid #8B79AF;">Rojo</td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon9" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon10" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon11" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon12" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon13" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon14" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon15" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon16" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr align="center">
+                                                                <td style="border: 2px solid #8B79AF;">Blanco</td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon17" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon18" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon19" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon20" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon21" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon22" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                <td style="border: 2px solid #8B79AF;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon23" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                            <td><b>,</b></td>
+                                                                            <td>
+                                                                                <input type="text" style="width: 90px; border: none; border-bottom: 2px dotted black; text-align: center;" id="p4dcon24" onkeyup="mayus(this)">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- pregunta 5-->
+                                <div class="panel panel-info">
+                                    <span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"><input type="text" class="nota-abierta form-control calif notain" id="nota1_5" style="display: none;" disabled></span>
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta5">Pregunta 5 <b>(1 pt.)</b></a>
+                                </h4>
+                                    </div>
+                                    <div id="pregunta5" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="text-question">¿Qué probabilidad hay de sacar una pelotita con el número 1, con el número 2 y con el número 3?</div>
+                                            <div class="row text-question">
+                                                <div class="col-sm-4">
+                                                    <br>
+                                                    <img src="img/i5_p170_act1.jpg" class="img-responsive">
+                                            </div>
+                                                    <div class="col-sm-8" align="center">
+                                                        <br>
+                                                        <div style="display: inline-block;" align="center">
+                                                            <div style="border-radius: 10px; display: inline-block; background: #C9D99D; border: 2px solid #8EB666; padding: 10px;">
+                                                                Pelotitas con el número 1
+                                                            </div>
+                                                            <br>
+                                                            <input type="text" style="width: 40px; border: 2px solid #6DB4D3; border-radius: 10px; text-align: center;" onkeypress="return soloNumeros(event)" id="p5dcon1">
+                                                        </div>
+                                                        <div style="display: inline-block;" align="center">
+                                                            <div style="border-radius: 10px; display: inline-block; background: #A1CDE2; border: 2px solid #A1CDE2; padding: 10px;">
+                                                                Pelotitas con el número 2
+                                                            </div>
+                                                            <br>
+                                                            <input type="text" style="width: 40px; border: 2px solid #6DB4D3; border-radius: 10px; text-align: center;" onkeypress="return soloNumeros(event)" id="p5dcon2">
+                                                        </div>
+                                                        <div style="display: inline-block;" align="center">
+                                                            <div style="border-radius: 10px; display: inline-block; background: #C8B5D4; border: 2px solid #C8B5D4; padding: 10px;">
+                                                                Pelotitas con el número 3
+                                                            </div>
+                                                            <br>
+                                                            <input type="text" style="width: 40px; border: 2px solid #6DB4D3; border-radius: 10px; text-align: center;" onkeypress="return soloNumeros(event)" id="p5dcon3">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div style="display: inline-block;">
+                                                            <img src="img/i7_p170_act1.jpg" class="img-responsive" style="display: inline-block;">
+                                                            <div class="fraction">
+                                                                <span class="fup">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon4">
+                                                                </span>
+                                                                <span class="bar">/</span>
+                                                                <span class="fdn">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon5">
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="display: inline-block;">
+                                                            <img src="img/i6_p170_act1.jpg" class="img-responsive" style="display: inline-block;">
+                                                            <div class="fraction">
+                                                                <span class="fup">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon6">
+                                                                </span>
+                                                                <span class="bar">/</span>
+                                                                <span class="fdn">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon7">
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="display: inline-block;">
+                                                            <img src="img/i8_p170_act1.jpg" class="img-responsive" style="display: inline-block;">
+                                                            <div class="fraction">
+                                                                <span class="fup">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon8">
+                                                                </span>
+                                                                <span class="bar">/</span>
+                                                                <span class="fdn">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon9">
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div style="display: inline-block;">
+                                                            Casos favorables
+                                                        </div>
+                                                        <div style="display: inline-block;">
+                                                            <input type="text" style="width: 40px; border: 2px solid #6DB4D3; border-radius: 10px; text-align: center;" onkeypress="return soloNumeros(event)" id="p5dcon10">
+                                                            <input type="text" style="width: 40px; border: 2px solid #6DB4D3; border-radius: 10px; text-align: center;" onkeypress="return soloNumeros(event)" id="p5dcon11">
+                                                            <input type="text" style="width: 40px; border: 2px solid #6DB4D3; border-radius: 10px; text-align: center;" onkeypress="return soloNumeros(event)" id="p5dcon12">
+                                                        </div>
+                                                        <br>
+                                                        <div style="display: inline-block;">
+                                                            Total de casos
+                                                        </div>
+                                                        <div style="display: inline-block;">
+                                                            <table>
+                                                                <tr align="center">
+                                                                    <td>
+                                                                        <input type="text" style="width: 40px; border: 2px solid #6DB4D3; border-radius: 10px; text-align: center;" onkeypress="return soloNumeros(event)" id="p5dcon13">
+                                                                    </td>
+                                                                    <td><b>+</b></td>
+                                                                    <td>
+                                                                        <input type="text" style="width: 40px; border: 2px solid #6DB4D3; border-radius: 10px; text-align: center;" onkeypress="return soloNumeros(event)" id="p5dcon14">
+                                                                    </td>
+                                                                    <td><b>+</b></td>
+                                                                    <td>
+                                                                        <input type="text" style="width: 40px; border: 2px solid #6DB4D3; border-radius: 10px; text-align: center;" onkeypress="return soloNumeros(event)" id="p5dcon15">
+                                                                    </td>
+                                                                    <td><b>=</b></td>
+                                                                    <td>
+                                                                        <input type="text" style="width: 40px; border: 2px solid #6DB4D3; border-radius: 10px; text-align: center;" onkeypress="return soloNumeros(event)" id="p5dcon16">
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row"></div>
+                                                    <div class="col-sm-4">
+                                                        <p><b style="color: #005CA4;">R.</b> Probabilidad1 =
+                                                            <div class="fraction">
+                                                                <span class="fup">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon17">
+                                                                </span>
+                                                                <span class="bar">/</span>
+                                                                <span class="fdn">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon18">
+                                                                </span>
+                                                            </div>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <p> Probabilidad2 =
+                                                            <div class="fraction">
+                                                                <span class="fup">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon19">
+                                                                </span>
+                                                                <span class="bar">/</span>
+                                                                <span class="fdn">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon20">
+                                                                </span>
+                                                            </div>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <p> Probabilidad3 =
+                                                            <div class="fraction">
+                                                                <span class="fup">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon21">
+                                                                </span>
+                                                                <span class="bar">/</span>
+                                                                <span class="fdn">
+                                                                    <input type="text" style="width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros(event)" id="p5dcon22">
+                                                                </span>
+                                                            </div>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal Guardar PDF-->
+                                    <div class="modal fade animated pulse" id="myModal" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                                                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="modal_form" class="form-horizontal">
+                                                        <div class="form-group ">
+                                                            <div class="col-sm-2">
+                                                                <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                                                            </div>
+                                                            <div class="col-sm-10">
+                                                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                                    <script src="js/jquery.min.js"></script>
+                                    <script src="js/jquery-ui.js"></script>
+                                    <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+                                    <!-- Include all compiled plugins (below), or include individual files as needed -->
+                                    <script src="js/bootstrap.min.js"></script>
+                                    <!--generador de pdf-->
+                                    <script src="js/react-with-addons.js"></script>
+                                    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+                                    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+                                    <script src="js/screenfull.js"></script>
+                                    <script src="js/helper.js"></script>
+                                    <script src="js/activities.js"></script>
+                                    <script src="js/highcharts.js"></script>
+                                    <script src="js/exporting.js"></script>
+                                    <script src="js/export-data.js"></script>
+                                    <script src="js/animate.css.min.js"></script>
+                                    <script src="js/jquery.animate.css.js"></script>
+                                    <script src="js/activities.js"></script>
+                                    <script src="js/Utilitario.js"></script>
+                                    <script src="js/uni4preparo.js"></script>
+                                    <script src="js/validacionesExtras.js"></script>
+                                    <!--<script src="js/activities.js"></script>-->
+                                    <script>
+                                    var titulos = 'preparo'
+                                    //Solo permite introducir numeros.
+                                    function soloNumeros1(e) {
+                                        var key = window.event ? e.which : e.keyCode;
+                                        if (key < 42 || key > 57) {
+                                            e.preventDefault();
+                                        }
+                                    }
+                                    //Solo permite introducir numeros.
+                                    function soloNumeros(e) {
+                                        var key = window.event ? e.which : e.keyCode;
+                                        if (key < 48 || key > 57) {
+                                            e.preventDefault();
+                                        }
+                                    }
+                                    //Solo permite introducir numeros.
+                                    function soloNumeros2(e) {
+                                        var key = window.event ? e.which : e.keyCode;
+                                        if (key < 108 || key > 108) {
+                                            e.preventDefault();
+                                        }
+                                    }
+                                    </script>
+                                    <script>
+                                    var winHeight = $(window).height();
+                                    var winWidth = $(window).width();
+                                    //var imageSize = { width: winHeight , height: winHeight };
+                                    var watermarkImage = new Image();
+                                    watermarkImage.src = 'img/i2_p170_act1.jpg';
+                                    LC.init(
+                                        document.getElementsByClassName('my-drawing')[0], {
+                                            imageURLPrefix: 'imgcanvas',
+
+                                            watermarkImage: watermarkImage,
+                                            watermarkScale: 0.6, // you can scale it
+                                            //imageSize: imageSize
+                                            backgroundColor: 'white'
+
+                                        });
+                                    </script>
+</body>
+
+</html>

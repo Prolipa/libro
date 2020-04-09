@@ -1,0 +1,745 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 2</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/estilo_canvas.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css">
+</head>
+<style type="text/css">
+    .correcto {
+        color: #ffffff;
+        background-color: #a7d27d;
+        font-weight: 700;
+    }
+
+    .incorrecto {
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+
+    .bg_palabra {
+        background-color: #F9E8B2;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 8px;
+        text-align: center;
+        font-size: 16px;
+        display: inline-block;
+    }
+
+    .respuesta_p1 {
+        width: 1.5cm;
+        height: 1.5cm;
+        border: 2px solid #a863a5;
+        border-radius: 20%;
+        font-size: 1.5em
+    }
+
+    .fontnu {
+        color: #005CA4;
+        font-size: 20px;
+    }
+
+    .imagenes1 img {
+        padding: 25px;
+        max-width: 200px;
+        display: inline-table;
+    }
+
+    .actividad1 {
+        background: #fff;
+    }
+
+    .cuadros {
+        margin-top: 20px;
+        margin-left: -4.8px;
+        border: 2px solid #009fe3;
+        width: 1.1cm;
+        height: 1.1cm;
+        display: inline-block;
+    }
+
+    .cuadros input {
+        max-width: 1cm;
+        min-height: 1cm;
+        text-align: center;
+        border: none;
+    }
+
+    .contenedor {
+        display: inline-block;
+        margin: 20px;
+    }
+
+    .contenedor img {
+        max-height: 150px;
+    }
+
+    .sel_p5 {
+        border: 2px solid;
+        min-width: 50px;
+        max-width: 100px;
+        padding: 15px;
+        display: inline-block;
+        font-size: 15px;
+    }
+
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button>
+                <br>
+                <br>
+                <img src="img/literatura.jpg" class="img img-responsive">
+                <!--  PREGUNTA 1-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta1">Pregunta 1</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-2">
+                                <span>1. Reconozco las partes del siguiente cuento y coloco la I de inicio, la N de nudo y la F de final, según corresponda.</span>
+                            </section>
+                            <div class="contenido">
+                                <div>
+                                    <table>
+                                        <tbody>
+                                            <tr class="imagg">
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 2-->
+                <img src="img/comunicacion.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta2">Pregunta 2</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-3">
+                                <span>2. <b>Dibujo</b> tres gestos que puedo hacer mientras narro un cuento.</span>
+                            </section>
+                            <div>
+                                <main>
+                                    <canvas id="prueba">Este navegador no soporta canvas, visualice la web con un navegador actualizado.</canvas>
+                                    <div id="paleta" class="mi_canvas">
+                                        <div id="contenedoropciones">
+                                            <table width="auto">
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="9" class="titulotabla">Color</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="celdascoloresdefondo" data-color="red">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="pink">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="orange">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="yellow">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="magenta">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="MEDIUMSEAGREEN">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="green">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="DARKCYAN">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="cyan">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="celdascoloresdefondo" data-color="blue">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="wheat">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="brown">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="white">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="LIGHTGRAY">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="gray">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="LIGHTSLATEGRAY">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="DARKSLATEGRAY">&nbsp;</td>
+                                                        <td class="celdascoloresdefondo" data-color="black">&nbsp;</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <table width="auto" id="opcionesdedibujo">
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="5" class="titulotabla">Opciones de dibujo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Grosor pincel:
+                                                            <input onChange="cambiagrosor(this)" name="grosor" type="number" id="grosor" max="100" min="3" step="1" title="Grosor del cursor" value="5">
+                                                        </td>
+                                                        <td onClick="cambiapincel(this)" id="celdapincelcuadrado" style="cursor:pointer;border:solid 1px black;background-color: white;">Pincel cuadrado</td>
+                                                        <td onClick="cambiaaccion(this)" id="xpintar" class="celdaaccion" style="cursor:pointer;border:solid 1px black;background-color: white;">Pintar</td>
+                                                        <td rowspan="2" class="" onClick="borrartodo()" style="cursor:pointer;border:solid 1px transparent"><span class="btn btn-danger">Borrar todo</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Grosor borrar:
+                                                            <input onChange="cambiagrosorborrador(this)" name="grosorborrar" type="number" id="grosorborrar" max="100" min="3" step="1" title="Grosor del borrardor" value="10">
+                                                        </td>
+                                                        <td onClick="cambiapincel(this)" id="celdapincelredondo" style="cursor:pointer;border:solid 1px transparent">Pincel redondo</td>
+                                                        <td onClick="cambiaaccion(this)" id="xborrar" class="celdaaccion" style="cursor:pointer;border:solid 1px transparent">Borrar</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </main>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 3-->
+                <img src="img/lectura.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta3">Pregunta 3</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-4">
+                                <span>3 . <b>Tacho</b> la imagen que no es una regla del juego “Rayuela” y explico por qué.</span>
+                            </section>
+                            <div class="contenido3">
+                                <div class="imagenes1" align="center"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 4-->
+                <img src="img/escritura.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#pregunta4">Pregunta 4</a>
+
+                        </h4>
+                    </div>
+                    <div id="pregunta4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <section class="titulo-pregunta p-titulo p-bg-titulo-4">
+                                <span>4. <b>Observo</b> las imágenes y escribo sus nombres.</span>
+                            </section>
+                            <div align="center" class="contenidopregunta4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 5-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta5">Pregunta 5</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">5. <b>Leo</b> las palabras de cada recuadro y <b>explico</b> de qué se tratan. <b>Tacho</b> la palabra que no corresponde al grupo.</div>
+                            <section id="contenido-pregunta-6" class="text-center ancho-pregunta">
+                                <p></p>
+                                <div align="center" class="conte_p5">
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <!-- INICIO PREGUNTA 6 -->
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta6">Pregunta 6</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta6" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>6. <b>Observo</b> las imágenes y <b>elaboro</b> una oración sobre cada una.</span>
+                            </div>
+                            <div>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td align="right">
+                                                <img class="img-responsive" src="img/i2_p95_act45.jpg" alt="" style="max-width: 180px">
+                                            </td>
+                                            <td>
+                                                <input class="form-control fuente" size="200px">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img class="img-responsive" src="img/i3_p95_act45.jpg" alt="" style="max-width: 220px">
+                                            </td>
+                                            <td>
+                                                <input class="form-control fuente" size="200px">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  PREGUNTA 7-->
+                <img src="img/lengua.jpg" class="img img-responsive">
+                <div class="panel panel-info">
+                    <span class="p_abierta"></span>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#aion" href="#pregunta7">Pregunta 7</a>
+                        </h4>
+                    </div>
+                    <div id="pregunta7" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="text-question">
+                                <span>7. Imagino y dibujo las cestas que elaboran las mujeres de las nacionalidades Chachi y Épera.</span>
+                            </div>
+                            <div style="text-align: center">
+                                <div class="col-lg-12">
+                                    <div class="my-drawing"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script src="js/literallycanvas.min.js"></script>
+    <script src="js/dibujarCANVAS.js"></script>
+    <script>
+        //CANVAS TIPO PAINT
+    f_canvas();
+
+    function f_canvas() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        var lc = LC.init(
+            document.getElementsByClassName('my-drawing')[0], { imageURLPrefix: 'imgcanvas' }
+        );
+        lc.respondToSizeChange();
+    }
+
+    $('.p_abierta').html('<span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"><input type="number" placeholder="0" class="form-control calif"></span> ');
+
+    $("#n_pagina").html("95"); //impresion de pagina  
+    var titulos = "evaluacion";
+    f_titulos();
+
+    var totalC = 0,
+        total = 0,
+        totalFinal = 0; //variables de la calificacion
+    var ejer = 1,
+        itemsT = 0,
+        cont = 0,
+        tmp, cor = 0,
+        inc = 0,
+        calificacion = 7,
+        claseAnimada = 'animate bounceIn';
+    var i = 0,
+        resp = [],
+        soluc = [],
+        resp_p1 = [],
+        txt_sol4 = [];
+
+    $('.btn_mostrar').on('click', function() { //mostrar todas las preguntas
+        $(".panel-collapse").removeClass('in');
+        $(".panel-collapse").addClass('in');
+    });
+    f_pregunta1();
+    f_pregunta3();
+    f_preg4();
+    f_preg5();
+
+    function f_pregunta1() {
+        var contenidospreg1 = [
+            ["<td><div><img class='img-responsive' src='img/i1_p94_act45.jpg' alt='' style='width: 70%'></div><div align='center'><input type='text' class='form-control text-uppercase text-center respuesta_p1' maxlength='1' ><input type='hidden' class='solucion_p1' value='N' maxlength='1'></div></td>"],
+            ["<td><div><img class='img-responsive' src='img/i2_p94_act45.jpg' alt='' style='width: 70%'></div><div align='center'><input type='text' class='form-control text-uppercase text-center respuesta_p1' maxlength='1' ><input type='hidden' class='solucion_p1' value='F' maxlength='1'></div></td>"],
+            ["<td><div><img class='img-responsive' src='img/i3_p94_act45.jpg' alt='' style='width: 70%'></div><div align='center'><input type='text' class='form-control text-uppercase text-center respuesta_p1' maxlength='1' ><input type='hidden' class='solucion_p1' value='I' maxlength='1'></div></td>"],
+        ]
+        contenidospreg1.sort(f_randomico);
+        $.each(contenidospreg1, function(i, item) {
+            $(".imagg").append(item);
+        });
+        itemsT += contenidospreg1.length;
+    }
+
+    function f_pregunta3() {
+        var contenidopreg2 = ['<img class="img-responsive si" src="img/i4_p94_act45.jpg" alt="" style="max-width: 230px">',
+            '<img class="img-responsive no" src="img/i5_p94_act45.jpg" alt="" style="max-width: 200px">',
+            '<img class="img-responsive no" src="img/i6_p94_act45.jpg" alt="" style="max-width: 200px">',
+        ];
+        contenidopreg2.sort(f_randomico);
+        $(".imagenes1").append(contenidopreg2).addClass(claseAnimada);
+        itemsT += ($(".si").length); 
+        $(".si").bind("click", function() { 
+            $(this).unbind("click");
+            $(this).addClass("correcto");
+            cor++;
+        });
+        $(".no").bind("click", function() { 
+            $(this).unbind("click");
+            $(this).addClass("incorrecto");
+            inc++;
+        });
+    }
+
+    function f_preg4() {
+        var div_contenidopregunta4 = [];
+        div_contenidopregunta4 = ['<div class="contenedor"> <div class="row" align="center"><img class="img-responsive" src="img/i3_p40_act21.jpg" alt=""></div> <div class="row"> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="P"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="E"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="R"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="A"></span></div> </div>', '<div class="contenedor"> <div class="row" align="center"><img class="img-responsive" src="img/i3_p29_act12.jpg" alt=""></div> <div class="row "> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="R"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="A"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="N"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="A"></span></div> </div>', '<div class="contenedor"> <div class="row" align="center"><img class="img-responsive" src="img/i4_p86_act43.jpg" alt=""></div> <div class="row "> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="M"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="A"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="L"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="E"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="T"></span><span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="A"></span></div></div>', '<div class="contenedor"> <div class="row" align="center"><img class="img-responsive" src="img/i1_p95_act45.jpg" alt=""></div> <div class="row "> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="T"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="I"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="N"></span> <span class="cuadros"><input type="text" class="text-uppercase respuesta_p4" maxlength="1"><input type="hidden" class="text-uppercase solucion_p4" maxlength="1" value="A"></span></div> </div> '];
+        div_contenidopregunta4.sort(f_randomico);
+        $(".contenidopregunta4").append(div_contenidopregunta4);
+        itemsT += $(".respuesta_p4").length;
+    }
+
+    function f_preg5() {
+        var div_p5 = ['<div class="sel_p5 p5no">dedo</div>', '<div class="sel_p5 p5no">mano</div>', '<div class="sel_p5 p5no">talón</div>', '<div class="sel_p5 p5si">nadar</div>', '<div class="sel_p5 p5no">pie</div>', '<div class="sel_p5 p5no">uña</div>'];
+        div_p5.sort(f_randomico);
+        $(".conte_p5").append(div_p5);
+        $('.sel_p5').css('cursor', 'default');
+        itemsT += $(".p5si").length;
+        $(".sel_p5").bind("click", function() {
+            $(this).unbind("click");
+            if ($(this).hasClass("p5si")) {
+                $(this).addClass("correcto");
+                cor++;
+            } else {
+                $(this).addClass("incorrecto");
+                inc++;
+            }
+        })
+        console.log(itemsT);
+    }
+    $(".btnCalificar").bind("click", function() { //click en el boton iniciar
+        cont++;
+        $(this).unbind("click");
+        AgregaClase(".nota", claseAnimada);
+        QuitaClase(".actividad", claseAnimada);
+        //preg1
+        $(".solucion_p1").each(function() {
+            resp_p1.push($(this).val()); //almacenamos las respuestas
+        });
+        $(".respuesta_p1").each(function(index) {
+            //soluc.push($( this).val().toUpperCase()); //almacenamos las respuetas ingresadas
+            tmp = $(this);
+            if (tmp.val().toUpperCase() == resp_p1[index]) { //comparamos las respuestas
+                cor++
+                f_ok(tmp);
+            } else {
+                inc++
+                f_no(tmp);
+            }
+        });
+        //preg4
+        $(".solucion_p4").each(function() {
+            txt_sol4.push($(this).val()); //almacenamos las respuestas
+        });
+        $(".respuesta_p4").each(function(index) {
+            tmp = $(this);
+            if (tmp.val().toUpperCase() == txt_sol4[index]) { //comparamos las respuestas
+                cor++
+                f_ok(tmp);
+            } else {
+                inc++
+                f_no(tmp);
+            }
+        });
+        totalC = (cor * (calificacion / itemsT)).toFixed(2); //suma de calificacion cerrada
+        $('.calif').each(function() { //suma de puntajes en respuestas abiertas
+            if ($(this).val() != '') {
+                total += parseFloat($(this).val());
+                f_ok($(this));
+            } else {
+                inc++;
+                f_no($(this));
+            }
+        });
+        totalFinal = (parseFloat(total) + parseFloat(totalC)).toFixed(2);
+        // console.log(total,totalC,totalFinal);
+        if (totalFinal > 10) {
+            alert("Verifique su puntaje en las respuestas Abiertas, excede el limite de calificación");
+        } else {
+            $("#txtNota").html(totalFinal);
+        }
+    });
+    </script>
+    <style type="text/css">
+        .mi_canvas {
+            min-width: 320px;
+        }
+
+        #prueba {
+            margin-top: 2rem;
+            display: block;
+            box-sizing: border-box;
+            padding: 0px;
+            transition: all .3s linear 0s;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #e5e5e5;
+            /*background-color:rgba(212,185,186,0.2); 
+    background-image: url(imagenes/fondo.jpg);*/
+            /* SI SE NECESITA UNA IMAGEN DE FONDO */
+            background-size: 100% 100%;
+        }
+
+        #logo {
+            display: block;
+            margin-top: 1rem;
+            margin-left: 1rem;
+            z-index: 1;
+            width: 30%;
+            height: auto;
+            max-width: 350px;
+            min-width: 100px;
+        }
+
+        #contenedoropciones {
+            margin-top: 2rem;
+            padding: 2px;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #contenedoropciones table {
+            background-color: rgba(220, 220, 220, 1.00);
+            border: .25rem solid rgba(188, 185, 185, 1.00);
+            margin-bottom: .5rem;
+            border-spacing: 5px;
+            border-collapse: separate;
+        }
+
+        #contenedoropciones table:nth-of-type(2) {
+            border-spacing: 5px;
+        }
+
+        #contenedoropciones table:nth-of-type(2) td {
+            width: 1px;
+            white-space: nowrap;
+        }
+
+        #contenedoropciones table:nth-of-type(1) td {
+            cursor: pointer;
+        }
+
+        #contenedoropciones .titulotabla {
+            text-align: center;
+            font-weight: bold;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: white;
+            background-color: rgba(103, 103, 103, 1.00)
+        }
+
+        #contenedoropciones table {
+            display: inline-table;
+        }
+
+        .celdascoloresdefondo {
+            width: 20px;
+            height: 10px;
+            border: solid 1px transparent;
+        }
+
+        @media (max-width: 890px) {
+
+            /*.mi_canvas {
+      font-size: .750rem;
+    }*/
+            #contenedoropciones,
+            #prueba {
+                width: 98%
+            }
+
+            #contenedoropciones {
+                margin-left: 1%;
+            }
+        }
+
+        @media (max-width: 450px) {
+            /*.mi_canvas {
+      font-size: .75rem;
+    }*/
+        }
+
+        @media (max-width: 1px) {
+            #contenedoropciones #opcionesdedibujo {
+                display: table;
+                width: 100%;
+            }
+
+            #contenedoropciones #opcionesdedibujo td {
+                display: block;
+                width: auto;
+                text-align: left;
+                margin-top: 5px;
+            }
+        }
+
+    </style>
+    <style type="text/css">
+        canvas {
+            display: block;
+            margin: 0 auto;
+            /*margin: calc(50vh - 150px) auto 0;
+    background-image: url('img/i2_p50_act25.jpg');
+    */
+            border-radius: 3px;
+            box-shadow: 0px 0px 15px 3px #ccc;
+            cursor: pointer;
+            background-repeat: no-repeat;
+            max-width: 100%;
+        }
+
+    </style>
+</body>
+</html>

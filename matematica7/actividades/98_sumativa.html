@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMÁTICA 7</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/highcharts.js"></script>
+    	<script src="js/data.js"></script>
+    	<script src="js/react-with-addons.js"></script>
+    	<script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+</head>
+
+<style type="text/css">
+       #draggable { width: 150px; height: 150px; padding: 0.5em; }
+	   * {
+                margin:0; padding:0;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            .wrap {
+                padding: 2em 1em;
+                width: 400px;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            @media(min-width: 30em){
+                .wrap{
+                    width: 490px;
+                }
+                .sudoku-board input {
+                    font-size: 24px;
+                    font-size: 1.5rem;
+                }
+                .sudoku-board .candidates {
+                    font-size: .8em;
+                }
+            }
+
+    .fondo_preg{
+        background-color: #D6F2F8;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+
+    .textTab{
+        color: #3D4C78;
+        font-size: 20px;
+    }
+
+    .textTab1{
+        color: #35A877;
+        font-size: 20px;
+    }
+
+    .n0{
+        color: #15816F;
+        font-size: 23px;
+    }
+
+    .np0{
+        color: #EB3959;
+        font-size: 23px;
+    }
+
+    .np1{
+        color: #0D9C73;
+        font-size: 23px;
+    }
+
+    .np2{
+        color: #9A983B;
+        font-size: 23px;
+    }
+
+    .n1{
+        color: #309794;
+        font-size: 23px;
+    }
+
+    .n2{
+       color: white;
+        font-size: 23px;
+        background-color: #B4AD67;
+        border-radius: 5px;
+    }
+
+    .num1{
+        background-color: #B3EEC9;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+        padding: 5px;
+    }
+
+    .num2{
+        background-color: #E1B3EE;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+        padding: 5px;
+    }
+    .num3{
+        background-color: #EEEAB3;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+        padding: 5px;
+    }
+
+
+    .suc1{
+        border-top-left-radius:15px;
+        border-bottom-right-radius:15px;
+        border-color: #419486;
+        text-align: center;
+    }
+
+    .suc2{
+        border-top-left-radius:15px;
+        border-bottom-right-radius:15px;
+        border-color: #E1B3EE;
+        text-align: center;
+    }
+
+    .suc3{
+        border-top-left-radius:15px;
+        border-bottom-right-radius:15px;
+        border-color: #DED226;
+        text-align: center;
+    }
+
+    .encabezado_pregunta{
+        background-color: #E5ECBD;
+        font-size: 19px;        
+        border-radius: 5px;
+    }
+   
+    .encabezados{
+        color: white;
+        font-size: 20px;
+    }
+
+    .r1{
+        border-top: none;
+        border-right: none;
+        border-left: none; 
+        border-bottom-width: 1px;
+        border-bottom-color: black;
+    }
+
+    .actividad1{
+        background: #fff;       
+    }
+
+    .t_images img{
+        padding: 8px;
+        max-width: 80%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+        margin-bottom: 15px;
+        padding: 3px;
+    }
+    
+@media (max-width: 770px) {
+	.cajas {
+	    clear: left;
+	  }
+   .t_images img{
+        padding: 8px;
+        max-width: 20%;
+    }
+    .r_images{
+        min-height: 85px;
+        border: 1px solid #006600;
+    }
+    .r_images img{
+        max-height: 100%;
+    }    
+}
+
+
+    .fraction {
+        display: inline-block;
+        vertical-align: middle; 
+        margin: 0 0.2em 0.4ex;
+        text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid black;}
+    .fraction span.bar {display: none;}
+
+
+    .colorea{
+        background-color: #CFA91E;
+    }
+
+
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button><br>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>
+           Resuelve los problemas e ingresa tus respuestas en los cuadros de texto correspondientes.<br><br>
+
+           Actividad 1, 2: selecciona el tipo de operación, el patrón y completa la sucesión.<br><br>
+           Actividad 10: Transforma los grados decimales planteados a grados, minutos y segundos.<br>
+           Utiliza los siguientes simbolos para representar tu respuesta.<br>
+           <span style="font-size: 20px;">grados = ° &nbsp;&nbsp;&nbsp;&nbsp; minutos = ´ &nbsp;&nbsp;&nbsp;&nbsp;segundos = ´´</span> puedes copiar y pegar estos simbolos para tus respuestas. Ej: 17° 5´ 10´´<br>
+        </b>
+
+        <br>
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-evaluacion" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-evaluacion">
+                    <span class="titulo"><img src="img/icoTST.png"> Evaluación sumativa</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+	 <div class="panel-body"> 
+            <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+
+                <div>
+                    <img src="img/algebra_funciones.jpg" class="img-responsive">
+                </div>
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                            
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-group form-inline">
+                            1. Con el uso de la calculadora, <b>encuentra</b> el patrón y <b>completa</b> la sucesión.<br><br>
+
+                            <div id="sucesion0"></div> 
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group" align="justify">
+                           
+                           2. <b>Resuelve</b> por sucesiones.<br><br>
+                            
+                           Un almacén vende <span class="np1" id="nAVC0"></span> calculadoras en una semana. Si en cada una de las semanas siguientes se triplica la venta de calculadoras, ¿cuántas calculadoras venderá en la quinta semana?<br>
+
+                           <br>
+
+                            <div class="col-sm-12">
+                                Patron: &nbsp;&nbsp; <select id="rAVC1" class="form-control respuestas" style="width: 60px; display: inline-block;">
+                                   <option></option>
+                                   <option>+</option>
+                                   <option>-</option>
+                                   <option>x</option>
+                                   <option>÷</option>
+                                </select>
+                                <input type="number" id="rAVC2" class="form-control respuestas" style="width: 70px; display: inline-block;">;
+                            <br><br><br>
+                            </div>
+
+                            <div class="col-sm-12" style="font-size: 20px;">
+                                <div class="col-sm-2" style="display: inline-block;">Sucesión:</div>
+                                <div class="col-sm-2" style="display: inline-block;" align="center"><span id="nAVC1"></span>,</div>
+                                <div class="col-sm-2" style="display: inline-block;" align="center"><span id="nAVC2"></span>,</div>
+                                <div class="col-sm-2" style="display: inline-block;" align="center"><span id="nAVC3"></span>,</div>
+                                <div class="col-sm-2" style="display: inline-block;" align="center"><span id="nAVC4"></span>,</div>
+                                <div class="col-sm-2" style="display: inline-block;" align="center"><span id="nAVC5"></span></div><br><br>
+                            </div>
+
+                            <div class="col-sm-12" style="font-size: 20px;">
+                                <div class="col-sm-2" style="display: inline-block;">Semanas:</div>
+                                <div class="col-sm-2" style="display: inline-block;" align="center"><span>1.°</span>,</div>
+                                <div class="col-sm-2" style="display: inline-block;" align="center"><span>2.°</span>,</div>
+                                <div class="col-sm-2" style="display: inline-block;" align="center"><span>3.°</span>,</div>
+                                <div class="col-sm-2" style="display: inline-block;" align="center"><span>4.°</span>,</div>
+                                <div class="col-sm-2" style="display: inline-block;" align="center"><span>5.°</span></div><br><br><br><br>
+                            </div>
+
+
+                           <div align="center">
+                               <span class="np0">R. &nbsp;&nbsp;</span>
+                               En la quinta semana venderá&nbsp;&nbsp;
+                               <input type="number" id="rAVC3" class="form-control respuestas" style="width: 70px; display: inline-block;">
+                               &nbsp;&nbsp;calculadoras.
+                           </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+                        </h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group" align="justify">
+                           
+                            3. <b>Observa</b> el gráfico y <b>responde</b> las preguntas.<br><br>
+                            
+                            <div class="col-sm-6" align="center">
+                                <img src="img/i1_p172_act3.jpg" class="img-responsive">
+                            </div>
+
+                            <div class="col-sm-6" align="justify"><br><br><br>
+                                <ol type="a" id="observa1"></ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Actividad 4</a>
+                        </h4>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group">
+
+                                4. <b>Resuelve</b> el siguiente ejercicio.<br><br>
+
+                                <div class="col-sm-6 form-group form-inline" style="display: inline-block;" align="center">
+                                <div class="eq-c">
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE1"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE2"></span>
+                                    </div>
+                                    &nbsp;&nbsp;÷&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE3"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE4"></span>
+                                    </div> &nbsp;&nbsp;-&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE5"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE6"></span>
+                                    </div> &nbsp;&nbsp;x&nbsp;&nbsp;
+
+                                    <span id="nRSE7" class="np1"></span>&nbsp;&nbsp;+&nbsp;&nbsp;
+
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE8"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE9"></span>
+                                    </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <!--------------------------------->
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rRSE1" class="form-control respuestas" style="width: 70px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rRSE2" class="form-control respuestas" style="width: 70px;"></span>
+                                    </div>
+                                </div>
+                                <br><br><br>
+                            </div>
+
+
+
+                            <div class="col-sm-6 form-group form-inline" style="display: inline-block;" align="center">
+                                <div class="eq-c">
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE10"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE11"></span>
+                                    </div>
+                                    &nbsp;&nbsp;-&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE12"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE13"></span>
+                                    </div> &nbsp;&nbsp;x&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE14"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE15"></span>
+                                    </div> &nbsp;&nbsp;+&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE16"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE17"></span>
+                                    </div> &nbsp;&nbsp;÷&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE18"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE19"></span>
+                                    </div>&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;
+                                <!--------------------------------->
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rRSE3" class="form-control respuestas" style="width: 70px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rRSE4" class="form-control respuestas" style="width: 70px;"></span>
+                                    </div>
+                                </div>
+                                <br><br><br>
+                            </div>
+
+
+
+
+
+                            <div class="col-sm-6 form-group form-inline" style="display: inline-block;" align="center">
+                                <div class="eq-c">
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE20"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE21"></span>
+                                    </div>
+                                    &nbsp;&nbsp;+&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE22"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE23"></span>
+                                    </div> &nbsp;&nbsp;-&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE24"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE25"></span>
+                                    </div> &nbsp;&nbsp;÷&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE26"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE27"></span>
+                                    </div> &nbsp;&nbsp;+&nbsp;&nbsp;
+                                    <span id="nRSE28" class="np1"></span>
+                                    &nbsp;&nbsp;x&nbsp;&nbsp;
+                                    <div class="fraction np1">
+                                        <span class="fup" id="nRSE29"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn" id="nRSE30"></span>
+                                    </div>&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;
+                                <!--------------------------------->
+                                    <div class="fraction np1">
+                                        <span class="fup"><input type="number" id="rRSE5" class="form-control respuestas" style="width: 70px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rRSE6" class="form-control respuestas" style="width: 70px;"></span>
+                                    </div>
+                                </div>
+                            </div> 
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Actividad 5</a>
+                        </h4>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group" align="justify">
+                           
+                            5. <b>Resuelve</b> el problema.<br><br>
+                            
+                            Mauricio compró un libro de <span id="nMCL1" class="np1"></span> páginas. El primer fin de semana, leyó los <span id="nMCL2" class="np1"></span> / <span id="nMCL3" class="np1"></span> del libro, y el segundo, <span id="nMCL4" class="np1"></span> / <span id="nMCL5" class="np1"></span> de lo que leyó el primer fin de semana. ¿Cuántas páginas le quedan por leer? <br><br>
+
+                            <div align="center">
+                                <span class="np0">R.&nbsp;&nbsp;</span> Le quedan por leer&nbsp;&nbsp;
+                                <input type="number" id="rMCL1" class="form-control respuestas" style="width: 70px; display: inline-block; text-align: center;">&nbsp;&nbsp;páginas.
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Actividad 6</a>
+                        </h4>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group" align="justify">
+                           
+                            6. <b>Escribe</b> en números romanos las siguientes cantidades.<br><br>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-11">
+                                <ol type="a" id="numeros1"></ol>    
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div>
+                   <img src="img/geometria_medida.jpg" class="img-responsive">                     
+                </div>
+
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">Actividad 7</a>
+                        </h4>
+                    </div>
+                    <div id="collapse7" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group" align="justify">
+                           
+                            7. <b>Resuelve</b> el problema.<br>
+                            
+                            Carmen y su hijo Sebastián salen de paseo en bicicleta. La rueda de la bicicleta de Carmen tiene un diámetro de <span id="nCHP1" class="np1"></span> milímetros y la de Sebastián de <span id="nCHP2" class="np1"></span> milímetros. Si recorren <span id="nCHP3" class="np1"></span> kilómetros, ¿cuántas vueltas da la llanta de la bicicleta de Carmen y cuántas la de Sebastián?<br><br>
+                            
+                                <span class="np0">R. &nbsp;&nbsp;</span>
+                                Llanta de la bicicleta de Carmen: &nbsp;&nbsp;<input type="number" id="rCHP1" class="form-control respuestas" style="width: 80px; display: inline-block;">&nbsp;&nbsp; vueltas; &nbsp;&nbsp;&nbsp;&nbsp;de Sebastián: &nbsp;&nbsp;<input type="number" id="rCHP2" class="form-control respuestas" style="width: 80px; display: inline-block;">&nbsp;&nbsp; vueltas.
+
+                        </div>
+                    </div>
+                </div>
+
+                
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">Actividad 8</a>
+                        </h4>
+                    </div>
+                    <div id="collapse8" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group" align="justify">
+                           
+                            8. <b>Resuelve</b> el problema.<br>
+                            
+                            Darío quiere comprar un estuche para proteger su tablet. Si las dimensiones son <span id="nDCE1" class="np2"></span> centímetros de base por <span id="nDCE2" class="np2"></span> centímetros de altura, ¿qué área total debe tener el estuche?<br><br>
+
+                            <div align="center">
+                                <span class="np0">R. &nbsp;&nbsp;</span>
+                                <input type="number" id="rDCE1" class="form-control respuestas" style="width: 80px; display: inline-block;"> cm<sup>2</sup>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">Actividad 9</a>
+                        </h4>
+                    </div>
+                    <div id="collapse9" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group" align="justify">
+                           
+                           <div class="col-sm-8">
+                               
+                           
+                           9. <b>Encuentra</b> el área del estadio circular de la figura, si se conoce que el radio es <span id="nEAE1" class="n1"></span> metros.<br><br>
+                            
+                            <div align="center">
+                                <span class="np0">A = &nbsp;&nbsp;</span>
+                                <input type="number" id="rEAE1" class="form-control respuestas" style="width: 90px; display: inline-block;"> m<sup>2</sup>
+                            </div>
+                            </div>
+                            <div class="col-sm-4" align="center">
+                                <img src="img/i1_p173_act9.jpg" class="img-responsive">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">                                                                             
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">Actividad 10</a>
+                        </h4>
+                    </div>
+                    <div id="collapse10" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group" align="justify">
+                           
+                            10. <b>Transforma</b> los siguientes grados decimales a grados, minutos y segundos.<br><br><br>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-11">
+                                <ol type="a">
+                                    <div class="col-sm-4">
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="np1" id="nTGD1"></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                                            <input type="text" id="rTGD1" class="form-control respuestas" style="width: 150px; display: inline-block;">
+                                            <br><br>
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="np1" id="nTGD2"></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                                            <input type="text" id="rTGD2" class="form-control respuestas" style="width: 150px; display: inline-block;">
+                                            <br><br>
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="np1" id="nTGD3"></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                                            <input type="text" id="rTGD3" class="form-control respuestas" style="width: 150px; display: inline-block;">
+                                            <br><br>
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="np1" id="nTGD4"></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                                            <input type="text" id="rTGD4" class="form-control respuestas" style="width: 150px; display: inline-block;">
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="np1" id="nTGD5"></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                                            <input type="text" id="rTGD5" class="form-control respuestas" style="width: 150px; display: inline-block;">
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="np1" id="nTGD6"></span> &nbsp;&nbsp;=&nbsp;&nbsp;
+                                            <input type="text" id="rTGD6" class="form-control respuestas" style="width: 150px; display: inline-block;">
+                                        </li>
+                                    </div>
+                                </ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+
+
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog"d>
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+       
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad98.js"></script>
+        <script type="text/javascript">
+            var titulos="evaluacion";
+            f_titulos();         
+            $("#n_pagina").html('172');
+        </script>
+</body>
+</html>

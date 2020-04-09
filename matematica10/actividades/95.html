@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mate 10</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/extrasCss.css">
+    <link rel="stylesheet" href="css/mathquillSINBORDE.css" />
+
+</head>
+<style type="text/css">
+    .cajas {
+        min-width: 100px;
+        min-height: 60px;
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 5px;
+        width: auto;
+
+    }
+
+    .cajas1 {
+
+        border: 1px #005ca4 solid;
+    }
+
+    .encierra {
+        background: rgba(153, 204, 255, 0.8);
+        color: #fff;
+
+    }
+
+    .actividad17 {
+        background: #fff;
+    }
+
+    .bg_palabra {
+        background-color: #F9E8B2;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 8px;
+        text-align: center;
+        font-size: 20px;
+        display: inline-block;
+    }
+
+    .rec_txt {
+        min-width: 60px;
+        min-height: 60px;
+        border: 1px dotted #444;
+        border-radius: 8px;
+        margin: 3px;
+        clear: inherit;
+    }
+
+    @media (max-width: 770px) {
+        .cajas {
+            clear: left;
+        }
+    }
+
+    tbody .numerador {
+        border-bottom: 1px solid;
+    }
+
+    #activity label {
+        font-size: 17px
+    }
+
+    .correcto {
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+
+    .incorrecto {
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+
+
+    .base {
+        width: 60px;
+        background-color: #99ccff;
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .periodo {
+        border-top: 2px solid;
+    }
+
+    .seleccionCaja {
+        background-color: #58D68D;
+        color: white;
+        width: 100px;
+    }
+
+    .deseleccionCaja {
+        background-color: white;
+        color: black;
+    }
+
+    .correcto {
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+
+    .incorrecto {
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+
+    .seleccionCajai {
+        background-color: #ffffff;
+        color: white;
+
+        width: auto;
+        height: auto;
+        border: 10px rgb(34, 197, 29) solid;
+        border-radius: 25px;
+        padding: 10px;
+        margin: 5px;
+
+    }
+
+    .correctoi {
+        width: auto;
+        height: auto;
+        border: 10px rgb(34, 197, 29) solid;
+        border-radius: 25px;
+        padding: 10px;
+        margin: 5px;
+    }
+
+    .incorrectoi {
+        width: auto;
+        height: auto;
+        border: 10px rgb(231, 16, 16) solid;
+        border-radius: 25px;
+        padding: 10px;
+        margin: 5px;
+    }
+
+    input {
+        text-align: center;
+    }
+
+    .subrayar {
+        text-decoration: underline;
+        background-color: #8FB435;
+    }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Escriba la respuesta correcta en los recuadros.<br>
+        <br>
+        <span id="ayudas"></span>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa"
+                        onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+
+            </ul>
+        </div>
+
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a">&nbsp;
+                                    <b>Pregunta 1 (1 pts).</b>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div>
+                                        <div class="text-question">
+                                            <span><b>1. Determina </b> la función de costo que una empresa textil mantiene
+                                                si adquiere maquinaria valorada en $ 3 000 utilizada en la elaboración de
+                                                pantalones. Si producir cada pantalón tiene un costo de producción de $ 12.</span></div><br>
+                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="4" placeholder="Texto"></textarea>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a">&nbsp;
+                                    <b>Pregunta 2 (1 pts).</b> </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <span><b>2. </b> El gráfico muestra la razón de cambio de posición de un móvil en
+                                            el tiempo. <b>Contesta</b>.</span></div><br>
+                                    <img class="img-responsive" src="img/i1_p116_act2.jpg"><br>
+                                    <span><h4><b>a)</b> ¿Cuál es la posición inicial?</h4></span>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea><br>
+                                    <span><h4><b>b)</b> ¿Cuál es la posición del móvil cuando han transcurrido cuatro horas?</h4></span>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea><br>
+                                    <span><h4><b>c) Escribe</b> la ecuación de la recta que muestra la gráfica de la posición
+                                            en función del tiempo.</h4></span>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a" readonly>&nbsp;
+                                    <b>Pregunta 3 (1 pts).</b> </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="col-md-12" style="padding-top: 20px">
+                                    <div class="text-question">
+                                        <span><b>3. </b> El peso de un bebe al nacer fue de 3,4 kg y en los meses siguientes
+                                            aumenta 1 kg cada mes.</span></div><br>
+                                    <span><h4><b>a) Escribe</b> una función que represente esta situación.</h4></span>
+                                    <label>P(x)=</label>
+                                    <input type="text" size="1" style="width:30px" class=" border-blue respuestas">
+                                    <input type="hidden" style="color:blue" class="solucion" value="x">&nbsp;
+                                    <input type="text" maxlength="1" size="1" style="width:15px" class=" border-blue respuestas">
+                                    <input type="hidden" style="color:blue" class="solucion" value="+">&nbsp;
+                                    <input type="text" size="1" style="width:30px" class=" border-blue respuestas">
+                                    <input type="hidden" style="color:blue" class="solucion" value="3,4">
+                                    <span><h4><b>b)</b> ¿Cuánto pesará el bebé a los 5 meses?</h4></span>
+                                    <label>P(5)=&nbsp;</label><input type="text" size="1" style="width:30px" class=" border-blue respuestas">
+                                    <input type="hidden" style="color:blue" class="solucion" value="8,4"><label>kg</label>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+                                    aria-controls="collapseFour">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a" readonly>&nbsp;
+                                    <b>Pregunta 4 (1 pts). </b> </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <span><b>4. </b> Para realizar un tour, el chofer del bus cobra $ 0,50 por cada kilómetro
+                                            recorrido en un viaje, pero debe pagar $ 35 de combustible para llenar el tanque
+                                            de su unidad.
+                                        </span></div><br>
+                                    <span><h4><b>a) Escribe</b> una función lineal que identifique el problema propuesto,
+                                            si desea obtener una ganancia recorriendo x kilómetros.</h4></span>
+                                    <label>G(x)=</label>
+                                    <input type="text" size="1" style="width:40px" class=" border-blue respuestas1">
+                                    <input type="hidden" style="color:blue" class="solucion1" value="0,50x">&nbsp;
+                                    <input type="text" maxlength="1" size="1" style="width:15px" class=" border-blue respuestas1">
+                                    <input type="hidden" style="color:blue" class="solucion1" value="-">&nbsp;
+                                    <input type="text" size="1" style="width:30px" class=" border-blue respuestas1">
+                                    <input type="hidden" style="color:blue" class="solucion1" value="35">
+                                    <span><h4><b>b)</b> ¿Existe ganancia y cuál es al recorrer 200 km?</h4></span>
+                                    <label>G(x)=&nbsp;</label><input type="text" size="1" style="width:30px" class=" border-blue respuestas1">
+                                    <input type="hidden" style="color:blue" class="solucion1" value="65"><label>$</label>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false"
+                                    aria-controls="collapseFive">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre5a">&nbsp;
+                                    <b>Pregunta 5 (1 pts). </b> </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <span><b>5. Escribe </b> un problema que pueda ser modelado con cada una de las siguientes
+                                        funciones afines:</span></div><br>
+                                <span><h4><b>a) </b> C(x) = 5x + 200</h4></span>
+                                <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea><br>
+                                <span><h4><b>b)</b> G(x) = 2,50x − 700</h4></span>
+                                <textarea class="form-control text-question no-redimensionar " cols="60" rows="5" placeholder="Texto"></textarea><br>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingSix">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false"
+                                    aria-controls="collapseSix">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre6a" readonly>&nbsp;
+                                    <b>Pregunta 6 (1 pts). </b> </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <span><b>6. </b>Durante las primeras semanas de cultivo, una planta alcanzó a medir 3
+                                        cm. Se ha observado que su crecimiento posterior es directamente proporcional al
+                                        tiempo a una razón de 0,5 cm cada semana.</span></div><br>
+                                <span><h4><b>a) </b> Establece una función lineal para calcular la altura de la planta en
+                                        función del tiempo.</h4></span>
+                                <label>h(t)=</label>
+                                <input type="text" size="1" style="width:40px" class=" border-blue respuestas2">
+                                <input type="hidden" style="color:blue" class="solucion2" value="0,50t*0,5t">&nbsp;
+                                <input type="text" maxlength="1" size="1" style="width:15px" class=" border-blue respuestas2">
+                                <input type="hidden" style="color:blue" class="solucion2" value="+">&nbsp;
+                                <input type="text" size="1" style="width:30px" class=" border-blue respuestas2">
+                                <input type="hidden" style="color:blue" class="solucion2" value="3">
+                                <span><h4><b>b) Calcula</b> la altura de la planta al cabo de tres meses.</h4></span>
+                                <label>h(t)=&nbsp;</label><input type="text" size="1" style="width:30px" class=" border-blue respuestas2">
+                                <input type="hidden" style="color:blue" class="solucion2" value="9"><label>cm</label>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingSeven">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false"
+                                    aria-controls="collapseSeven">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre7a" readonly>&nbsp;
+                                    <b>Pregunta 7 (1 pts). </b> </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <span><b>7. </b>Los estudiantes de décimo año de educación básica planean un viaje de
+                                        fin de año, para lo cual han pedido que se realice una cotización del transporte;
+                                        a lo que dos choferes responden:<br><br> El chofer A cobra $ 0,75 por cada kilómetro
+                                        de recorrido más un costo fijo de $ 100.<br> El chofer B cobra $ 0,50 por cada kilómetro
+                                        de recorrido más un costo fijo de $ 150.
+                                        <br>
+                                    </span></div><br>
+                                <span><h4><b>a) Escribe </b> la función de costo de ambos choferes.</h4></span><br>
+                                <span><b>Función chofer A:</b></span>
+                                <label>C(x)=</label>
+                                <input type="text" size="1" style="width:50px" class=" border-blue respuestas7">
+                                <input type="hidden" style="color:blue" class="solucion7" value="0,75x">&nbsp;
+                                <input type="text" maxlength="1" size="1" style="width:15px" class=" border-blue respuestas7">
+                                <input type="hidden" style="color:blue" class="solucion7" value="+">&nbsp;
+                                <input type="text" size="1" style="width:30px" class=" border-blue respuestas7">
+                                <input type="hidden" style="color:blue" class="solucion7" value="100"><br><br>
+                                <span><b>Función chofer B:</b></span>
+                                <label>C(x)=</label>
+                                <input type="text" size="1" style="width:50px" class=" border-blue respuestas7">
+                                <input type="hidden" style="color:blue" class="solucion7" value="0,50x">&nbsp;
+                                <input type="text" maxlength="1" size="1" style="width:15px" class=" border-blue respuestas7">
+                                <input type="hidden" style="color:blue" class="solucion7" value="+">&nbsp;
+                                <input type="text" size="1" style="width:30px" class=" border-blue respuestas7">
+                                <input type="hidden" style="color:blue" class="solucion7" value="150"><br><br>
+                                <span><h4><b>b) </b>Existen tres opciones de destinos, el más cercano se encuentra a 50 km,
+                                        el segundo a 100 km y el tercero a 300 km.<br><br><b>Completa</b> la tabla con el
+                                        costo de los tres viajes con las dos opciones que tienen para viajar.</h4></span><br>
+
+                                <table class="table" style="text-align: center" border="1" bordercolor="#3498DB">
+                                    <tr>
+                                        <td rowspan="2" bgcolor="#E55468" style="color: #FFFFFF" WIDTH="25%">
+                                            <h4><b>Destino</b></h4>
+                                        </td>
+                                        <td rowspan="2" bgcolor="#BC85DE" style="color: #FFFFFF" WIDTH="25%">
+                                            <h4><b>Distancia<br>(Km)</b></h4>
+                                        </td>
+                                        <td colspan="2" bgcolor="#3AC13D" style="color: #FFFFFF" WIDTH="50%">
+                                            <h4><b>Costo ($)</b></h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td bgcolor="#3AB8C1" style="color: #FFFFFF">
+                                            <h4>Chofer A</h4>
+                                        </td>
+                                        <td bgcolor="#21DBE7" style="color: #FFFFFF">
+                                            <h4>Chofer B</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4>1</h4>
+                                        </td>
+                                        <td>
+                                            <h4>50</h4>
+                                        </td>
+                                        <td>
+                                            <h4><input type="text" size="1" style="width:80px" class=" border-blue respuestas7">
+                                                <input type="hidden" style="color:blue" class="solucion7" value="137,50"></h4>
+                                        </td>
+                                        <td>
+                                            <h4><input type="text" size="1" style="width:80px" class=" border-blue respuestas7">
+                                                <input type="hidden" style="color:blue" class="solucion7" value="175"></h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4>2</h4>
+                                        </td>
+                                        <td>
+                                            <h4>100</h4>
+                                        </td>
+                                        <td>
+                                            <h4><input type="text" size="1" style="width:80px" class=" border-blue respuestas7">
+                                                <input type="hidden" style="color:blue" class="solucion7" value="175"></h4>
+                                        </td>
+                                        <td>
+                                            <h4><input type="text" size="1" style="width:80px" class=" border-blue respuestas7">
+                                                <input type="hidden" style="color:blue" class="solucion7" value="200"></h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4>3</h4>
+                                        </td>
+                                        <td>
+                                            <h4>300</h4>
+                                        </td>
+                                        <td>
+                                            <h4><input type="text" size="1" style="width:80px" class=" border-blue respuestas7">
+                                                <input type="hidden" style="color:blue" class="solucion7" value="325"></h4>
+                                        </td>
+                                        <td>
+                                            <h4><input type="text" size="1" style="width:80px" class=" border-blue respuestas7">
+                                                <input type="hidden" style="color:blue" class="solucion7" value="300"></h4>
+                                        </td>
+                                    </tr>
+                                </table><br>
+                                <span><h4><b>c) Escribe </b> verdadero o falso según corresponda.</h4></span><br>
+                                <span><h4>El chofer A cobra menos en cualquier viaje.</h4></span>
+                                <input type="text" size="1" style="width:80px" class=" border-blue respuestas7">
+                                <input type="hidden" style="color:blue" class="solucion7" value="falso*Falso"><br>
+                                <span><h4>El chofer A, recorriendo 100 km, cobra lo mismo que el chofer B recorriendo 50
+                                        km.
+                                    </h4></span><input type="text" size="1" style="width:80px" class=" border-blue respuestas7">
+                                <input type="hidden" style="color:blue" class="solucion7" value="Verdadero*verdadero">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingEigth">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEigth" aria-expanded="false"
+                                    aria-controls="collapseEigth">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre8a" readonly>&nbsp;
+                                    <b>Pregunta 8 (1 pts). </b> </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEigth" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEigth">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <span><b>8. </b>Esteban es un técnico en electromecánica que compró maquinaria en $ 1
+                                        500 para arreglar motores de automóviles. En función de esta inversión por cada motor
+                                        arreglado cobra $ 125.
+                                    </span></div><br>
+                                <span><h4><b>a) Escribe </b> la función que represente la ganancia que obtendrá Esteban.</h4></span><br>
+
+                                <label>G(x)=</label>
+                                <input type="text" size="1" style="width:50px" class=" border-blue respuestas8">
+                                <input type="hidden" style="color:blue" class="solucion8" value="125x">&nbsp;
+                                <input type="text" maxlength="1" size="1" style="width:15px" class=" border-blue respuestas8">
+                                <input type="hidden" style="color:blue" class="solucion8" value="-">&nbsp;
+                                <input type="text" size="1" style="width:60px" class=" border-blue respuestas8">
+                                <input type="hidden" style="color:blue" class="solucion8" value="1500"><br><br>
+
+                                <span><h4><b>b) Determina. </b> ¿Se obtendrá ganancia arreglando 10 motores de auto?</h4></span><br>
+                                <input type="text" size="1" class="form-control border-blue respuestas8">
+                                <input type="hidden" style="color:blue" class="solucion8" value="No la obtendrá*No*NO*"><br>
+                                <span><h4><b>b) Determina. </b> ¿Qué ganancia obtendrá arreglando 15 autos?</h4></span><br>
+                                <label>G(x)=</label>
+                                <input type="text" size="1" style="width:60px" class=" border-blue respuestas8">
+                                <input type="hidden" style="color:blue" class="solucion8" value="375"><br><br>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingnINE">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsenINE" aria-expanded="false"
+                                    aria-controls="collapsenINE">
+                                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre9a" readonly>&nbsp;
+                                    <b>Pregunta 9 (1 pts). </b> </a>
+                            </h4>
+                        </div>
+                        <div id="collapsenINE" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingnINE">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <span><b>9. </b>Una imprenta cobró $ 2 025 por realizar la impresión de unos folletos,
+                                        se sabe que el costo fijo de mantener la imprenta es de $ 75 y que el valor de cada
+                                        folleto fue de $ 50 pero no encuentran la cantidad de folletos impresos.
+                                    </span></div><br>
+                                <span><h4><b>a) Escribe </b> una función que represente el problema de la imprenta.</h4></span><br>
+                                <label>C(x)=</label>
+                                <input type="text" size="1" style="width:50px" class=" border-blue respuestas9">
+                                <input type="hidden" style="color:blue" class="solucion9" value="50x">&nbsp;
+                                <input type="text" maxlength="1" size="1" style="width:15px" class=" border-blue respuestas9">
+                                <input type="hidden" style="color:blue" class="solucion9" value="+">&nbsp;
+                                <input type="text" size="1" style="width:60px" class=" border-blue respuestas9">
+                                <input type="hidden" style="color:blue" class="solucion9" value="75"><br><br>
+
+                                <span><h4><b>b) Ayuda </b> al dueño de la imprenta a calcular el número de folletos que imprimió.</h4></span>
+                                <label>x =</label><input type="text" size="1" style="width:60px" class=" border-blue respuestas9">
+                                <input type="hidden" style="color:blue" class="solucion9" value="39"><label> folletos</label><br>
+
+                                <span><h4><b>c) Calcula </b> analíticamente el valor exacto de imprimir 81 folletos.</h4></span><br>
+                                <label>C(x) =</label><input type="text" size="1" style="width:60px" class=" border-blue respuestas9">
+                                <input type="hidden" style="color:blue" class="solucion9" value="4125"><label>$</label><br>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/numPaginas.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/math.min.js" type="text/javascript"></script>
+    <script src="js/fraction.min.js" type="text/javascript"></script>
+    <script src="js/rational.js"></script>
+    <script src="js/initElementos.js"></script>
+    <script src="js/select_dselect_elements.js"></script>
+    <script src="js/dragNdrop.js"></script>
+    <script src="js/calcularNotas.js"></script>
+    <script src="js/mathquillNOTEDITABLE.js"></script>
+    <script src="js/mathCalc.js"></script>
+    <script src="js/actividad95.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Matemática 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {}
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.t1 {
+    max-width: 180px;
+    display: inline-block;
+    text-align: center;
+    font-size: 22px;
+}
+
+.txt_tit {
+    color: #009DCC;
+    font-size: 18px;
+}
+
+.col_div {
+    width: 48%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.txt_cont {
+    font-size: 18px;
+    margin-top: -8px;
+    padding-top: 18px;
+    border-right: 3px dashed #76B82A;
+    border-bottom: 3px dashed #76B82A;
+    margin-bottom: 20px;
+}
+
+.bg_titu {
+    z-index: 999px;
+    padding: 12px;
+    background-color: #F9B000;
+    border-radius: 18px 0px;
+    max-width: 90px;
+    color: #fff;
+    font-size: 18px;
+}
+
+@media (max-width: 770px) {
+    .cajas {
+        clear: left;
+    }
+}
+
+.encierra {
+    border: 2px solid #9B8600;
+    border-radius: 40%;
+
+}
+
+.pinta {
+    background: #DBCD9E;
+}
+
+.pinta1 {
+    background: #DBCD9E;
+}
+
+.pinta2 {
+    background: #DBCD9E;
+}
+
+.pinta3 {
+    background: #DBCD9E;
+}
+
+.c_destino2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 70px;
+}
+
+.c_destino1 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 100px;
+}
+
+.c_origen {
+
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 60px;
+    max-width: 100%;
+    margin-left: 1px;
+    min-width: 100%;
+
+}
+
+.bg_palabra {
+
+    border-radius: 10px;
+    background: #4EB399;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+
+.inputDiv {
+    text-align: center;
+    border: 0;
+    width: 30px;
+}
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 50px;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1: </b> Completa la secuencia de acuerdo con el patrón.
+        <br>
+        <b>Pregunta 2: </b> Expresa la división en forma horizontal y mediante galera.
+        <br>
+        <b>Pregunta 3: </b> Resuelve cada división haciendo restas sucesivas.
+        <br>
+        <b>Pregunta 4: </b> Completa relacionando la división y la multiplicación.
+        <br>
+        <b>Pregunta 5: </b> Realiza las divisiones.
+        <br>
+        <b>Pregunta 6: </b> Da click sobre las opciones para encerrar la respuesta.
+        <br>
+        <b>Pregunta 7: </b> Resuelve los siguientes problemas.
+        <br>
+        <b>Pregunta 8: </b> Resuelve los siguientes problemas.
+        <br>
+        <b>Pregunta 9: </b> Representa los datos de la tabla y luego responde.
+        <br>
+        <b>Pregunta 10: </b> Observa la siguiente ruleta y contesta.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-reflexiono" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-reflexiono">
+                <span class="titulo"><img src="img/icoR.png" alt="Reflexiono para avanzar"> Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="row" align="center" style="background: #628CC4; color: white; padding: 5px; font-size: 20pt; border-radius: 10px;">Álgebra y funciones</div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a" readonly>&nbsp; <b style="color: #005CA4;">1.</b> <b>Completa</b> la secuencia de acuerdo con el patrón indicado. <b>(1 pt.)</b></p>
+                </div>
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">a)</b></p>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <td><b style="color: #005CA4;">Patrón</b></td>
+                                <td><img src="img/i1_p216_u5a17.jpg" alt=""></td>
+                                <td style="vertical-align: top;">x <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon1"></td>
+                                <td><img src="img/i2_p216_u5a17.jpg" alt=""></td>
+                                <td style="vertical-align: top;">x <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon2"></td>
+                                <td><img src="img/i2_p216_u5a17.jpg" alt=""></td>
+                                <td style="vertical-align: top;">x <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon3"></td>
+                                <td><img src="img/i2_p216_u5a17.jpg" alt=""></td>
+                                <td style="vertical-align: top;">x <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p1dcon4"></td>
+                                <td><img src="img/i3_p216_u5a17.jpg" alt=""></td>
+                            </tr>
+                            <tr>
+                                <td><b style="color: #005CA4;">Sucesión</b></td>
+                                <td id="p1im1"></td>
+                                <td></td>
+                                <td id="p1im2" align="center"></td>
+                                <td></td>
+                                <td align="center"><input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="5" onkeypress="return soloNumeros1(event)" id="p1dco1"></td>
+                                <td></td>
+                                <td align="center"><input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="5" onkeypress="return soloNumeros1(event)" id="p1dco2"></td>
+                                <td></td>
+                                <td align="right"><input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="5" onkeypress="return soloNumeros1(event)" id="p1dco3"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a" readonly>&nbsp; <b style="color: #005CA4;">2.</b> <b>Observa</b> los gráficos y <b>expresa</b> la división en forma horizontal y mediante galera. <b>(1 pt.)</b></p>
+                </div>
+                <div class="text-question" align="center">
+                    <div class="table-responsive">
+                        <table>
+                            <tr align="center">
+                                <td style="color: white; background: #0067b4; border: 2px solid #0067b4;">Grupos</td>
+                                <td style="color: white; background: #f68321; border: 2px solid #0067b4;">En forma horizontal</td>
+                                <td style="color: white; background: #6dc068; border: 2px solid #0067b4;">Mediante galera</td>
+                            </tr>
+                            <tr align="center">
+                                <td style="border: 2px solid #0067b4;"><img src="img/i4_p216_u5a17.jpg" class="img-responsive" style="min-width: 200px;" alt=""></td>
+                                <td style="border: 2px solid #0067b4;">
+                                    <p><input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p2dcon1">÷<input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p2dcon2">=<input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p2dcon3"></p>
+                                </td>
+                                <td style="border: 2px solid #0067b4;">
+                                    <div class="table-responsive" align="center">
+                                        <table class="table-bordered">
+                                            <tr align="center">
+                                                <td></td>
+                                                <td></td>
+                                                <td><input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act2num1"></input></td>
+                                                <td><input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act2num2"></input></td>
+                                                <td style="border-left: 2px solid #000000; border-bottom:2px solid #000000;"><input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act2num3"></input></td>
+                                                <td style="border-bottom:2px solid #000000;"></td>
+                                            </tr>
+                                            <tr align="center">
+                                                <td></td>
+                                                <td style="border-bottom:2px solid #000000;">
+                                                    <div>-</div>
+                                                </td>
+                                                <td style="border-bottom:2px solid #000000;">
+                                                    <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act2num4"></input>
+                                                </td>
+                                                <td style="border-bottom:2px solid #000000;">
+                                                    <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act2num5"></input>
+                                                </td>
+                                                <td style="border-left: 2px solid #000000;">
+                                                    <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act2num6"></input>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr align="center">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act2num7"></input>
+                                                </td>
+                                                <td style="border-left: 2px solid #000000;"></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td style="border: 2px solid #0067b4;"><img src="img/i5_p216_u5a17.jpg" class="img-responsive" style="min-width: 200px;" alt=""></td>
+                                <td style="border: 2px solid #0067b4;">
+                                    <p><input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p21dcon1">÷<input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p21dcon2">=<input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p21dcon3"></p>
+                                </td>
+                                <td style="border: 2px solid #0067b4;">
+                                    <div class="table-responsive" align="center">
+                                        <table class="table-bordered">
+                                            <tr align="center">
+                                                <td></td>
+                                                <td></td>
+                                                <td><input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act21num1"></input></td>
+                                                <td><input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act21num2"></input></td>
+                                                <td style="border-left: 2px solid #000000; border-bottom:2px solid #000000;"><input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act21num3"></input></td>
+                                                <td style="border-bottom:2px solid #000000;"></td>
+                                            </tr>
+                                            <tr align="center">
+                                                <td></td>
+                                                <td style="border-bottom:2px solid #000000;">
+                                                    <div>-</div>
+                                                </td>
+                                                <td style="border-bottom:2px solid #000000;">
+                                                    <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act21num4"></input>
+                                                </td>
+                                                <td style="border-bottom:2px solid #000000;">
+                                                    <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act21num5"></input>
+                                                </td>
+                                                <td style="border-left: 2px solid #000000;">
+                                                    <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act21num6"></input>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr align="center">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act21num7"></input>
+                                                </td>
+                                                <td style="border-left: 2px solid #000000;"></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a" readonly>&nbsp; <b style="color: #005CA4;">3.</b> <b>Resuelve</b> cada división mediante restas sucesivas. <b>(1 pt.)</b></p>
+                </div>
+                <div class="text-question">
+                    <div class="col-sm-4" id="p3im1">
+                    </div>
+                    <div class="col-sm-4" id="p3im2">
+                    </div>
+                    <div class="col-sm-4" id="p3im3">
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a" readonly>&nbsp; <b style="color: #005CA4;">4.</b> <b>Completa</b> relacionando la división y la multiplicación. <b>(1 pt.)</b></p>
+                </div>
+                <div class="text-question">
+                    <div class="col-sm-6">
+                        <p><span style="display: inline-block;"><b style="color: #005CA4;">a)</b></span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td id="p4im1"></td>
+                                        <td>÷</td>
+                                        <td id="p4im2"></td>
+                                        <td>=</td>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p40dcon1"></td>
+                                    </tr>
+                                </table>
+                            </div><span style="display: inline-block;">, porque</span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p40dcon2"></td>
+                                        <td>x</td>
+                                        <td id="p4im3"></td>
+                                        <td>=</td>
+                                        <td id="p4im4"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </p>
+                        <p><span style="display: inline-block;"><b style="color: #005CA4;">b)</b></span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td id="p41im1"></td>
+                                        <td>÷</td>
+                                        <td id="p41im2"></td>
+                                        <td>=</td>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p41dcon1"></td>
+                                    </tr>
+                                </table>
+                            </div><span style="display: inline-block;">, porque</span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p41dcon2"></td>
+                                        <td>x</td>
+                                        <td id="p41im3"></td>
+                                        <td>=</td>
+                                        <td id="p41im4"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </p>
+                        <p><span style="display: inline-block;"><b style="color: #005CA4;">c)</b></span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td id="p42im1"></td>
+                                        <td>÷</td>
+                                        <td id="p42im2"></td>
+                                        <td>=</td>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p42dcon1"></td>
+                                    </tr>
+                                </table>
+                            </div><span style="display: inline-block;">, porque</span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p42dcon2"></td>
+                                        <td>x</td>
+                                        <td id="p42im3"></td>
+                                        <td>=</td>
+                                        <td id="p42im4"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p><span style="display: inline-block;"><b style="color: #005CA4;">d)</b></span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td id="p43im1"></td>
+                                        <td>÷</td>
+                                        <td id="p43im2"></td>
+                                        <td>=</td>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p43dcon1"></td>
+                                    </tr>
+                                </table>
+                            </div><span style="display: inline-block;">, porque</span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p43dcon2"></td>
+                                        <td>x</td>
+                                        <td id="p43im3"></td>
+                                        <td>=</td>
+                                        <td id="p43im4"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </p>
+                        <p><span style="display: inline-block;"><b style="color: #005CA4;">e)</b></span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td id="p44im1"></td>
+                                        <td>÷</td>
+                                        <td id="p44im2"></td>
+                                        <td>=</td>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p44dcon1"></td>
+                                    </tr>
+                                </table>
+                            </div><span style="display: inline-block;">, porque</span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p44dcon2"></td>
+                                        <td>x</td>
+                                        <td id="p44im3"></td>
+                                        <td>=</td>
+                                        <td id="p44im4"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </p>
+                        <p><span style="display: inline-block;"><b style="color: #005CA4;">f)</b></span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td id="p45im1"></td>
+                                        <td>÷</td>
+                                        <td id="p45im2"></td>
+                                        <td>=</td>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p45dcon1"></td>
+                                    </tr>
+                                </table>
+                            </div><span style="display: inline-block;">, porque</span>
+                            <div class="" style="display: inline-block;">
+                                <table>
+                                    <tr>
+                                        <td><input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 40px; text-align: center;" maxlength="2" onkeypress="return soloNumeros1(event)" id="p45dcon2"></td>
+                                        <td>x</td>
+                                        <td id="p45im3"></td>
+                                        <td>=</td>
+                                        <td id="p45im4"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre5a" readonly>&nbsp; <b style="color: #005CA4;">5.</b> <b>Realiza</b> las divisiones. <b>(1 pt.)</b></p>
+                </div>
+                <div class="text-question">
+                    <div class="col-sm-4">
+                        <p><span id="p5im1"></span> ÷ <span id="p5im2"></span> = <input type="text" style="border: none; border-bottom: 2px dotted black; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="act5num5"></p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-bordered">
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td id="p5i1"></td>
+                                    <td id="p5i2"></td>
+                                    <td style="border-left: 2px solid #000000; border-bottom:2px solid #000000;" id="p5i3"></td>
+                                    <td style="border-bottom:2px solid #000000;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border-bottom:2px solid #000000;">
+                                        <div>-</div>
+                                    </td>
+                                    <td style="border-bottom:2px solid #000000;">
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act5num1"></input>
+                                    </td>
+                                    <td style="border-bottom:2px solid #000000;">
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act5num2"></input>
+                                    </td>
+                                    <td style="border-left: 2px solid #000000;">
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act5num3"></input>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act5num4"></input>
+                                    </td>
+                                    <td style="border-left: 2px solid #000000;"></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><span id="p5im3"></span> ÷ <span id="p5im4"></span> = <input type="text" style="border: none; border-bottom: 2px dotted black; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="act51num5"></p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-bordered">
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td id="p5i4"></td>
+                                    <td id="p5i5"></td>
+                                    <td style="border-left: 2px solid #000000; border-bottom:2px solid #000000;" id="p5i6"></td>
+                                    <td style="border-bottom:2px solid #000000;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border-bottom:2px solid #000000;">
+                                        <div>-</div>
+                                    </td>
+                                    <td style="border-bottom:2px solid #000000;">
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act51num1"></input>
+                                    </td>
+                                    <td style="border-bottom:2px solid #000000;">
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act51num2"></input>
+                                    </td>
+                                    <td style="border-left: 2px solid #000000;">
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act51num3"></input>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act51num4"></input>
+                                    </td>
+                                    <td style="border-left: 2px solid #000000;"></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><span id="p5im5"></span> ÷ <span id="p5im6"></span> = <input type="text" style="border: none; border-bottom: 2px dotted black; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="act52num5"></p>
+                        <div class="table-responsive" align="center">
+                            <table class="table-bordered">
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td id="p5i7"></td>
+                                    <td id="p5i8"></td>
+                                    <td style="border-left: 2px solid #000000; border-bottom:2px solid #000000;" id="p5i9"></td>
+                                    <td style="border-bottom:2px solid #000000;"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td style="border-bottom:2px solid #000000;">
+                                        <div>-</div>
+                                    </td>
+                                    <td style="border-bottom:2px solid #000000;">
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act52num1"></input>
+                                    </td>
+                                    <td style="border-bottom:2px solid #000000;">
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act52num2"></input>
+                                    </td>
+                                    <td style="border-left: 2px solid #000000;">
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act52num3"></input>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr align="center">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <input class="inputDiv sinEspacios" onkeypress="return soloNumeros1(event)" maxlength="1" id="act52num4"></input>
+                                    </td>
+                                    <td style="border-left: 2px solid #000000;"></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre6a" readonly>&nbsp; <b style="color: #005CA4;">6.</b> <b>Encierra</b> las respuestas de cada problema. <b>(1 pt.)</b></p>
+                </div>
+                <div class="text-question">
+                    <p><b style="color: #005CA4;">a)</b> Tania tiene 12 caramelos y los reparte a sus 3 hermanos. A cada uno le toca:</p>
+                    <div id="p6rs1" align="center">
+                        <span style="padding: 30px;"><span class="1 enc1"><b style="color: #005CA4;">A)</b> <span id="p6im1"></span></span></span>
+                        <span style="padding: 30px;"><span class="1 enc2"><b style="color: #005CA4;">B)</b> <span id="p6im2"></span></span></span>
+                        <span style="padding: 30px;"><span class="1 enc3"><b style="color: #005CA4;">C)</b> <span id="p6im3"></span></span></span>
+                        <span style="padding: 30px;"><span class="1 enc4"><b style="color: #005CA4;">D)</b> <span id="p6im4"></span></span></span>
+                    </div>
+                    <p><b style="color: #005CA4;">b)</b> Angélica compra 48 naranjas, la mitad las ocupa haciendo jugo y el resto lo guarda en 3 fundas. ¿Cuántas naranjas van en cada funda?</p>
+                    <div id="p6rs2" align="center">
+                        <span style="padding: 30px;"><span class="2 enc11"><b style="color: #005CA4;">A)</b> <span id="p6im11"></span></span></span>
+                        <span style="padding: 30px;"><span class="2 enc12"><b style="color: #005CA4;">B)</b> <span id="p6im12"></span></span></span>
+                        <span style="padding: 30px;"><span class="2 enc13"><b style="color: #005CA4;">C)</b> <span id="p6im13"></span></span></span>
+                        <span style="padding: 30px;"><span class="2 enc14"><b style="color: #005CA4;">D)</b> <span id="p6im14"></span></span></span>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <div class="row" align="center" style="background: #E25674; color: white; padding: 5px; font-size: 20pt; border-radius: 10px;">Geometría y medida</div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre7a" readonly>&nbsp; <b style="color: #005CA4;">7.</b> <b>Resuelve</b> los siguientes problemas: <b>(1 pt.)</b></p>
+                </div>
+                <div class="text-question">
+                    <p align="justify">Cuatro amigos al comparar sus ahorros tenían lo siguientes: Lorenz 84 dólares. Juan tenía la mitad de lo que tenía Lorenz, Francis tenía un tercio de los ahorros de Juan y Saúl la cuarta parte de lo que tenía Lorenz. ¿Cuánto dinero tiene cada uno?</p>
+                    <div class="col-sm-3">
+                        <p>Lorenz <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="3" onkeypress="return soloNumeros1(event)" id="p7dcon1"> dólares</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p>Juan <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p7dcon2">÷<input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p7dcon3">=<input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p7dcon4"></p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p>Francis <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p7dcon5">÷<input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p7dcon6">=<input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p7dcon7"></p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p>Saúl <input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p7dcon8">÷<input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p7dcon9">=<input type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px; text-align: center;" maxlength="4" onkeypress="return soloNumeros1(event)" id="p7dcon10"></p>
+                    </div>
+                    <div class="row"></div>
+                    <p>Juan tiene <input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 50px; text-align: center;" maxlength="3" onkeypress="return soloNumeros1(event)" id="p7dcon11"> dólares, Francis <input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 50px; text-align: center;" maxlength="3" onkeypress="return soloNumeros1(event)" id="p7dcon12"> dólares y Saúl <input type="text" style="border: 2px solid #f6a8af; border-radius: 10px; text-align: center; width: 50px; text-align: center;" maxlength="3" onkeypress="return soloNumeros1(event)" id="p7dcon13"> dólares.</p>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre8a" readonly>&nbsp; <b style="color: #005CA4;">8.</b> <b>Resuelve</b> <b>(1 pt.)</b></p>
+                </div>
+                <div class="text-question">
+                    <div class="col-sm-6">
+                        <p align="justify"><b style="color: #005CA4;">a)</b> Claudia necesita 450 g de mantequilla para una receta de cocina. Si tiene un empaque de <span id="p8im1">1</span> kg, ¿cuánto le sobra?</p>
+                        <div class="table-responsive" align="center">
+                            <table>
+                                <tr>
+                                    <td id="p8im2"></td>
+                                    <td>kg</td>
+                                    <td>=</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 60px; text-align: center;" maxlength="5" onkeypress="return soloNumeros1(event)" id="p8dcon1"></td>
+                                    <td>g</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive" align="center">
+                            <table>
+                                <tr>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 60px; text-align: center;" maxlength="5" onkeypress="return soloNumeros1(event)" id="p8dcon2"></td>
+                                    <td>-</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 60px; text-align: center;" maxlength="5" onkeypress="return soloNumeros1(event)" id="p8dcon3"></td>
+                                    <td>=</td>
+                                    <td><input type="text" style="border: none; border-bottom: 2px dotted black; width: 60px; text-align: center;" maxlength="5" onkeypress="return soloNumeros1(event)" id="p8dcon4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p><b style="color: #005CA4;">R.</b> Le sobra <input type="text" style="border: none; border-bottom: 2px dotted black; width: 60px; text-align: center;" maxlength="5" onkeypress="return soloNumeros1(event)" id="p8dcon5"> .</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p align="justify"><b style="color: #005CA4;">b)</b> Abigail tenía <span id="p8im3">800</span> gramos de chocolate. Si para hacer un postre ocupó <span id="p8im4">682</span> gramos, ¿cuántos gramos de chocolate le sobraron?</p>
+                        <div class="table-responsive" style="" align="center">
+                            <table>
+                                <tr align="center">
+                                    <td style="border: 1px solid black"></td>
+                                    <td style="border: 1px solid black"><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="1" onkeypress="return soloNumeros1(event)" id="p81dcon1"></td>
+                                    <td style="border: 1px solid black"><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="1" onkeypress="return soloNumeros1(event)" id="p81dcon2"></td>
+                                    <td style="border: 1px solid black"><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="1" onkeypress="return soloNumeros1(event)" id="p81dcon3"></td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border: 1px solid black; padding: 10px;"><b>-</b></td>
+                                    <td style="border: 1px solid black"><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="1" onkeypress="return soloNumeros1(event)" id="p81dcon4"></td>
+                                    <td style="border: 1px solid black"><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="1" onkeypress="return soloNumeros1(event)" id="p81dcon5"></td>
+                                    <td style="border: 1px solid black"><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="1" onkeypress="return soloNumeros1(event)" id="p81dcon6"></td>
+                                </tr>
+                                <tr align="center" style="border-top: 4px solid black;">
+                                    <td style="border: 1px solid black"></td>
+                                    <td style="border: 1px solid black"><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="1" onkeypress="return soloNumeros1(event)" id="p81dcon7"></td>
+                                    <td style="border: 1px solid black"><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="1" onkeypress="return soloNumeros1(event)" id="p81dcon8"></td>
+                                    <td style="border: 1px solid black"><input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="1" onkeypress="return soloNumeros1(event)" id="p81dcon9"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p><b style="color: #005CA4;">R.</b> Le sobraron <input type="text" style="border: none; border-bottom: 2px dotted black; width: 60px; text-align: center;" maxlength="5" onkeypress="return soloNumeros1(event)" id="p81dcon10"> gramos de chocolate.</p>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <div class="row" align="center" style="background: #927AB2; color: white; padding: 5px; font-size: 20pt; border-radius: 10px;">Estadística y probabilidad</div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre9a" readonly>&nbsp; <b style="color: #005CA4;">9.</b> <b>Representa</b> los datos de la tabla y luego <b>responde.</b> <b>(1 pt.)</b></p>
+                </div>
+                <div class="text-question">
+                    <div class="col-sm-6" align="center">
+                        <div class="table-responsive">
+                            <table>
+                                <tr align="center">
+                                    <td colspan="2" style="color: white; background: #8e4a9d; border: 2px solid #8e4a9d;">Temperaturas por regiones</td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="background: #fedcb4; border: 2px solid #8e4a9d;">Regiones</td>
+                                    <td style="background: #fedcb4; border: 2px solid #8e4a9d;">Temperatura máxima (ºC)</td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="background: #f1e9f4; border: 2px solid #8e4a9d;">Litoral</td>
+                                    <td style="background: #f1e9f4; border: 2px solid #8e4a9d;">35</td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="background: #fff7ef; border: 2px solid #8e4a9d;">Interandina</td>
+                                    <td style="background: #fff7ef; border: 2px solid #8e4a9d;">20</td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="background: #f1e9f4; border: 2px solid #8e4a9d;">Amazonía</td>
+                                    <td style="background: #f1e9f4; border: 2px solid #8e4a9d;">35</td>
+                                </tr>
+                                <tr align="center">
+                                    <td style="background: #fff7ef; border: 2px solid #8e4a9d;">Insular</td>
+                                    <td style="background: #fff7ef; border: 2px solid #8e4a9d;">32</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="my-drawing"></div>
+                    </div>
+                    <div class="row"></div>
+                    <p><b style="color: #005CA4;">a)</b> ¿Qué regiones registran las temperaturas más altas?</p>
+                    <div align="center">
+                        <div style="padding: 10px; display: inline-block;">
+                            <input type="text" style="border: none; border-bottom: 2px dotted black; width: 120px; text-align: center;" onkeyup="mayus(this)" id="p9dcon1">
+                        </div>
+                        <div style="padding: 10px; display: inline-block;">
+                            <input type="text" style="border: none; border-bottom: 2px dotted black; width: 120px; text-align: center;" onkeyup="mayus(this)" id="p9dcon2">
+                        </div>
+                    </div>
+                    <p><b style="color: #005CA4;">b)</b> ¿En cuántos grados supera la temperatura máxima de la región Insular a la de la región Interandina?</p>
+                    <p>En <input type="text" style="border: none; border-bottom: 2px dotted black; width: 40px; text-align: center;" maxlength="3" onkeypress="return soloNumeros1(event)" id="p9dcon3"> grados.</p>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question"><input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre10a">&nbsp; <b style="color: #005CA4;">10.</b> <b>Observa</b> la siguiente ruleta y <b>contesta:</b> <b>(1 pt.)</b></p>
+                </div>
+                <div class="text-question">
+                    <div class="col-sm-8">
+                        <p><b style="color: #005CA4;">a)</b> ¿Cuál es el número total de casos?</p>
+                        <input type="text" class="form-control">
+                        <p><b style="color: #005CA4;">b)</b> ¿Cuál de los casos tiene menos probabilidad de salir?</p>
+                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="4" placeholder="Texto"></textarea>
+                        <p><b style="color: #005CA4;">c)</b> Si haces girar una ruleta, ¿puede salir la opción que indica el juguete? ¿Por qué?</p>
+                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="4" placeholder="Texto"></textarea>
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="img/i6_p216_u5a17.jpg" class="img-responsive" alt="">
+                    </div>
+                </div>
+                <div class="row"></div>
+                <br>
+                <!--<p id="trace" class="alert alert-warning display-none"></p>-->
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/export-data.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/numPaginas.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni5act17.js"></script>
+    <script type="text/javascript">
+    var titulos = "evaluacion";
+    $("#n_pagina").html('216');
+    $(".oculta").hide();
+
+    $("#myImg1").click(function() {
+        $(".oculta").hide(1000);
+        $("#myImg").show();
+    });
+    $("#myImg").click(function() {
+        $(".oculta").show(1000);
+        $("#myImg").hide();
+    });
+
+    //Solo permite introducir numeros.
+    function soloNumeros1(e) {
+        var key = window.event ? e.which : e.keyCode;
+        if (key < 48 || key > 57) {
+            e.preventDefault();
+        }
+    }
+
+    function soloNumeros(e) {
+        var key = window.event ? e.which : e.keyCode;
+        if (key < 46 || key > 57) {
+            e.preventDefault();
+        }
+    }
+    </script>
+    <script>
+    LC.init(
+        document.getElementsByClassName('my-drawing')[0], {
+            imageURLPrefix: 'imgcanvas',
+            backgroundColor: 'white'
+
+        });
+    </script>
+</body>
+
+</html>

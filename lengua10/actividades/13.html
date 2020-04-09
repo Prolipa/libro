@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lengua y Literatura 10</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+	<link href="css/Comprendo.css" rel="stylesheet">
+    <script src="js/evaluacion.js"></script>
+    <style>
+    hr {
+        border-color: black;
+        border-width: 2px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin: 3px;
+    }
+    .txt5{
+        font-size: 16px;
+    }
+   .pintarcorrecto{				
+       background-color: #32a75b;						
+    }
+    
+    .pintarincorrecto{						
+	   background-color: #F97591;
+       text-decoration: line-through;						
+	}
+        
+    
+     .correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+        margin: 5px;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+        margin: 5px;
+    }    
+
+   
+    .calif {
+        position: relative;      
+        font-size: 15px;
+    }
+
+    
+
+    .textarea {
+        resize: none;
+        width: 350px;
+        height: 100px;
+    }
+    </style>
+    </head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" onClick="comprobar_calificar_txt()" data-info="Calificar / Comprobar" id="Calificar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="act_actual">1</span> / <span id="act_total">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 46
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Evaluación Sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div class="container col-xs-12 col-md-12 col-lg-12">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-info">
+                                <span class="p_abierta"></span>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Pregunta 1</a>
+                                    </h4>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="row">
+										<div  class="col-md-12 space">
+                       						<span class="text-question"> <span style="color: #ec6608; font-size: 15pt">1.</span> <b>Lee</b> el siguiente fragmento de <i>El enfermo imaginario</i> y <b>explica</b> a qué género pertenece la obra.
+											</span>
+                   						 </div>
+										</div>
+                                        
+                                        <div class="row" style="background-color: #FFFAE4">
+                                        
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            
+                                                <p class="fuente391">ESCENA XI</p>
+                                                
+                                                <p class="fuente391">(Adaptación)</p>
+                                                
+                                                <p class="fuente391">ANTONIA, ARGAN, BERALDO</p>
+                                                
+                                                <p class="fuente">[...]</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA.</span> —Es la verdad... (A BERALDO).</p>
+                                                
+                                                <p class="fuente">¿Queréis que os convenza y os haga ver ahora<br>mismo cómo la señora quiere al señor? <b>(A ARGAN)</b>.</p>
+                                                
+                                                <p class="fuente"><span class="fuentecolorlista">ARGAN</span>. —¿Cómo?</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA</span>. —La señora volverá dentro de un<br>instante, tumbaos ahí, haciéndoos el muerto, y<br>veréis su desolación cuando yo le dé la noticia.</p>
+                                                
+                                                <p class="fuente"><span class="fuentecolorlista">ARGAN.</span> —Muy bien pensado.</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA.</span> —Pero no vayáis a prolongar mucho tiempo<br>su desesperación, porque podría costarle la vida.</p>
+                                                
+                                                <p class="fuente"><span class="fuentecolorlista">ARGAN</span>. —Déjame a mí.</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA</span> (<i>A BERALDO</i>). —Escondeos en<br>ese rincón.</p>
+                                                
+                                                <p class="fuente"><span class="fuentecolorlista">ARGAN.</span> —¿Habrá algún peligro en hacerse el<br>muerto...?</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA</span>. —Ninguno... Tumbaos ahí. (Bajo). Ya<br>veréis cómo le vamos a dar en la cabeza a vuestro<br>hermano... ¡Ya está ahí la señora...!</p>
+                                                
+                                                <p class="fuente391">ESCENA XII</p>
+                                                
+                                                <p class="fuente391">BELISA, ANTONIA, ARGAN y BERALDO</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA</span> (Llorando). —¡Ay, Dios mío, qué desgracia<br>tan grande!</p>
+                                                
+                                                <p class="fuente"><span class="font263">BELISA</span>. —¿Qué es eso, Antonia?</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA</span>. —¡Vuestro esposo ha muerto!</p>
+                                                
+                                                <p class="fuente"><b>BELISA</b>. —¿Mi marido ha muerto?</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA</span>. —Sí. El pobre ya es cadáver.</p>
+                                                
+                                                <p class="fuente"><b>BELISA</b>. —¿Estás segura?</p>
+                                                
+                                            </div>
+                                            
+                                            
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            
+                                                <p class="fuente"><span class="font261">ANTONIA</span>. —¡Y tan segura...! Todavía no conoce<br>nadie el accidente, porque estaba yo sola; ha<br>muerto en mis brazos...</p>
+                                                
+                                                <p class="fuente"><span class="font263">BELISA</span>. —¡Loado sea Dios, y qué carga más pesada<br>se me quita de encima...! Pero ¿a qué viene el<br>afligirse de ese modo?</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA</span>. —Yo creía que había que llorar.</p>
+                                                
+                                                <p class="fuente"><span class="font263">BELISA</span>. —¡No vale la pena, que no es tan gran<br>cosa lo que se ha perdido! ¿Quieres decirme para<br>qué servía este hombre...? Para molestar a todo<br>el mundo con sus lavativas y sus drogas. Siempre<br>sucio, tosiendo, estornudando y moqueando a<br>cada instante; agrio, enojoso, de mal humor y no<br>dejando vivir a nadie ni de día ni de noche...</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA</span>. —¡Vaya una oración fúnebre!</p>
+                                                
+                                                <p class="fuente"><span class="font263">BELISA</span>. —Ahora es preciso que secundes mis<br>planes, que yo te compensaré si me ayudas. Vamos<br>a llevarle a su cama y a ocultar su muerte.<br>Hay dinero y papeles de los que quiero apoderarme,<br>porque creo que es razón que yo los disfrute,<br>habiéndole sacrificado los mejores años de mi vida.</p>
+                                                
+                                                <p class="fuente"><span class="fuentecolorlista">ARGAN</span> (Incorporándose bruscamente). —¡Poco a<br>poco!</p>
+                                                
+                                                <p class="fuente"><span class="font263">BELISA</span> (Llena de espanto). —¡Ah!</p>
+                                                
+                                                <p class="fuente"><span class="fuentecolorlista">ARGAN</span>. —¿Era ésta vuestra manera de amar,<br>señora esposa?</p>
+                                                
+                                                <p class="fuente"><span class="font261">ANTONIA</span>. —¡El difunto está vivo!</p>
+                                                
+                                                <p class="fuente"><span class="fuentecolorlista">ARGAN</span> (A BELISA, que se marcha). —Celebro<br>haber conocido vuestra estimación y escuchado el<br>panegírico que de mí habéis hecho: es una sabia<br>advertencia que me servirá de enseñanza para el<br>porvenir.</p>
+                                                
+                                                <p><cite style="text-align: right">Baptiste Poquelin, Jean (s/f ). “El enfermo de aprensión”. [Versión digital]. Biblioteca virtual universal. Recuperado de https://goo.gl/hDHbQU</cite></p>
+                                                                                                
+                                            </div>
+                                        
+                                        </div>
+                                        
+                                        <div  class="fuente">
+                                            <input type="text" class="form-control" size="108px">
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <span class="p_abierta"></span>
+                                <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Pregunta 2</a>
+                                </h4>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										<div class="row">
+										<div  class="col-md-12 space">
+                       						<span class="text-question"> <span style="color: #ec6608; font-size: 15pt">2.</span><b>Explica</b> una característica del género al que pertenece el fragmento anterior. Ejemplifica tu respuesta a partir del texto.
+											</span>
+                   						 </div>
+										</div>
+										
+                                        
+                                        <div  class="fuente">
+                                            <input type="text" size="108px" class="form-control">
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Pregunta 3</a>
+                              
+                            </h4>
+                                </div>
+                                <div id="collapse3" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										<div class="row">
+										<div  class="col-md-12 space">
+                       						<span class="text-question"> <span style="color: #964091; font-size: 15pt">3.</span> 
+											<b>Relaciona</b> cada uno de los siguientes momentos con la etapa correspondiente de la lectura expresiva.
+											</span>
+                   						 </div>
+										</div>
+										
+										<div class="contenido1">
+					                       <form name="Formulario" id="formulario1" class="text-center" >
+					                       <table id="tabla1" class="table table-responsive table-bordered table-hover" align="center">
+										
+					                           <tbody>
+						                          <tr>
+							                         <td style="background-color: #00A2DC"><div><p class="fuente30">Momento</p></div></td>
+							                         <td style="background-color: #F9B000"><div><p class="fuente30">Etapa</p></div></td>
+						                          </tr>
+						                          <tr>
+							                         <td class="t3"></td>
+							                         <td class="opts3">
+                                                        
+                                                      </td>
+						                          </tr>
+						                          <tr>
+							                         <td class="t3"></td>
+							                         <td class="opts3">
+                                                         <input type="text" class="form-control r3 text-lowercase" style="width: 150px">
+                                                      </td>
+						                          </tr>
+						                          <tr>
+							                         <td class="t3"></td>
+							                         <td class="opts3">
+                                                         <input type="text" class="form-control r3 text-lowercase" style="width: 150px">
+                                                      </td>
+						                          </tr>
+                                                   <tr>
+							                         <td class="t3"></td>
+							                         <td class="opts3">
+                                                         <input type="text" class="form-control r3 text-lowercase" style="width: 150px">
+                                                     </td>
+						                          </tr>
+						                      </tbody>
+					                       </table>
+					                       </form>
+					                   </div>	
+									 </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <span class="p_abierta"></span>
+                                <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Pregunta 4</a>
+                                </h4>
+                                </div>
+                                <div id="collapse4" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										<div class="row">
+										<div  class="col-md-12 space">
+                       						<span class="text-question"> <span style="color: #E5005B; font-size: 15pt">4.</span> A partir del texto original, <b>realiza</b> una paráfrasis mecánica y una paráfrasis constructiva.
+											</span>
+                   						 </div>
+										</div>
+										
+                                        <div>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="background-color: #00B4D5; width: 40%">
+                                                            <p class="fuente30">Texto original</p>
+                                                        </td>
+                                                        <td style="background-color: #7F5CA3">
+                                                            <p class="fuente30">Paráfrasis mecánica</p>
+                                                        </td>
+                                                        <td style="background-color: #ADCE6D">
+                                                            <p class="fuente30">Paráfrasis</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <p class="fuente">¿Alguna vez trabajaste mucho para obtener algo que querías, para descubrir una vez que lo tienes que te sientes vacío? Con mucha frecuencia, al querer ser más populares y ser parte del grupo, perdemos de vista las cosas que son mucho más importantes, como el respeto hacia nosotros mismos, la verdadera amistad y la tranquilidad.</p>
+                                                            
+                                                            <cite style="text-align: right">Covey, Sean (1998). Los 7 hábitos de los adolescentes altamente efectivos, México D.F. : Grijalbo, p. 93.</cite>
+                                                        </td>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <textarea class="fuente form-control" cols="30" rows="10" ></textarea>
+                                                        </td>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <textarea class="fuente form-control" cols="30" rows="10" ></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                                                        	
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Pregunta 5</a>
+                                </h4>
+                                </div>
+                                <div id="collapse5" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										 <div class="row">
+										<div  class="col-md-12 space">
+                       						<span class="text-question"> <span style="color: #009DC5; font-size: 15pt">5.</span> 
+											<b>Elige</b>. ¿Cuál de las siguientes opciones expresa el fundamento de la honestidad académica?
+											</span>
+                   						 </div>
+										</div>
+																			   
+                                        <div>
+                                            <p> <b class="txt5"> a. &nbsp;&nbsp; </b>  <span class="select1_p5"></span> </p>
+                                            <p> <b class="txt5"> b. &nbsp;&nbsp; </b>  <span class="select1_p5"></span> </p>
+                                            <p> <b class="txt5"> c. &nbsp;&nbsp; </b>  <span class="select1_p5"></span> </p>
+                                            <p> <b class="txt5"> d. &nbsp;&nbsp; </b>  <span class="select1_p5"></span> </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <span class="p_abierta"></span>
+                                <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Pregunta 6</a>
+                                </h4>
+                                </div>
+                                <div id="collapse6" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										 <div class="row">
+										<div  class="col-md-12 space">
+                       						<span class="text-question"> <span style="color: #009DC5; font-size: 15pt">6.</span> 
+											<b>Realiza</b> una cita textual con énfasis en el texto de acuerdo con la normativa APA a partir del siguiente texto original.
+											</span>
+                   						 </div>
+										</div>
+										
+                                        <div>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="background-color: #00B4D5; width: 30%">
+                                                            <p class="fuente30">Texto original</p>
+                                                        </td>
+                                                        <td style="background-color: #7F5CA3">
+                                                            <p class="fuente30">Texto citado con énfasis en el texto</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <p class="fuente">¿Cuántas veces nos fijamos metas cuando estábamos de humor, pero luego nos dimos cuenta de que no teníamos la fuerza para cumplirlas? ¿Por qué sucede esto? Porque no habíamos considerado el costo.</p>
+                                                            <cite>Covey, Sean (1998). Los 7 hábitos de los adolescentes altamente efectivos. México D. F. Grijalbo, p. 94.</cite>
+                                                        </td>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <textarea class="fuente form-control" rows="10" ></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+										
+										
+                                        <!--Contenido 6-->
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="panel panel-info">
+                                <span class="p_abierta"></span>
+                                <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">Pregunta 7</a>
+                                </h4>
+                                </div>
+                                <div id="collapse7" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										 <div class="row">
+										<div  class="col-md-12 space">
+                       						<span class="text-question"> <span style="color: #009DC5; font-size: 15pt">7.</span> 
+											<b>Elabora</b> tres ejemplos con oraciones yuxtapuestas. En cada ejemplo, <b>utiliza</b> un signo de puntuación distinto.
+											</span>
+                   						 </div>
+										</div>
+										
+										<div style="margin-left: 20px">
+                                            <textarea class="fuente form-control" ></textarea>
+                                        </div>
+                                                                                
+                                        <!--Contenido 7-->
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="panel panel-info">
+                                <span class="p_abierta"></span>
+                                <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">Pregunta 8</a>
+                                </h4>
+                                </div>
+                                <div id="collapse8" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										 <div class="row">
+										<div  class="col-md-12 space">
+                       						<span class="text-question"> <span style="color: #009DC5; font-size: 15pt">8.</span> 
+											<b>Escribe</b> dos oraciones con complemento indirecto de tal forma que los puedas reemplazar por el pronombre átono <span class="fuente391">les</span> en la primera oración y el pronombre <span class="fuente391">le</span> en la segunda.
+											</span>
+                   						 </div>
+										</div>
+                                                                                
+										<div>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="background-color: #00B4D5">
+                                                            <p class="fuente30">Oración original</p>
+                                                        </td>
+                                                        <td style="background-color: #7F5CA3">
+                                                            <p class="fuente30">Oración con los reemplazos</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <textarea class="fuente form-control" cols="40" rows="5" ></textarea>
+                                                        </td>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <textarea class="fuente form-control" cols="40" rows="5" ></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <textarea class="fuente form-control" cols="40" rows="5" ></textarea>
+                                                        </td>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <textarea class="fuente form-control" cols="40" rows="5" ></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+										
+                                        
+                                        <!--Contenido 8-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <span class="p_abierta"></span>
+                                <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">Pregunta 9</a>
+                                </h4>
+                                </div>
+                                <div id="collapse9" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										 <div class="row">
+										<div  class="col-md-12 space">
+                       						<span class="text-question"> <span style="color: #005ca9; font-size: 15pt">9.</span> 
+											<b>Escribe</b> una oración con complemento directo e indirecto de tal forma que los puedas reemplazar por el pronombre átono <span class="fuente391">los</span> para el complemento directo y <span class="fuente391">se</span> para el indirecto.
+											</span>
+                   						 </div>
+										</div>
+                                        
+                                        <div>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="background-color: #005CA9">
+                                                            <p class="fuente30">Oración original</p>
+                                                        </td>
+                                                        <td style="background-color: #C24F97">
+                                                            <p class="fuente30">Oración con los reemplazos</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <textarea class="fuente form-control" cols="40" rows="5" ></textarea>
+                                                        </td>
+                                                        <td style="border: 2px solid #005CA9">
+                                                            <textarea class="fuente form-control" cols="40" rows="5" ></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+										
+                                        <!--Contenido 9-->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-info">
+                                <span class="p_abierta"></span>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">Pregunta 10</a>
+                              
+                            </h4>
+                                </div>
+                                <div id="collapse10" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										 <div class="row">
+										<div  class="col-md-12 space">
+                       						<span class="text-question"> <span style="color: #005ca9; font-size: 15pt">10.</span> 
+											Explica en qué consisten las variaciones lingüísticas diatópicas.
+											</span>
+                   						 </div>
+										</div>
+                                        
+                                        
+										<div style="margin-left: 20px">
+                                            <textarea class="fuente form-control" cols="40" rows="5" ></textarea>
+                                        </div>
+										
+                                        <!--Contenido 10-->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" class="lblnombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre" id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/export-data.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/evaluacion.js"></script>
+   
+        
+    <script>
+        var titulos="evaluacion";
+        f_titulos();
+        $('.p_abierta').html('<span class="col-lg-1 col-md-2 col-sm-2 col-xs-3"><input type="number" placeholder="0" class="form-control calif"></span> ');
+
+        var totalC=0, total=0, totalFinal=0; //variables de la calificacion
+        var ejer=1,itemsT=0,cont=0,tmp,cor=0,inc=0,calificacion=2,claseAnimada='animate bounceIn';
+       
+        var i, resp_p3=[], resp_p5=[];
+        var contenido_p3;  
+          f_preg_3();
+          f_preg_5();
+
+
+          function f_preg_3(){
+            itemsT +=4; //cantidad de respuestas correctas y multiplicar x la cantidad de ejercicios a realizar                       
+            contenido_p3=[
+                ['Tomar notas de sugerencias e incorporarlas en la siguiente lectura','Después de la lectura'],
+                ['Entonar con mayor expresividad las partes que lo requieran','Durante la lectura'],
+                ['Identificar oraciones para destacarlas con la entonación','Antes de la lectura'],
+                ['Comprender la intencionalidad del texto','Antes de la lectura'],             
+              ];
+            contenido_p3.sort(f_randomico);
+            $(".t3").each(function(index){
+                $(this).html(contenido_p3[index][0]);
+                resp_p3.push(contenido_p3[index][1]);//respuestas
+                //console.log(resp_p3)
+            });
+            $(".opts3").html('<select class="form-control r3"><option>Seleccione...</option><option value="Después de la lectura">Después de la lectura</option><option value="Durante la lectura">Durante la lectura</option><option value="Antes de la lectura">Antes de la lectura</option><option value="Antes de la lectura">Antes de la lectura</option></select>');
+            }
+                
+        function f_preg_5(){ 
+            itemsT+=1;                        
+            var orac_1_p5=['<span class="b0 txt5"> El citar con énfasis en el autor porque nosotros hemos producido el conocimiento y las ideas.</span>','<span class="b0 txt5">El citar con énfasis en el texto porque lo importante es lo que se dice.</span>','<span class="a0 txt5">El reconocer que hemos tomado los conocimientos e ideas de otro.</span>','<span class="b0 txt5">El reconocer que hemos utilizado en trabajos anteriores las ideas nuestras.</span>'];
+            orac_1_p5.sort(f_randomico);
+            $(".select1_p5").each(function(index){
+                $(this).append(orac_1_p5[index]);                
+            });
+            $(".txt5").bind("click",function(){
+                $(this).unbind("click");
+                if($(this).hasClass('a0')){
+                    resp_p5.push('ok');
+                    $(this).addClass("correcto");
+                }else{
+                    resp_p5.push('no');
+                    $(this).addClass("incorrecto");
+                }
+            })
+
+        }
+        $( ".btnCalificar" ).bind( "click", function() { //click en el boton iniciar
+            cont++;
+            $( this).unbind( "click" );
+            AgregaClase(".nota",claseAnimada);
+            QuitaClase(".actividad",claseAnimada);
+            //pregunta 3            
+            $(".r3").each(function(index){
+                tmp = $(this);
+                if($(this).val() == resp_p3[index]){
+                    cor++;
+                    f_ok(tmp);
+                }else{
+                    inc++
+                    f_no(tmp);
+               };
+            });
+            
+            tmp = $(".txt5");
+            for(i=0;i<resp_p5.length;i++){
+                if(resp_p5.length == 1 && resp_p5[0] == 'ok'){
+                   cor++;
+                    f_ok(tmp);
+                }else{
+                    inc++
+                    f_no(tmp);
+               };
+            }
+            totalC = (cor * (calificacion / itemsT)).toFixed(2);//suma de calificacion cerrada
+            $('.calif').each(function(){ //suma de puntajes en respuestas abiertas
+                if( $(this).val()!='' ) {
+                    total+= parseFloat($(this).val());
+                    f_ok( $(this));
+                }else{
+                    inc++;
+                    f_no( $(this));
+                }
+            });
+            totalFinal = parseFloat(total)+parseFloat(totalC);
+            //console.log(total,totalC,totalFinal);
+            if(totalFinal>10){
+                alert("Verifique su puntaje en las respuestas Abiertas, excede el limite de calificación");
+            }else{
+                $("#txtNota").html(totalFinal);
+            }
+
+        });
+
+			      
+        </script>   
+	
+    </body>
+    </html>

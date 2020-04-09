@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/lengu2.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Para mostrar los contenidos de manera secuencial pulsa sobre <span class="glyphicon glyphicon-play help-ico biniciar" aria-hidden="true"></span><br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_4 btnIniciar mytooltip" data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip display-none" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota display-none">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-reflexiono" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-reflexiono">
+                <span class="titulo"><img src="img/icoR.png" alt="">Reflexiono para avanzar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--  <div style="overflow-x:auto;"> -->
+                <!--texto de ayuda de la actividad-->
+                <!--pregunats de la actividad-->
+                <p class="fuente anim"><b>Formen</b> grupos y<b> lean</b> el siguiente texto.<b> Pueden</b> leer varios compañeros, representando cada uno a un personaje.</p>
+                <div class="col-xs-12">
+                    <p class="fuente2 anim">
+                        <font size="6" color="#03acd5"><b>La campana</b>
+                            <br>Juan Cervera</font>
+                    </p>
+                </div>
+                <div class="row anim">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <br>
+                            <img src="img/i1_p214_ani71.jpg" style="max-width: 100%; border-radius: 20px">
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <p class="fuente anim">
+                                <font color="#b42db5"><b>NARRADOR.-</b></font> ¡Qué tiempos aquellos! La ciudad de Taramara tenía una vida muy tranquila. Tan tranquila que se despertaba por la mañana al son de las campanas. Pero aconteció que, como la ciudad era muy<font color="#0166b3"><b> próspera</b></font> y todos eran ricos, no se encontraba campanero para sustituir al pobre Gerardo, hacía dos meses muerto de puro viejo.
+                            </p>
+                            <p class="fuente anim">Entonces se entabló en Taramara un pleito entre los estudiantes y las vendedoras del mercado. Los estudiantes<font color="#0166b3"><b> alegaban</b></font> que a ellos les correspondía tocar las campanas para despertar a la ciudad, porque eran jóvenes y sabían mucho de leyes y de artes. Las vendedoras del mercado decían que a ellas les correspondía, porque tenían que madrugar más que nadie para que tan pronto como despertara la primera ama de casa pudiera ir a comprar, aunque solo fuera chocolate para el desayuno.</p>
+                            <p class="fuente anim">Y así fue como los estudiantes designaron a dos representantes suyos, escogidos entre los más inteligentes, para que se encargaran del caso. Y las vendedoras escogieron a dos<font color="#0166b3"><b> verduleras</b></font> de las más sueltas de lengua y con más habilidad.</p>
+                            <p class="fuente anim">(Ante el ABOGADO. Hablan reposados.)</p>
+                            <p class="fuente anim">
+                                <font color="#02acab"><b>FERNANDO.-</b></font> Señor<font color="#0166b3"><b> letrado,</b></font> necesitamos que defienda nuestra causa. Somos los estudiantes los más indicados para ocuparnos de tocar la campana que despierta a toda la ciudad.
+                            </p>
+                            <p class="fuente anim">
+                                <font color="#f36f39"><b>ABOGADO.-</b></font> O sea.
+                            </p>
+                            <p class="fuente anim"><b>RAMIRO.-</b> O sea que queremos que nos defienda en el pleito ante las vendedoras del mercado, que dicen que han de ser ellas, porque se levantan más temprano.</p>
+                        </div>
+                        <p class="fuente anim">
+                            <font color="#02acab"><b>FERNANDO.-</b></font> Y eso no es cierto. Nosotros nos levantamos antes, porque ellas, por la noche, preparan los puestos del mercado, ¿y cómo se van a levantar tan temprano?
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#f36f39"><b>ABOGADO.-</b></font> O sea.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#02acab"><b>FERNANDO.-</b></font> O sea que nosotros nos levantamos antes que nadie y a nosotros nos corresponde el deber de anunciar a toda la gente el comienzo del día.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#f36f39"><b>ABOGADO.-</b></font> O sea.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#0169c6"><b>RAMIRO.-</b></font> ¿Cómo que «o sea»?
+                        </p>
+                        <p class="fuente anim"><b>ABOGADO.-</b> Quiero decir que si vosotros queréis ser los campaneros-despertadores de la ciudad porque tenéis más ganas de madrugar que nadie.</p>
+                        <p class="fuente anim">
+                            <font color="#02acab"><b>FERNANDO.-</b></font> Bueno, ¿usted qué opina?
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#f36f39"><b>ABOGADO.-</b></font> ¡Ah! Yo no opino. Yo a esas horas duermo.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#0169c6"><b>RAMIRO.-</b></font> ¿O sea que le tenemos que decir la verdad?
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#f36f39"><b>ABOGADO.-</b></font> La verdad, toda la verdad y nada más que la verdad.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#02acab"><b>FERNANDO.-</b></font> Bueno. Pues, la verdad, la verdad es que nosotros decimos que queremos ser campaneros porque nos parece que madrugamos demasiado y lo que pretendemos es ser campanerosdespertadores para dejar dormir un par de horas más a la ciudad... (El ABOGADO sonríe.)
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#0169c6"><b>RAMIRO.-</b></font> ...a la ciudad y a nosotros también.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#f36f39"><b>ABOGADO.-</b></font> Siendo así, defenderé vuestra causa. Pero que no lo sepa nadie. Será algo difícil.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#b42db5"><b>NARRADOR.-</b></font> Y el abogado empezó a<font color="#0169c6"><b> emborronar cuartillas y folios</b></font>, hasta que llenó un montón de volúmenes que constituían los derechos de los estudiantes para ser los únicos despertadores de la ciudad. (Se verá un montón de ellos al lado derecho de la mesa del ABOGADO.)
+                        </p>
+                        <p class="fuente anim">(Ante el mismo ABOGADO. Hablan nerviosamente.)</p>
+                        <p class="fuente anim">
+                            <font color="#915f46"><b>LEOCADIA.-</b></font> Señor abogado, necesitamos que defienda nuestra causa. Somos las representantes de las vendedoras del mercado y creemos que nosotras somos las más indicadas para tocar la campana.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#f36f39"><b>ABOGADO.-</b></font> O sea.
+                        </p>
+                        <p class="fuente anim"><b>GENOVEVA.-</b> O sea que queremos que nos apoye contra los estudiantes, que dicen que han de ser ellos y eso no es posible.</p>
+                        <p class="fuente anim">
+                            <font color="#915f46"><b>LEOCADIA.-</b></font> Porque los estudiantes por la noche andan dando serenatas y cantando por las calles, ¿y cómo van a levantarse tan temprano?
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#f36f39"><b>ABOGADO.-</b></font> O sea.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#915f46"><b>LEOCADIA.-</b></font> O sea que nosotras nos levantamos antes que ellos y a nosotras nos corresponde el importante deber de anunciar a toda la gente la salida del Sol.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#f36f39"><b>ABOGADO.-</b></font> O sea.
+                        </p>
+                        <p class="fuente anim"><b>GENOVEVA.-</b> ¡Vaya con el «o sea»!</p>
+                        <p class="fuente anim">
+                            <font color="#f36f39"><b>ABOGADO.-</b></font> Quiero decir si...
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#915f46"><b>LEOCADIA.-</b></font> Bueno, si el señor abogado no nos traiciona, le diremos que nosotras lo que queremos es dejar dormir a la ciudad un par de horas más, porque ya estamos hartas de levantarnos tan temprano porque la gente nos reclama.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#f36f39"><b>ABOGADO.-</b></font> (Casi atragantado.) Vaya, en realidad, esto puede ser muy difícil de obtener. Que no se entere nadie que yo defiendo vuestra causa.
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#b42db5"><b>NARRADOR.-</b></font> Y el abogado empezó a emborronar otro montón de cuartillas y de folios que se apilaban encima de su mesa. (Se verá un montón de ellos al lado izquierdo de la mesa del ABOGADO.)
+                        </p>
+                        <p class="fuente anim">Y como los días iban pasando y las discusiones aumentaban entre la gente porque los dos bandos querían tener el derecho exclusivo de despertar a la ciudad de Taramara, sucedió que llegó a oídos del rey que en Taramara había disturbios. Y mandó un juez justo, prudente y enérgico que<font color="#0166b4"><b> congregó</b></font> a los representantes de las partes<font color="#0166b4"><b> contendientes</b></font> y...</p>
+                        <p class="fuente anim">(Están gritando y discutiendo los cuatro representantes de los bandos.)</p>
+                        <p class="fuente anim">
+                            <font color="#a50e2e"><b>JUEZ.-</b></font> (Apareciendo) ¡Silencio! ¡Orden y silencio! Estoy aquí para zanjar de una vez esta cuestión de la campana... y haré estricta justicia. (A los estudiantes.) Hablad vosotros...
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#02acab"><b>FERNANDO.-</b></font> Señor juez, nosotros pensamos que nos corresponde a nosotros porque...
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#a50e2e"><b>JUEZ.-</b></font> (Cortando) Basta ya. Callaos. (Gran sorpresa por parte de ellos y alegría por parte de ellas.) Hablad vosotras...
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#6b2f93"><b>LEOCADIA.-</b></font> (Coqueta. Hace una inclinación.) Con permiso. Nosotras creemos...
+                        </p>
+                        <p class="fuente anim">
+                            <font color="#a50e2e"><b>JUEZ.-</b></font> (Cortando) Basta ya. Callaos. (Gran sorpresa por parte de ellas y ellos.) ¿Algo más que alegar?
+                        </p>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <img class="anim" src="img/i1_p216_ani71.jpg" style="max-width: 100%; border-radius: 20px">
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <p class="fuente anim">
+                                <font color="#f36f39"><b>ABOGADO.-</b></font> (Entrando con dos fardos al hombro ante el pasmo del JUEZ.) Yo tenía que decir que estas son las razones de los estudiantes. (Descarga un fardo y lo vacía.)
+                            </p>
+                            <p class="fuente anim">
+                                <font color="#a50e2e"><b>JUEZ.-</b></font> (A los estudiantes) ¿Es vuestro abogado?
+                            </p>
+                            <p class="fuente anim">
+                                <font color="#15a886"><b>FERNANDO</b></font> y<font color="#016abb"><b> RAMIRO</b></font>.- Sí, señoría.
+                            </p>
+                            <p class="fuente anim">
+                                <font color="#6b2f93"><b>LEOCADIA.-</b></font> Mira el<font color="#0f66b3"><b> picapleitos.</b></font>
+                            </p>
+                            <p class="fuente anim">
+                                <font color="#f36f39"><b>ABOGADO.-</b></font> (Descarga el otro fardo y lo vacía.) Y estas las de las vendedoras.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <p class="fuente anim">
+                    <font color="#15a886"><b>FERNANDO</b></font> ¿Eh?
+                </p>
+                <p class="fuente anim">
+                    <font color="#a50e2e"><b>JUEZ.-</b></font> (<font color="#0f66b3"><b>Perplejísimo.</b></font> Piensa. Al final se decide.) Que las junten todas en un montón.
+                </p>
+                <p class="fuente anim">
+                    <font color="#f36f39"><b>ABOGADO.-</b></font> Pero si se mezclan...
+                </p>
+                <p class="fuente anim">
+                    <font color="#a50e2e"><b>JUEZ.-</b></font> Juntadlas y mezcladlas. Y esta es mi sentencia: que despierte a la noble y laboriosa gente de la ciudad de Taramara el primero que se levante.
+                </p>
+                <p class="fuente anim"><b>TODOS.-</b> ¡Oh! ¡Qué sabiduría!</p>
+                <p class="fuente anim">
+                    <font color="#a50e2e"><b>JUEZ.-</b></font> (Satisfecho) Que quede bien claro: el primero que se levante y nadie más.
+                </p>
+                <p class="fuente anim">
+                    <font color="#016abb"><b>RAMIRO.-</b></font> ¿Y qué hacemos con las razones de esos informes?
+                </p>
+                <p class="fuente anim">
+                    <font color="#15a886"><b>GENOVEVA.-</b></font> Eso es, las razones.
+                </p>
+                <p class="fuente anim">
+                    <font color="#a50e2e"><b>JUEZ.-</b></font> Que las quemen.
+                </p>
+                <p class="fuente anim">(Una humarada las envuelve y envuelve el final de la escena.)</p>
+                <p class="fuente anim">
+                    <font color="#b42db5"><b>NARRADOR.-</b></font> Y al día siguiente, cuando todos los habitantes de Taramara dormían plácidamente se despertaron sorprendidos por...
+                </p>
+                <p class="fuente anim">
+                    <font color="#ec1565"><b>CANTO DEL GALLO.-</b></font> Quiquiriquí, quiquiriquí, quiquiriquíííí. Y la gente se asomaba a las ventanas...
+                </p>
+                <p class="fuente anim">(Se abrirá la ventana de un estudiante y luego de una vendedora y aparecerán con el típico camisón y gorro de dormir... Y desperezándose.)</p>
+                <p class="fuente anim">
+                    <font color="#016abb"><b>RAMIRO.-</b></font> ¡Qué fastidio!
+                </p>
+                <p class="fuente anim">
+                    <font color="#15a886"><b>GENOVEVA.-</b></font> ¿Tan temprano?
+                </p>
+            </div>
+            <p class="fuente2 anim"><b>FIN</b></p>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script>
+    $("#n_pagina").html("214"); //impresion de pagina
+    </script>
+</body>
+
+</html>

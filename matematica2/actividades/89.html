@@ -1,0 +1,410 @@
+    <!DOCTYPE HTML>
+    <html>
+
+    <head>
+        <title>Matemática 2</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/icomoon.css" rel="stylesheet">
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+        <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 5px;
+            width: auto;
+            height: 100px
+    
+        }
+        
+        #caja_res, #caja_res1,#caja_res2{
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+        .respuestas{
+                width: 80%;
+                border: none;
+                border-bottom: 1px solid #005ca4;
+            }
+        .c_imagenes{
+            padding: 10px;
+        }
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 140px;
+            height: 30px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 140px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+        .correcto{
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+        
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+        .encierra{
+            border: 1px solid blue;
+            border-radius: 40%;
+            
+        }
+        .respuesta {
+    text-align: center;
+    border: 0;
+    border-top: 2px solid #393939;
+    border-bottom: 1px solid #85BCEB;
+    width: 50px;
+}
+.bordeT {
+    border: 1px #76B82A solid;
+}
+
+
+
+.bordeT2 {
+    border: 1px #76B82A solid;
+    text-align: center;
+}
+
+.paso {
+    background-color: #F9B000;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+}
+.pinta{
+            background: #9B8600;
+            
+        }
+        </style>
+    </head>
+
+    <body>
+        <div id="nota-informativa" class="nota-ayuda">
+            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            <b>Literal c:</b> Completa la tabla de frecuencia y conteo. Para la parte de conteo utiliza la letra <b>L en minúscula</b> de acuerdo al número de elementos. <br>
+            <span id="ayudas"></span>
+        </div>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" >
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span class="notificacion actividad ">
+                                <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                        </span>
+                        <span class="btn notificacion nota">
+                                <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span>/ 10
+                        </span>
+                        <span class="notificacion pagina">
+                                <span class="glyphicon glyphicon-bookmark"></span> Pag 88
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--FIN DE NAVBAR QUE SE AÑADE-->
+        <!--contenedor de la actividad-->
+        <div class="container space" style="margin-top: 30px;">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-preparo" id="activity">
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-preparo">
+                    <span class="titulo"><img src="img/icoPRE.png" alt="">Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+                </div>
+                <div class="panel-body">
+                    <img src="img/practiquemos_juntos.png" class="img-responsive">
+                    <br>
+                    <!--pregunats de la actividad-->
+                        <div class="text-question"><p align="justify"><b style="color: #005DA8;">a) </b><b> Nos organizamos </b> en grupos de 4 o 5 estudiantes.</p>
+                            <div class="row">
+                            <div class="col-sm-6">
+                            <p align="justify"><b style="color: #005DA8;">b) </b><b> Recopilamos </b> los útiles escolares indicados de cada uno de los estudiantes del grupo.</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="img/i1_p88_act89.jpg" class="img-responsive">    
+                            </div>
+                            </div>
+                            
+                        </div>
+                        <div class="actividad88">
+                            <div class="row">
+                            <div class="col-sm-6">
+                                <p align="justify" class="text-question"><input type="text" class="nota-abierta calif" id="nota1_1" ><b style="color: #005DA8;">c) </b><b> Contamos </b> el número de cada elemento y <b>registramos </b> en la tabla de datos.</p>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tr align="center">
+                                            <td style="border:1px solid black; background: #B3D49E; color: black;"><b>Útiles escolares</b></td>
+                                            <td style="border:1px solid black; background: #EEF3D3; color: black;"><b>Conteo</b></td>
+                                            <td style="border:1px solid black; background: #CFE4C0; color: black;"><b>Cantidad</b></td>
+                                        </tr>
+                                        <tr align="center">
+                                            <td style="border:1px solid black;">
+                                                <img src="img/i2_p88_act89.jpg" class="img-responsive">
+                                            </td>
+                                            <td style="border:1px solid black;">
+                                                <input type="text" onkeypress="return soloNumeros2(event)" id="a89tc1"  style=" text-align:center; width:  80px; border:none; border-bottom: 2px dashed black">
+                                            </td>
+                                            <td style="border:1px solid black;">
+                                                <input  onkeypress="return soloNumeros1(event)"  type="text" id="a89dcon1" maxlength="3"  style=" text-align:center; width:  40px; border:none; border-bottom: 2px dashed black">
+                                            </td>
+                                        </tr>
+                                        <tr align="center">
+                                            <td style="border:1px solid black;">
+                                                <img src="img/i3_p88_act89.jpg" class="img-responsive">
+                                            </td>
+                                            <td style="border:1px solid black;">
+                                                <input type="text" onkeypress="return soloNumeros2(event)" id="a89tc2"  style=" text-align:center; width:  80px; border:none; border-bottom: 2px dashed black">
+                                            </td>
+                                            <td style="border:1px solid black;">
+                                                <input  onkeypress="return soloNumeros1(event)"  type="text" id="a89dcon2" maxlength="3"  style=" text-align:center; width:  40px; border:none; border-bottom: 2px dashed black">
+                                            </td>
+                                        </tr>
+                                        <tr align="center">
+                                            <td style="border:1px solid black;">
+                                                <img src="img/i4_p88_act89.jpg" class="img-responsive">
+                                            </td>
+                                            <td style="border:1px solid black;">
+                                                <input type="text" onkeypress="return soloNumeros2(event)" id="a89tc3"  style=" text-align:center; width:  80px; border:none; border-bottom: 2px dashed black">
+                                            </td>
+                                            <td style="border:1px solid black;">
+                                                <input  onkeypress="return soloNumeros1(event)"  type="text" id="a89dcon3" maxlength="3"  style=" text-align:center; width:  40px; border:none; border-bottom: 2px dashed black">
+                                            </td>
+                                        </tr>
+                                        <tr align="center">
+                                            <td style="border:1px solid black;">
+                                                <img src="img/i5_p88_act89.jpg" class="img-responsive">
+                                            </td>
+                                            <td style="border:1px solid black;">
+                                                <input type="text" onkeypress="return soloNumeros2(event)" id="a89tc4"  style=" text-align:center; width:  80px; border:none; border-bottom: 2px dashed black">
+                                            </td>
+                                            <td style="border:1px solid black;">
+                                                <input  onkeypress="return soloNumeros1(event)"  type="text" id="a89dcon4" maxlength="3"  style=" text-align:center; width:  40px; border:none; border-bottom: 2px dashed black">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <p align="justify" class="text-question"><input type="text" class="nota-abierta calif" id="nota1_2" ><b style="color: #005DA8;">d) </b><b> Comparamos </b> los datos entre compañeros de los diferentes grupos y contestamos las preguntas.</p>
+                                
+                                <p align="justify" class="text-question">¿Cuántos lápices hay en total?</p>
+                                <input type="text" class="form-control" onkeypress="return soloNumeros1(event)">
+                                <p align="justify" class="text-question">¿Cuántas cajas de lápices de colores hay más que borradores?</p>
+                                <input type="text" class="form-control" onkeypress="return soloNumeros1(event)">
+                                <p align="justify" class="text-question">¿Cuál es el elemento que menos hay?</p>
+                                <input type="text" class="form-control">
+                            </div>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        
+                        <p id="trace" class="alert alert-warning display-none"></p>    
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+<script src="js/activities.js"></script>
+        
+        <script src="js/highcharts.js"></script>
+        <script src="js/exporting.js"></script>
+        <script src="js/export-data.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad89.js"></script>
+
+        
+        <!---->
+        <script>
+        var titulos = 'aplico'
+        $( ".btnCalificar" ).bind( "click", function() {
+                    CalificacionAbierta();
+                });
+        //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+        //Solo permite introducir numeros.
+        function soloNumeros2(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 108 || key > 108 ) {
+            e.preventDefault();
+          }
+        }
+        </script>
+        
+    </body>
+
+    </html>

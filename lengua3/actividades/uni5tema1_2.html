@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/stylesopa.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.pintarcorrecto {
+
+    background-color: #32a75b;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+
+}
+
+.pintar1 {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.letraAzul {
+    color: #005ca4;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+
+.punteado {
+    border: 0;
+    border-bottom: 1px dotted #000000;
+    text-align: center;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>Pregunta 1</b> Arrastra con el mouse para encontrar la palabra.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-aplico" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico">
+                <span class="titulo"><img src="img/icoE.png" alt="">Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--texto de ayuda de la actividad-->
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <input class="nota-abierta" style="text-align: center;" id="nota1" readonly></input><b style="color: #005da8;">1. </b><b>Encuentra</b> en la sopa de letras palabras relacionadas con las leyendas. <b>Escríbelas</b>. <i><b>(5 pts.)</b></i>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div id="puzzle"></div>
+                        </div>
+                        <div class="col-lg-4">
+                            <br><br>
+                            <input type="text" class="punteado"><br>
+                            <input type="text" class="punteado"><br>
+                            <input type="text" class="punteado"><br>
+                            <input type="text" class="punteado"><br>
+                            <input type="text" class="punteado"><br>
+                            <input type="text" class="punteado"><br>
+                        </div>
+                    </div>
+                    <input class="nota-abierta" style="text-align: center;" id="nota2" readonly></input><b class="letraAzul">2. </b> <b>Lee</b> la descripción de los personajes de algunas leyendas del Ecuador. <b>Indaga y escribe</b> el nombre de la leyenda a la que corresponde.
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td class="act2class" id="act02Txt0" style="width: 50%;">
+                                </td>
+                                <td class="act2class" id="act02Txt1">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="act2class" id="act02Txt2">
+                                </td>
+                                <td class="act2class" id="act02Txt3">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="act2class" id="act02Txt4">
+                                </td>
+                                <td class="act2class" id="act02Txt5">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script type="text/javascript" src="js/wordfind.js"></script>
+    <script type="text/javascript" src="js/wordfindgame.js"></script>
+    <script>
+    $("#n_pagina").html("165"); //impresion de pagina
+    var titulos = 'aplico';
+    f_titulos();
+    var cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        cor = 0,
+        inc = 0,
+        calificacion = 10;
+
+    document.getElementById('nota1').addEventListener('keypress', () => {
+        validNumero(0, 2.5, 1);
+    });
+    document.getElementById('nota1').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1'), 2.5)
+    });
+    /* document.getElementById('nota2').addEventListener('keypress', () => {
+         validNumero(0, 2.5, 1);
+     });
+     document.getElementById('nota2').addEventListener('keyup', () => {
+         validMaxIngreso(document.getElementById('nota2'), 2.5)
+     });
+     document.getElementById('nota3').addEventListener('keypress', () => {
+         validNumero(0, 2.5, 1);
+     });
+     document.getElementById('nota3').addEventListener('keyup', () => {
+         validMaxIngreso(document.getElementById('nota3'), 2.5)
+     });
+     document.getElementById('nota4').addEventListener('keypress', () => {
+         validNumero(0, 2.5, 1);
+     });
+     document.getElementById('nota4').addEventListener('keyup', () => {
+         validMaxIngreso(document.getElementById('nota4'), 2.5)
+     });*/
+
+    ///////////////////////////////////////////////
+    var words = ['NARRACIÓN', 'TRADICIÓN', 'PUEBLOS', 'PERSONAJES', 'FANTASÍA', 'REALISMO'];
+    var gamePuzzle = wordfindgame.create(words, '#puzzle', '#words');
+    $('#solve').click(function() { wordfindgame.solve(gamePuzzle, words); });
+    var puzzle = wordfind.newPuzzle(words, { height: 20, width: 20, fillBlanks: false });
+    wordfind.print(puzzle);
+
+    var nota1 = 5,
+        palabras = 6,
+        sopa = 0;
+
+
+    function pregunta1() {
+        var totalC = (sopa * (nota1 / palabras)).toFixed(2); //suma de calificacion cerrada
+        if (totalC < 0) {
+            totalC = 0;
+            $('#nota1').val(parseFloat(totalC).toFixed(2));
+        } else {
+            $('#nota1').val(parseFloat(totalC).toFixed(2));
+        }
+
+    }
+    //////////////pregunta2//////////////
+    var random2 = [
+        ['<div style="background: #c7ebfc;">La tacona es una mujer joven que transita por las calles y seduce a los hombres cuando hay luna llena. Ellos casi mueren de susto cuando ven su rostro cadavérico.</div> <input class="form-control" id="act2num0" style="text-align:center;border: 2px solid #c7ebfc"></input>'],
+        ['<div style="background: #e6f2d6;">El Tintín es un personaje de la mitología montubia, de estatura mediana, con orejas grandes y puntiagudas. Usa un sombrero de Jipijapa. Enamora a las mujeres.</div> <input class="form-control" id="act2num1" style="text-align:center;border: 2px solid #e6f2d6"></input>'],
+        ['<div style="background: #ffe293;"> Un gallo de metal se enoja por los insultos de un borrachito y cobra vida para vengarse. Una noche baja de la catedral y lo ataca con fuertes picotazos. </div> <input class="form-control" id="act2num2" style="text-align:center;border: 2px solid #ffe293"></input>'],
+        ['<div style="background: #c7ebfc;"> Fue un indígena que hizo un pacto con el diablo, a cambio de su alma, para que le ayudara a terminar la construcción del atrio de la Iglesia de San Francisco. </div> <input class="form-control" id="act2num3" style="text-align:center;border: 2px solid #c7ebfc"></input>'],
+        ['<div style="background: #e6f2d6;"> Una criatura enana, de piel pálida, ojos azules y facciones deformes. Ataca a los hombres y les quita su ropa. </div> <input class="form-control" id="act2num4" style="text-align:center;border: 2px solid #e6f2d6"></input>'],
+        [' <div style="background: #ffe293;"> Bella Aurora, hermosa chica que vivía en la casa 1028. Fue perseguida por un toro negro que acabó con su vida. </div> <input class="form-control" id="act2num5" style="text-align:center;border: 2px solid #ffe293"></input>'],
+    ];
+    var act02Txt = document.getElementsByClassName('act2class');
+    random2.sort(f_randomico);
+    for (i = 0; i < act02Txt.length; i++) {
+        $('#' + act02Txt[i].id).html(random2[i]);
+    }
+
+    function pregunta2() {
+        var respact2 = ['la tacona', 'el tintín', 'el gallo de la catedral', 'cantuña', 'el chuzalongo', 'la casa 1028', ];
+        var cont = 0;
+        for (var i = 0; i < 6; i++) {
+            var res = $('#act2num' + [i] + '').val().toLowerCase();
+            var res2 = $.trim(res)
+            if (respact2[i] == res2) {
+                cont = cont + 1;
+                $('#act2num' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#act2num' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 5) / 6;
+        $('#nota2').val(parseFloat(total).toFixed(2));
+
+    }
+
+
+    function NotaFinal() {
+        pregunta1();
+        pregunta2();
+        var nota1 = document.getElementById('nota1').value;
+        var nota2 = document.getElementById('nota2').value;
+
+        cor = parseFloat(nota1) + parseFloat(nota2);
+        Calculo_nota();
+        $('#bt_comprobar').attr("disabled", true);
+        $('input').attr("disabled", true);
+        $('#txtAlumno').attr("disabled", false);
+
+    }
+    </script>
+</body>
+
+</html>

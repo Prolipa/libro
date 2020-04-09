@@ -1,0 +1,829 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Matemática 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <style>
+    .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            min-width: 150px;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 1px;
+            margin: 5px;
+            width: auto;
+            height: 80px;
+    
+        }
+        .cajas1 {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 1px;
+            margin: 5px;
+            width: auto;
+            height: 80px;
+    
+        }
+        .cajas2 {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 1px;
+            margin: 5px;
+            width: auto;
+            height: 80px;
+            
+        }
+    .tab {
+        margin: 5px auto;
+        border: 1px solid #FAC183;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    .ancho {
+        width: 100px;
+    }
+
+    .mark {
+        width: 80%;
+        height: 150px;
+        border-style: dashed;
+        border-width: 1px;
+        border-radius: 15px;
+        border-color: #2eb8b8;
+        background-color: transparent
+    }
+
+    .img {
+        margin-left: 14px;
+    }
+
+    .heart {
+        padding-right: 10px;
+    }
+
+    .cross {
+        padding-left: 10px;
+    }
+
+    .mark1 {
+        width: 80%;
+        height: 210px;
+        border-style: dashed;
+        border-width: 1px;
+        border-radius: 15px;
+        border-color: #2eb8b8;
+        background-color: transparent
+    }
+
+    .img1 {
+        margin-left: 14px;
+    }
+
+    .heart1 {
+        padding-right: 10px;
+    }
+
+    .cross1 {
+        padding-left: 10px;
+    }
+    .correcto{
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+        #caja_res, #caja_res1,#caja_res2,#caja_res3{
+            padding: 5px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 90px;
+            width: 90px;
+        }
+        #ime1,#ime2,#ime3,#ime4{
+            mix-blend-mode: multiply;
+        }
+        .bg_palabra{
+            border-radius: 8px;
+            border: 1px solid green;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+        .encierra{
+            border: 1px solid orange;
+            border-radius: 40%;
+            
+        }
+        .encierra1{
+            border: 1px solid orange;
+            border-radius: 40%;
+            
+        }
+        .pinta{
+            background: #E5E1D7;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b> Pregunta 1</b> Da click sobre las respuestas que se encuentran en la parte inferior para seleccionar. <b>Pregunta 2</b> Da click sobre las opciones para seleccionar.  <b>Pregunta 3</b> Resuelve los problemas planteados. <b>Pregunta 4</b> Resuelve las operaciones con la propiedad conmutativa. <b>Pregunta 5</b> Resuelve las operaciones combinadas. <b>Pregunta 6</b> Para colorear da click sobre la opción correcta. <b>Pregunta 7</b> Escribe el tipo de ángulo que corresponde según la imagen. <b>Pregunta 8</b> Arratra la imagen según sus características. <b>Pregunta 9</b> Para el conteo utilizar la letra L en minúscula.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="btn notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span>/ 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 90
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container space" style="margin-top: 30px;">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-preparo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-preparo">
+                <span class="titulo"><img src="img/icoPRE.png" alt="">Me preparo para mi evaluación</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  Álgebra y funciones (click aqui)
+                                </a>
+                              </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                        <div class="col-md-12 text-question">
+                                            <table class="table-responsive">
+                                                <td>
+                                                    <div  align="center" style="width: 70px; border-radius: 55px; border: 3px solid blue;"><p id="a94cal1"></p><p>1pt</p></div>     
+                                                </td>
+                                                <td>
+                                                    <p class="space"><strong style="color: blue;">1. </strong><strong> Encierra</strong> las respuestas correctas.</p>        
+                                                </td>
+                                            </table>
+                                            
+                                        </div>
+                                        <div class="col-md-12 text-question" >
+                                            <div class="col-sm-12">
+                                            <p>U = {planetas del sistema solar}</p>
+                                            </div>
+                                            <div class="col-sm-4">H = {Mercurio, Venus, Tierra}</div>
+                                            <div class="col-sm-4">I = {Júpiter, Saturno}</div>
+                                            <div class="col-sm-4">J = {Sol}</div>
+                                            <div class="col-sm-12"><br></div>
+                                            <div class="col-sm-12" id="a93subra1">
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="a94conj1" class="enc1 cc1" ></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span id="a94conj2" class="enc2 cc1" ></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span id="a94conj3" class="enc3 cc1" ></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span id="a94conj4" class="enc4 cc1" ></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span id="a94conj5" class="enc5 cc1" ></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span id="a94conj6" class="enc6 cc1" ></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span id="a94conj7" class="enc7 cc1" ></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-12 text-question">
+                                            <br>
+                                            <table class="table-responsive">
+                                                <td>
+                                                    <div  align="center" style="width: 70px; border-radius: 55px; border: 3px solid blue;"><p  id="a94cal2"></p><p>2pt</p></div>
+                                                </td>
+                                                <td>
+                                                    <p class="space"><strong style="color: blue;">2. </strong><strong> Encierra</strong> la letra cuyos números completan cada sucesión.</p>        
+                                                </td>
+                                            </table>
+                                            
+                                        </div>
+                                        <div class="col-md-12 text-question" >
+                                            <div class="col-sm-6" style="border-right: 2px dashed orange;">
+                                                <p ><span style="color: blue;"> a) </span> <span id="a94suc1"></span></p>
+                                                <span id="a94enc1" class="enc8"><span style="color: blue;">A)</span><span id="a94cs1"></span></span><br>
+                                                <span id="a94enc2" class="enc9"><span style="color: blue;">B)</span><span id="a94cs2"></span></span><br>
+                                                <span id="a94enc3" class="enc10"><span style="color: blue;">C)</span><span id="a94cs3"></span></span><br>
+                                                <span id="a94enc4" class="enc11"><span style="color: blue;">D)</span><span id="a94cs4"></span></span>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p><span style="color: blue;"> b) </span> <span id="a94suc2"></span></p>
+                                                <span id="a94enc11" class="enc12"><span style="color: blue;">A)</span><span id="a94cs11"></span></span><br>
+                                                <span id="a94enc12" class="enc13"><span style="color: blue;">B)</span><span id="a94cs12"></span></span><br>
+                                                <span id="a94enc13" class="enc14"><span style="color: blue;">C)</span><span id="a94cs13"></span></span><br>
+                                                <span id="a94enc14" class="enc15"><span style="color: blue;">D)</span><span id="a94cs14"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-12 text-question">
+                                            <table class="table-responsive">
+                                                <td>
+                                                    <div align="center" style="width: 70px; border-radius: 55px; border: 3px solid blue;"><p  id="a94cal3"></p><p>1pt</p></div>
+                                                </td>
+                                                <td>
+                                                    <p class="space"><strong style="color: blue;">3. </strong><strong> Resuelve:</strong> </p>        
+                                                </td>
+                                            </table>
+                                            
+                                        </div>
+                                        <div class="col-md-12 text-question" >
+                                            <div class="col-sm-6" style="border-right: 2px dashed orange;">
+                                                <p><b style="color: blue;"> a) </b> Gabriela compra para su papelería <span id="a94pr1">2648</span> lápices, <span id="a94pr2">951</span> sacapuntas y <span id="a94pr3">1513</span> reglas.</p>
+                                                <p>¿Cuántos elementos compró en total?</p>
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu1" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu2" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu3" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu4" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu5" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu6" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu7" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td><b> + </b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu8" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu9" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu10" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu11" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                    </tr>
+                                                    <tr align="center" style="border-top: 2px solid black;">
+                                                        <td></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu12" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu13" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu14" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu15" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                    </tr>
+                                                </table>
+                                                <p><b style="color: blue;"> R. </b> Compró <input onkeypress="return soloNumeros1(event)" type="text" id="a94rnu16" style=" text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"> elementos.</p>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p><b style="color: blue;"> b) </b> Don Arturo compró un terreno en $ <span id="a94pr11">2648</span> y después lo vendió en $ <span id="a94pr12">951</span>. ¿Cuánto ganó? </p>
+                                                <div class="col-sm-6">
+                                                    <img class="img-responsive" src="img/i1_p90_act94.jpg" alt="">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p>Datos: </p>
+                                                    <ul><li><input onkeypress="return soloNumeros1(event)" type="text" id="a94rter1" style=" text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"> compra.</li></ul>
+                                                    <ul><li><input onkeypress="return soloNumeros1(event)" type="text" id="a94rter2" style=" text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"> venta.</li></ul>
+                                                    <p>Planteamiento: </p>
+                                                    <table class="table">
+                                                        <tr align="center">
+                                                            <td></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv1" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv2" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv3" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv4" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        </tr>
+                                                        <tr align="center">
+                                                            <td> <b> - </b></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv5" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv6" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv7" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv8" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        </tr>
+                                                        <tr align="center" style="border-top: 2px solid black;">
+                                                            <td></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv9" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv10" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv11" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                            <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv12" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        </tr>
+
+                                                    </table>
+                                                    <p><b style="color: blue;"> R. </b> Ganó $ <input onkeypress="return soloNumeros1(event)" type="text" id="a94rcv13" style=" text-align:center; width:  60px; border:none; border-bottom: 1px dashed black"> elementos.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-12 text-question">
+                                            <table class="table-responsive">
+                                                <td>
+                                                    <div align="center" style="width: 70px; border-radius: 55px; border: 3px solid blue;"><p  id="a94cal4"></p><p>1pt</p></div>
+                                                </td>
+                                                <td>
+                                                    <p class="space"><strong style="color: blue;">4. </strong><strong> Resuelve y comprueba </strong> aplicando la propiedad conmutativa.</p>        
+                                                </td>
+                                            </table>
+                                            
+                                        </div>
+                                        <div class="col-md-12 text-question" align="center" >
+                                            <table class="table-responsive">
+                                                <td>
+                                                    <p align="center" style="background: #C5D3EB; border-radius: 5px;" id="a94prco1"></p>
+                                                    <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94recom1" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"> <b> + </b> <input onkeypress="return soloNumeros1(event)" type="text" id="a94recom2" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"></p>
+                                                    <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94recom3" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"></p>
+                                                </td>
+                                                <td>
+                                                    <b> = </b>
+                                                    <br><br><br><br>
+                                                </td>
+                                                <td>
+                                                    <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94recom4" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"> <b> + ( </b> <input onkeypress="return soloNumeros1(event)" type="text" id="a94recom5" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"> <b> + </b> <input onkeypress="return soloNumeros1(event)" type="text" id="a94recom6" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"> <b> ) </b></p>
+                                                    <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94recom7" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"> <b> + </b> <input onkeypress="return soloNumeros1(event)" type="text" id="a94recom8" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"></p>
+                                                    <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94recom9" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"></p>
+                                                </td>
+                                            </table>
+                                            <p><br></p>
+                                            <div class="col-sm-6">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td></td>
+                                                        <td id="a94prcom1"></td>
+                                                        <td id="a94prcom2"></td>
+                                                        <td id="a94prcom3"></td>
+                                                        <td id="a94prcom4"></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td></td>
+                                                        <td id="a94prcom11"></td>
+                                                        <td id="a94prcom12"></td>
+                                                        <td id="a94prcom13"></td>
+                                                        <td id="a94prcom14"></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td><b> + </b></td>
+                                                        <td id="a94prcom21"></td>
+                                                        <td id="a94prcom22"></td>
+                                                        <td id="a94prcom23"></td>
+                                                        <td id="a94prcom24"></td>
+                                                    </tr>
+                                                    <tr align="center" style="border-top: 2px solid black;">
+                                                        <td></td>
+                                                        <td> <input onkeypress="return soloNumeros1(event)" type="text" id="a94rst1" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td> <input onkeypress="return soloNumeros1(event)" type="text" id="a94rst2" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td> <input onkeypress="return soloNumeros1(event)" type="text" id="a94rst3" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td> <input onkeypress="return soloNumeros1(event)" type="text" id="a94rst4" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td></td>
+                                                        <td ><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst5" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td ><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst6" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td ><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst7" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td ><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst8" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst9" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst10" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst11" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst12" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td><b> + </b></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst13" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst14" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst15" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td><input onkeypress="return soloNumeros1(event)" type="text" id="a94rst16" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                    </tr>
+                                                    <tr align="center" style="border-top: 2px solid black;">
+                                                        <td></td>
+                                                        <td> <input onkeypress="return soloNumeros1(event)" type="text" id="a94rst17" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td> <input onkeypress="return soloNumeros1(event)" type="text" id="a94rst18" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td> <input onkeypress="return soloNumeros1(event)" type="text" id="a94rst19" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                        <td> <input onkeypress="return soloNumeros1(event)" type="text" id="a94rst20" maxlength="1"  style=" text-align:center; width:  20px; border:none; border-bottom: 1px dashed black"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-12 text-question">
+                                            <table class="table-responsive">
+                                                <td>
+                                                    <div align="center" style="width: 70px; border-radius: 55px; border: 3px solid blue;"><p  id="a94cal5"></p><p>1pt</p></div>
+                                                </td>
+                                                <td>
+                                                    <p class="space"><strong style="color: blue;">5. </strong><strong> Completa y resuelve </strong> las siguientes operaciones combinadas:</p>        
+                                                </td>
+                                            </table>
+                                            
+                                        </div>
+                                        <div class="col-md-12 text-question" >
+                                            <div class="col-sm-4" style="border-right: 2px dashed orange;">
+                                                <p align="center"  id="a94opcom1"></p>
+                                                <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94ropcom1" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"> <b> - </b> <input onkeypress="return soloNumeros1(event)" type="text" id="a94ropcom2" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"></p>
+                                                <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94ropcom3" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"></p>
+                                            </div>
+                                            <div class="col-sm-4" style="border-right: 2px dashed orange;">
+                                                <p align="center"  id="a94opcom2"></p>
+                                                <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94ropcom4" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"> <b> + </b> <input onkeypress="return soloNumeros1(event)" type="text" id="a94ropcom5" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"></p>
+                                                <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94ropcom6" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"></p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p align="center"  id="a94opcom3"></p>
+                                                <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94ropcom7" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"> <b> - </b> <input onkeypress="return soloNumeros1(event)" type="text" id="a94ropcom8" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"></p>
+                                                <p align="center"><input onkeypress="return soloNumeros1(event)" type="text" id="a94ropcom9" style=" text-align:center; width:  50px; border:none; border-bottom: 1px dashed black"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-12 text-question">
+                                            <table class="table-responsive">
+                                                <td>
+                                                    <div align="center" style="width: 70px; border-radius: 55px; border: 3px solid blue;"><p id="a94cal6"></p><p>1pt</p></div>
+                                                </td>
+                                                <td>
+                                                    <p class="space"><strong style="color: blue;">6. </strong><strong> Realiza </strong> las operaciones mentalmente y <strong> colorea </strong> la letra que corresponde a la respuesta.</p>        
+                                                </td>
+                                            </table>
+                                            
+                                        </div>
+                                        <div class="col-md-12 text-question" >
+                                            <div class="col-sm-3" style="border-right: 2px dashed orange;">
+                                                <p id="a94opmen1"></p>
+                                                <div class="col-sm-6">
+                                                <p class="pint1" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> A) </b> <span id="a94rpi1"></span></p>
+                                                <p class="pint2" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> B) </b> <span id="a94rpi2"></span></p>
+                                                <p class="pint3" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> C) </b> <span id="a94rpi3"></span></p>
+                                                <p class="pint4" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> D) </b> <span id="a94rpi4"></span></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3" style="border-right: 2px dashed orange;">
+                                                <p id="a94opmen2"></p>
+                                                <div class="col-sm-6">
+                                                <p class="pint5" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> A) </b> <span id="a94rpi11"></span></p>
+                                                <p class="pint6" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> B) </b> <span id="a94rpi12"></span></p>
+                                                <p class="pint7" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> C) </b> <span id="a94rpi13"></span></p>
+                                                <p class="pint8" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> D) </b> <span id="a94rpi14"></span></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3" style="border-right: 2px dashed orange;">
+                                                <p id="a94opmen3"></p>
+                                                <div class="col-sm-6">
+                                                <p class="pint9" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> A) </b> <span id="a94rpi21"></span></p>
+                                                <p class="pint10" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> B) </b> <span id="a94rpi22"></span></p>
+                                                <p class="pint11" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> C) </b> <span id="a94rpi23"></span></p>
+                                                <p class="pint12" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> D) </b> <span id="a94rpi24"></span></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <p id="a94opmen4"></p>
+                                                <div class="col-sm-6">
+                                                <p class="pint13" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> A) </b> <span id="a94rpi31"></span></p>
+                                                <p class="pint14" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> B) </b> <span id="a94rpi32"></span></p>
+                                                <p class="pint15" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> C) </b> <span id="a94rpi33"></span></p>
+                                                <p class="pint16" align="center" style="border-radius: 5px; border: 2px solid #72CEE0;"><b style="color: blue;"> D) </b> <span id="a94rpi34"></span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                  Geometría y medida
+                                </a>
+                              </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                        <div class="col-md-12 text-question">
+                                            <table class="table-responsive">
+                                                <td>
+                                                    <div align="center" style="width: 70px; border-radius: 55px; border: 3px solid blue;"><p  id="a94cal7"></p><p>1pt</p></div>
+                                                </td>
+                                                <td>
+                                                    <p class="space"><strong style="color: blue;">7. </strong><strong> Señala </strong>  los ángulos en los objetos y <strong> escribe </strong> la clase a la que pertenece cada uno.</p>        
+                                                </td>
+                                            </table>
+                                            
+                                        </div>
+                                        <div class="col-md-12 text-question" >
+                                           <div class="col-sm-4" id="a94aob1" align="center">
+                                               
+                                           </div>
+                                           <div class="col-sm-4" id="a94aob2" align="center">
+                                               
+                                           </div>
+                                           <div class="col-sm-4" id="a94aob3" align="center">
+                                               
+                                           </div>
+                                        </div>
+                                    </div>
+                                <div class="col-md-12">
+                                        <div class="col-md-12 text-question">
+                                            <table class="table-responsive">
+                                                <td>
+                                                    <div align="center" style="width: 70px; border-radius: 55px; border: 3px solid blue;"><p  id="a94cal8"></p><p>1pt</p></div>
+                                                </td>
+                                                <td>
+                                                    <p class="space"><strong style="color: blue;">8. </strong><strong> Une </strong>  con líneas la figura y sus características.</p>        
+                                                </td>
+                                            </table>
+                                            
+                                        </div>
+                                        <div class="col-md-12 text-question" >
+                                           <div class="col-sm-4" id="resim" align="center"></div> 
+                                                        
+                                                    <table class="table-responsive">
+                                                    
+                                                    <tr>
+                                                        
+                                                        <td>
+                                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 images" id="caja_res"></div>
+                                                        </td>
+                                                        <td id="imael1">
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 images" id="caja_res1"></div>
+                                                        </td>
+                                                        <td id="imael2">
+                                                            
+                                                        </td>                                                
+                                                    </tr>
+                                                    <tr>
+                                                        
+                                                        <td>
+                                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 images" id="caja_res2"></div>
+                                                        </td>
+                                                        <td id="imael3">
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </table>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Estadística y probabilidad
+                                </a>
+                              </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                        <div class="col-md-12 text-question">
+                                            <table class="table-responsive">
+                                                <td>
+                                                    <div align="center" style="width: 70px; border-radius: 55px; border: 3px solid blue;"><p  id="a94cal9"></p><p>1pt</p></div>
+                                                </td>
+                                                <td>
+                                                    <p class="space"><strong style="color: blue;">9. </strong><strong> Completa </strong> la tabla de datos según se indica.</p>       
+                                                </td>
+                                            </table>
+                                            
+                                        </div>
+                                        <div class="col-md-12 text-question" >
+                                            <div class="col-sm-5">
+                                                <p>Los datos de una encuesta sobre “el jugo preferido” de los compañeros de una clase fueron: <span id="cantip1"> 15 </span> estudiantes prefieren jugo de naranja, <span id="cantip2"> 5 </span> estudiantes prefieren el de mora, <span id="cantip3"> 7 </span> estudiantes prefieren el de guanábana y <span id="cantip4"> 3 </span> prefieren el de durazno.</p>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <div class="table-responsive">
+                                                <table class="table">
+                                                <tr align="center" style="border: 1px solid purple;"><td colspan="3" style="background: #0095DA; border: 1px solid purple;"><b style="color: white;">Tabla de datos</b></td></tr>
+                                                <tr align="center" style="border: 1px solid purple;">
+                                                    <td style="background: #FFDBA3; border: 1px solid purple;">
+                                                        <b>Sabor</b>
+                                                    </td>
+                                                    <td style="background: #97D4C3; border: 1px solid purple;">
+                                                        <b>Conteo</b>
+                                                    </td>
+                                                    <td style="background: #E1D2E6; border: 1px solid purple;">
+                                                        <b>Frecuencia</b>
+                                                    </td>
+                                                </tr>
+                                                <tr align="center" style="border: 1px solid purple;">
+                                                    <td style="background: #FFEECE; border: 1px solid purple;">
+                                                        <b>Naranja</b>
+                                                    </td>
+                                                    <td style="border: 1px solid purple;">
+                                                        <input type="text" onkeypress="return soloNumeros2(event)" id="a94tc1"  style=" text-align:center; width:  120px; border:none; border-bottom: 1px dashed black">
+                                                    </td>
+                                                    <td style="border: 1px solid purple;">
+                                                        <input type="number" id="a94tf1"  style=" text-align:center; width:  120px; border:none; border-bottom: 1px dashed black">
+                                                    </td>
+                                                </tr>
+                                                <tr align="center" style="border: 1px solid purple;">
+                                                    <td style="background: #FFEECE; border: 1px solid purple;">
+                                                        <b>Mora</b>
+                                                    </td>
+                                                    <td style="border: 1px solid purple;">
+                                                        <input type="text" onkeypress="return soloNumeros2(event)" id="a94tc2"  style=" text-align:center; width:  120px; border:none; border-bottom: 1px dashed black">
+                                                    </td>
+                                                    <td style="border: 1px solid purple;">
+                                                        <input type="number"  id="a94tf2"  style=" text-align:center; width:  120px; border:none; border-bottom: 1px dashed black">
+                                                    </td>
+                                                </tr>
+                                                <tr align="center" style="border: 1px solid purple;">
+                                                    <td style="background: #FFEECE; border: 1px solid purple;">
+                                                        <b>Guanábana</b>
+                                                    </td>
+                                                    <td style="border: 1px solid purple;">
+                                                        <input type="text" onkeypress="return soloNumeros2(event)" id="a94tc3"  style=" text-align:center; width:  120px; border:none; border-bottom: 1px dashed black">
+                                                    </td>
+                                                    <td style="border: 1px solid purple;">
+                                                        <input type="number" id="a94tf3"  style=" text-align:center; width:  120px; border:none; border-bottom: 1px dashed black">
+                                                    </td>
+                                                </tr>
+                                                <tr align="center" style="border: 1px solid purple;">
+                                                    <td style="background: #FFEECE; border: 1px solid purple;">
+                                                        <b>Durazno</b>
+                                                    </td>
+                                                    <td style="border: 1px solid purple;">
+                                                        <input type="text" onkeypress="return soloNumeros2(event)" id="a94tc4"  style=" text-align:center; width:  120px; border:none; border-bottom: 1px dashed black">
+                                                    </td>
+                                                    <td style="border: 1px solid purple;">
+                                                        <input type="number" id="a94tf4"  style=" text-align:center; width:  120px; border:none; border-bottom: 1px dashed black">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/highcharts.js"></script>
+        <script src="js/exporting.js"></script>
+        <script src="js/export-data.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad94.js"></script>
+    <!--<script src="js/activities.js"></script>-->
+    <script>
+    var titulos = 'evaluacion'
+    //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+    //Solo permite introducir numeros.
+        function soloNumeros2(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 108 || key > 108 ) {
+            e.preventDefault();
+          }
+        }
+        
+    </script>
+    
+</body>
+
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <style>
+        table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+    .correcto {
+    color: #ffffff;
+    background-color: #00e600;
+    }
+
+    .incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+    }
+
+
+    .subrayar {
+        border-bottom: 2px solid #005ca4;
+    }
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+
+
+    .pintar {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+    }
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 50px;
+    max-width: 100%;
+    margin-left: 1px;
+    width: auto;
+}
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 50px;
+    min-width: 120px;
+    width: auto;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>4. </b> Completa la conjugación con la desinencia correcta, siguiendo el modelo.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <img class="img-responsive" src="img/practico.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota1" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
+                                        <b>1. Une</b> <span class="sobre">2 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>1. Une</b> el prefijo con la palabra y escribe las nuevas palabras correctamente.
+                                        <table class="table" style="text-align: center;">
+                                            <tr>
+                                                <td>extra</td>
+                                                <td>terrestre</td>
+                                                <td><input id="act1num0" class="form-control sinEspacios" style="border: 5px solid #78c7eb;text-align: center;"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>pro</td>
+                                                <td>ALCA</td>
+                                                <td><input id="act1num1" class="form-control sinEspacios" style="border: 5px solid #78c7eb;text-align: center;"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>sub</td>
+                                                <td>gerente</td>
+                                                <td><input id="act1num2" class="form-control sinEspacios" style="border: 5px solid #78c7eb;text-align: center;"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>pos</td>
+                                                <td>Renacimiento</td>
+                                                <td><input id="act1num3" class="form-control sinEspacios" style="border: 5px solid #78c7eb;text-align: center;"></input></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota2" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <b>2. Crea</b> <span class="sobre">2 pts</span>
+                                        </a>
+                                        </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>2. Crea</b> palabras utilizando correctamente los siguientes prefijos.
+                                        <table>
+                                            <tr>
+                                                <td><b style="color: #a863a4;">ex</b> (anterior):</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b style="color: #a863a4;">hiper</b> (superioridad):</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b style="color: #a863a4;">des</b> (privación):</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b style="color: #a863a4;">sobre</b> (exceso):</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b style="color: #a863a4;">super</b> (por encima de):</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b style="color: #a863a4;">circun</b> (alrededor):</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b style="color: #a863a4;">ultra</b> (más allá):</td>
+                                                <td><input class="form-control"></input></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="html2pdf__page-break"></div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota3" class="nota-abierta" style="text-align: center;background: white;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <b>3. Escribe</b> <span class="sobre">2 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>3. Escribe</b> cinco ocupaciones que terminen con el sufijo <b style="color: #009ee4;">-ista</b>.
+                                    <br>
+                                    <table>
+                                        <tr>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control"></td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota4" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                       <b>4. Completa</b> <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>4. Completa</b> la conjugación con la desinencia correcta, siguiendo el modelo.
+                                        <br>
+                                        <table style="text-align: center;" class="table">
+                                            <tr>
+                                                <td colspan="4" style="color: white;background: #953f90;text-align: center;">Saltar</td>
+                                            </tr>
+                                            <tr>
+                                                <td>yo</td>
+                                                <td>salt<b style="color:#953f90;">aba</b></td>
+                                                <td>nosotros</td>
+                                                <td>saltáb<b style="color:#953f90;">amos</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>tú</td>
+                                                <td>salt<input id="act4num0" class="inputfraccciones sinEspacios" style="border:0;border-bottom: 1px dotted #000000;"></input></td>
+                                                <td>ustedes</td>
+                                                <td>salt<input id="act4num1" class="inputfraccciones sinEspacios" style="border:0;border-bottom: 1px dotted #000000;"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td>él</td>
+                                                <td>salt<input id="act4num2" class="inputfraccciones sinEspacios" style="border:0;border-bottom: 1px dotted #000000;"></input></td>
+                                                <td>ellos</td>
+                                                <td>salt<input id="act4num3" class="inputfraccciones sinEspacios" style="border:0;border-bottom: 1px dotted #000000;"></input></td>
+                                            </tr>
+                                        </table>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota5" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                       <b>5. Deduce y completa</b> <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>5. Deduce y completa</b> la regla.
+                                        <br>
+                                        Se escriben con <input class="inputfraccciones sinEspacios" style="border:0;border-bottom: 1px dotted #000000;" id="act5num0"></input> las desinencias de los verbos terminados en <input class="inputfraccciones sinEspacios" style="border:0;border-bottom: 1px dotted #000000;" id="act5num1"></input>, en pretérito imperfecto.
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script type="text/javascript">
+    var titulos = "aplico";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("153");
+    $('.btnGuardar').removeClass('disabled');
+    /*$(document).ready(function() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        //var imageSize = { width: winHeight , height: winHeight };
+        //var watermarkImage = new Image();
+        ///watermarkImage.src = 'img/i1_p170_actpreparo.jpg';
+        //var watermarkImage2 = new Image();
+        //watermarkImage2.src = 'img/i7_p98_act100.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+
+                //watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+
+            });
+
+
+
+    });*/
+    $('.enc').click(function() {
+
+        if ($(this).hasClass('pintar')) {
+            $(this).removeClass('pintar')
+        } else {
+            $(this).addClass('pintar')
+        }
+    })
+
+
+    document.getElementById('nota2').addEventListener('keypress', () => {
+        validNumero(0, 2, 1);
+    });
+    document.getElementById('nota2').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota2'), 2)
+    });
+    document.getElementById('nota3').addEventListener('keypress', () => {
+        validNumero(0, 2, 1);
+    });
+    document.getElementById('nota3').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota3'), 2)
+    });
+
+
+    function pregunta1() {
+        var respact2 = ['extraterrestre', 'pro-alca', 'subgerente', 'pos-renacimiento', ];
+        var cont = 0;
+        for (var i = 0; i < 4; i++) {
+            var res = $('#act1num' + [i] + '').val().toLowerCase();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#act1num' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#act1num' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 2) / 4;
+        $('#nota1').val(parseFloat(total).toFixed(2));
+    }
+    /////////////pregunta4///////////////////////
+
+    function pregunta4() {
+        var respact2 = ['abas', 'aban', 'aba', 'aban', ];
+        var cont = 0;
+        for (var i = 0; i < 4; i++) {
+            var res = $('#act4num' + [i] + '').val().toLowerCase();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#act4num' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#act4num' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 2) / 4;
+        $('#nota4').val(parseFloat(total).toFixed(2));
+    }
+
+    //////////////////pregunta5///////////////////////////
+    function pregunta5() {
+        var respact2 = ['b', 'ar', ];
+        var cont = 0;
+        for (var i = 0; i < 2; i++) {
+            var res = $('#act5num' + [i] + '').val().toLowerCase();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#act5num' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#act5num' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 2) / 2;
+        $('#nota5').val(parseFloat(total).toFixed(2));
+    }
+    ////////////////////
+    function NotaFinal() {
+        var nota1 = document.getElementById('nota1').value;
+        var nota2 = document.getElementById('nota2').value;
+        var nota3 = document.getElementById('nota3').value;
+        var nota4 = document.getElementById('nota4').value;
+        var nota5 = document.getElementById('nota5').value;
+
+
+        if ((nota2 == "") || (nota3 == "")) {
+            alert("Debe ingresar la calificación de la pregunta 2 o 3.")
+        } else {
+            pregunta1();
+            pregunta4();
+            pregunta5();
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var nota5 = document.getElementById('nota5').value;
+
+            var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4) + parseFloat(nota5);
+            $('#txtNota').html(parseFloat(total).toFixed(2));
+            document.getElementById('bt_comprobar').disabled = true;
+            $('input').attr("disabled", true);
+            $('textarea').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+        }
+    }
+    </script>
+</body>
+
+</html>

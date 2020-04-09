@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LENGUA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.cajas {
+    min-width: 100px;
+        min-height: 60px;
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 5px;
+        width: auto;
+}
+.bg_palabra{
+            background-color: #F9E8B2;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+.cajas1 {
+
+    border: 1px #009277 solid;
+}
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+.encierra{
+            border: 1px solid #9B8600;
+            border-radius: 30%;
+            
+        }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1:</b> Da click sobre el verso para encerrar.
+        <br>
+        <b>Pregunta 2:</b> Desplaza la intención para cada estrofa.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" >
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><b style="color:#005CA9">1.</b> <b>Observa </b> la estructura del siguiente chigualo y <b>encierra </b> el estribillo.</span>
+                </div>
+                <div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr align="center">
+                                <td></td>
+                                <td>
+                                    <div class="enc1">
+                                        <p>Pajarito verde<br>color de limón,<br>ya viene el Niñito<br>de mi corazón.</p>
+                                    </div>
+                                </td>
+                                <td rowspan="2">
+                                    <img src="img/i1_p52_act66.jpg" class="img-responsive" style="width: 30%;min-width: 90px;" alt="">
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <img src="img/i2_p52_act66.jpg" class="img-responsive" style="width: 80%; min-width: 180px;">    
+                                </td>
+                                <td>
+                                    <div class="enc2" style="width: 190px;">
+                                        <div style="background: #FADEE0; border-radius: 10px 0px 10px 0px; width: 150px;">
+                                        <p>Buenas noches, Niño,<br>noches le estoy dando,<br>con estos versitos,<br>le estoy saludando.</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr align="center">
+                                <td></td>
+                                <td>
+                                    <div class="enc3">
+                                        <p>Pajarito verde<br>color de limón,<br>ya viene el Niñito<br>de mi corazón.</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="enc4" style="width: 120px;">
+                                        <p>Pajarito verde<br>color de limón,<br>ya viene el Niñito<br>de mi corazón.</p>
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <img src="img/i3_p52_act66.jpg" class="img-responsive" style="width: 80%; min-width: 180px;">    
+                                </td>
+                                <td>
+                                    <div class="enc5">
+                                        <p><span style="background: #CAE4CE; border-radius: 10px 0px 10px 0px;">El</span> <span style="background: #FEDBBA; border-radius: 10px 0px 10px 0px;">Ni</span><span style="background: #E4C2DD; border-radius: 10px 0px 10px 0px;">ño</span> <span style="background: #FADEE0; border-radius: 10px 0px 10px 0px;">me</span> <span style="background: #CAB8D9; border-radius: 10px 0px 10px 0px;">mi</span><span style="background: #BEC8E5; border-radius: 10px 0px 10px 0px;">ra.</span><br>me vuelve a mirar<br>como que me dice<br>que vuelva a cantar.</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="enc6" style="width: 120px;">
+                                        <p>En este pesebre<br>hay mucho que ver,<br>hasta la hormiguita<br>aprendiendo a leer.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td></td>
+                                <td>
+                                    <div class="enc7">
+                                        <p>Pajarito verde<br>color de limón,<br>ya viene el Niñito<br>de mi corazón.</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="enc8" style="width: 120px;">
+                                        <p>Pajarito verde<br>color de limón,<br>ya viene el Niñito<br>de mi corazón.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <img src="img/i4_p52_act66.jpg" class="img-responsive" style="width: 80%; min-width: 180px;">    
+                                </td>
+                                <td>
+                                    <div class="enc9">
+                                        <p>Aquí nadie ha visto<br>lo que yo estoy vi<span style="background: #FEDBBA; border-radius: 10px 0px 10px 0px;">endo:</span><br>que el Niño en su cuna<br>ya se está durmi<span style="background: #FEDBBA; border-radius: 10px 0px 10px 0px;">endo.</span></p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="enc10" style="width: 120px;">
+                                        <p>Ya llegó el Niñito<br>en su lindo barco<br>con los angelitos,<br>vestido de blanco.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr align="center">
+                                <td></td>
+                                <td>
+                                    <div >
+                                        
+                                    </div>
+                                </td>
+                                <td>
+                                    <div >
+                                        <h6>Puga, Consuelo (2012). La fiesta navideña montubia,<br>Picoazá 2010 [Tesis magistral inédita].<br>Universidad de Cuenca/Pontificia Universidad<br>Católica del Ecuador, pp. 31-64.</h6>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="text-question">
+                    <span><b style="color:#005CA9">2.</b> <b>Relaciona </b> cada estrofa con su intención. </span>
+                </div>
+                <div>
+                    <img src="img/i5_p52_act66.jpg" class="img-responsive" alt="">
+                    <div class="row ">
+                                <div class="col-xs-12 textos"></div>                          
+                            </div>
+                            <div class="clear"><br> </div>
+                            <div class="row  ">
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                </div>
+                                <table class="table contenidos">
+                                
+                                </table>
+                            </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    
+    <script type="text/javascript">
+    var titulos = "reflexiono";
+
+    $("#txtNota").html("0");
+    $("#n_pagina").html("52");
+    var ejer=1,itemsT=10,cont=0,tmp,cor=0,inc=0,calificacion=10,claseAnimada='animate bounceIn';
+    var resp=[],i,resp1=[];
+    for (var i =1; i < 11; i++) {
+  $('.enc'+i).click(function(){
+
+            if ($(this).hasClass('encierra')) {
+                $(this).removeClass('encierra')
+                
+
+            }else{
+                $(this).addClass('encierra')
+                
+            }
+
+        })  
+}
+    f_iniciar();
+    function f_iniciar(){
+        var pal1=['<span class="bg_palabra c1">Responder  a otra estrofa</span>','<span class="bg_palabra c2">Expresar  picardía</span>','<span class="bg_palabra c3">Invitación  al juego</span>','<span class="bg_palabra c4">Relatar la vida  cotidiana</span>'];
+        var txt1 = ['<tr><td><div class="cajas imagen c4" id="caja_img1"></div></td><td><div class="col-lg-6 col-md-6 col-sm-6 col-xs-7 cajas texto" id="caja_txt1">Yo tenía un chanchito<br> para el Niño Dios,<br> y vino la peste<br> y se me murió.<br><h6>María de Párraga</h6></div></td></tr>',
+            '<tr><td><div class="cajas imagen c1" id="caja_img2"></div></td><td><div class="col-lg-6 col-md-6 col-sm-6 col-xs-7 cajas texto" id="caja_txt2">Mentira, Niñito,<br> no se deje creer,<br> que lo vio gordito<br> y lo sacó a vender.<br><h6>María de Párraga</h6></div></td></tr>',
+            '<tr><td><div class="cajas imagen c2" id="caja_img3"></div></td><td><div class="col-lg-6 col-md-6 col-sm-6 col-xs-7 cajas texto" id="caja_txt3">Yo con mi Niñito<br> tengo un interés,<br> que es la pastora<br> que tiene a sus pies.<br><h6>Dumas Mora</h6></div></td></tr>',
+            '<tr><td><div class="cajas imagen c3" id="caja_img4"></div></td><td><div class="col-lg-6 col-md-6 col-sm-6 col-xs-7 cajas texto" id="caja_txt4">Niñito bonito,<br> quítese el ajuar,<br> después de este<br>  canto, vamos a jugar.<br><h6> Cantos Río Caña</h6></div></td></tr>'];
+                    pal1.sort(f_randomico);
+                    txt1.sort(f_randomico);
+                    $(".textos").append(pal1);
+                    $(".contenidos").append(txt1);
+                    $(".bg_palabra").css('cursor','move');
+                    $(".bg_palabra").draggable({ //arrastramos
+                        revert: "invalid",
+                        zIndex:5,
+                        containment: ".actividad17",
+                        scroll: false,                   
+                    });
+                    $(".imagen").droppable({
+                        drop: function(e, ui) {
+                            //v_idsp5.push(ui.draggable.attr("id").substr(3));//obtenemos el id del arrastre
+                            //r_idsp5.push($(this).attr("id").substr(4)); //obtenemos el id del destino
+                            for(i=1;i<5;i++){ //4 elementos
+                                var nn = 'c'+i; //obtenemos la clase
+                                if($(ui.draggable).hasClass(nn)){ //comparamos la clase del arrastre
+                                    if($(this).hasClass(nn)){ //con la clase del destino q tienen en mismo nombre
+                                        resp.push('ok');
+                                        resp1.push($(this).attr("id"));
+                                    }else{
+                                        resp.push('no');
+                                        resp1.push($(this).attr("id"));
+                                    }
+                                }
+                            }
+                            $(ui.draggable).removeClass("bg_palabra");//quitamos clase de background
+                            //console.log(resp); //respuestas
+                            ui.draggable.attr("style", "");
+                            $(this).append(ui.draggable);
+                        }
+                    });
+                     $( ".btnCalificar" ).bind( "click", function() { //click en el boton iniciar
+                        cont++;
+                        $( this).unbind( "click" );
+                        AgregaClase(".nota",claseAnimada);
+                        QuitaClase(".actividad",claseAnimada);
+                        temp = $(".imagen");
+                        var a66cont2=0;
+                        for(i=0;i<resp.length;i++){
+                            if(resp[i]=='ok'){
+                                a66cont2++;
+                                f_ok($('#'+resp1[i]));
+                            }else{
+                                a66cont2++;
+                                f_no($('#'+resp1[i]));
+                            }
+                        }
+      var result2=0;
+      result2=parseFloat((a66cont2 * 5)/4);
+      cor=cor + result2;
+      inc=inc+(5 - result2)
+                        var a66con1=$('.enc1').hasClass('encierra');
+      var a66con3=$('.enc3').hasClass('encierra');
+      var a66con4=$('.enc4').hasClass('encierra');
+      var a66con5=$('.enc7').hasClass('encierra');
+      var a66con6=$('.enc8').hasClass('encierra');
+      var a66con7=$('.enc2').hasClass('encierra');
+      var a66con8=$('.enc5').hasClass('encierra');
+      var a66con9=$('.enc6').hasClass('encierra');
+      var a66con10=$('.enc9').hasClass('encierra');
+      var a66con11=$('.enc10').hasClass('encierra');
+      var a66con2=$('.encierra').length;
+      var a66cont1=0;
+      if (a66con2>'0') {
+        if (a66con1) {
+          a66cont1++;
+          f_ok($('.enc1'));
+        } 
+        if (a66con3) {
+          a66cont1++;
+          f_ok($('.enc3'));
+        }
+        if (a66con4) {
+          a66cont1++;
+          f_ok($('.enc4'));
+        }
+        if (a66con5) {
+          a66cont1++;
+          f_ok($('.enc7'));
+        }
+        if (a66con6) {
+          a66cont1++;
+          f_ok($('.enc8'));
+        }
+        if (a66con7) {
+          a66cont1--;
+          f_no($('.enc2'));
+        }
+        if (a66con8) {
+          a66cont1--;
+          f_no($('.enc5'));
+        }
+        if (a66con9) {
+          a66cont1--;
+          f_no($('.enc6'));
+        }
+        if (a66con10) {
+          a66cont1--;
+          f_no($('.enc9'));
+        }
+        if (a66con11) {
+          a66cont1--;
+          f_no($('.enc10'));
+        }
+      }else{
+        a66cont1;
+        f_no($('.enc1'));
+        f_no($('.enc2'));
+        f_no($('.enc3'));
+        f_no($('.enc4'));
+        f_no($('.enc5'));
+        f_no($('.enc6'));
+        f_no($('.enc7'));
+        f_no($('.enc8'));
+        f_no($('.enc9'));
+        f_no($('.enc10'));
+      }
+      var result1=0;
+      result1=(a66cont1*5)/5;
+      cor=cor + result1;
+      inc=inc+(5 - result1);
+            Calculo_nota();
+        });
+    }
+    </script>
+</body>
+
+</html>

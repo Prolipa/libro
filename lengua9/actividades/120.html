@@ -1,0 +1,1198 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <div>
+        <title>Lengua y Literatura 9</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/colorPick.min.css" rel="stylesheet">
+        <link href="css/paintToolBar.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <style>
+            table td {
+            padding: 5px;
+        }
+
+        .question {
+            padding: 15px;
+            border-radius: 20px;
+        }
+
+        .answer {
+            margin-left: 25px;
+            margin-right: 25px;
+            padding-top: 5px;
+            padding-bottom: 18px;
+        }
+        .colorear{
+           background:  #008FFF;
+           border-radius:10px 10px 10px 10px;
+           color: white;
+        }
+
+        .sobre {
+            padding: 4px;
+            border-style: none;
+            border-width: 2px;
+            border-radius: 15%;
+            border-left-style: solid;
+            border-right-style: solid;
+            border-color: #1a75ff;
+            color: #1a75ff;
+        }
+
+        .cajas {
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 5px;
+            text-align: center;
+            width: auto;
+        }
+        .correcto {
+        color: #ffffff;
+        background-color: #00e600;
+        }
+
+        .incorrecto {
+        color: #ffffff;
+        background-color: #ff6666;
+        }
+
+
+        .subrayar {
+            border-bottom: 2px solid #005ca4;
+        }
+
+        .vacio {}
+
+        .bordeCaja {
+            border: 1px #005CA9 solid;
+        }
+
+        .bordeCaja2 {
+            border: 1px #283583 solid;
+        }
+
+
+        .encierra {
+            background: rgba(255, 102, 0, 0.8);
+            color: #fff;
+            padding: 2px;
+            border-radius: 15px;
+        }
+
+        .encierra2 {
+            background: #FDE1C6;
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+        .imagen64 {
+            background-image: url('img/i1_p44_act64.png');
+            width: 990px;
+            height: 367px;
+            display: flex;
+        }
+
+        .bordeTabla {
+            border: 1px #F7AB59 solid;
+        }
+
+
+        .pintar {
+
+        border: 5px solid #008FFF;
+        border-radius: 10px 10px 10px 10px;
+        }
+        .inputfraccciones {
+        text-align: center;
+        border: 1px solid #D3D3D3;
+        width: 40px;
+        }
+        .c_origen {
+        border: 1px solid #009BDB;
+        border-radius: 10px;
+        min-height: 50px;
+        max-width: 100%;
+        margin-left: 1px;
+        width: auto;
+        }
+
+        .c_destinos2 {
+        padding: 5px;
+        border: 1px solid #CCAE69;
+        border-radius: 10px;
+        min-height: 50px;
+        min-width: 120px;
+        width: auto;
+        }
+
+        .bg_palabra {
+        background-color: #F9E8B2;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 8px;
+        text-align: center;
+        font-size: 20px;
+        display: inline-block;
+        }
+        </style>
+    </div>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>Pregunta 3. </b> Hacer click en el cuadro correcto para poder pintar.
+        <br>
+        <b>Pregunta 6. </b> Hacer click en la palabra para subrayar y seleccionar la respuesta correcta.
+        <br>
+        <b>Pregunta 10. </b> Hacer click en la palabra para subrayar.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <img class="img-responsive" src="img/literatura.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota1" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
+                                        <b>1. Lee</b> <span class="sobre">2 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>1. Lee</b> el siguiente poema de José de Espronceda. <b>Examina</b> su estructura y <b>completa</b> la matriz.
+                                        <img src="img/i1_p174_uni4Sumativa.jpg" alt="" class="img-responsive">
+                                        <br>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <tr style="background: #ffe7d5;">
+                                                    <td>Estrófico o monosestrófico</td>
+                                                    <td>N.° de estrofas</td>
+                                                    <td>Poema simétrico o asimétrico</td>
+                                                    <td>Isométrico o heterométrico</td>
+                                                    <td>¿Octavas u octavillas?</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <select id="sel0">
+                                                            <option>---seleccione---</option>
+                                                            <option>Estrófico</option>
+                                                            <option>11</option>
+                                                            <option>asimétrico</option>
+                                                            <option>heterométrico</option>
+                                                            <option>Estrófico</option>
+                                                            <option>cuartetas</option>
+                                                            <option>Arte menor</option>
+                                                            <option>Con estribillo</option>
+                                                            <option>Octosílabos y tetrasílabos</option>
+                                                            <option>octosílabos</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><select id="sel1">
+                                                            <option>---seleccione---</option>
+                                                            <option>Estrófico</option>
+                                                            <option>11</option>
+                                                            <option>asimétrico</option>
+                                                            <option>heterométrico</option>
+                                                            <option>Estrófico</option>
+                                                            <option>cuartetas</option>
+                                                            <option>Arte menor</option>
+                                                            <option>Con estribillo</option>
+                                                            <option>Octosílabos y tetrasílabos</option>
+                                                            <option>octosílabos</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><select id="sel2">
+                                                            <option>---seleccione---</option>
+                                                            <option>Estrófico</option>
+                                                            <option>11</option>
+                                                            <option>asimétrico</option>
+                                                            <option>heterométrico</option>
+                                                            <option>Estrófico</option>
+                                                            <option>cuartetas</option>
+                                                            <option>Arte menor</option>
+                                                            <option>Con estribillo</option>
+                                                            <option>Octosílabos y tetrasílabos</option>
+                                                            <option>octosílabos</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><select id="sel3">
+                                                            <option>---seleccione---</option>
+                                                            <option>Estrófico</option>
+                                                            <option>11</option>
+                                                            <option>asimétrico</option>
+                                                            <option>heterométrico</option>
+                                                            <option>Estrófico</option>
+                                                            <option>cuartetas</option>
+                                                            <option>Arte menor</option>
+                                                            <option>Con estribillo</option>
+                                                            <option>Octosílabos y tetrasílabos</option>
+                                                            <option>octosílabos</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><select id="sel4">
+                                                            <option>---seleccione---</option>
+                                                            <option>Estrófico</option>
+                                                            <option>11</option>
+                                                            <option>asimétrico</option>
+                                                            <option>heterométrico</option>
+                                                            <option>Estrófico</option>
+                                                            <option>cuartetas</option>
+                                                            <option>Arte menor</option>
+                                                            <option>Con estribillo</option>
+                                                            <option>Octosílabos y tetrasílabos</option>
+                                                            <option>octosílabos</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr style="background: #e8f4ef;">
+                                                    <td>Cuartetas o redondillas</td>
+                                                    <td>Los sextetos son de arte mayor o menor</td>
+                                                    <td>Con estribillo o sin estribillo</td>
+                                                    <td>Sílabas métricas en las estrofas de ocho versos</td>
+                                                    <td>Sílabas métricas de las estrofas cuatro versos</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><select id="sel5">
+                                                            <option>---seleccione---</option>
+                                                            <option>Estrófico</option>
+                                                            <option>11</option>
+                                                            <option>asimétrico</option>
+                                                            <option>heterométrico</option>
+                                                            <option>Estrófico</option>
+                                                            <option>cuartetas</option>
+                                                            <option>Arte menor</option>
+                                                            <option>Con estribillo</option>
+                                                            <option>Octosílabos y tetrasílabos</option>
+                                                            <option>octosílabos</option>
+                                                        </select></td>
+                                                    <td><select id="sel6">
+                                                            <option>---seleccione---</option>
+                                                            <option>Estrófico</option>
+                                                            <option>11</option>
+                                                            <option>asimétrico</option>
+                                                            <option>heterométrico</option>
+                                                            <option>Estrófico</option>
+                                                            <option>cuartetas</option>
+                                                            <option>Arte menor</option>
+                                                            <option>Con estribillo</option>
+                                                            <option>Octosílabos y tetrasílabos</option>
+                                                            <option>octosílabos</option>
+                                                        </select></td>
+                                                    <td><select id="sel7">
+                                                            <option>---seleccione---</option>
+                                                            <option>Estrófico</option>
+                                                            <option>11</option>
+                                                            <option>asimétrico</option>
+                                                            <option>heterométrico</option>
+                                                            <option>Estrófico</option>
+                                                            <option>cuartetas</option>
+                                                            <option>Arte menor</option>
+                                                            <option>Con estribillo</option>
+                                                            <option>Octosílabos y tetrasílabos</option>
+                                                            <option>octosílabos</option>
+                                                        </select></td>
+                                                    <td><select id="sel8">
+                                                            <option>---seleccione---</option>
+                                                            <option>Estrófico</option>
+                                                            <option>11</option>
+                                                            <option>asimétrico</option>
+                                                            <option>heterométrico</option>
+                                                            <option>Estrófico</option>
+                                                            <option>cuartetas</option>
+                                                            <option>Arte menor</option>
+                                                            <option>Con estribillo</option>
+                                                            <option>Octosílabos y tetrasílabos</option>
+                                                            <option>octosílabos</option>
+                                                        </select></td>
+                                                    <td><select id="sel9">
+                                                            <option>---seleccione---</option>
+                                                            <option>Estrófico</option>
+                                                            <option>11</option>
+                                                            <option>asimétrico</option>
+                                                            <option>heterométrico</option>
+                                                            <option>Estrófico</option>
+                                                            <option>cuartetas</option>
+                                                            <option>Arte menor</option>
+                                                            <option>Con estribillo</option>
+                                                            <option>Octosílabos y tetrasílabos</option>
+                                                            <option>octosílabos</option>
+                                                        </select></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/comunicacion.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota2" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <b>2. Coloca</b> <span class="sobre">0.5 pts</span>
+                                        </a>
+                                        </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <div class="row">
+                                            <b>2. Coloca</b> en la tabla cada una de las siguientes preguntas de una entrevista, de acuerdo a tu tipo.
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    ¿Qué le dirías al presidente de la República? <br>
+                                                    ¿Cuántos años tienes?</div>
+                                                <div class="col-lg-6">
+                                                    ¿Cómo te fue en el colegio el día de hoy?<br>
+                                                    ¿Prefieres pizza o ensalada? ¿Por qué?<br>
+                                                </div>
+                                            </div>
+                                            <table>
+                                                <tr>
+                                                    <td>Tipo de pregunta</td>
+                                                    <td>Ejemplo</td>
+                                                </tr>
+                                                <tr class="act2class" id="act02Txt0">
+                                                </tr>
+                                                <tr class="act2class" id="act02Txt1">
+                                                </tr>
+                                                <tr class="act2class" id="act02Txt2">
+                                                </tr>
+                                                <tr class="act2class" id="act02Txt3">
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota3" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <b>3. Escoge</b> <span class="sobre">0.5 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>3. Escoge</b> la expresión que complete la idea de forma correcta:
+                                    <br>
+                                    Hay que preparar con anticipación las preguntas de la entrevista porque...
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-3 act3class" id="act03Txt0" style="border: 2px solid #005ca4;border-radius: 10px 10px 10px 10px;">
+                                        </div>
+                                        <div class="col-lg-3 act3class" id="act03Txt1" style="border: 2px solid #005ca4;border-radius: 10px 10px 10px 10px;">
+                                        </div>
+                                        <div class="col-lg-3 act3class" id="act03Txt2" style="border: 2px solid #005ca4;border-radius: 10px 10px 10px 10px;">
+                                        </div>
+                                        <div class="col-lg-3 act3class" id="act03Txt3" style="border: 2px solid #005ca4;border-radius: 10px 10px 10px 10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/lectura.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota4" class="nota-abierta" style="background: white;text-align: center;" hidden>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                       <b>4. Lee</b>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>4. Lee</b> los siguientes textos:
+                                        <br><br>
+                                        <img class="img-responsive" src="img/i2_p174_uni4Sumativa.jpg"></img>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota5" class="nota-abierta" style="background: white;text-align: center;">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                       <b>5. Establece</b> <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>5. Establece</b> en el siguiente cuadro las semejanzas y diferencias entre los dos textos.
+                                        <br>
+                                        <table class="table">
+                                            <tr>
+                                                <td></td>
+                                                <td style="background: #f8a8af; border-radius: 10px 10px 10px 10px;">Texto 1</td>
+                                                <td></td>
+                                                <td style="background: #f8a8af; border-radius: 10px 10px 10px 10px;">Texto 2</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div style="border: 2px solid #f8a8af;border-radius: 10px 10px 10px 10px">
+                                                        <span style="color: #f8a8af">Diferencias</span><br>Opinión positiva <textarea name="" class="form-control" style="resize: none;" rows="5"></textarea>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <div style="border: 2px solid #f8a8af;border-radius: 10px 10px 10px 10px">
+                                                        <span style="color: #f8a8af">Semejanzas</span><br>Ideas similares que transmiten <textarea name="" class="form-control" style="resize: none;" rows="5"></textarea>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <div style="border: 2px solid #f8a8af;border-radius: 10px 10px 10px 10px">
+                                                        <span style="color: #f8a8af">Diferencias</span><br>Opinión negativa <textarea name="" class="form-control" style="resize: none;" rows="5"></textarea>
+                                                    </div>
+                                                </td>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/escritura.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingSix">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nota6" class="nota-abierta" style="text-align: center;" readonly>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                       <b>6. Subraya</b> <span class="sobre">1 pts</span>
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>6. Subraya</b> las oraciones subordinadas adverbiales del siguiente grupo. <b>Identifica</b> a qué clase pertenecen.
+                                        <br>
+                                        <b>Fíjate</b> en el ejemplo.
+                                        <div class="table-responsive">
+                                            <ol type="a">
+                                                <table>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><span class="enc" id="0">Felipe dijo que no irá a la fiesta </span><span class="enc" id="1">que se llevará a cabo mañana.</span></td>
+                                                        <td>Circunstancial de tiempo</td>
+                                                    </tr>
+                                                    <tr class="act6class" id="act06Txt0">
+                                                    </tr>
+                                                    <tr class="act6class" id="act06Txt1">
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b style="color: #005ca4;"><li></li></b></td>
+                                                        <td><span class="enc" id="6">Se perdió la mochila; </span><span class="enc" id="7">por lo tanto, no hice el deber.</span></td>
+                                                        <td>Circunstancial consecutiva</td>
+                                                    </tr>
+                                                    <tr class="act6class" id="act06Txt2">
+                                                    </tr>
+                                                    <tr class="act6class" id="act06Txt3">
+                                                    </tr>
+                                                </table>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingSeven">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota7"  class="nota-abierta" style="text-align: center;" readonly hidden></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                         <b>7. Lee</b>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>7. Lee</b> el siguiente editorial y <b>realiza</b> la actividad propuesta.
+                                        <br>
+                                        <img src="img/i3_p174_uni4Sumativa.jpg" alt="" class="img-responsive">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info actividadSuma">
+                        <div class="panel-heading" role="tab" id="headingEigth">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota8"  class="nota-abierta" style="text-align: center;background: white;"></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEigth" aria-expanded="false" aria-controls="collapseEigth">
+                                         <b>8. Pregunta</b><span class="sobre">2 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEigth" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEigth">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>8. </b>¿Qué clase de artículo editorial es y por qué?
+                                        <br>
+                                        <textarea name="" class="form-control" style="resize: none;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingNine">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota9"  class="nota-abierta" style="text-align: center;background: white;"></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                         <b>9. Pregunta</b><span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>9. </b>¿Cuál es la idea o tema central que se quiere transmitir?
+                                        <br>
+                                        <textarea name="" class="form-control" style="resize: none;"></textarea>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/lengua.png"></img>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTen">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota10"  class="nota-abierta" style="text-align: center;" readonly></input>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                                         <b>10. Reconoce</b><span class="sobre">1 pts</span>
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <b>10. Reconoce</b> cuál de las siguientes causas no contribuyó al origen del español.
+                                        <br>
+                                        <table>
+                                            <tr>
+                                                <td><span class="2 enci1">Las lenguas prerromanas en la península Ibérica</span></td>
+                                                <td><span class="2 enci2">La influencia árabe</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="2 enci3">La latinización de la península Ibérica</span></td>
+                                                <td><span class="2 enci4">La influencia de las lenguas nórdicas</span></td>
+                                            </tr>
+                                        </table>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script type="text/javascript">
+    var titulos = "evaluacion";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("174");
+    $('.btnGuardar').removeClass('disabled');
+    /*$(document).ready(function() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        //var imageSize = { width: winHeight , height: winHeight };
+        //var watermarkImage = new Image();
+        ///watermarkImage.src = 'img/i1_p170_actpreparo.jpg';
+        //var watermarkImage2 = new Image();
+        //watermarkImage2.src = 'img/i7_p98_act100.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+
+                //watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+
+            });
+
+
+
+    });*/
+
+
+    document.getElementById('nota5').addEventListener('keypress', () => {
+        validNumero(0, 2, 1);
+    });
+    document.getElementById('nota5').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota5'), 2)
+    });
+    document.getElementById('nota8').addEventListener('keypress', () => {
+        validNumero(0, 2, 1);
+    });
+    document.getElementById('nota8').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota8'), 2)
+    });
+    document.getElementById('nota9').addEventListener('keypress', () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById('nota9').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota9'), 1)
+    });
+
+    function pregunta1() {
+        var respact2 = ['Estrófico', '11', 'asimétrico', 'heterométrico', 'Estrófico', 'cuartetas', 'Arte menor', 'Con estribillo', 'Octosílabos y tetrasílabos', 'octosílabos', ];
+        var cont = 0;
+        for (var i = 0; i < 10; i++) {
+            var res = $('#sel' + [i] + ' option:selected').text();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#sel' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#sel' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 2) / 10;
+        $('#nota1').val(parseFloat(total).toFixed(2));
+        $('select').attr("disabled", true);
+    }
+    ///////////////////////pregunta2////////////////////////////
+    var random2 = [
+        ['<td>Abierta</td> <td>' +
+            '<select id="sele0">' +
+            '<option value="">---seleccione---</option>' +
+            '<option>¿Cómo te fue en el colegio el día de hoy?</option>' +
+            '<option>¿Cuántos años tiene?</option>' +
+            '<option>¿Prefieres pizza o ensalada? ¿Por qué?</option>' +
+            '<option>¿Qué le dirías al presidente de la República?</option>' +
+            '</select>' +
+            '</td>'
+        ],
+        ['<td>Cerrada</td> <td>' +
+            '<select id="sele1">' +
+            '<option value="">---seleccione---</option>' +
+            '<option>¿Cómo te fue en el colegio el día de hoy?</option>' +
+            '<option>¿Cuántos años tiene?</option>' +
+            '<option>¿Prefieres pizza o ensalada? ¿Por qué?</option>' +
+            '<option>¿Qué le dirías al presidente de la República?</option>' +
+            '</select>' +
+            '</td>'
+        ],
+        ['<td>Sondeo</td> <td>' +
+            '<select id="sele2">' +
+            '<option value="">---seleccione---</option>' +
+            '<option>¿Cómo te fue en el colegio el día de hoy?</option>' +
+            '<option>¿Cuántos años tiene?</option>' +
+            '<option>¿Prefieres pizza o ensalada? ¿Por qué?</option>' +
+            '<option>¿Qué le dirías al presidente de la República?</option>' +
+            '</select>' +
+            '</td>'
+        ],
+        ['<td>Hipotética</td> <td>' +
+            '<select id="sele3">' +
+            '<option value="">---seleccione---</option>' +
+            '<option>¿Cómo te fue en el colegio el día de hoy?</option>' +
+            '<option>¿Cuántos años tiene?</option>' +
+            '<option>¿Prefieres pizza o ensalada? ¿Por qué?</option>' +
+            '<option>¿Qué le dirías al presidente de la República?</option>' +
+            '</select>' +
+            '</td>'
+        ],
+
+    ];
+    var act02Txt = document.getElementsByClassName('act2class');
+    random2.sort(f_randomico);
+    for (i = 0; i < act02Txt.length; i++) {
+        $('#' + act02Txt[i].id).html(random2[i]);
+    }
+
+    function pregunta2() {
+        var respact2 = ['¿Cómo te fue en el colegio el día de hoy?', '¿Cuántos años tiene?', '¿Prefieres pizza o ensalada? ¿Por qué?', '¿Qué le dirías al presidente de la República?', ];
+        var cont = 0;
+        for (var i = 0; i < 4; i++) {
+            var res = $('#sele' + [i] + ' option:selected').text();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#sele' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#sele' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total = (cont * 0.5) / 4;
+        $('#nota2').val(parseFloat(total).toFixed(2));
+        $('select').attr("disabled", true);
+    }
+    /////////////////////pregunta3/////////////////
+    var random3 = [
+        ['<div class="1 enc1">es la forma que tiene el entrevistador para lucirse en la entrevista.</div>'],
+        ['<div class="1 enc2">así puedo evidenciar que el entrevistado no estará preparado para responder todo.</div>'],
+        ['<div class="1 enc3">así podemos lograr el objetivo de la entrevista y evitamos pérdidas de tiempo.</div>'],
+        ['<div class="1 enc4">es la manera que tiene el entrevistador para prepararse de mejor forma para las evaluaciones.</div>'],
+
+    ];
+    var act03Txt = document.getElementsByClassName('act3class');
+
+    random3.sort(f_randomico);
+    for (i = 0; i < act03Txt.length; i++) {
+        $('#' + act03Txt[i].id).html(random3[i]);
+    }
+
+    $('.1').click(function() {
+        switch ($(this).attr('class')) {
+            case '1 enc1':
+                $('.enc1').addClass('colorear');
+                $('.enc2').removeClass('colorear');
+                $('.enc3').removeClass('colorear');
+                $('.enc4').removeClass('colorear');
+
+                break;
+            case '1 enc2':
+                $('.enc2').addClass('colorear');
+                $('.enc1').removeClass('colorear');
+                $('.enc3').removeClass('colorear');
+                $('.enc4').removeClass('colorear');
+                break;
+            case '1 enc3':
+                $('.enc3').addClass('colorear');
+                $('.enc1').removeClass('colorear');
+                $('.enc2').removeClass('colorear');
+                $('.enc4').removeClass('colorear');
+
+                break;
+            case '1 enc4':
+                $('.enc4').addClass('colorear');
+                $('.enc1').removeClass('colorear');
+                $('.enc2').removeClass('colorear');
+                $('.enc3').removeClass('colorear');
+
+                break;
+
+
+        }
+    });
+
+
+    function pregunta3() {
+        var nt1 = 0,
+            nt2 = 0,
+            nt3 = 0;
+        if ($('.enc3').hasClass('colorear') == true) {
+            nt1 = 0.5;
+
+            $('.enc3').addClass('correcto');
+
+
+        } else if ($('.enc1').hasClass('colorear') == true) {
+            $('.enc1').addClass('incorrecto');
+
+
+        } else if ($('.enc4').hasClass('colorear') == true) {
+            $('.enc4').addClass('incorrecto');
+
+
+        } else if ($('.enc2').hasClass('colorear') == true) {
+            $('.enc2').addClass('incorrecto');
+        }
+
+        $('.1').off('click');
+        $('#nota3').val(parseFloat(nt1).toFixed(2));
+    }
+
+    ///////////////pregunta6////////////////////////////
+    $('.enc').click(function() {
+
+        if ($(this).hasClass('subrayar')) {
+            $(this).removeClass('subrayar')
+        } else {
+            $(this).addClass('subrayar')
+        }
+    })
+
+    /////////////pregunta6/////////////////
+
+    var random6 = [
+        [' <td><b style="color: #005ca4;"><li></li></b></td>' +
+            '<td><span class="enc" id="2">Isabel limpió la casa </span><span class="enc" id="3">cuando llegó su madre.</span></td>' +
+            '<td><select name="" id="selec0">' +
+            '<option value="">---seleccione---</option>' +
+            '<option value="">Circunstancial de tiempo</option>' +
+            '<option value="">Comparativa</option>' +
+            '<option value="">Circunstancial de modo</option>' +
+            '<option value="">Causal</option>' +
+            '</select></td>'
+        ],
+        ['<td><b style="color: #005ca4;"><li></li></b></td>' +
+            '<td><span class="enc" id="4">Este grupo ha estudiado </span><span class="enc" id="5">menos que lo que lo hizo el anterior.</span></td>' +
+            '<td><select name="" id="selec1">' +
+            '<option value="">---seleccione---</option>' +
+            '<option value="">Circunstancial de tiempo</option>' +
+            '<option value="">Comparativa</option>' +
+            '<option value="">Circunstancial de modo</option>' +
+            '<option value="">Causal</option>' +
+            '</select></td>'
+        ],
+        ['<td><b style="color: #005ca4;"><li></li></b></td>' +
+            '<td><span class="enc" id="8">Redactó la carta </span><span class="enc" id="9">como se lo dijo el jefe.</span></td>' +
+            '<td><select name="" id="selec2">' +
+            '<option value="">---seleccione---</option>' +
+            '<option value="">Circunstancial de tiempo</option>' +
+            '<option value="">Comparativa</option>' +
+            '<option value="">Circunstancial de modo</option>' +
+            '<option value="">Causal</option>' +
+            '</select></td>'
+        ],
+        ['<td><b style="color: #005ca4;"><li></li></b></td>' +
+            '<td><span class="enc" id="10">Pudo hacer el gol </span><span class="enc" id="11">porque el arquero falló.</span></td>' +
+            '<td><select name="" id="selec3">' +
+            '<option value="">---seleccione---</option>' +
+            '<option value="">Circunstancial de tiempo</option>' +
+            '<option value="">Comparativa</option>' +
+            '<option value="">Circunstancial de modo</option>' +
+            '<option value="">Causal</option>' +
+            '</select></td>'
+        ],
+    ];
+    var act06Txt = document.getElementsByClassName('act6class');
+
+    random6.sort(f_randomico);
+    for (i = 0; i < act06Txt.length; i++) {
+        $('#' + act06Txt[i].id).html(random6[i]);
+    }
+
+    function pregunta6() {
+        var respr1 = 0;
+        var respr2 = 0;
+        for (var i = 0; i < 12; i++) {
+            var caja = $('span[id=' + [i] + ']').text();
+            if ($('#' + [i] + '').hasClass("subrayar")) {
+
+                if ((caja == "que se llevará a cabo mañana.") || (caja == "cuando llegó su madre.") || (caja == "menos que lo que lo hizo el anterior.") || (caja == "por lo tanto, no hice el deber.") || (caja == "como se lo dijo el jefe.") || (caja == "porque el arquero falló.")) {
+                    respr1 = respr1 + 1;
+
+                    $('#' + [i] + '').css("background", "#00e600");
+                } else {
+                    respr2 = respr2 + 1;
+
+                    $('#' + [i] + '').css("background", "#ff6666");
+                }
+
+            } else {
+
+            }
+
+        }
+        var buenas = (respr1 * 0.5) / 6;
+        var malas = (respr2 * 0.5) / 6;
+        $('.enc').off('click');
+
+        var total1 = buenas - malas;
+
+
+        var respact2 = ['Circunstancial de tiempo', 'Comparativa', 'Circunstancial de modo', 'Causal', ];
+        var cont = 0;
+        for (var i = 0; i < 4; i++) {
+            var res = $('#selec' + [i] + ' option:selected').text();
+            if (respact2[i] == res) {
+                cont = cont + 1;
+                $('#selec' + [i] + '').css("background", "#00e600");
+            } else {
+                $('#selec' + [i] + '').css("background", "#ff6666");
+            }
+
+        }
+        var total2 = (cont * 0.5) / 4;
+
+
+        var total = total1 + total2;
+        if (total < 0) {
+            total = 0;
+            $('#nota6').val(parseFloat(total).toFixed(2));
+        } else {
+            $('#nota6').val(parseFloat(total).toFixed(2));
+
+        }
+
+
+    }
+    //////////////////////pregunta10////////////////////////
+    $('.2').click(function() {
+        switch ($(this).attr('class')) {
+            case '2 enci1':
+                $('.enci1').addClass('subrayar');
+                $('.enci2').removeClass('subrayar');
+                $('.enci3').removeClass('subrayar');
+                $('.enci4').removeClass('subrayar');
+
+                break;
+            case '2 enci2':
+                $('.enci2').addClass('subrayar');
+                $('.enci1').removeClass('subrayar');
+                $('.enci3').removeClass('subrayar');
+                $('.enci4').removeClass('subrayar');
+                break;
+            case '2 enci3':
+                $('.enci3').addClass('subrayar');
+                $('.enci1').removeClass('subrayar');
+                $('.enci2').removeClass('subrayar');
+                $('.enci4').removeClass('subrayar');
+
+                break;
+            case '2 enci4':
+                $('.enci4').addClass('subrayar');
+                $('.enci1').removeClass('subrayar');
+                $('.enci2').removeClass('subrayar');
+                $('.enci3').removeClass('subrayar');
+
+                break;
+
+
+        }
+    });
+
+    function pregunta10() {
+        var nt1 = 0,
+            nt2 = 0,
+            nt3 = 0;
+        if ($('.enci4').hasClass('subrayar') == true) {
+            nt1 = 1;
+
+            $('.enci4').addClass('correcto');
+
+
+        } else if ($('.enci1').hasClass('subrayar') == true) {
+            $('.enci1').addClass('incorrecto');
+
+
+        } else if ($('.enci3').hasClass('subrayar') == true) {
+            $('.enci3').addClass('incorrecto');
+
+
+        } else if ($('.enci2').hasClass('subrayar') == true) {
+            $('.enci2').addClass('incorrecto');
+        }
+
+        $('.1').off('click');
+        $('#nota10').val(parseFloat(nt1).toFixed(2));
+    }
+
+
+    function NotaFinal() {
+
+        var nota1 = document.getElementById('nota1').value;
+        var nota2 = document.getElementById('nota2').value;
+        var nota3 = document.getElementById('nota3').value;
+        var nota5 = document.getElementById('nota5').value;
+        var nota6 = document.getElementById('nota6').value;
+        var nota8 = document.getElementById('nota8').value;
+        var nota9 = document.getElementById('nota9').value;
+        var nota10 = document.getElementById('nota10').value;
+
+
+        if ((nota5 == "") || (nota8 == "") || (nota9 == "")) {
+            alert("Calificar la pregunta 5, 8 ó 9")
+        } else {
+            pregunta1();
+            pregunta2();
+            pregunta3();
+            //pregunta4();
+            //pregunta5();
+            pregunta6();
+            //pregunta7();
+            //pregunta8();
+            //pregunta9();
+            pregunta10();
+
+
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota5 = document.getElementById('nota5').value;
+            var nota6 = document.getElementById('nota6').value;
+            var nota8 = document.getElementById('nota8').value;
+            var nota9 = document.getElementById('nota9').value;
+            var nota10 = document.getElementById('nota10').value;
+
+
+            var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota5) + parseFloat(nota6) + parseFloat(nota8) + parseFloat(nota9) + parseFloat(nota10);
+
+
+            $('#txtNota').html(parseFloat(total).toFixed(2));
+            document.getElementById('bt_comprobar').disabled = true;
+            $('input').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+        }
+
+
+    }
+    </script>
+</body>
+
+</html>

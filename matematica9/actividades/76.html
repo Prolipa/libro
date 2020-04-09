@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MATEMÁTICA 9</title>
+    <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link href="css/estilo_canvas.css" rel="stylesheet">
+            <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+</head>
+<style type="text/css">
+    .preguntas{
+        font-size: 17px;
+        padding-top: 20px;
+    }
+    .n0{
+        color: #5366C2;
+        font-size: 23px;
+    }
+
+    .n1{
+        color: #D44B0B;
+        font-size: 23px;
+    }
+
+    .n2{
+        color: #3768F7;
+        font-size: 23px;
+    }
+
+    .np0{
+        color: #25B48B;
+        font-size: 23px;
+    }
+
+    .np1{
+        color: #EF435B;
+        font-size: 23px;
+    }
+
+    .np2{
+        color: #1C2E85;
+        font-size: 23px;
+    }
+
+    .np3{
+        color: #7E7E7E;
+        font-size: 25px;
+    }
+
+    .linea{
+        text-decoration:overline; 
+        text-decoration-color: #D44B0B;
+        border: none;
+    }
+
+    .linea1{
+        text-decoration:overline; 
+        text-decoration-color: #3768F7;
+        border: none;
+    }
+
+    .literal{
+        color: #485699;
+        font-size: 23px;
+    }
+
+    .num{
+        background-color: #F9C797;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .num1{
+        background-color: #E2C2F3;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .num2{
+        background-color: #C2F3CB;
+        font-size: 21px;        
+        border-top-left-radius:15px;
+        border-top-right-radius:0;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .encabezados{
+        color: white;
+        font-size: 23px;
+    }
+
+    .actividad1{
+        background: #fff;       
+    }
+    .correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+    @media (max-width: 770px) {
+      .cajas {
+        clear: left;
+      }      
+
+    }
+
+    .fraction {
+        display: inline-block;
+        vertical-align: middle; 
+        margin: 0 0.2em 0.4ex;
+        text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid #636363;}
+    .fraction span.bar {display: none;}
+
+
+ /*ESTILO DEL CANVAS PARA MODIFICAR IMAGEN*/
+      #prueba {
+        margin-top: 2rem;
+        display: block;
+        box-sizing: border-box;
+        padding: 0px;
+        transition: all .3s linear 0s;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color:#e5e5e5; 
+        /*background-color:rgba(212,185,186,0.2); */
+        background-image: url(img/i1_p69_act2.jpg); /* SI SE NECESITA UNA IMAGEN DE FONDO */
+        background-size: 100% 100%;
+      }
+
+
+    /*table.table-bordered{
+        border:1px solid #1E2E71;
+        margin-top:20px;        
+      }
+    table.table-bordered > thead > tr > th{
+        border:1px solid #1E2E71;
+        border-radius: 10px;
+    }
+    table.table-bordered > tbody > tr > td{
+        border:1px solid #1E2E71;
+    }*/
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+       <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Responde en los espacios en blanco según se solicita<br>
+        Actividad 1: Escoje la clasificación de los elementos planteados en la tabla.<br>
+        Actividad 2: Calcula los ejercicios planteados y escribe tu respuesta en los cuadros de texto correspondientes.<br>
+        Actividad 3: Escribe los numeros irracionales que estan entre los valores planteados. Escribe únicamente el radical y la base.<br>
+        Actividad 4: Escribe los números racionales solicitados mismos que deben estar comprendidos entre los números dados.<br>
+        Actividad 5: Resuelve las operaciones planteadas en los cuadros de texto correspondientes. Esta actividad debe ser calificada manualmente sobre 1 punto.<br>
+        Actividad 6: Resuelve el problema planteado en el cuadro de texto correspondiente. Esta actividad debe ser calificada manualmente sobre 1 punto.<br>
+        Actividad 7: Descompón el radicando para que las medidas de sus lados sean racionales. En el cuadro de texto correspondiente escribe la suma de los dos números cuya raiz da un valor racional. Ej: √8 = √4+4 <br>
+        Actividad 8: Selecciona en el casillero el nombre de la propiedad aplicada en cada caso. <br>
+        Actividad 9: Representa en la recta numérica real el número y el módulo unitario planteados. Esta actividad debe ser calificada manualmente sobre 1 punto.<br>
+        Actividad 10: Localiza en la recta numérica los valores planteados. Esta actividad debe ser calificada manualmente sobre 1 punto.<br>
+        Actividad 11: Sin graficar, describe: ¿Qué proceso aplicarías para localizar en la recta numérica real del número planteado?. Esta actividad debe ser calificada manualmente sobre 1 punto.<br>
+
+        <span id="ayudas"></span>
+    </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> <span id="txtNota1" style="display: none;"></span>/ 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-refuerzo" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-refuerzo">
+                    <span class="titulo"><img src="img/icoD.png" alt="Refuerzo mis destrezas"> Refuerzo mis Destrezas</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                    
+                </div>
+
+                <div class="panel-body"> 
+            <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+        <div class="row">
+            <div class="col-sm-8"><img src="img/practica_individual.jpg" class="img-responsive"></div>           
+         </div> 
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">                                                                    
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Actividad 1</a>
+                </h4>
+                </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group">
+                            <span>1. En el siguiente conjunto de números, <b>clasifica</b> sus elementos como racionales ( ℚ ) o irracionales ( ℚ ´), indicando qué criterio justifica la elección.</span>
+                            <br>
+                            <br>                     
+                            <div align="center" class="img-responsive"><img src="img/i1_p82_act1.jpg" class="img-responsive" width="350px;"></div>
+                            <br>
+                            <table class="table table-bordered table-hover table-sm">
+                                <tr style="background-color: #2CA3FF; color: white;" align="center">
+                                  <td>Número</td>
+                                  <td>Criterio</td>
+                                </tr>
+                                <tbody align="center" id="conN0"></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+            </div>
+
+
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">                                                                 
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Actividad 2</a>
+                </h4>
+                </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group">
+                            <span>2. <b>Calcula</b> los siguientes ejercicios.</span>
+                            <br><br>                         
+                            <div class="col-sm-6">
+                                <br>
+                                <span class="literal">a) &nbsp;&nbsp;</span><span class="np2">( <span id="nC0"></span> √<span id="nC1"></span> - <span id="nC2"></span> √<span id="nC3"></span> ) · √<span id="nC4"></span></span> &nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" id="rC0" class="form-control respuestas"> 
+
+                            </div>
+                            
+                            <div class="col-sm-6" style="font-size: 17px;">
+                                <div class="col-sm-8">
+                                    <br>
+                                    <span class="literal">b) &nbsp;&nbsp;</span><span class="np2">( <span id="nC5"></span> √<span id="nC6"></span> ) <sup>2</sup> · ( <span id="nC7"></span> √<span id="nC8"></span> ) <sup>−2</sup></span> &nbsp;&nbsp;=&nbsp;&nbsp;  
+                                </div>                                
+                                <div class="col-sm-3" align="center">
+                                    <div>
+                                        <input type="number" id="rC1" class="form-control respuestas" style="width: 90px;">
+                                    </div>
+                                    <div style="border-top: 1px solid;">
+                                        <input type="number" id="rC1_1" class="form-control respuestas" style="width: 90px;">
+                                    </div>
+                                </div>
+                                <br><br><br><br><br><br>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <span class="literal">c) &nbsp;&nbsp;</span><span class="np2">( √<span id="nC9"></span>  − <span id="nC10"></span> ) <sup>2</sup> · ( √<span id="nC11"></span>  + <span id="nC12"></span> ) <sup>2</sup></span> &nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" id="rC2" class="form-control respuestas"> 
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+
+
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">                                                                    
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Actividad 3</a>
+                </h4>
+                </div>
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group">
+                            <span>3. <b>Escribe</b> cinco números irracionales ubicados entre:</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="np0">√<span id="nE0"></span></span> &nbsp;&nbsp;y&nbsp;&nbsp; <span class="np0">√<span id="nE1"></span></span>
+                            <br>
+                            <br>                     
+                            
+                            <span class="np1">R. &nbsp;&nbsp;&nbsp;&nbsp;
+                                <sup><input type="number" id="rEx0" class="form-control respuestas" style="width: 60px;"></sup> 
+                                √<input type="number" id="rE0" class="form-control respuestas" style="width: 75px;">                                
+                                ;&nbsp;&nbsp;&nbsp;&nbsp;<sup><input type="number" id="rEx1" class="form-control respuestas" style="width: 60px;"></sup> √<input type="number" id="rE1" class="form-control respuestas" style="width: 75px;">                                
+                                ;&nbsp;&nbsp;&nbsp;&nbsp;<sup><input type="number" id="rEx2" class="form-control respuestas" style="width: 60px;"></sup>√<input type="number" id="rE2" class="form-control respuestas" style="width: 75px;">
+                                ;&nbsp;&nbsp;&nbsp;&nbsp;<sup><input type="number" id="rEx3" class="form-control respuestas" style="width: 60px;"></sup> √<input type="number" id="rE3" class="form-control respuestas" style="width: 75px;">
+                                ;&nbsp;&nbsp;&nbsp;&nbsp;<sup>√<input type="number" id="rEx4" class="form-control respuestas" style="width: 60px;"></sup> √<input type="number" id="rE4" class="form-control respuestas" style="width: 75px;">
+                            </span>   
+                        </div>
+                    </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">                                                                    
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Actividad 4</a>
+                </h4>
+                </div>
+                    <div id="collapse4" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group">
+                            <div class="col-sm-12">
+                                <span class="col-sm-3"><br>4.  Dados los números racionales: </span>
+                                <div class="eq-c col-sm-1 np1">
+                                <div class="fraction">
+                                    <span class="fup" id="nEnt0"></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn" id="nEnt1"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-1" align="center"> <br>y </div>
+                            <div class="eq-c col-sm-1 np1" align="right">
+                                <div class="fraction">
+                                    <span class="fup" id="nEnt2"></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn" id="nEnt3"></span>
+                                </div>
+                            </div>
+                            </div>    
+
+                            <br><br><br><br>
+                            
+                            <div><span class="literal">&nbsp;&nbsp;a)&nbsp;&nbsp;</span>Escribe cinco números racionales comprendidos entre los números dados.<br><br></div> 
+                            
+
+                            <div class="eq-c col-sm-2 np1" align="right">
+                                <div class="fraction">
+                                    <span class="fup"><input type="number" id="rEnt0" class="form-control respuestas" style="width: 70px;"></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn"><input type="number" id="rEnt00" class="form-control respuestas" style="width: 70px;"></span>
+                                </div>;
+                            </div>
+                            <div class="eq-c col-sm-2 np1" align="right">
+                                <div class="fraction">
+                                    <span class="fup"><input type="number" id="rEnt1" class="form-control respuestas" style="width: 70px;"></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn"><input type="number" id="rEnt01" class="form-control respuestas" style="width: 70px;"></span>
+                                </div>;
+                            </div>
+                            <div class="eq-c col-sm-2 np1" align="right">
+                                <div class="fraction">
+                                    <span class="fup"><input type="number" id="rEnt2" class="form-control respuestas" style="width: 70px;"></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn"><input type="number" id="rEnt02" class="form-control respuestas" style="width: 70px;"></span>
+                                </div>;
+                            </div>
+                            <div class="eq-c col-sm-2 np1" align="right">
+                                <div class="fraction">
+                                    <span class="fup"><input type="number" id="rEnt3" class="form-control respuestas" style="width: 70px;"></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn"><input type="number" id="rEnt03" class="form-control respuestas" style="width: 70px;"></span>
+                                </div>;
+                            </div>
+                            <div class="eq-c col-sm-2 np1" align="right">
+                                <div class="fraction">
+                                    <span class="fup"><input type="number" id="rEnt4" class="form-control respuestas" style="width: 70px;"></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn"><input type="number" id="rEnt04" class="form-control respuestas" style="width: 70px;"></span>
+                                </div>;
+                                <br><br>
+                            </div>
+                            
+                            
+
+  
+                            <div class="col-sm-4">
+                                    <br><span class="literal">b)&nbsp;&nbsp;</span><b>Escribe</b> un número irracional p tal que
+                            </div>
+                            <div class="eq-c col-sm-1 np1" align="right">
+                                <div class="fraction">
+                                    <span class="fup" id="nIr0"></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn" id="nIr1"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-1" align="right"> <br>< p <</div>
+                            <div class="eq-c col-sm-1 np1" align="right">
+                                <div class="fraction">
+                                    <span class="fup" id="nIr2"></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn" id="nIr3"></span>
+                                </div> 
+                            </div>
+
+                            <div class="col-sm-4">
+
+                                <div class="np1 col-sm-2" align="right"><br>R. </div>
+                                <div class="col-sm-8">
+                                    <div class="eq-c np1" align="left">
+                                    <div class="fraction">
+                                        <span class="fup"><input type="number" id="rIr0" class="form-control respuestas" style="width: 90px;"></span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn"><input type="number" id="rIr1" class="form-control respuestas" style="width: 90px;"></span>
+                                    </div>;
+                                    <br><br>
+                                    </div>
+                            
+                                </div>
+                            </div>
+                            </div> 
+                            
+                    </div>
+            </div>
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">
+                <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                    <input type="number" id="calificacion0" placeholder="Puntaje/1" style="width: 110px;" class="form-control">      
+                </div>                                                               
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse5" style="margin-left: 70px;">Actividad 5</a>
+                </h4>
+                </div>
+                    <div id="collapse5" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group">
+                            <span>5. <b>Efectúa</b> y <b>simplifica</b>.</span>
+                            <br>
+                            <br>                     
+                            
+                            <div class="eq-c literal col-sm-4">
+                                a) &nbsp;&nbsp;
+                                <div class="fraction np1">
+                                    <span class="fup">√<span id="nEf0"></span></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn">√<span id="nEf1"></span> - <span id="nEf2"></span></span>
+                                </div> -
+                                <div class="fraction np1">
+                                    <span class="fup"><span id="nEf3"></span></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn">√<span id="nEf4"></span> + <span id="nEf5"></span></span>
+                                </div>
+                                <br><br>
+                            </div>
+                            <div class="col-sm-8">
+                                <span class="np1">R.&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+                                <textarea class="form-control respuestas" rows="2" style="width: 80%;"></textarea>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="eq-c literal col-sm-4">
+                                b) &nbsp;&nbsp;
+                                <div class="fraction np1">
+                                    <span class="fup"><span id="nEf6"></span></span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn">√<span id="nEf7"></span> + <span id="nEf8"></span></span>
+                                </div>
+                                </div>
+                                <div class="col-sm-8">
+                                <span class="np1">R.&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+                                <textarea class="form-control respuestas" rows="2" style="width: 80%;"></textarea>
+                                </div>
+    
+                            </div>
+                            
+                        </div>
+                    </div>
+            </div>
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">
+                <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                    <input type="number" id="calificacion1" placeholder="Puntaje/1" style="width: 110px;" class="form-control">      
+                </div>                                                                                   
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse6" style="margin-left: 70px;">Actividad 6</a>
+                </h4>
+                </div>
+                    <div id="collapse6" class="panel-collapse collapse">
+                        <div class="panel-body preguntas ">
+                            <span>6. &nbsp;&nbsp;&nbsp;&nbsp;La longitud de una circunferencia de <span class="np1" id="nR0"></span> cm de radio es <span class="np1" id="nR1"></span> cm. &nbsp;&nbsp;&nbsp;Comprueba el valor de <span class="np1">π</span> .</span>
+                            <br>
+                            
+                            <textarea class="form-control respuestas" rows="3"></textarea>
+                            
+                        </div>
+                    </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">                                                                    
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">Actividad 7</a>
+                </h4>
+                </div>
+                    <div id="collapse7" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group">
+                            <span>7. &nbsp;&nbsp;&nbsp;&nbsp;En los siguientes rectángulos, <b>descompón</b> el radicando para que las medidas de sus lados sean racionales.</span>
+                            <br><br>
+                            
+                            <div class="col-sm-6"><img src="img/i1_p82_act7.jpg" class="img-responsive"></div>
+                            <div class="col-sm-6">
+                                <br><br><br>                                
+                                <span class="np1">√<span id="nDes0"></span>&nbsp;&nbsp; = &nbsp;&nbsp;&nbsp;&nbsp;√<input type="text" id="rDes0" class="form-control respuestas"></span>
+                                <br><br><br><br><br><br><br>
+                                <span class="np1">√<span id="nDes1"></span>&nbsp;&nbsp; = &nbsp;&nbsp;&nbsp;&nbsp;√<input type="text" id="rDes1" class="form-control respuestas"></span> 
+                                <br><br><br><br><br><br><br>
+                                <span class="np1">√<span id="nDes2"></span>&nbsp;&nbsp; = &nbsp;&nbsp;&nbsp;&nbsp;√<input type="text" id="rDes2" class="form-control respuestas"></span>
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">                                                                    
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">Actividad 8</a>
+                </h4>
+                </div>
+                    <div id="collapse8" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group">
+                            <span>8. &nbsp;&nbsp;&nbsp;&nbsp;<b>Selecciona</b> en el casillero el nombre de la propiedad aplicada en cada caso.</span>
+                            <br><br>                    
+                            
+                            <table class="table table-bordered table-hover table-sm table-responsive">
+                                <tbody align="center" id="conNom0"></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+            </div>
+
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">
+                <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                    <input type="number" id="calificacion2" placeholder="Puntaje/1" style="width: 110px;" class="form-control">      
+                </div>                                                                                                       
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse9" style="margin-left: 70px;">Actividad 9</a>
+                </h4>
+                </div>
+                    <div id="collapse9" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-inline form-group">
+                            <span>9. &nbsp;&nbsp;&nbsp;&nbsp;Representa en la recta numérica real el número <span class="np1">√<span id="nRep0"></span></span>, con un módulo unitario de <span class="np1">1,5 cm</span>.</span>
+                            <br><br>
+
+                            <div class="my-drawing img-responsive"></div>
+                            <br>
+
+                            <script>
+                            var backgroundImage = new Image()
+                            backgroundImage.src = 'img/i1_p82_act10.jpg';
+                            var winHeight = $(window).height();
+                            var winWidth = $(window).width();
+                            var lc = LC.init(
+                                document.getElementsByClassName('my-drawing')[0], { imageURLPrefix: 'imgcanvas',
+                                          backgroundShapes: [
+                                            LC.createShape(
+                                          'Image', {x: 0, y: 0, image: backgroundImage}),
+                                            ] }
+                            );
+                            lc.respondToSizeChange();
+                            </script>
+
+                        </div>
+                    </div>
+            </div>
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">
+                <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                    <input type="number" id="calificacion3" placeholder="Puntaje/1" style="width: 110px;" class="form-control">      
+                </div>                                                                                                                           
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse10" style="margin-left: 70px;">Actividad 10</a>
+                </h4>
+                </div>
+                    <div id="collapse10" class="panel-collapse collapse in">
+                        <div class="panel-body preguntas form-inline form-group">
+                            
+                            <span>10. &nbsp;&nbsp;&nbsp;&nbsp;<b>Localiza</b> en la recta numérica ( √10  +  √12 ) . Elige el tamaño del módulo unitario.</span>
+                            <br><br>
+
+                            <div class="my-drawing img-responsive"></div>
+                            <br>
+
+                            <script>
+                            var backgroundImage = new Image()
+                            backgroundImage.src = 'img/i1_p82_act11.jpg';
+                            var winHeight = $(window).height();
+                            var winWidth = $(window).width();
+                            var lc = LC.init(
+                                document.getElementsByClassName('my-drawing')[1], { imageURLPrefix: 'imgcanvas',
+                                          backgroundShapes: [
+                                            LC.createShape(
+                                          'Image', {x: 0, y: 0, image: backgroundImage}),
+                                            ] }
+                            );
+                            lc.respondToSizeChange();
+                            </script>
+
+                        </div>
+                    </div>
+            </div>
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h4 class="panel-title">
+                <div style="float: left;position: relative;width: 60px;height: 40px;bottom: 8px;">
+                    <input type="number" id="calificacion4" placeholder="Puntaje/1" style="width: 110px;" class="form-control">      
+                </div>                    
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse11" style="margin-left: 70px;">Actividad 11</a>
+                </h4>
+                </div>
+                    <div id="collapse11" class="panel-collapse collapse">
+                        <div class="panel-body preguntas form-inline form-group">
+
+                            <div class="eq-c">
+                                11. &nbsp;&nbsp;&nbsp;&nbsp;Sin graficar, <b>describe</b>: ¿Qué proceso aplicarías para localizar en la recta numérica real el número: &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="fraction np1">
+                                    <span class="fup"><span id="nL0"></span>√13</span>
+                                    <span class="bar">/</span>
+                                    <span class="fdn">2</span>
+                                </div>&nbsp;&nbsp;?
+                            </div>
+
+                            <br>                            
+                            
+                            <textarea class="form-control respuestas" rows="4" style="width: 80%;"></textarea>
+
+
+                        </div>
+                    </div>
+            </div>
+    </div>
+
+    <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/76.js"></script>
+
+        <script type="text/javascript">
+            $("#n_pagina").html('82');
+            $( ".btnCalificar" ).bind( "click", function() {
+                CalificacionAbierta();
+            });
+        </script>
+</body>
+</html>

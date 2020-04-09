@@ -1,0 +1,586 @@
+    <!DOCTYPE HTML>
+    <html>
+
+    <head>
+        <title>Matemática 4</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/icomoon.css" rel="stylesheet">
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <style type="text/css">
+  .mi_canvas {
+    min-width: 320px;
+  }
+  #prueba {
+    margin-top: 2rem;
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    transition: all .3s linear 0s;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#e5e5e5; 
+    /*background-color:rgba(212,185,186,0.2); 
+    background-image: url(imagenes/fondo.jpg);*/ /* SI SE NECESITA UNA IMAGEN DE FONDO */
+    background-size: 100% 100%;
+  }
+  #logo {
+    display: block;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    z-index: 1;
+    width: 30%;
+    height: auto;
+    max-width: 350px;
+    min-width: 100px;
+  }
+  #contenedoropciones {
+    margin-top: 2rem;
+    padding: 2px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #contenedoropciones table {
+  background-color: rgba(220,220,220,1.00);
+  border: .25rem solid rgba(188,185,185,1.00);
+  margin-bottom: .5rem;
+  border-spacing: 5px;
+  border-collapse: separate;
+  }
+  #contenedoropciones table:nth-of-type(2) {
+    border-spacing: 5px;
+  }
+  #contenedoropciones table:nth-of-type(2) td {
+    width: 1px;
+    white-space: nowrap;
+  }
+  #contenedoropciones table:nth-of-type(1) td {
+    cursor: pointer;
+  }
+  #contenedoropciones .titulotabla {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color:rgba(103,103,103,1.00)
+  }
+  #contenedoropciones table {
+    display: inline-table;
+  }
+  
+  .celdascoloresdefondo {
+    width: 20px;
+    height: 10px;
+    border: solid 1px transparent;
+  }
+  @media (max-width: 890px) {
+    /*.mi_canvas {
+      font-size: .750rem;
+    }*/
+    #contenedoropciones, #prueba {
+      width: 98%
+    }
+    #contenedoropciones {
+      margin-left: 1%;
+    }
+  }
+  @media (max-width: 450px) {
+    /*.mi_canvas {
+      font-size: .75rem;
+    }*/
+  }
+  @media (max-width: 1px) {
+    #contenedoropciones #opcionesdedibujo {
+      display: table;
+      width: 100%;
+    }
+    #contenedoropciones #opcionesdedibujo td {
+      display: block;
+      width: auto;
+      text-align: left;
+      margin-top: 5px;    
+    }
+  }
+</style>
+        <style>
+        .cajas {
+            max-width: 50%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 5px;
+            width: auto;
+            height: 50px
+    
+        }
+        #caja_res, #caja_res1,#caja_res2{
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+        .respuestas{
+                width: 80%;
+                border: none;
+                border-bottom: 1px solid #005ca4;
+            }
+        .c_imagenes{
+            padding: 10px;
+        }
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 140px;
+            height: 30px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 140px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+        .correcto{
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+        
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+        .encierra{
+            border: 1px solid blue;
+            border-radius: 40%;
+            
+        }
+        .respuesta {
+    text-align: center;
+    border: 0;
+    border-top: 2px solid #393939;
+    border-bottom: 1px solid #85BCEB;
+    width: 50px;
+}
+.bordeT {
+    border: 1px #76B82A solid;
+}
+
+
+
+.bordeT2 {
+    border: 1px #76B82A solid;
+    text-align: center;
+}
+
+.paso {
+    background-color: #F9B000;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+}
+.bg_palabra{
+            background-color: #F9E8B2;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+        .rec_txt{
+            min-width: 60px;
+            min-height: 60px;
+            border: 1px dotted #444;
+            border-radius: 8px;
+            margin: 3px;
+            clear: inherit;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div id="nota-informativa" class="nota-ayuda">
+            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            Lee cuidadosamente las preguntas, contesta cada una de ellas. <b>Pregunta 1 </b> Presiona click para dibujar en el recuadro. <b>Pregunta 2 </b> arrastra las imágenes y colaca en el recuadro que corresponda el par ordenado. <br>
+            <span id="ayudas"></span>
+        </div>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" >
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span class="notificacion actividad ">
+                                <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                        </span>
+                        <span class="btn notificacion nota">
+                                <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span>/ 10
+                        </span>
+                        <span class="notificacion pagina">
+                                <span class="glyphicon glyphicon-bookmark"></span> Pag 57
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--FIN DE NAVBAR QUE SE AÑADE-->
+        <!--contenedor de la actividad-->
+        <div class="container space" style="margin-top: 30px;">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-preparo" id="activity">
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-preparo">
+                    <span class="titulo"><img src="img/icoPRE.png" alt="">Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+                </div>
+                <div class="panel-body">
+                    <img class="img-responsive" src="img/practica_individual.png" alt="">
+                    <br>
+                    <!--pregunats de la actividad-->
+                        <div class="text-question"><p> <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><input type="number" min="0" max="5" placeholder="De 0 a 5" class="form-control calif "></span><b>Realiza</b> las siguientes actividades en tu cuaderno.</p></div>
+                       <div class="actividad59">
+                            <div class="text-question"><p><b style="color: blue;">1. </b><b>Dibuja</b> los elementos de los pares ordenados en los conjuntos de salida y entrada.</p></div>
+                            <table class="table-responsive">
+                              <tr>
+                                <td><p><b style="color: blue">a)</b></p></td>
+                                <td>
+                                  
+                                  <div style="border: 1px #E1FBD5 solid; border-radius: 10px 0px 10px 0px; background: #E1FBD5;">
+                                     (candado, llave)
+                                  </div>
+                                  
+                                </td>
+                                <td><p><b style="color: blue">c)</b></p></td>
+                                <td>
+                                  
+                                  <div style="border: 1px #D5DBFB solid; border-radius: 10px 0px 10px 0px; background: #D5DBFB;">
+                                     (cuchillo, manzana)
+                                  </div>
+                                  
+                                </td>
+                                <td><p><b style="color: blue">e)</b></p></td>
+                                <td>
+                                  
+                                  <div style="border: 1px #E1FBD5 solid; border-radius: 10px 0px 10px 0px; background: #E1FBD5;">
+                                     (plato, taza)
+                                  </div>
+                                  
+                                </td>  
+                              </tr>
+                              <tr>
+                                <td><p><b style="color: blue">b)</b></p></td>
+                                <td>
+                                  
+                                  <div style="border: 1px #FBE6D5 solid; border-radius: 10px 0px 10px 0px; background: #FBE6D5;">
+                                     (lápiz, sacapuntas)
+                                  </div>
+                                  
+                                </td>
+                                <td><p><b style="color: blue">d)</b></p></td>
+                                <td>
+                                  
+                                  <div style="border: 1px #D5FBFA solid; border-radius: 10px 0px 10px 0px; background: #D5FBFA;">
+                                     (fósforo, vela)
+                                  </div>
+                                  
+                                </td>
+                                <td></td>
+                              </tr>
+                            </table>
+                            <main>
+                                <canvas id="prueba">Este navegador no soporta canvas, visualice la web con un navegador actualizado.</canvas>
+                                <div id="paleta" class="mi_canvas">
+                                    <div id="contenedoropciones">
+                                      <table width="auto">
+                                          <tbody>
+                                            <tr>
+                                              <td colspan="9" class="titulotabla">Color</td>
+                                            </tr>
+                                            <tr>
+                                              
+                                              <td class="celdascoloresdefondo" data-color="red">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="pink">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="orange">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="yellow">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="magenta">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="MEDIUMSEAGREEN">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="green">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="DARKCYAN">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="cyan">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                            
+                                              <td class="celdascoloresdefondo" data-color="blue">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="wheat">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="brown">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="white">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="LIGHTGRAY">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="gray">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="LIGHTSLATEGRAY">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="DARKSLATEGRAY">&nbsp;</td>
+                                              <td class="celdascoloresdefondo" data-color="black">&nbsp;</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                        <table width="auto" id="opcionesdedibujo">
+                                          <tbody>
+                                            <tr>
+                                              <td colspan="5" class="bg-info">Opciones de dibujo</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Grosor pincel: <input onChange="cambiagrosor(this)" name="grosor" type="number" id="grosor" max="100" min="3" step="1" title="Grosor del cursor" value="5"></td>
+                                              <td onClick="cambiapincel(this)" id="celdapincelcuadrado" style="cursor:pointer;border:solid 1px black;background-color: white;">Pincel cuadrado</td>
+                                              <td onClick="cambiaaccion(this)" id="xpintar"class="celdaaccion" style="cursor:pointer;border:solid 1px black;background-color: white;">Pintar</td>
+                                              <td rowspan="2"  onClick="borrartodo()"><span class="btn btn-danger">Borrar todo</span></td>
+                                            </tr>
+                                            <tr>
+                                              <td>Grosor borrar: <input onChange="cambiagrosorborrador(this)" name="grosorborrar" type="number" id="grosorborrar" max="100" min="3" step="1" title="Grosor del borrardor" value="10"></td>
+                                              <td onClick="cambiapincel(this)" id="celdapincelredondo" style="cursor:pointer;border:solid 1px transparent">Pincel redondo</td>
+                                              <td onClick="cambiaaccion(this)" id="xborrar" class="celdaaccion" style="cursor:pointer;border:solid 1px transparent">Borrar</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+
+                                    </div>
+                                
+                                </div>
+                            </main>
+                        </div>
+                        <!--pregunats de la actividad-->
+                        <div class="text-question"><p> <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><input type="number" min="0" max="5" placeholder="De 0 a 5" class="form-control calif "></span><b style="color: blue;">2. </b><b>Forma</b> pares ordenados con los países y nacionalidades de los recuadros y <b>grafica</b> los conjuntos de salida y entrada.</p></div>
+                       <div class="actividad59">
+                            <div class="row ">
+                                <div class="col-xs-12 textos"></div>                          
+                            </div>
+                            <div class="clear"><br> </div>
+                            <div class="row  ">
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                </div>
+                                <div class="col-sm-6">
+                                <table class="table contenidos">
+                                
+                                </table>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="trace" class="alert alert-warning display-none"></p>      
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/highcharts.js"></script>
+        <script src="js/exporting.js"></script>
+        <script src="js/export-data.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/dibujarCANVAS1.js"></script>
+        <script src="js/Utilitario.js"></script>
+        
+        
+        <!--<script src="js/activities.js"></script>-->
+        <script>
+        var ejer=1,itemsT=4,cont=0,tmp,cor=0,inc=0,calificacion=10,claseAnimada='animate bounceIn';
+                var resp=[],i;
+        var titulos = 'aplico'
+        
+        f_iniciar();
+                function f_iniciar(){
+                    var pal1=['<span class="bg_palabra c1">Ecuador</span>','<span class="bg_palabra c2">Chile</span>','<span class="bg_palabra c3">Colombia</span>','<span class="bg_palabra c4">Venezuela</span>','<span class="bg_palabra c5">Perú</span>'];
+                    var txt1 = ['<tr><td><div class="cajas imagen c2" id="caja_img1"></div></td><td><div class="col-lg-6 col-md-6 col-sm-6 col-xs-7 cajas texto" id="caja_txt1">chileno</div></td></tr>','<tr><td><div class="cajas imagen c3" id="caja_img2"></div></td><td><div class="col-lg-6 col-md-6 col-sm-6 col-xs-7 cajas texto" id="caja_txt2">colombiano</div></td></tr>','<tr><td><div class="cajas imagen c1" id="caja_img3"></div></td><td><div class="col-lg-6 col-md-6 col-sm-6 col-xs-7 cajas texto" id="caja_txt3">ecuatoriano</div></td></tr>','<tr><td><div class="cajas imagen c4" id="caja_img4"></div></td><td><div class="col-lg-6 col-md-6 col-sm-6 col-xs-7 cajas texto" id="caja_txt4">venezolano</div></td></tr>','<tr><td><div class="cajas imagen c5" id="caja_img4"></div></td><td><div class="col-lg-6 col-md-6 col-sm-6 col-xs-7 cajas texto" id="caja_txt4">peruano</div></td></tr>'];
+                    pal1.sort(f_randomico);
+                    txt1.sort(f_randomico);
+                    $(".textos").append(pal1);
+                    $(".contenidos").append(txt1);
+                    $(".bg_palabra").css('cursor','move');
+                    $(".bg_palabra").draggable({ //arrastramos
+                        revert: "invalid",
+                        zIndex:5,
+                        containment: ".actividad17",
+                        scroll: false,                   
+                    });
+                    $(".imagen").droppable({
+                        drop: function(e, ui) {
+                            //v_idsp5.push(ui.draggable.attr("id").substr(3));//obtenemos el id del arrastre
+                            //r_idsp5.push($(this).attr("id").substr(4)); //obtenemos el id del destino
+                            for(i=1;i<5;i++){ //4 elementos
+                                var nn = 'c'+i; //obtenemos la clase
+                                if($(ui.draggable).hasClass(nn)){ //comparamos la clase del arrastre
+                                    if($(this).hasClass(nn)){ //con la clase del destino q tienen en mismo nombre
+                                        resp.push('ok');
+                                    }else{
+                                        resp.push('no');
+                                    }
+                                }
+                            }
+                            $(ui.draggable).removeClass("bg_palabra");//quitamos clase de background
+                            //console.log(resp); //respuestas
+                            ui.draggable.attr("style", "");
+                            $(this).append(ui.draggable);
+                        }
+                    });
+                
+                
+        $( ".btnCalificar" ).bind( "click", function() {
+                    CalificacionAbierta();
+                });
+      }
+        </script>
+        
+    </body>
+
+    </html>

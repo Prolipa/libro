@@ -1,0 +1,438 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Matemática 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.pintarcorrecto {
+
+    background-color: #32a75b;
+    color: white;
+    border: 5px solid #32a75b;
+    border-radius: 10px 10px 10px 10px;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+    color: white;
+    border: 5px solid #F97591;
+    border-radius: 10px 10px 10px 10px;
+
+}
+
+.cajaprincipal {
+    width: 100%;
+    min-height: 400px;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.titulop,
+.tnumero {
+    font-size: 25px;
+    color: #009277;
+    font-weight: bolder;
+    padding: 10px;
+
+}
+
+/*.pregunta {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 15px;
+    padding-bottom: 20px;
+
+}
+
+.opciones {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 20px;
+
+}
+*/
+.principal {}
+
+.opciones img {
+    max-height: 300px;
+
+}
+
+.letraAzul,
+li {
+    color: #005ca4;
+    font-weight: bold;
+
+}
+
+p {
+    color: #000000;
+}
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.<br>
+        Hacer click en la respuesta correcta y solo se podra elegir una sola vez.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li style="display: none;">
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo">Segundo Quimestre</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body" align="justify">
+                <div class="cajaprincipal text-question">
+                    <b>Elige</b> la opción correcta y <b>pinta</b> el círculo en la tabla de respuestas.
+                    <br>
+                    <div>
+                        <span class="titulop">Pregunta Nº<span class="tnumero">1</span></span>
+                    </div>
+                    <div class="pregunta"></div>
+                    <br>
+                    <div class="opciones">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="border: 2px dotted #005da8;">
+                            <p class="letraAzul" style="background: #e1e6f4;border-radius: 15px;"><b>Opciones de respuesta</b></p>
+                            <ol type="A" class="op1">
+                            </ol>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 imag1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script type="text/javascript">
+    var titulos = "squimestre";
+    //f_titulos();
+    $("#txtNota").html("0");
+    $("#n_pagina").html("252");
+
+    var nota = 0,
+        cor = 0,
+        inc = 0,
+        itemsT = 13,
+        calificacion = 10,
+        cont = 0,
+        ejer = 13;
+    var preg = [];
+    var resp = [];
+    var nn1 = 0;
+
+    preg = [
+        ['<b>Observa</b> los siguientes números y <b>selecciona</b> los números decimales. <br><b class="letraAzul">1.</b> 18,04 <br> <b class="letraAzul">2.</b> 523 <br> <b class="letraAzul">3.</b> 25,35 <br> <b class="letraAzul">4.</b> 1 985 <br> <b class="letraAzul">5.</b> 21,84 <br>', 0, ],
+        ['<b>Relaciona</b> cada fracción con su equivalente en decimales. <img src="img/i1_p252_quimestre2.jpg" alt="" class="img-responsive"/></img>', 1, ],
+        ['Al sumar las siguientes cantidades, la respuesta, con aproximación a los centésimos, es:<img src="img/i2_p252_quimestre2.jpg" alt="" class="img-responsive"/></img>', 2, ],
+        ['<b>Relaciona</b> cada operación con su producto.<img src="img/i3_p252_quimestre2.jpg" alt="" class="img-responsive"/></img>', 3, ],
+        ['<b>Relaciona</b> cada figura geométrica con su nombre.<img src="img/i4_p252_quimestre2.jpg" alt="" class="img-responsive"/></img>', 4, ],
+        ['<b>Relaciona</b> cada polígono regular con la cantidad de lados correspondientes.<img src="img/i6_p252_quimestre2.jpg" alt="" class="img-responsive"/></img>', 5, ],
+        ['<b>Escoge</b> la palabra correcta para que la expresión sea verdadera.<br> El metro cúbico es la unidad de las medidas de ......................', 6, ],
+        ['<b>Elige</b> la respuesta que corresponde a la resolución del problema. <br><br>Patricio necesita decorar una piscina: en su perímetro desea colocar una fila de baldosas de colores. Si la piscina tiene forma octogonal regular y sus lados miden 2,8 metros, ¿cuántos metros de baldosa necesita para cubrir el perímetro de la piscina?', 7, ],
+        ['<b>Elige</b> la respuesta que corresponde a la resolución del problema. <br><br>Un carpintero quiere colocar un borde de madera en una ventana pentagonal regular cuyos lados miden 1,5 metros cada uno. ¿Cuántos metros de madera necesita?', 8, ],
+        ['Los submúltiplos del metro cúbico son: <br><br> <b class="letraAzul">1.</b> Decímetro cúbico <br> <b class="letraAzul">2.</b> Hectómetro cúbico <br> <b class="letraAzul">3.</b> Metro cúbico <br> <b class="letraAzul">4.</b> Centímetro cúbico <br> <b class="letraAzul">5.</b> Milímetro cúbico <br> ', 9, ],
+        ['<b>Relaciona</b> las medidas con sus equivalencias. <img src="img/i5_p252_quimestre2.jpg" alt="" class="img-responsive"/></img>', 10, ],
+        ['<b>Interpreta</b> la situación y selecciona la respuesta correcta. <br><br>Un estudiante de 5.° de Básica obtuvo 7 puntos en una prueba de Matemáticas. Organiza todas las calificaciones de sus compañeros y obtiene que la media es 8. Este valor representa:', 11, ],
+        ['Nancy tiene una bombonera con 14 fichas de color rojo, 17 fichas de color verde y 9 fichas de color azul. La probabilidad de sacar una ficha en forma aleatoria, para cada color, es:', 12, ],
+
+    ];
+
+    resp = [
+
+        ['<li><p class="fuente no">1, 2, 3</p></li>',
+            '<li><p class="fuente no">2, 3, 5</p></li>',
+            '<li><p class="fuente no">3, 4, 5</p></li>',
+            '<li><p class="fuente si">1, 3, 5</p></li>',
+        ],
+        ['<li><p class="fuente no">1b, 2a, 3c</p></li>',
+            '<li><p class="fuente no">1c, 2b, 3a</p></li>',
+            '<li><p class="fuente no">1a, 2c, 3b</p></li>',
+            '<li><p class="fuente si">1a, 2b, 3c</p></li>',
+        ],
+        ['<li><p class="fuente no">1 025,33</p></li>',
+            '<li><p class="fuente no">2 678,20</p></li>',
+            '<li><p class="fuente no">1 050,35</p></li>',
+            '<li><p class="fuente si">1 053,99</p></li>',
+        ],
+        ['<li><p class="fuente no">1a, 2b, 3c</p></li>',
+            '<li><p class="fuente no">1b, 2a, 3c</p></li>',
+            '<li><p class="fuente no">1c, 2b, 3a</p></li>',
+            '<li><p class="fuente si">1c, 2a, 3b</p></li>',
+        ],
+        ['<li><p class="fuente no">1a, 2b, 3c, 4d</p></li>',
+            '<li><p class="fuente no">1c, 2d, 3b, 4a</p></li>',
+            '<li><p class="fuente no">1d, 2a, 3c, 4d</p></li>',
+            '<li><p class="fuente si">1c, 2b, 3d, 4a</p></li>',
+        ],
+        ['<li><p class="fuente no">1a, 2b, 3c</p></li>',
+            '<li><p class="fuente no">1b, 2a, 3c</p></li>',
+            '<li><p class="fuente no">1c, 2b, 3a</p></li>',
+            '<li><p class="fuente si">1a, 2c, 3b</p></li>',
+        ],
+        ['<li><p class="fuente no">superficie</p></li>',
+            '<li><p class="fuente no">longitud</p></li>',
+            '<li><p class="fuente si">volumen</p></li>',
+        ],
+        ['<li><p class="fuente no">22,4 metros de baldosa</p></li>',
+            '<li><p class="fuente no">14 metros de baldosa</p></li>',
+            '<li><p class="fuente no">7,84 metros de baldosa</p></li>',
+            '<li><p class="fuente si">26,4 metros de baldosa</p></li>',
+        ],
+        ['<li><p class="fuente no">7,5 metros de madera</p></li>',
+            '<li><p class="fuente no">6 metros de madera</p></li>',
+            '<li><p class="fuente no">8,3 metros de madera</p></li>',
+            '<li><p class="fuente si">4 metros de madera</p></li>',
+        ],
+        ['<li><p class="fuente no">1, 2, 3</p></li>',
+            '<li><p class="fuente no">2, 3, 4</p></li>',
+            '<li><p class="fuente no">3, 4, 5</p></li>',
+            '<li><p class="fuente si">1, 4, 5</p></li>',
+        ],
+        ['<li><p class="fuente no">1b, 2a, 3c</p></li>',
+            '<li><p class="fuente no">1c, 2b, 3a</p></li>',
+            '<li><p class="fuente no">1a, 2c, 3b</p></li>',
+            '<li><p class="fuente si">1b, 2c, 3a</p></li>',
+        ],
+        ['<li><p class="fuente no">La cantidad de aplazados.</p></li>',
+            '<li><p class="fuente no">La calificación más frecuente.</p></li>',
+            '<li><p class="fuente no">La calificación central de todos los datos.</p></li>',
+            '<li><p class="fuente si">El promedio de todas las calificaciones.</p></li>',
+        ],
+        ['<li><p class="fuente no">P<sub>rojo</sub> <sup>9</sup>/<sub>40</sub>&nbsp;&nbsp;&nbsp;&nbsp;P<sub>verde</sub> <sup>17</sup>/<sub>40</sub>&nbsp;&nbsp;&nbsp;&nbsp;P<sub>azul</sub> <sup>14</sup>/<sub>40</sub></p></li>',
+            '<li><p class="fuente no">P<sub>rojo</sub> <sup>17</sup>/<sub>40</sub>&nbsp;&nbsp;&nbsp;&nbsp;P<sub>verde</sub> <sup>9</sup>/<sub>40</sub>&nbsp;&nbsp;&nbsp;&nbsp;P<sub>azul</sub> <sup>14</sup>/<sub>40</sub></p></li>',
+            '<li><p class="fuente no">P<sub>rojo</sub> <sup>17</sup>/<sub>40</sub>&nbsp;&nbsp;&nbsp;&nbsp;P<sub>verde</sub> <sup>14</sup>/<sub>40</sub>&nbsp;&nbsp;&nbsp;&nbsp;P<sub>azul</sub> <sup>9</sup>/<sub>40</sub></p></li>',
+            '<li><p class="fuente si">P<sub>rojo</sub> <sup>14</sup>/<sub>40</sub>&nbsp;&nbsp;&nbsp;&nbsp;P<sub>verde</sub> <sup>17</sup>/<sub>40</sub>&nbsp;&nbsp;&nbsp;&nbsp;P<sub>azul</sub> <sup>9</sup>/<sub>40</sub></p></li>',
+        ],
+
+
+
+    ];
+    preg.sort(f_randomico);
+
+    $(".titulop").hide();
+
+
+    f_iniciar();
+
+
+    function f_iniciar() {
+
+        $(".titulop").show(500);
+        $(".principal").hide(500);
+        nn1 = (preg[cont][1]);
+        console.log(preg);
+        for (i = 0; i < resp.length; i++) {
+
+            resp[i].sort(f_randomico);
+        }
+        console.log(resp[nn1]);
+
+        $(".tnumero").html('').append(cont + 1)
+        $(".pregunta").html('').append(preg[cont][0])
+        $(".imag1").html('').append(preg[cont][2])
+        $(".op1").html('').append(resp[nn1])
+        $(".si").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarcorrecto");
+            cor++;
+            calificar_preg();
+        });
+        $(".no").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarincorrecto");
+            inc++;
+            calificar_preg();
+        });
+
+        function calificar_preg() {
+            cont++;
+            $(this).unbind("click");
+            var timer = setTimeout(f_condicion, 1000);
+
+            function f_condicion() {
+                if (cont == itemsT) {
+                    $('.cajaprincipal').html('<table class="table table-bordered" style="text-align:center; font-size: 30px;">' +
+                        '<tr>' +
+                        '<td colspan="2"><b>Tu Calificación es:</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td colspan="2"><b><span class="notaq1"></span>/10</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td><b style="color:  green;">Respuestas Correctas</b></td>' +
+                        '<td><b style="color:  red;">Respuestas Incorrectas</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td>' + cor + '</td>' +
+                        '<td>' + inc + '</td>' +
+                        '</tr>' +
+                        '</table>');
+                }
+                clearTimeout(timer);
+                Calculo_nota();
+            }
+
+
+        }
+
+    }
+    </script>
+</body>
+
+</html>

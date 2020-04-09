@@ -1,0 +1,490 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>LENGUA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <style>
+    table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+
+
+    .subrayar {
+        text-decoration: underline;
+    }
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+
+    .incorrecto {
+
+        background-color: #E76E80;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br> <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="calificaTST()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 46
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <input type="text" id="nt1" class="nota-abierta">
+                                    <a role="button"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Literatura <span class="sobre">2 pts</span>
+                                    </a>
+
+
+                                </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <img class="img-responsive" src="img/literatura.png"></img>
+                                        <span><b style="color: #EC6608">1.-</b> <b>Identifica</b> los elementos de esta leyenda y <b>escríbelos</b> en los recuadros.</span>
+                                        <div align="center">
+                                            <img src="img/i1_p44_act60.jpg" alt="" class="img-responsive">
+                                            <table class="table" style="text-align: center;width: 70%;">
+                                                <tr>
+                                                    <td><b class="encierra2">Narrador</b></td>
+                                                    <td>
+                                                        <textarea class="form-control bordeTabla" cols="10" rows="3" style="resize: none;"></textarea>
+                                                    </td>
+                                                    <td><b class="encierra2">Personajes</b></td>
+                                                    <td rowspan="3">
+                                                        <textarea class="form-control bordeTabla" cols="10" rows="11" style="resize: none;"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b class="encierra2">Tiempo</b></td>
+                                                    <td>
+                                                        <textarea class="form-control bordeTabla" cols="10" rows="3" style="resize: none;"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b class="encierra2">Espacio</b></td>
+                                                    <td>
+                                                        <textarea class="form-control bordeTabla" cols="10" rows="3" style="resize: none;"></textarea>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="text-question">
+                                        <span><b style="color: #EC6608">2.-</b> <b>Explica</b> por qué este texto es una leyenda.</span>
+                                        <br>
+                                        <br>
+                                        <input class="form-control" type="text" placeholder="Escribe tu respuesta"></input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <input type="number" id="nt2" class="nota-abierta" disabled>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Comunicación oral <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <div class="col-md-12 ">
+                                        <div class="text-question">
+                                            <img class="img-responsive" src="img/comunicacion.png"></img>
+                                            <span><b style="color: #964091">3.-</b> <b>Subraya</b> las recomendaciones para hacer una buena reseña oral.</span>
+                                            <div>
+                                                <br><span class="enc" id="R1">• Decir la verdad.</span>
+                                                <br>
+                                                <span class="enc" id="R2">• Organizar la información.</span>
+                                                <br>
+                                                <span class="enc" id="R3">• Grabar en video.</span>
+                                                <br>
+                                                <span class="enc" id="R4">• Hablar con claridad.</span>
+                                                <br>
+                                                <span class="enc" id="R5">• Hacer una reseña larga.</span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="text-question">
+                                            <span><b style="color: #964091">4.-</b> <b>Identifica</b> qué función comunicativa tiene cada uno de estos discursos orales.</span>
+                                            <div align="center">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:200px;" class="bordeCaja2">El patio de mi casa
+                                                            <br> es muy particular,
+                                                            <br> cuando llueve se moja
+                                                            <br> como los demás.
+                                                            <br> Agáchate
+                                                            <br> y vuélvete a agachar…
+                                                            <br> <b style="color: #964091">Función:</b>
+                                                            <br>
+                                                            <input type="text" class="form-control" name="" id="txt1">
+                                                        </td>
+                                                        <td style="width:200px;" class="bordeCaja2">Las lluvias se agudizan este
+                                                            <br> invierno.
+                                                            <br> Muchos planteles
+                                                            <br> escolares han tenido
+                                                            <br> que suspender las clases. <b style="color: #964091">Función:</b>
+                                                            <br>
+                                                            <input type="text" class="form-control" name="" id="txt2">
+                                                        </td style="width:200px;" class="bordeCaja2">
+                                                        <td class="bordeCaja2">Alerta por altos niveles
+                                                            <br> de radiación solar.
+                                                            <br> Recomendamos a
+                                                            <br> nuestros radioescuchas
+                                                            <br> que hoy permanezcan
+                                                            <br> bajo sombra y usen
+                                                            <br>protector solar.
+                                                            <br><b style="color: #964091">Función:</b>
+                                                            <br>
+                                                            <input type="text" class="form-control" name="" id="txt3">
+                                                        </td>
+                                                    </tr>
+                                                    <tr align="center">
+                                                        <td colspan="3" class="bordeCaja2"><img class="img-responsive" src="img/i2_p44_act60.jpg"></img>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="html2pdf__page-break"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="html2pdf__page-break"></div>
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <input type="text" id="nt3" class="nota-abierta" >
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Lectura <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    <div class="col-md-12" style="padding-top: 20px">
+                                        <div class="text-question">
+                                            <img class="img-responsive" src="img/lectura.png"></img>
+                                            <span><b style="color: #E5005B">5.-</b> <b>Identifica</b> la función comunicativa de la leyenda del padre Almeida y <b>argumenta</b> tu respuesta.</span>
+                                            <br>
+                                            <input type="text" placeholder="Escribe tu respuesta" class="form-control" name="">
+                                        </div>
+                                        <br>
+                                        <div class="text-question">
+                                            <span><b style="color: #E5005B">6.-</b> <b>Expresa</b> tu opinión sobre la leyenda: ¿qué parte puede haber sucedido en realidad? ¿Por qué?</span>
+                                            <br>
+                                            <input type="text" placeholder="Escribe tu respuesta" class="form-control" name="">
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="text-question">
+                                            <span><b style="color: #E5005B">7.-</b> <b>Escribe</b> con tus propias palabras estas expresiones que aparecen en la lectura:</span>
+                                            <br>
+                                            <div>
+                                                <br> Tenía una bien timbrada voz.
+                                                <input class="form-control" type="text" placeholder="Escribe tu respuesta"></input>
+                                                Se disputaban por colmarle de mimos.
+                                                <input class="form-control" type="text" placeholder="Escribe tu respuesta"></input>
+                                                El cura superior, que ya sospechaba de los desmanes.
+                                                <input class="form-control" type="text" placeholder="Escribe tu respuesta"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingFour">
+                                <h4 class="panel-title">
+                                    <input type="text" id="nt4" class="nota-abierta">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        Escritura <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="text-question">
+                                            <img class="img-responsive" src="img/escritura.png"></img>
+                                            <span><b style="color: #009DC5">8.-</b> <b>Escribe</b> una reseña sobre la leyenda del padre Almeida. <b>Utiliza</b> una construcción comparativa en el desarrollo.</span>
+                                            <div align="center">
+                                                <table class="table" style="background-color: #DECCC8; width: 80%; ">
+                                                    <tr>
+                                                        <td><b style="color:#9B6244">Título</b></td>
+                                                        <td>
+                                                            <textarea class="form-control" cols="30" style="resize: none;" rows="5"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b style="color:#9B6244">Introducción</b></td>
+                                                        <td>
+                                                            <textarea class="form-control" cols="30" style="resize: none;" rows="5"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b style="color:#9B6244">Desarrollo</b></td>
+                                                        <td>
+                                                            <textarea class="form-control" cols="30" style="resize: none;" rows="5"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b style="color:#9B6244">Conclusión</b></td>
+                                                        <td>
+                                                            <textarea class="form-control" cols="30" style="resize: none;" rows="5"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="html2pdf__page-break"></div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingFive">
+                                    <h4 class="panel-title">
+                                    <input type="text" id="nt5"  class="nota-abierta">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        Lengua y Cultura <span class="sobre">2 pts</span>
+                                    </a>
+                                </h4>
+                                </div>
+                                <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                    <div class="panel-body">
+                                        <div>
+                                            <div class="text-question">
+                                                <img class="img-responsive" src="img/lengua.png"></img>
+                                                <span><b style="color: #005CA9">9.-</b> <b>Explica</b> por qué el castellano de América y el de España son distintos.</span>
+                                                <br>
+                                                <br>
+                                                <textarea class="form-control" cols="30" rows="5" style="resize: none;"></textarea>
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <div class="text-question">
+                                                <span><b style="color: #005CA9">10.-</b> <b>Menciona</b> tres lenguas distintas al castellano que contribuyeron al desarrollo del castellano en el Ecuador.</span>
+                                                <br>
+                                                <br>
+                                                <textarea class="form-control" cols="30" rows="5" style="resize: none;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="guardar()">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+            <!--generador de pdf-->
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/Utilitario.js"></script>
+            <script src="js/actividad60.js"></script>
+            <script type="text/javascript">
+            var titulos = "evaluacion";
+            $("#txtNota").html("0");
+            $("#n_pagina").html("44");
+            $('.btnGuardar').removeClass('disabled');
+            </script>
+</body>
+
+</html>

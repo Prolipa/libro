@@ -1,0 +1,588 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Matemáticas 4</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+		<link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+		<link href="css/Comprendo.css" rel="stylesheet">
+		<link href="css/lengu2.css" rel="stylesheet">
+
+
+    </head>
+    <style type="text/css">
+  .mi_canvas {
+    min-width: 320px;
+  }
+  #prueba {
+    margin-top: 2rem;
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    transition: all .3s linear 0s;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#e5e5e5; 
+    background-color:rgba(212,185,186,0.2); 
+    background-image: url(img/i1_p87_ani14%20.png); /* SI SE NECESITA UNA IMAGEN DE FONDO */
+    background-size: 100% 100%;
+  }
+  #logo {
+    display: block;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    z-index: 1;
+    width: 30%;
+    height: auto;
+    max-width: 350px;
+    min-width: 100px;
+  }
+  #contenedoropciones {
+    margin-top: 2rem;
+    padding: 2px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #contenedoropciones table {
+  background-color: rgba(220,220,220,1.00);
+  border: .25rem solid rgba(188,185,185,1.00);
+  margin-bottom: .5rem;
+  border-spacing: 5px;
+  border-collapse: separate;
+  }
+  #contenedoropciones table:nth-of-type(2) {
+    border-spacing: 5px;
+  }
+  #contenedoropciones table:nth-of-type(2) td {
+    width: 1px;
+    white-space: nowrap;
+  }
+  #contenedoropciones table:nth-of-type(1) td {
+    cursor: pointer;
+  }
+  #contenedoropciones .titulotabla {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color:rgba(103,103,103,1.00)
+  }
+  #contenedoropciones table {
+    display: inline-table;
+  }
+  
+  .celdascoloresdefondo {
+    width: 20px;
+    height: 10px;
+    border: solid 1px transparent;
+  }
+  @media (max-width: 890px) {
+    /*.mi_canvas {
+      font-size: .750rem;
+    }*/
+    #contenedoropciones, #prueba {
+      width: 98%
+    }
+    #contenedoropciones {
+      margin-left: 1%;
+    }
+  }
+  @media (max-width: 450px) {
+    /*.mi_canvas {
+      font-size: .75rem;
+    }*/
+  }
+  @media (max-width: 1px) {
+    #contenedoropciones #opcionesdedibujo {
+      display: table;
+      width: 100%;
+    }
+    #contenedoropciones #opcionesdedibujo td {
+      display: block;
+      width: auto;
+      text-align: left;
+      margin-top: 5px;    
+    }
+     
+  }
+</style>
+    <body>
+		
+		<div id="nota-informativa" class="nota-ayuda">
+             <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+                            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+                           
+                           	Para mostrar los contenidos de manera secuencial pulsa sobre <span  class="glyphicon glyphicon-play help-ico biniciar" aria-hidden="true"></span><br>
+                     		<span id="ayudas"></span>
+
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_4 btnIniciar mytooltip" data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip display-none" data-info="Calificar / Comprobar" id="bt_comprobar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                        </span>
+                        <span  class="notificacion nota display-none" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" >/ 10</span> 
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág  <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-exploro" id="activity" style="border-color: #7FCAB9"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-exploro" style="background-color: #7FCAB9">
+                    <span class="titulo">Organizo mis ideas</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                   
+                </div>
+               
+                <div class="panel-body">
+                    <!--texto de ayuda de la actividad-->
+                 
+                    <!--pregunats de la actividad-->
+                  
+					<div>
+                        
+                        <div class="row">
+                            <div class="anim" style="background-color: #6E89C0; border: 4px dotted white; border-radius: 15px">
+                                
+                                <p class="fuente30">Álgebra y funciones</p>
+                             
+                            </div>
+                            <p></p>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="anim" style="background-color: #DDE2F2; border: 4px dotted #6E89C0; border-radius: 15px">
+                                     <p class="fuente2"><b>Relación de inclusión o de contenencia</b></p>
+                                </div>
+                                <p></p>
+                                <div class="anim" style="border: 4px dotted #6E89C0; border-radius: 15px">
+                                    <p class="fuente">La relación de contenencia se da cuando los elementos de un subconjunto están incluidos en el conjunto universo.</p>
+                                </div>
+                                <p></p>
+                                <div class="anim" style="border: 4px dotted #6E89C0; border-radius: 15px">
+                                                    
+                                                    <p class="fuente" style="text-align: left"><b>Establece</b> la relación de contenencia.</p>
+                                                    
+                                                    <p class="fuente">U = {1 000, 3 000, 7 000, 9 000}</p>
+                                                    
+                                                    <p class="fuente">A = {1000}&emsp;&emsp; <br>B = {4000}</p>
+                                                    
+                                                    <label class="fuente">A<label><input class="form-control fuente2" style="width: 80px"></label><label>U</label>&emsp;&emsp;&emsp;<br> <label>B</label><label><input class="form-control fuente2" style="width: 80px"></label><label>U</label></label>
+                                                
+                                </div>
+                                <p></p>
+                                <div class="anim" style="border: 4px dotted #6E89C0; border-radius: 15px; padding: 5px">
+                                    <p class="fuente"><b>Pares ordenados</b></p>
+                                    <p class="fuente">Un par ordenado es una pareja de elementos escritos en un orden determinado.</p>
+                                </div>
+                                <p></p>
+                                 <div class="anim" style="border: 4px dotted #6E89C0; border-radius: 15px; padding: 5px">
+                                    <p class="fuente"><b>Escribe</b> los pares ordenados que se forman de los siguientes conjuntos.</p>
+                                    <p class="fuente">M={candado, lápiz}</p>
+                                    <p class="fuente" style="text-align: left">N={llave, sacapuntas}</p>
+                                    <input class="form-control fuente">
+                                    <input class="form-control fuente">
+                                 </div>
+                            </div>
+                            
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <p></p>
+                                <div class="anim" style="background-color: #DDE2F2; border: 4px dotted #6E89C0; border-radius: 15px">
+                                    <p class="fuente2"><b>Patrones numéricos basados en sumas y restas</b></p>
+                                </div>
+                                <p></p>
+                                <div class="anim" style="border: 4px dotted #6E89C0; border-radius: 15px">
+                                                    <p class="fuente anim">Es un valor constante que se suma o resta una y otra vez para formar una sucesión.</p>
+                                                    
+                                                    <p class="fuente anim"><b>Completa</b> la sucesión.</p>
+                                                    
+                                                    <div align="center">
+                                                        <table>
+                                                            <tbody>
+                                                                <tr class="anim">
+                                                                    <td>
+                                                                        <div style="border: 2px solid #D68500; border-radius: 8px; width: 1cm; height: 1cm;">
+                                                                            <p style="font-size: 20px; text-align: center">+7</p>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="padding-left: 10px">
+                                                                        <div style="border: 2px solid #D68500; border-radius: 8px; width: 1cm; height: 1cm;">
+                                                                            <p style="font-size: 20px; text-align: center">+7</p>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="padding-left: 10px">
+                                                                        <div style="border: 2px solid #D68500; border-radius: 8px; width: 1cm; height: 1cm;">
+                                                                            <p style="font-size: 20px; text-align: center">+7</p>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    
+                                                    <div>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr class="anim">
+                                                                    <td><div><p class="fuente">683</p></div></td>
+                                                                    <td style="padding-left: 5px"><div><input class="form-control fuente" style="width: 80px"></div></td>
+                                                                    <td style="padding-left: 5px"><div><input class="form-control fuente" style="width: 80px"></div></td>
+                                                                    <td style="padding-left: 5px"><div><input class="form-control fuente" style="width: 80px"></div></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                <p></p>
+                                <div class="anim" style="border: 4px dotted #6E89C0; border-radius: 15px; padding: 5px">
+                                    <p class="fuente"><b>Completa:</b></p>
+                                                    
+                                    <p class="fuente">Los términos de la adición son:</p>
+                                                    
+                                    <input class="form-control fuente">
+                                </div>
+                                <p></p>
+                                <div class="anim" style="border: 4px dotted #6E89C0; border-radius: 15px; padding: 5px">
+                                      <p class="fuente"><b>Resuelve</b> las adiciones:</p>
+                                                    
+                                      <div>
+                                          <table>
+                                              <tbody>
+                                                  <tr class="anim">
+                                                      <td>
+                                                          <p style="font-size: 20px; text-align: center">&nbsp;&nbsp;&nbsp;4 891</p>
+                                                          <p style="font-size: 20px; text-align: center">+ 3 812</p>
+                                                          <div><input class="form-control fuente2"></div>
+                                                      </td>
+                                                      <td>
+                                                          <p style="font-size: 20px; text-align: center">&nbsp;&nbsp;&nbsp;5 074</p>
+                                                          <p style="font-size: 20px; text-align: center">+ 1 938</p>
+                                                          <div><input class="form-control fuente2"></div>
+                                                      </td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                </div>
+                                <p></p>
+                                <div class="anim" style="background-color: #DDE2F2; border: 4px dotted #6E89C0; border-radius: 15px">
+                                    <p class="fuente2"><b>Propiedades: asociativa, conmutativa</b></p>
+                                </div>
+                                <p></p>
+                                <div class="anim" style="border: 4px dotted #6E89C0; border-radius: 15px; padding: 5px">
+                                   <p class="fuente"><b>Escribe</b> la propiedad que se aplica en las siguientes operaciones:</p>
+                                   <p class="fuente">800 + 500 = 500 + 800 = 1 300</p>
+                                   <div><input class="form-control fuente"></div>
+                                   <p class="fuente">(2 000 + 900) + 3 001 = 5 901</p>
+                                   <div><input class="form-control fuente"></div>
+                                </div>
+                                <p></p>
+                                <div class="anim" style="background-color: #DDE2F2; border: 4px dotted #6E89C0; border-radius: 15px">
+                                   <p class="fuente2"><b>Sustracción con números hasta el 9 999</b></p>
+                                </div>
+                                <p></p>
+                                <div class="anim" style="border: 4px dotted #6E89C0; border-radius: 15px; padding: 5px">
+                                     <p class="fuente"><b>Complete:</b></p>
+                                     <p class="fuente">Los términos de la sustracción son:</p>
+                                     <input class="form-control fuente">
+                                </div>
+                                <p></p>
+                                <div class="anim" style="border: 4px dotted #6E89C0; border-radius: 15px; padding: 5px">
+                                     <p class="fuente"><b>Resuelve</b></p>
+                                                    
+                                     <div>
+                                         <table>
+                                             <tbody>
+                                                 <tr class="anim">
+                                                     <td>
+                                                         <p style="font-size: 20px; text-align: center">&nbsp;&nbsp;&nbsp;8 000</p>
+                                                         <p style="font-size: 20px; text-align: center">+ 5 915</p>
+                                                         <div><input class="form-control fuente2"></div>
+                                                     </td>
+                                                     <td>
+                                                         <p style="font-size: 20px; text-align: center">&nbsp;&nbsp;&nbsp;6 247</p>
+                                                         <p style="font-size: 20px; text-align: center">+ 4 861</p>
+                                                         <div><input class="form-control fuente2"></div>
+                                                     </td>
+                                                 </tr>
+                                             </tbody>
+                                         </table>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p></p>
+                        <div>
+                            <div class="anim" style="background-color: #CF7887; border: 4px dotted white; border-radius: 15px">
+                                <p class="fuente30">Geometría y medida</p>
+                            </div>
+                            
+                            <p></p>
+                            
+                            <div class="anim" style="background-color: #F3E1E4; border: 4px dotted #CF7887; border-radius: 15px">
+                                <p class="fuente2">Clasificación de los ángulos</p>
+                            </div>
+                            
+                            <p></p>
+                            
+                            <div class="anim" style="border: 4px dotted #CF7887; border-radius: 15px">
+                                <p class="fuente">Los ángulos se clasifican en: recto, mide 90º, agudo, menos de 90º y obtuso, más de 90º.</p>
+                            </div>
+                            
+                            <p></p>
+                            
+                            <div class="anim" style="border: 4px dotted #CF7887; border-radius: 15px">
+                                    <main>
+	                                   <canvas id="prueba">Este navegador no soporta canvas, visualice la web con un navegador actualizado.</canvas>
+                                            <div id="paleta" class="mi_canvas">
+    	                                       <div id="contenedoropciones">
+                                                  <table width="auto">
+                                                    <tbody>
+                                                        <tr>
+                                                        <td colspan="9" class="titulotabla">Color</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="celdascoloresdefondo" data-color="red">&nbsp;</td>
+                                                            <td class="celdascoloresdefondo" data-color="pink">&nbsp;</td>
+                                                            <td class="celdascoloresdefondo" data-color="orange">&nbsp;</td>
+                                                            <td class="celdascoloresdefondo" data-color="yellow">&nbsp;</td>
+                                                            <td class="celdascoloresdefondo" data-color="magenta">&nbsp;</td>
+                                                            <td class="celdascoloresdefondo" data-color="MEDIUMSEAGREEN">&nbsp;</td>
+                                                            <td class="celdascoloresdefondo" data-color="green">&nbsp;</td>
+                                                            <td class="celdascoloresdefondo" data-color="DARKCYAN">&nbsp;</td>
+                                                            <td class="celdascoloresdefondo" data-color="cyan">&nbsp;</td>
+                                                        </tr>
+                                                        <tr>
+                                                        
+                                                          <td class="celdascoloresdefondo" data-color="blue">&nbsp;</td>
+                                                          <td class="celdascoloresdefondo" data-color="wheat">&nbsp;</td>
+                                                          <td class="celdascoloresdefondo" data-color="brown">&nbsp;</td>
+                                                          <td class="celdascoloresdefondo" data-color="white">&nbsp;</td>
+                                                          <td class="celdascoloresdefondo" data-color="LIGHTGRAY">&nbsp;</td>
+                                                          <td class="celdascoloresdefondo" data-color="gray">&nbsp;</td>
+                                                          <td class="celdascoloresdefondo" data-color="LIGHTSLATEGRAY">&nbsp;</td>
+                                                          <td class="celdascoloresdefondo" data-color="DARKSLATEGRAY">&nbsp;</td>
+                                                          <td class="celdascoloresdefondo" data-color="black">&nbsp;</td>
+                                                        </tr>
+                                                </tbody>
+                                        </table>
+                                        <table width="auto" id="opcionesdedibujo">
+                                                <tbody>
+                                                        <tr>
+                                                          <td colspan="5" class="bg-info">Opciones de dibujo</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td>Grosor pincel: <input onChange="cambiagrosor(this)" name="grosor" type="number" id="grosor" max="100" min="3" step="1" title="Grosor del cursor" value="5"></td>
+                                                          <td onClick="cambiapincel(this)" id="celdapincelcuadrado" style="cursor:pointer;border:solid 1px black;background-color: white;">Pincel cuadrado</td>
+                                                          <td onClick="cambiaaccion(this)" id="xpintar"class="celdaaccion" style="cursor:pointer;border:solid 1px black;background-color: white;">Pintar</td>
+                                                          <td rowspan="2"  onClick="borrartodo()"><span class="btn btn-danger">Borrar todo</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td>Grosor borrar: <input onChange="cambiagrosorborrador(this)" name="grosorborrar" type="number" id="grosorborrar" max="100" min="3" step="1" title="Grosor del borrardor" value="10"></td>
+                                                          <td onClick="cambiapincel(this)" id="celdapincelredondo" style="cursor:pointer;border:solid 1px transparent">Pincel redondo</td>
+                                                          <td onClick="cambiaaccion(this)" id="xborrar" class="celdaaccion" style="cursor:pointer;border:solid 1px transparent">Borrar</td>
+                                                        </tr>
+                                                </tbody>
+                                        </table>
+
+                                    </div>
+                                 </div>
+                            </main>
+                          </div>
+                            
+                          <p></p>    
+                            
+                          <div class="anim" style="background-color: #F3E1E4; border: 4px dotted #CF7887; border-radius: 15px">
+                                <p class="fuente2">Características de triángulos, cuadrados y rectángulos</p>
+                          </div>
+                            
+                          <p></p>    
+                            
+                          <div class="anim" style="border: 4px dotted #CF7887; border-radius: 15px">
+                              
+                              <p class="fuente anim"><b>Pon</b> el nombre de las siguientes figuras:</p>
+                              
+                              <div align="center" style="padding: 10px">
+                                  <table>
+                                    <tbody>
+                                        <tr class="anim">
+                                            <td><div align="center"><img class="img-responsive" src="img/i2_p87_ani14%20.png" alt="" style="max-width: 150px"></div></td>
+                                            <td><div align="center"><img class="img-responsive" src="img/i3_p87_ani14%20.png" alt="" style="max-width: 200px"></div></td>
+                                            <td><div align="center"><img class="img-responsive" src="img/i4_p87_ani14%20.png" alt="" style="max-width: 150px"></div></td>
+                                        </tr>  
+                                        <tr class="anim">
+                                            <td><input class="form-control fuente2"></td>
+                                            <td><input class="form-control fuente2"></td>
+                                            <td><input class="form-control fuente2"></td>
+                                        </tr>
+                                    </tbody>
+                                  </table>
+                              </div>
+                          </div>  
+                            
+                          <p></p>    
+                            
+                          <div class="anim" style="border: 4px dotted #CF7887; border-radius: 15px">
+                              <p class="fuente"><b>Magnitudes: cantidad y unidad.</b></p>
+                              
+                              <p class="fuente"><b>Contesta</b>:</p>
+                              
+                              <p class="fuente">¿Qué es magnitud?</p>
+                              
+                              <div><input class="form-control fuente"></div>
+                              
+                              <p class="fuente"><b>Escribe</b> dos unidades de medida.</p>
+                              
+                              <div><input class="form-control fuente"></div>
+                            
+                          </div>    
+                        </div>
+                        
+                        <p></p>
+                        
+                        <div class="anim">
+                            <div style="background-color: #824F94; border: 4px dotted white; border-radius: 15px">
+                                <p class="fuente30">Estadística y probabilidad</p>
+                            </div>
+                        </div>
+                        
+                        <p></p>
+                        
+                        <div class="anim" style="background-color: #F8F6FA; border: 4px dotted #824F94; border-radius: 15px">
+                            <p class="fuente2">Tablas de conteo y frecuencia</p>
+                        </div>
+                        
+                        
+                    </div>
+				</div>
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+		<script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+		<script src="js/animate.css.min.js"></script>
+		<script src="js/jquery.animate.css.js"></script>
+		<script src="js/Utilitario.js"></script>
+        <script src="js/dibujarCANVAS.js"></script>
+
+		
+		<script>
+			var titulos ="organizo"
+			$("#n_pagina").html("87"); //impresion de pagina            
+        </script>
+
+    </body>
+</html>

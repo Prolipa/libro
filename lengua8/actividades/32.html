@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Lengua y Literatura 8</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            Lee cuidadosamente las preguntas, contesta cada una de ellas.<br> 
+            Selecciona <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+            , en el cuadro de dialogo escribir el nombre del alumno o alumnos que realizaron actividad,<br> 
+            para descargar un pdf para que el profesor evalue sus respuestas.
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onclick="calificar_abierta()">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad " >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 31
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-aplico" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-aplico">
+                    <span class="titulo"><img src="img/icoA.png" alt="">Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+
+                </div>
+                <div class="panel-body">
+
+                    <!--pregunats de la actividad-->
+                    <div  class="col-md-12 space">
+                        <input type="number" class="nota-abierta" min="0" max="10">
+                        <span class="text-question">1. <strong>Observa</strong> la tabla y <strong>completa</strong> con preguntas indagatorias. 
+                            <strong>Verifica</strong> el significado de las oraciones.</span>
+                        <div class="table-responsive">
+                            <table class="table-bordered text-question">
+                                <tr  >
+                                    <td style="width: 25%" class="text-center" colspan="3">
+                                        <strong>Preguntas indagatorias:</strong> ¿Qué conoce sobre nuestra empresa?</td>
+                                </tr>
+                                <tr >
+                                    <td style="width: 25%" rowspan="2">
+                                        <span style="color:blue">Oraciones
+                                            interrogativas</span><br>
+                                        Se formulan para
+                                        obtener información.
+                                        Pueden plantearse
+                                        como preguntas
+                                        y se emplean
+                                        pronombres
+                                        y adverbios
+                                        interrogativos.
+                                    </td>
+                                    <td style="width: 25%">
+                                        <span style="color:blue">Pronombres interrogativos:</span><br>
+                                        Palabras tónicas que
+                                        siempre llevan tilde.</td> 
+
+                                    <td>
+                                        <table  >
+                                            <tr>
+                                                <td>
+                                                    qué
+                                                </td>
+                                                <td>
+                                                    ¿Qué conoce sobre nuestra empresa?
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    quién
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-question respuesta" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    quiénes
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-question respuesta" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    cuál
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-question respuesta" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    cuáles
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-question respuesta" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    cuánta
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-question respuesta" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    cuántas
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-question respuesta" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    cuántos
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-question respuesta" value="">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td> 
+                                </tr>
+                                <tr>
+                                    <td >
+                                        <span style="color:blue">Adverbios
+                                            interrogativos:</span>
+                                        Palabras tónicas que
+                                        siempre llevan tilde.</td>
+
+                                    <td>
+                                        <table >
+                                            <tr>
+                                                <td>
+                                                    dónde
+                                                </td>
+                                                <td>
+                                                    ¿Dónde va a ser la entrevista?
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    cuándo
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-question respuesta" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    cómo
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-question respuesta" value="">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td> 
+                                </tr>
+                            </table> 
+                        </div>
+
+                    </div>
+                    <!--salto de pagina en el pdf-->
+                    <div class="html2pdf__page-break"></div> 
+                    <div  class="col-md-12 ">
+                        <input type="number" class="nota-abierta" min="0" max="10">
+                        <span class="text-question ">2. <strong>Cambia</strong> la siguiente pregunta de directa a indirecta o viceversa. <strong>Pon</strong> atención en el ejemplo.</span>
+                        <table class="text-question ">
+                            <tr>
+                                <td style="width: 30%">
+                                    <div class="bg-info" style="border-radius: 5px; margin: 2px;">
+                                        <span class="text-primary"><strong>Preguntas directas</strong></span><br>
+                                        Se escriben entre signos de interrogaciòn.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="bg-danger" style="border-radius: 5px;margin: 2px">
+                                        <span class="text-danger"><strong>Preguntas indirectas</strong></span><br>
+                                        Se escriben sin signos de interrogaciòn y van en medio de la oraciòn. 
+                                        Se construyen con los verbos <i>saber, decir, entender, preguntar,</i>
+                                        entre otros.
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <svg width="100" height="40" style="margin: 0px;padding: 0px">
+
+                                    <line x1="50" y1="0" x2="50" y2="100" 
+                                          stroke="orange" stroke-width="3" marker-end="url(#flecha)" />
+                                    </svg>
+                                </td>
+                                <td class="text-right">
+                                    <svg width="100" height="40" style="margin: 0px;padding: 0px">
+                                    <line x1="50" y1="0" x2="50" y2="100" 
+                                          stroke="blue" stroke-width="3" marker-end="url(#flecha)" />
+                                    </svg>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table style="width: 100%" class="text-question">
+                                        <tr  >
+                                            <td class="bg-info">¿Cuáles son sus aspiraciones salariales?</td>
+                                            <td>
+                                                <svg width="40" height="30" style="margin: 0px;padding: 0px">
+                                                <line x1="3" y1="14" x2="40" y2="14" 
+                                                      stroke="blue" stroke-width="3" marker-end="url(#flecha)" />
+                                                </svg>
+                                            </td>
+                                            <td class="bg-danger">Quisiera saber cuáles son sus aspiraciones salariales.</td>
+                                        </tr>
+                                        <tr  >
+                                            <td class="bg-info">¿Cuántos años tiene de experiencia?</td>
+                                            <td>
+                                                <svg width="40" height="30" style="margin: 0px;padding: 0px">
+                                                <line x1="3" y1="14" x2="40" y2="14" 
+                                                      stroke="blue" stroke-width="3" marker-end="url(#flecha)" />
+                                                </svg>
+                                            </td>
+                                            <td class="bg-danger"><input type="text" class="form-control text-question respuesta" value=""></td>
+                                        </tr>
+                                        <tr  >
+                                            <td class="bg-info"><input type="text" class="form-control text-question respuesta" value=""></td>
+                                            <td>
+                                                <svg width="40" height="30" style="margin: 0px;padding: 0px">
+                                                <line x1="3" y1="14" x2="40" y2="14" 
+                                                      stroke="blue" stroke-width="3" marker-end="url(#flecha)" />
+                                                </svg>
+                                            </td>
+                                            <td class="bg-danger">Me gustaría escuchar cuáles son sus mayores virtudes.</td>
+                                        </tr>
+                                        <tr  >
+                                            <td class="bg-info"><input type="text" class="form-control text-question respuesta" value=""></td>
+                                            <td>
+                                                <svg width="40" height="30" style="margin: 0px;padding: 0px">
+                                                <line x1="3" y1="14" x2="40" y2="14" 
+                                                      stroke="blue" stroke-width="3" marker-end="url(#flecha)" />
+                                                </svg>
+                                            </td>
+                                            <td class="bg-danger">Quisiera conocer por qué quiere cambiar de trabajo.</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+
+
+    </body>
+</html>

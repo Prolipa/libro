@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MATEMÁTICA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 100%;
+    max-height: 100%;
+    border: 1px #005ca4 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    width: auto;
+    display: grid;
+}
+
+.encierra {
+    border: 5px solid #FF9D29;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.sobre {
+    padding: 4px;
+    border-style: none;
+    border-width: 2px;
+    border-radius: 15%;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-color: #1a75ff;
+    color: #1a75ff;
+}
+
+.saltos2 {
+    text-align: center;
+    border: 1px solid #C3C7C3;
+    border-bottom: 1px solid #85BCEB;
+    border-radius: 15px;
+
+
+    width: 100px;
+}
+
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+
+.inputPequeño {
+    text-align: center;
+    border: 0;
+    border-bottom: 1px dotted #328AF7;
+    width: 40px;
+    color: blue;
+}
+
+.cajas1 {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #ed8700 dotted;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    width: auto;
+}
+
+
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+
+.periodicos {
+    border-top: 2px solid #000000;
+    border-radius: 15px;
+}
+
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+
+.subrayar {
+
+    border-bottom: 3px solid #FF8A00;
+}
+
+.pintar1 {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.grafico1 {
+    border: 2px solid #000000;
+}
+
+.grafico2 {
+    border: 2px solid #000000;
+    background: #008FFF;
+}
+
+.grafico3 {
+    border: 2px solid #000000;
+}
+
+.grafico4 {
+    border: 2px solid #000000;
+    background: #008FFF;
+}
+
+.grafico5 {
+    border: 2px solid #000000;
+}
+
+.grafico6 {
+    border: 2px solid #000000;
+    background: #008FFF;
+}
+
+.inputDiv {
+    text-align: center;
+    border: 0;
+    width: 30px;
+}
+
+.letraAzul {
+    color: #005ca4;
+}
+
+.punteado {
+    border: 0;
+    border-bottom: 1px dotted #000000;
+    text-align: center;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <img src="img/algebra_funciones.jpg" alt="" class="img-responsive"></img>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <input type="text" maxlength="4" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota1" readonly>&nbsp; <b>1. Encuentra</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>1. Encuentra</b> el patrón y <b>completa</b> las sucesiones.
+                                        <div class="table-responsive">
+                                            <table class="table" style="text-align: center;">
+                                                <tr>
+                                                    <td><b class="letraAzul">a)</b></td>
+                                                    <td>Patrón:</td>
+                                                    <td>+ <input type="text" class="inputfraccciones sinEspacios punteado" id="act1num0">;</td>
+                                                    <td>× <input type="text" class="inputfraccciones sinEspacios punteado" id="act1num1"></td>
+                                                    <td><span id="div2_0"></span><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;"></td>
+                                                    <td><span id="div2_1"></span><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;"></td>
+                                                    <td><span id="div2_2"></span><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;"></td>
+                                                    <td><span id="div2_3"></span><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Sucesión:</td>
+                                                    <td id="suc2_0"></td>
+                                                    <td id="suc2_1"></td>
+                                                    <td id="suc2_2"></td>
+                                                    <td id="suc2_3"></td>
+                                                    <td id="suc2_4"></td>
+                                                    <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act1num2"></td>
+                                                    <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act1num3"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                     <input type="text" maxlength="" size="" style="text-align:center;" readonly class="nota-abierta" min="0" max="1" id="nota2">&nbsp;<b>2. Resuelve</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question" align="justify">
+                                        <b>2. Resuelve</b> el problema aplicando sucesiones.
+                                        <br>
+                                        Ramiro y Carmen tienen que resolver 256 ejercicios de Matemáticas. Ramiro resolvió la cuarta parte del total la primera semana, la cuarta parte de lo resuelto en la segunda semana, y así sucesivamente durante 4 semanas. Carmen resolvió el resto de ejercicios.
+                                        <br>
+                                        ¿Cuántos ejercicios resolvió Ramiro y cuántos Carmen?
+                                        <div class="row">
+                                            <div class="col-lg-12 table-responsive">
+                                                <div style="background: url('img/i1_p254_uni6Sumativa.jpg');width: 818px;height: 129px;">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left: 307px;top: 9px;" placeholder="0">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left: 447px;top: 9px;" placeholder="0">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left: 587px;top: 9px;" placeholder="0">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left: 727px;top: 9px;" placeholder="0">
+                                                    <!---------------------------------------------->
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left: 230px;top: 71px;" placeholder="0">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left: 370px;top: 71px;" placeholder="0">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left: 520px;top: 71px;" placeholder="0">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left:
+                                                      650px;top: 71px;" placeholder="0">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left:
+                                                      790px;top: 71px;" placeholder="0">
+                                                    <!---------------------------------------------->
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left: 370px;top: 100px;" placeholder="0">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left: 520px;top: 100px;" placeholder="0">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left:
+                                                      650px;top: 100px;" placeholder="0">
+                                                    <input type="text" class="punteado inputfraccciones sinEspacios" style="position: absolute;left:
+                                                      790px;top: 100px;" placeholder="0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <input type="text" class="punteado"><br>
+                                        Carmen:<input type="text" class="punteado"><br>
+                                        <br>
+                                        <b class="letraAzul">R. </b>Ramiro resolvió <input type="text" class="inputfraccciones sinEspacios punteado" id="act2num0"> ejercicios y Carmen, <input type="text" class="inputfraccciones sinEspacios punteado" id="act2num1"> .
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                 <input type="text" maxlength="" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota3" readonly></input>&nbsp;
+                                    <b>3. Resuelve</b> <span class="sobre">2 pts</span>
+
+                                    </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>3. Resuelve</b> los ejercicios y expresa la respuesta con redondeo a las décimas.
+                                    <br>
+                                    <b class="letraAzul">a)</b><span id="num0act3"></span><input type="text" class="inputfraccciones soloPunto punteado sinEspacios" style="width: 70px;" id="act3num0">
+                                    <br><br><br>
+                                    <b class="letraAzul">b)</b><span id="num1act3"></span><input type="text" class="inputfraccciones soloPunto punteado sinEspacios" style="width: 70px;" id="act3num1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+                                    aria-controls="collapseFour">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center;" readonly class="nota-abierta" min="0" max="1" id="nota4">&nbsp;<b>4. Problema</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <b>4. </b>Julia organiza la fiesta de finalización del año lectivo para los 4 paralelos de los niños de 7.° GEGB, y para sus familiares. En cada paralelo hay 25 niños; cada niño tiene 5 entradas adicionales para sus familiares. Asistitan 14 personas entre profesores y autoridades de la escuela. En el salón ubican mesas redondas con capacidad para 8 personas. ¿Cuántas mesas necesitan? Aplica el redondeo.
+                                    <br><br>
+                                    <b class="letraAzul">R. </b>Se necesitan <input id="act4num0" type="text" class="inputfraccciones soloPunto sinEspacios punteado"> mesas.
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false"
+                                    aria-controls="collapseFive">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota5" readonly>&nbsp;<b>5. Resuelve</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <b>5. Resuelve</b> el problema con la aplicación de porcentajes.
+                                            <br>
+                                            Fernando compra un televisor en $ 630. El vendedor del almacén le llena la factura con el 14% del IVA.
+                                            <br>
+                                            <b class="letraAzul">a)</b> ¿Cuánto debe pagar Fernando por el televisor? <br>
+                                            <b class="letraAzul">b)</b> ¿Cómo llena la factura el vendedor? <br>
+                                            <textarea name="" class="form-control" rows="5" style="resize: none;"></textarea>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <img src="img/i2_p254_uni6Sumativa.jpg" alt="" class="img-responsive"></img>
+                                        </div>
+                                    </div>
+                                    <b class="letraAzul">R. </b>Fernando debe pagar $ <input id="act5num0" type="text" class="inputfraccciones sinEspacios soloPunto punteado" style="width: 70px;"> por el televisor.
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="img/geometria_medida.jpg" alt="" class="img-responsive"></img>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingSix">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false"
+                                    aria-controls="collapseSix">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota6" readonly>&nbsp;<b>6. Observa</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <b>6. Observa</b> la siguiente imagen y luego <b>responde</b>.
+                                    <br>
+                                    Si cada cubo tiene una capacidad de 15 metros cúbicos, ¿cuál es el total del volumen de los tres? ¿Cuál es el equivalente en litros de la medida encontrada?
+                                    <img src="img/i3_p254_uni6Sumativa.jpg" alt="" class="img-responsive"></img>
+                                    <br>
+                                    <b class="letraAzul">R. </b>El total del volumen es <input id="act6num0" type="text" class="inputfraccciones soloPunto punteado sinEspacios"> m<sup>3</sup> y el equivalente en litros es <input id="act6num1" type="text" class="inputfraccciones soloPunto punteado sinEspacios" style="width: 70px;"> dm<sup>3</sup> (L).
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingSeven">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false"
+                                    aria-controls="collapseSeven">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota7" readonly>&nbsp;<b>7. Lee, analiza y resuelve</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <b>7. Lee, analiza y resuelve</b> el problema.
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            Para las fiestas navideñas, una niña compra un papel de regalo que mide 2 metros de largo por 2 metros de ancho. Necesita forrar un regalo con forma cúbica, cuyo volumen es de 125 000 centímetros cúbicos. ¿Será suficiente la cantidad de papel para envolver el regalo?
+                                            <br>
+                                            Área del papel: <input type="text" class="punteado"><br><br>
+                                            Lado del cubo: <input type="text" class="punteado"><br><br>
+                                            Área del regalo (cubo): <input type="text" class="punteado"><br><br>
+                                            Área del papel – área del regalo = <input type="text" class="punteado"><br><br>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <img src="img/i4_p254_uni6Sumativa.jpg" alt="" class="img-responsive"></img>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <b class="letraAzul">R. </b>La cantidad de papel es suficiente para que envuelva el regalo, e incluso sobran <input type="text" class="inputfraccciones punteado sinEspacios soloPunto" id="act7num0"> metros cuadrados.
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingEigth">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEigth" aria-expanded="false"
+                                    aria-controls="collapseEigth">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota8" readonly>&nbsp;<b>8. Resuelve</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEigth" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEigth">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <b>8. Resuelve</b> el problema.
+                                    Un grupo de ecologistas encuentra 25 peces en peligro de extinción. Necesitan construir una pecera con forma cúbica para poder resguardarlos. Cada pez necesita 2 m3 de agua para poder mantenerse en excelentes condiciones. ¿Qué capacidad debe tener entonces la pecera? ¿Cuántos litros de agua necesitan para llenarla?
+                                    <br><br>
+                                    <b class="letraAzul">R. </b>La pecera debe medir <input id="act8num0" type="text" class="inputfraccciones sinEspacios soloPunto punteado">m<sup>3</sup> y se necesitan <input id="act8num1" type="text" class="inputfraccciones sinEspacios soloPunto punteado" style="width: 70px;">litros de agua para llenarla.
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingNine">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false"
+                                    aria-controls="collapseNine">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota9" readonly>&nbsp;<b>9. Problema</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <b>9. </b> Juana construye un recipiente cúbico que mide 84 centímetros de lado. Coloca en el interior una pirámide cuyo volumen es de 12 000 centímetros cúbicos. Si coloca en el interior arena de colores, ¿cuál es el volumen que debe llenar con arena? Expresa la respuesta en metros cúbicos.
+                                    <br>
+                                    <textarea name="" class="form-control" style="resize: none;"></textarea>
+                                    <br>
+                                    <b class="letraAzul">R. </b>El volumen que debe llenar con arena es de <input type="text" class="inputfraccciones soloPunto sinEspacios punteado" id="act9num0"> metros cúbicos.
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal conLevent-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/dragNdrop.js"></script>
+        <script type="text/javascript">
+        var titulos = "evaluacion";
+        f_titulos();
+        $("#txtNota").html("0");
+        $("#n_pagina").html("254");
+
+        /*$(document).ready(function() {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            //var imageSize = { width: winHeight , height: winHeight };
+            var watermarkImage = new Image();
+            watermarkImage.src = 'img/i5_p234_uni6Refuerzo1.jpg';
+            //var watermarkImage2 = new Image();
+            //watermarkImage2.src = 'img/i7_p98_act100.jpg';
+
+            LC.init(
+                document.getElementsByClassName('my-drawing')[0], {
+                    imageURLPrefix: 'imgcanvas',
+
+                    watermarkImage: watermarkImage,
+                    watermarkScale: 1.1, // you can scale it
+                    //imageSize: imageSize
+                    backgroundColor: 'white'
+
+                });
+
+
+
+        });*/
+        var ten = ['2,5', ];
+        var n = ten[0].replace(",", ".");
+
+        function validarN(inputs) {
+
+            $(inputs).on('keypress', function(e) {
+                tecla = document.all ? e.keyCode : e.which;
+                if (tecla == 8) return true;
+                patron = /[,qwertyuiopñlkvjhfgdsazcxbnmQWERTYFVUIOPÑLKJHGDSAZCBNM<>,;-_""]/;
+                te = String.fromCharCode(tecla);
+                if (patron.test(te)) {
+                    //alert("INGRESE V(VERDADERO) O F(FALSO) ");
+                    return false;
+                }
+
+            });
+        }
+
+        validarN(".soloPunto");
+
+        function soloNumeros2(e) {
+            var key = window.event ? e.which : e.keyCode;
+            if (key < 108 || key > 108) {
+                e.preventDefault();
+            }
+        }
+
+        function sinEspacios(inputs) {
+            $(inputs).on('keypress', function(e) {
+                if (e.which == 32)
+                    return false;
+            });
+        }
+        sinEspacios(".sinEspacios");
+        //$('.panel-info .panel-heading').css({ 'background': '#e2d1e8', 'color': '#8c4291' });
+        //$('.panel-info .panel-heading').css({ 'background': '#ffdab5', 'color': '#f07c00' });
+        ///style=": #ffdab5;color: #f07c00;"
+        /////////////////pregunta1/////////////////
+
+        var n1_2 = Math.floor(Math.random() * 98) + 2;
+        var n2_2 = Math.floor(Math.random() * 5) + 2;
+        var n3_2 = Math.floor(Math.random() * 18) + 2;
+        var suce = [];
+        var suce2 = [];
+        suce2.push(n1_2);
+        suce2.push(n1_2 + n3_2);
+        suce2.push(suce2[1] * n2_2);
+        suce2.push(suce2[2] + n3_2);
+        suce2.push(suce2[3] * n2_2);
+        suce2.push(suce2[4] + n3_2);
+        suce2.push(suce2[5] * n2_2);
+        suce2.push(suce2[6] + n3_2);
+
+        ///////////////////////////////////////////////////////////////
+        for (var i = 0; i < 5; i++) {
+            $('#suc2_' + [i] + '').html(suce2[i]);
+        }
+
+        $('#div2_0').html('' + suce2[1] + ' - ' + suce2[0] + ' =');
+        $('#div2_1').html('' + suce2[2] + ' ÷ ' + suce2[1] + ' =');
+        $('#div2_2').html('' + suce2[3] + ' - ' + suce2[2] + ' =');
+        $('#div2_3').html('' + suce2[4] + ' ÷ ' + suce2[3] + ' =');
+
+
+        function pregunta1() {
+
+            var respact1 = [n3_2, n2_2, suce2[5], suce2[6]];
+            var cont = 0;
+            for (var i = 0; i < 4; i++) {
+                var res = $('#act1num' + [i] + '').val().toLowerCase();
+                if (respact1[i] == res) {
+                    cont = cont + 1;
+                    $('#act1num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act1num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 4;
+            $('#nota1').val(parseFloat(total).toFixed(2));
+
+        }
+        //////////////////pregunta2////////////////////////
+
+        function pregunta2() {
+
+            var respact1 = [85, 171];
+            var cont = 0;
+            for (var i = 0; i < 2; i++) {
+                var res = $('#act2num' + [i] + '').val().toLowerCase();
+                if (respact1[i] == res) {
+                    cont = cont + 1;
+                    $('#act2num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act2num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 2;
+            $('#nota2').val(parseFloat(total).toFixed(2));
+
+        }
+        ////////////////////pregunta3//////////////////
+        var numact3i = [],
+            numact3d = [];
+        for (var i = 0; i < 10; i++) {
+            numact3i.push(Math.floor(Math.random() * 99) + 1);
+            numact3d.push(((Math.random() * 99) + 1).toFixed(2));
+        }
+
+        $('#num0act3').html('{' + numact3d[0] + ' + (' + numact3i[0] + ' – ' + numact3i[1] + ') x ' + numact3d[1] + '} ÷ ' + numact3d[2] + ' ≈')
+
+
+        $('#num1act3').html('' + numact3d[3] + ' ÷ ' + numact3d[4] + ' + (' + numact3d[5] + ' x ' + numact3d[6] + ') ≈');
+
+        var res3_1 = ((parseFloat(numact3d[0]) + (parseFloat(numact3i[0]) - parseFloat(numact3i[1])) * parseFloat(numact3d[1])) / parseFloat(numact3d[2])).toFixed(1);
+
+        var res3_2 = (parseFloat(numact3d[3]) / parseFloat(numact3d[4]) + (parseFloat(numact3d[5]) * parseFloat(numact3d[6]))).toFixed(1);
+
+
+
+
+        function pregunta3() {
+
+            var resact3 = [res3_1, res3_2];
+            var cont = 0;
+            for (var i = 0; i < 2; i++) {
+                var res = $('#act3num' + [i] + '').val().toLowerCase();
+                if (resact3[i] == res) {
+                    cont = cont + 1;
+                    $('#act3num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act3num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 2) / 2;
+            $('#nota3').val(parseFloat(total).toFixed(2));
+
+        }
+
+        //////////////////////////////pregunta4//////////////
+        function pregunta4() {
+
+            var respact1 = [77];
+            var cont = 0;
+            for (var i = 0; i < 1; i++) {
+                var res = $('#act4num' + [i] + '').val().toLowerCase();
+                if (respact1[i] == res) {
+                    cont = cont + 1;
+                    $('#act4num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act4num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 1;
+            $('#nota4').val(parseFloat(total).toFixed(2));
+
+        }
+
+        ///////////////pregunta5////////////////////////
+        function pregunta5() {
+
+            var respact1 = [718.20];
+            var cont = 0;
+            for (var i = 0; i < 1; i++) {
+                var res = $('#act5num' + [i] + '').val().toLowerCase();
+                if (respact1[i] == res) {
+                    cont = cont + 1;
+                    $('#act5num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act5num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 1;
+            $('#nota5').val(parseFloat(total).toFixed(2));
+
+        }
+
+        ////////////pregunta6//////////////////////////////
+        function pregunta6() {
+
+            var respact1 = [45, 45000];
+            var cont = 0;
+            for (var i = 0; i < 2; i++) {
+                var res = $('#act6num' + [i] + '').val().toLowerCase();
+                if (respact1[i] == res) {
+                    cont = cont + 1;
+                    $('#act6num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act6num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 2;
+            $('#nota6').val(parseFloat(total).toFixed(2));
+
+        }
+
+        /////////////pregunta7///////////////////////////
+        function pregunta7() {
+
+            var respact1 = [2.5];
+            var cont = 0;
+            for (var i = 0; i < 1; i++) {
+                var res = $('#act7num' + [i] + '').val().toLowerCase();
+                if (respact1[i] == res) {
+                    cont = cont + 1;
+                    $('#act7num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act7num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 1;
+            $('#nota7').val(parseFloat(total).toFixed(2));
+
+        }
+        ////////////pregunta8//////////////////////////////
+        function pregunta8() {
+
+            var respact1 = [50, 50000];
+            var cont = 0;
+            for (var i = 0; i < 2; i++) {
+                var res = $('#act8num' + [i] + '').val().toLowerCase();
+                if (respact1[i] == res) {
+                    cont = cont + 1;
+                    $('#act8num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act8num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 2;
+            $('#nota8').val(parseFloat(total).toFixed(2));
+
+        }
+        ////////////pregunta9/////////////////////////////
+
+        function pregunta9() {
+
+            var respact1 = [0.58];
+            var cont = 0
+            for (var i = 0; i < 1; i++) {
+                var res = $('#act9num' + [i] + '').val().toLowerCase();
+                if (respact1[i] == res) {
+                    cont = cont + 1;
+                    $('#act9num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act9num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 1;
+            $('#nota9').val(parseFloat(total).toFixed(2));
+
+        }
+
+        function NotaFinal() {
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var nota5 = document.getElementById('nota5').value;
+            var nota6 = document.getElementById('nota6').value;
+            var nota7 = document.getElementById('nota7').value;
+            var nota8 = document.getElementById('nota8').value;
+            var nota9 = document.getElementById('nota9').value;
+
+            /*if (nota4 == "") {
+                alert("Debe ingresar la nota de la pregunta 4.")
+            } else {*/
+            pregunta1();
+            pregunta2();
+            pregunta3();
+            pregunta4();
+            pregunta5();
+            pregunta6();
+            pregunta7();
+            pregunta8();
+            pregunta9();
+
+
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var nota5 = document.getElementById('nota5').value;
+            var nota6 = document.getElementById('nota6').value;
+            var nota7 = document.getElementById('nota7').value;
+            var nota8 = document.getElementById('nota8').value;
+            var nota9 = document.getElementById('nota9').value;
+
+
+            var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4) + parseFloat(nota5) + parseFloat(nota6) + parseFloat(nota7) + parseFloat(nota8) + parseFloat(nota9);
+            $('#txtNota').html(total.toFixed(2));
+            $('#bt_comprobar').attr("disabled", true);
+            $('input').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+            //}
+        }
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Lengua y Literatura 4</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+		<link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+    </head>
+    <body>
+		
+		<div id="nota-informativa" class="nota-ayuda">
+             <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+                            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+                           
+                           	Realiza la actividad dando clic sostenido y arrastrando las opciones hasta su destino.<br> 
+                            <span id="ayudas"></span>
+
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" onClick="comprobar_calificar_txt()" data-info="Calificar / Comprobar" id="bt_comprobar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" >/ 10</span> 
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág  <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-exploro" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-exploro">
+                    <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                   
+                </div>
+               
+                <div class="panel-body">
+                    <!--texto de ayuda de la actividad-->
+                 
+                    <!--pregunats de la actividad-->
+                   <div  class="col-md-12 space">
+                        <span class="text-question"> 2. <b>Une</b> con una línea las siguientes expresiones con el tipo de saludo que corresponde.<br>
+						<b>Luego</b> explica qué saludo utilizarías en una carta personal. </span>
+                    </div>
+                	
+					<div align="center">
+							
+							<label Name="palabras" style="border: 4px solid #4cb4d2; border-radius: 15px;  width: 800px; height: 90px; padding-top: 10px; font-size: 16px">
+								
+							<span id="a" class="drag1" draggable="true" style="font-size: 16pt">Señorita Marcia</span>
+							<span id="b" class="drag1" draggable="true" style="font-size: 16pt">Profesor Juan</span>
+							<span id="c" class="drag1" draggable="true" style="font-size: 16pt">Hijo lindo</span>
+							<span id="d" class="drag1" draggable="true" style="font-size: 16pt">Saludo académico</span>
+							<span id="e" class="drag1" draggable="true" style="font-size: 16pt">Saludo familiar</span>
+							<span id="f" class="drag1" draggable="true" style="font-size: 16pt">Saludo laboral</span>
+							
+							</label>	
+							
+					</div>
+					<br>
+					<div class="col-lg-12" align="center">
+						<table class="table table-bordered">
+						<tbody>
+						
+							<tr>
+							
+								<td align="center" style="font-size: 20px; width: 50%; background-color: #ccd8f8" >Saludo</td>
+								<td align="center" style="font-size: 20px; background-color: #ccf8ec">Tipo</td>
+							
+							</tr>
+							
+							<tr>
+								
+								<td class="ds" style="width: 50%">
+								<div class="drop1" style="width: 100%; height: 100px; border: 2px solid #55caea; border-radius: 4px">
+								<input type="hidden" class="respuestas" value="">
+                            	<input type="hidden" class="solucion" value="a*b*c"></div>
+								
+								</td>
+								
+								<td class="ds" style="width: 50%">
+								<div class="drop1" style="width: 100%; height: 100px; border: 2px solid #55caea; border-radius: 4px">
+								<input type="hidden" class="respuestas" value="">
+                            	<input type="hidden" class="solucion" value="d*e*f"></div>
+																
+								</td>
+							
+							</tr>
+						  </tbody>
+						</table>
+					</div>
+							
+				</div>
+
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+		<script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/dragndrop.js"></script>
+		<script src="js/animate.css.min.js"></script>
+		<script src="js/jquery.animate.css.js"></script>
+		
+		<script>
+            $("#n_pagina").html("45"); //impresion de pagina            
+        </script>
+		
+		<script>
+                            $(function () {
+                                $(".drag").draggable({revert: "invalid"});
+                                $(".drop").droppable({
+                                    classes: {
+                                        "ui-droppable-active": "ui-state-active",
+                                        "ui-droppable-hover": "ui-state-hover"
+                                    },
+                                    drop: function (event, ui) {
+                                       ui.draggable.attr("style", "height: 1cm; width: 6cm");
+                                        $(this).append(ui.draggable);
+                                        $(this).find(".drag").draggable('disable');
+                                        //       ui.draggable.attr("style", "");
+
+                                        $.each($(this).children(), function (index, value) {
+                                            if ($(value).hasClass("respuestas")) {
+                                                $(value).val(ui.draggable.attr('id'));
+                                            }
+                                        });
+                                    }
+                                });
+								$(".drag1").draggable({revert: true, helper: "clone"});
+                                $(".drop1").droppable({
+                                    classes: {
+                                        "ui-droppable-active": "ui-state-active",
+                                        "ui-droppable-hover": "ui-state-hover"
+                                    },
+                                    drop: function (event, ui) {
+										el =ui.helper.clone();
+										ui.helper.clone().remove();
+										el.attr("style", "margin-left: 15px");
+                                        $(this).append(el)
+                                        $.each($(this).children(), function (index, value) {
+                                            if ($(value).hasClass("respuestas")) {
+                                                $(value).val(ui.draggable.attr('id'));
+                                            }
+                                        });
+                                    }
+                                });
+                            });
+			</script>
+
+    </body>
+</html>

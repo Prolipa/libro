@@ -1,0 +1,493 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>MATEMÁTICA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.pintarcorrecto {
+
+    background-color: #32a75b;
+    color: white;
+    border: 5px solid #32a75b;
+    border-radius: 10px 10px 10px 10px;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+    color: white;
+    border: 5px solid #F97591;
+    border-radius: 10px 10px 10px 10px;
+
+}
+
+.cajaprincipal {
+    width: 100%;
+    min-height: 400px;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.titulop,
+.tnumero {
+    font-size: 25px;
+    color: #009988;
+    font-weight: bolder;
+    padding: 10px;
+
+}
+
+/*.pregunta {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 15px;
+    padding-bottom: 20px;
+
+}
+
+.opciones {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 20px;
+
+}
+*/
+.principal {}
+
+.opciones img {
+    max-height: 300px;
+
+}
+
+.letraAzul,
+li {
+    color: #005ca4;
+    font-weight: bold;
+
+}
+
+p {
+    color: #000000;
+}
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.<br>
+        Hacer click en la respuesta correcta y solo se podra elegir una sola vez.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li style="display: none;">
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo">Segundo Quimestre</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body" align="justify">
+                <div class="cajaprincipal text-question">
+                    <div>
+                        <span class="titulop">Pregunta Nº <span class="tnumero">1</span></span>
+                    </div>
+                    <div class="pregunta"></div>
+                    <div class="opciones">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <p class="letraAzul"><b>Opciones de respuesta</b></p>
+                            <ol type="A" class="op1">
+                            </ol>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 imag1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/dragNdrop.js"></script>
+    <script type="text/javascript">
+    var titulos = "squimestre";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("259");
+
+    var nota = 0,
+        cor = 0,
+        inc = 0,
+        itemsT = 17,
+        calificacion = 10,
+        cont = 0,
+        ejer = 17;
+    var preg = [];
+    var resp = [];
+    var nn1 = 0;
+
+    preg = [
+        ['<b>Ordena</b> los números en orden creciente. <img src="img/i1_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 0, ],
+        ['<b>Relaciona</b> cada cifra con su equivalente en números romanos. <img src="img/i2_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 1],
+        ['<b>Relaciona</b> cada operación con su resultado. <img src="img/i3_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 2],
+        ['Para preparar colada morada, Luisa necesita las siguientes cantidades de frutas: <div class="fraction"> <span class="fup">1</span> <span class="bar">/</span> <span class="fdn">4</span> </div> kg de frutilla, <div class="fraction"> <span class="fup">1</span> <span class="bar">/</span> <span class="fdn">2</span> </div>kg de mortiño y <div class="fraction"> <span class="fup">6</span> <span class="bar">/</span> <span class="fdn">8</span> </div>kg de piña. <br> <b>Ordena</b> las cantidades para saber qué fruta que se necesita en mayor cantidad.', 3],
+        ['<b>Completa</b> el planteamiento del problema usando las palabras correctas. <br><br> Para pintar una piscina con forma rectangular, se necesita saber cuánto será el costo de la mano de obra. La piscina tiene 8 m ......................... de , 6 m de ............... y 1,5 m de .................... .', 4],
+        ['Rubí compró en el supermercado 6 kg de arroz a $ 1,25 cada uno, 2 litros de jugo a $ 1,90 cada uno y 3 kg de cebollas a $ 1,70 cada uno. ¿Cuánto pagó por la compra? <br><br><b>Selecciona</b> las operaciones que debió realizar para comprobar que el pago era el correcto. <img src="img/i4_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 5],
+        ['<b>Lee</b> el problema. <br> Una costurera compró 45 metros de tela, a $ 3,50 cada metro, para confeccionar uniformes. Con la tela hizo 20 uniformes, los que vendió a $ 103 cada uno. Para elaborarlos, pagó $ 100 a cada uno de sus dos ayudantes. Al final, ¿de cuánto fue la ganancia de la costurera? <br> <b>Relaciona</b> los elementos del problema con la resolución. <img src="img/i5_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 6],
+        ['<b>Relaciona</b> cada operación con su resultado aproximado a los décimos.<img src="img/i6_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 7],
+        ['<b>Relaciona</b> el peso de la carne con el valor que se debe pagar, redondeado a los décimos. . Si un kilogramo de carne cuesta $ 6,25.<img src="img/i7_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 8],
+        ['<b>Observa</b> la imagen.<img src="img/i8_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 9],
+        ['<b>Relaciona</b> cada porcentaje con la fracción o expresión decimal.<img src="img/i9_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 10],
+        ['<b>Lee</b> el problema. <br> Bernardo quiere sembrar mangos en un terreno que tiene 19 m de largo y 16 m de ancho. Si cada planta se coloca a un metro de distancia, ¿cuántas plantas se sembrarán en el terreno? <br> <b>Selecciona</b> la respuesta correcta.', 11],
+        ['<b>Lee</b> el problema. <br> La represa de San Marcos tiene una capacidad de 49 hm³, destinados principalmente para irrigación. Semanalmente se usan 40 hm3, y con ello se riegan 50 000 cm de tierra. <br> <b>Relaciona</b> cada medida con su equivalente.<img src="img/i10_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 12],
+        ['<b>Lee</b> el problema. <br>En el Museo del Agua hay una pecera pequeña con una ..................... de 37 decilitros. Esta capacidad es 2,5 litros menor que la de la pecera ................... ¿Qué capacidad tiene esta última? El resultado es de ................. litros.<br> <b>Completa</b> la siguiente situación.', 13],
+        ['<b>Relaciona</b> el valor decimal con su equivalencia en grados, minutos y segundos.<img src="img/i11_p259_quimestre2.jpg" alt="" class="img-responsive" /></img>', 14],
+        ['Cada vez que se lanza un dado, un suceso seguro es:', 15],
+        ['<b>Analiza</b> la situación. <br> En un parqueadero hay 25 coches negros, 18 rojos, 6 azules y 5 amarillos. Si se van a llevar uno al azar, ¿cuál de las siguientes probabilidades es correcta? <br> <b>Selecciona</b> la respuesta correcta.', 16],
+
+
+    ];
+
+    resp = [
+
+        ['<li><p class="fuente no">1, 2, 3, 4, 5</p></li>',
+            '<li><p class="fuente no">3, 2, 5, 1, 4</p></li>',
+            '<li><p class="fuente no">2, 3, 1, 4, 5</p></li>',
+            '<li><p class="fuente si">2, 4, 3, 5, 1</p></li>',
+        ],
+        ['<li><p class="fuente si">1a, 2b, 3c, 4d, 5e</p></li>',
+            '<li><p class="fuente no">1b, 2e, 3a, 4d, 5c</p></li>',
+            '<li><p class="fuente no">1c, 2b, 3a, 4e, 5d</p></li>',
+            '<li><p class="fuente no">1e, 2a, 3b, 4c, 5c</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">1a, 2b, 3c, 4d, 5e</p></li>',
+            '<li><p class="fuente si">1d, 2c, 3e, 4a, 5b</p></li>',
+            '<li><p class="fuente no">1c, 2d, 3a, 4e, 5d</p></li>',
+            '<li><p class="fuente no">1b, 2c, 3b, 4d, 5a</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente si"><sup>1</sup>/<sub>4</sub> <b><</b> <sup>1</sup>/<sub>2</sub> <b><</b> <sup>6</sup>/<sub>8</sub></p></li>',
+            '<li><p class="fuente no"><sup>1</sup>/<sub>2</sub> <b><</b> <sup>1</sup>/<sub>4</sub> <b><</b> <sup>6</sup>/<sub>8</sub></p></li>',
+            '<li><p class="fuente no"><sup>6</sup>/<sub>8</sub> <b><</b> <sup>1</sup>/<sub>4</sub> <b><</b> <sup>1</sup>/<sub>2</sub></p></li>',
+            '<li><p class="fuente no"><sup>6</sup>/<sub>8</sub> <b><</b> <sup>1</sup>/<sub>2</sub> <b><</b> <sup>1</sup>/<sub>4</sub></p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">largo – profundidad – ancho</p></li>',
+            '<li><p class="fuente si">largo – ancho – profundidad</p></li>',
+            '<li><p class="fuente no">ancho – profundidad – largo</p></li>',
+            '<li><p class="fuente no">profundidad – ancho – largo</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no"> 1, 2, 3</p></li>',
+            '<li><p class="fuente si"> 2, 4, 5</p></li>',
+            '<li><p class="fuente no"> 2, 3, 4</p></li>',
+            '<li><p class="fuente no"> 3, 4, 5</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">1a, 2b, 3c, 4d</p></li>',
+            '<li><p class="fuente no">1b, 2c, 3a, 4d</p></li>',
+            '<li><p class="fuente si">1d, 2a, 3b, 4c</p></li>',
+            '<li><p class="fuente no">1c, 2b, 3a, 4d</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">1a, 2b, 3c, 4d, 5e</p></li>',
+            '<li><p class="fuente no">1d, 2a, 3b, 4d, 5c</p></li>',
+            '<li><p class="fuente si">1e, 2d, 3a, 4b, 5c</p></li>',
+            '<li><p class="fuente no">1c, 2e, 3a, 4b, 5c</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">1d, 2b, 3a, 4c, 5e</p></li>',
+            '<li><p class="fuente no">1a, 2d, 3e, 4b, 5c</p></li>',
+            '<li><p class="fuente si">1c, 2e, 3d, 4b, 5a</p></li>',
+            '<li><p class="fuente no">1e, 2a, 3b, 4d, 5c</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no"> 2, 3, 4</p></li>',
+            '<li><p class="fuente no"> 3, 4, 5</p></li>',
+            '<li><p class="fuente si"> 1, 3, 5</p></li>',
+            '<li><p class="fuente no"> 1, 2, 3</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">1a, 2b, 3c, 4d, 5e</p></li>',
+            '<li><p class="fuente no">1b, 2c, 3e, 4d, 5a</p></li>',
+            '<li><p class="fuente si">1a, 2e, 3c, 4b, 5d</p></li>',
+            '<li><p class="fuente no">1b, 2a, 3c, 4e, 5d</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">19 plantas</p></li>',
+            '<li><p class="fuente no">16 plantas</p></li>',
+            '<li><p class="fuente si">304 plantas</p></li>',
+            '<li><p class="fuente no">300 plantas</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">1a, 2b, 3c</p></li>',
+            '<li><p class="fuente no">1c, 2a, 3b</p></li>',
+            '<li><p class="fuente si">1b, 2c, 3a</p></li>',
+            '<li><p class="fuente no">2a, 3b, 1c</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">poca – capacidad – 3,5</p></li>',
+            '<li><p class="fuente no">mucha – capacidad – 4</p></li>',
+            '<li><p class="fuente si">capacidad – grande – 6,2</p></li>',
+            '<li><p class="fuente no">grande – capacidad – 1</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">1a, 2b, 3c</p></li>',
+            '<li><p class="fuente no">1c, 2a, 3b</p></li>',
+            '<li><p class="fuente si">1b, 2c, 3a</p></li>',
+            '<li><p class="fuente no">1d, 2b, 3a</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">Que salga un número mayor a 6.</p></li>',
+            '<li><p class="fuente no">Que salgan dos números del 1 al 6.</p></li>',
+            '<li><p class="fuente si">Que salga cualquier número entre 1 y 6.</p></li>',
+            '<li><p class="fuente no">Que salga el número 0.</p></li>',
+
+        ],
+        [
+            '<li><p class="fuente no">P<sub>negro</sub> = 12/57</p></li>',
+            '<li><p class="fuente no">P<sub>azul</sub> = 1/8</p></li>',
+            '<li><p class="fuente si">P<sub>rojo</sub> = 1/3</p></li>',
+            '<li><p class="fuente no">P<sub>amarillo</sub> = 1/11</p></li>',
+
+        ],
+
+
+
+
+    ];
+    preg.sort(f_randomico);
+
+    $(".titulop").hide();
+
+
+    f_iniciar();
+
+
+    function f_iniciar() {
+
+        $(".titulop").show(500);
+        $(".principal").hide(500);
+        nn1 = (preg[cont][1]);
+        console.log(preg);
+        for (i = 0; i < resp.length; i++) {
+
+            resp[i].sort(f_randomico);
+        }
+        console.log(resp[nn1]);
+
+        $(".tnumero").html('').append(cont + 1)
+        $(".pregunta").html('').append(preg[cont][0])
+        $(".imag1").html('').append(preg[cont][2])
+        $(".op1").html('').append(resp[nn1])
+        $(".si").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarcorrecto");
+            cor++;
+            calificar_preg();
+        });
+        $(".no").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarincorrecto");
+            inc++;
+            calificar_preg();
+        });
+
+        function calificar_preg() {
+            cont++;
+            $(this).unbind("click");
+            var timer = setTimeout(f_condicion, 1000);
+
+            function f_condicion() {
+                if (cont == 17) {
+                    $('.cajaprincipal').html('<table class="table table-bordered" style="text-align:center; font-size: 30px;">' +
+                        '<tr>' +
+                        '<td colspan="2"><b>Tu Calificación es:</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td colspan="2"><b><span class="notaq1"></span>/10</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td><b style="color:  green;">Respuesta Correctas</b></td>' +
+                        '<td><b style="color:  red;">Respuesta Incorrectas</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td>' + cor + '</td>' +
+                        '<td>' + inc + '</td>' +
+                        '</tr>' +
+                        '</table>');
+                }
+
+                clearTimeout(timer);
+                Calculo_nota();
+            }
+        }
+
+    }
+
+
+    </script>
+</body>
+
+</html>

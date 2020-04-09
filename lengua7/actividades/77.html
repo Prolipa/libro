@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LENGUA 7</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.cajas1 {
+
+    border: 1px #009277 solid;
+}
+.cajas2 {
+    min-width: 100px;
+        min-height: 60px;
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 5px;
+        width: auto;
+}
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+.imagen3 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #FFF0CA;
+}
+.imagen4 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #F5F0F7;
+}
+.underline{
+        text-decoration: underline;
+        text-decoration-color: rgb(59, 114, 37);
+        
+    }
+    .bg_palabra{
+            
+            border-radius: 10px 0px 10px 0px;
+            border: 2px solid #FBD2D5;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        
+        Lee las preguntas y contesta. <br>
+        <b>Pregunta 2: </b>Desplaze los pasos en orden a la receta correspondiente. <br>
+        <b>Pregunta 9: </b>Completa los ingredientes de la receta. <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/practico.png" class="img-responsive" alt="">
+                <br>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_1"> <b style="color:#005CA9">1. </b> <b>Propón</b> tus ideas. ¿Qué información se podría añadir al título de la receta de patacones?</span>
+                </div>
+                <div class="col-sm-12">
+                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                    
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><b style="color:#005CA9">2. </b> <b>Contesta.</b>¿Cómo están organizadas las instrucciones en la receta de patacones?</span>
+                </div>
+                <div class="col-sm-12">
+                    <p class="text-question"> Están organizadas en <input type="text" style="border: none; border-bottom: 2px dotted black; " id="a77in1"> y con números del <input type="text" style="border: none; border-bottom: 2px dotted black; text-align:center; width:  50px;" onkeypress="return soloNumeros1(event)" id="a77in2" maxlength="2"> al <input type="text" style="border: none; border-bottom: 2px dotted black; text-align:center; width:  50px;" id="a77in3" onkeypress="return soloNumeros1(event)" maxlength="2"></p>
+                    
+                    
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span> <b style="color:#005CA9">3. </b> Los pasos de estas dos recetas se mezclaron. <b>Clasifica</b> los pasos correctamente.</span>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row ">
+                                <div class="col-xs-12 textos"></div>                          
+                            </div>
+                            <div class="clear"><br> </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                                </div>
+                                <div class="col-sm-12">
+                                <div class="col-sm-6">
+                                    <table class="table ">
+                                        <tr align="center">
+                                            <td colspan="2" style="background: #FBD2D5">
+                                                <div><h3 style="background: white; border-radius: 10px;" ><b style="color: #009DCD;">Batido de banano</b></h3></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="left"  style="background: #FBD2D5">
+                                            <td>
+                                                <div class="col-sm-4" style="background: white; border-radius: 10px;">
+                                                <p>2 plátanos</p> 
+                                                <p>500 ml de leche</p>
+                                                <p>500 ml de yogur</p>
+                                                <p>azúcar y canela</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen" id="caja_img1"></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen" id="caja_img2"></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen" id="caja_img3"></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen" id="caja_img4"></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen" id="caja_img5"></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen" id="caja_img6"></div>
+                                            </td>
+                                        </tr>
+                                    </table>    
+                                </div>
+                                <div class="col-sm-6">
+                                    <table class="table">
+                                        <tr align="center">
+                                            <td colspan="2" style="background: #FBD2D5">
+                                                <div><h3 style="background: white; border-radius: 10px;" ><b style="color: #009DCD;">Bolitas de queso</b></h3></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="left"  style="background: #FBD2D5">
+                                            <td>
+                                                <div class="col-sm-4" style="background: white; border-radius: 10px;">
+                                                <p>1 queso mozzarella</p> 
+                                                <p>2 claras de huevo</p>
+                                                <p>1 taza de harina</p>
+                                                <p>aceite</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen c1" id="caja_img7"></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen c2" id="caja_img8"></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen c3" id="caja_img9"></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen" id="caja_img10"></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen" id="caja_img11"></div>
+                                            </td>
+                                        </tr>
+                                        <tr align="center"  style="background: #FBD2D5">
+                                            <td colspan="2">
+                                                <div class="cajas2 imagen" id="caja_img12"></div>
+                                            </td>
+                                        </tr>
+                                    </table>    
+                                </div>
+                                </div>
+                            </div>
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><b style="color:#005CA9">4. </b> <b>Responde.</b> ¿Qué pistas utilizaste para encontrar el primer paso de cada receta?</span>
+                </div>
+                <div class="col-sm-12">
+                    <p class="text-question"> Los marcadores textuales como <input type="text" style="border: none; border-bottom: 2px dotted black; " id="a77in4"> y  <input type="text" style="border: none; border-bottom: 2px dotted black; " id="a77in5"></p>
+                    
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_2"> <b style="color:#005CA9">5. </b> ¿Qué se podría añadir a las recetas anteriores para mejorar la explicación?</span>
+                </div>
+                <div class="col-sm-12">
+                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                    
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_3"> <b style="color:#005CA9">6. </b> ¿Qué ingredientes crees que son indispensables en la primera receta? ¿Cuáles se podría reemplazar o eliminar? ¿Por qué?</span>
+                </div>
+                <div class="col-sm-12">
+                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                    
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_4"> <b style="color:#005CA9">7. </b> ¿Cómo podrías medir las cantidades de leche y de yogur para la primera receta?</span>
+                </div>
+                <div class="col-sm-12">
+                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                    
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><input type="text" class="nota-abierta calif" id="nota1_5"> <b style="color:#005CA9">8. </b> En algunas recetas, en lugar de medir los ingredientes en gramos o litros, se utilizan medidas no convencionales, como taza, vaso, cucharada, cucharadita, pizca, chorrito, etc. ¿Qué ventajas y qué desventajas puede tener escribir la receta con medidas no convencionales?</span>
+                </div>
+                <div class="col-sm-12">
+                    <textarea name="" id="" class="form-control cajas" placeholder="Escribe tu respuesta"></textarea>
+                    
+                </div>
+                <div class="row"></div>
+                <!--pregunats de la actividad-->
+                <div class="text-question">
+                    <span><b style="color:#005CA9">9. </b><b>Lee</b> los pasos de la siguiente receta e <b>infiere </b> el título y los ingredientes. <b> Completa </b> la receta.</span>
+                </div>
+                <div class="col-sm-12">
+                    <table class="table">
+                        <tr align="center">
+                            <td colspan="2" style="background: #A5D2EA">
+                                <div><h3 style="background: white; border-radius: 10px;" ><input style="text-align: center;" id="a77in6" type="text" class="form-control"></h3></div>
+                            </td>
+                        </tr>
+                        
+                        <tr align="center"  style="border-left: 4px dotted #A5D2EA; border-right: 4px dotted #A5D2EA; border-bottom: 2px solid blue;">
+                            <td colspan="2">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4" style="background: white; border-radius: 10px;">
+                                    <p><b style="color:#B81380;">Ingredientes</b></p>
+                                    <p><input style="text-align: center;" type="text" class="form-control" id="a77in7"></p> 
+                                    <p><input style="text-align: center;" type="text" class="form-control" id="a77in8"></p>
+                                    <p><input style="text-align: center;" type="text" class="form-control" id="a77in9"></p>
+                                    <p><input style="text-align: center;" type="text" class="form-control" id="a77in10"></p>
+                                    <p><input style="text-align: center;" type="text" class="form-control" id="a77in11"></p>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </td>
+                            
+                        </tr>
+                        
+                        <tr align="left" style="border-left: 4px dotted #A5D2EA; border-right: 4px dotted #A5D2EA; border-bottom: 4px dotted #A5D2EA;">
+                            <td colspan="2">
+
+                                <p align="center"><b style="color:#B81380;">Preparación</b></p>
+                                <p><b style="color:#B81380;">1.</b> Lavar la lechuga y el tomate.</p>
+                                <p><b style="color:#B81380;">2.</b> Cortar el tomate en rodajas.</p>
+                                <p><b style="color:#B81380;">3.</b> Abrir la lata de atún.</p>
+                                <p><b style="color:#B81380;">4.</b> En un tazón, mezclar el atún con una cucharada de mayonesa.</p>
+                                <p><b style="color:#B81380;">5.</b> Poner una hojita de lechuga sobre el pan.</p>
+                                <p><b style="color:#B81380;">6.</b> Poner el atún sobre la lechuga.</p>
+                                <p><b style="color:#B81380;">7.</b> Poner una rodaja de tomate sobre el atún.</p>
+                                <p><b style="color:#B81380;">8.</b> Cubrir con otra rodaja de pan.</p>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </div>
+                <div class="row"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    
+    <script type="text/javascript">
+    var titulos = "aplico";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("63");
+    //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+    
+    var ejer=1,itemsT=10,cont=0,tmp,cor=0,inc=0,calificacion=10,claseAnimada='animate bounceIn';
+    var resp=[],i,resp1=[];
+    document.getElementById('nota1_1').addEventListener('keypress', () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById('nota1_1').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1_1'), 1)
+    });
+    document.getElementById('nota1_2').addEventListener('keypress', () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById('nota1_2').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1_2'), 1)
+    });
+    document.getElementById('nota1_3').addEventListener('keypress', () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById('nota1_3').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1_3'), 1)
+    });
+    document.getElementById('nota1_4').addEventListener('keypress', () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById('nota1_4').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1_4'), 1)
+    });
+    document.getElementById('nota1_5').addEventListener('keypress', () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById('nota1_5').addEventListener('keyup', () => {
+        validMaxIngreso(document.getElementById('nota1_5'), 1)
+    });
+    f_iniciar();
+    function f_iniciar(){
+        var pal1=['<span class="bg_palabra c1">Primero, pela los plátanos y pícalos en rodajas.</span>',
+        '<span class="bg_palabra c2">Para empezar, ralla el queso.</span>',
+        '<span class="bg_palabra c3">Mete la masa en la refrigeradora por una hora.</span>',
+        '<span class="bg_palabra c4">Agrega la leche y el yogur.</span>',
+        '<span class="bg_palabra c5">Pon el queso rallado y las claras en un tazón y mezcla hasta obtener una masa homogénea.</span>',
+        '<span class="bg_palabra c6">Pon las rodajas de plátano en la licuadora.</span>',
+        '<span class="bg_palabra c7">Transcurrido ese tiempo, haz bolitas y pásalas por harina.</span>',
+        '<span class="bg_palabra c8">Finalmente, añade azúcar al gusto y licúa todo.</span>',
+        '<span class="bg_palabra c9">Fríe las bolitas en abundante aceite.</span>',
+        '<span class="bg_palabra c10">Espolvorea canela por encima.</span>',
+        '<span class="bg_palabra c11">Saca las bolitas y déjalas escurrir sobre papel absorbente.</span>',
+        '<span class="bg_palabra c12">Sirve el batido en un vaso.</span>'];
+                    pal1.sort(f_randomico);
+                    
+                    $(".textos").append(pal1);
+        
+                    $(".bg_palabra").css('cursor','move');
+                    $(".bg_palabra").draggable({ //arrastramos
+                        revert: "invalid",
+                        zIndex:5,
+                        containment: ".actividad17",
+                        scroll: false,                   
+                    });
+                    $(".imagen").droppable({
+                        drop: function(e, ui) {
+                            //v_idsp5.push(ui.draggable.attr("id").substr(3));//obtenemos el id del arrastre
+                            //r_idsp5.push($(this).attr("id").substr(4)); //obtenemos el id del destino
+                            for(i=1;i<5;i++){ //4 elementos
+                                var nn = 'c'+i; //obtenemos la clase
+                                if($(ui.draggable).hasClass(nn)){ //comparamos la clase del arrastre
+                                    if($(this).hasClass(nn)){ //con la clase del destino q tienen en mismo nombre
+                                        resp.push('ok');
+                                        
+                                    }else{
+                                        resp.push('no');
+                                        
+                                    }
+                                }
+                            }
+                            $(ui.draggable).removeClass("bg_palabra");//quitamos clase de background
+                            //console.log(resp); //respuestas
+                            ui.draggable.attr("style", "");
+                            $(this).append(ui.draggable);
+                        }
+                    });
+                     $( ".btnCalificar" ).bind( "click", function() { //click en el boton iniciar
+                        cont++;
+                        $( this).unbind( "click" );
+                        AgregaClase(".nota",claseAnimada);
+                        QuitaClase(".actividad",claseAnimada);
+                        
+                        var a77cont1=0;
+                        var r_caja1=['Primero, pela los plátanos y pícalos en rodajas.','Pon las rodajas de plátano en la licuadora.','Agrega la leche y el yogur.','Finalmente, añade azúcar al gusto y licúa todo.','Sirve el batido en un vaso.','Espolvorea canela por encima.'];
+                        var caja_img1=[$('#caja_img1 span').text(),$('#caja_img2 span').text(),$('#caja_img3 span').text(),$('#caja_img4 span').text(),$('#caja_img5 span').text(),$('#caja_img6 span').text()];
+                        for(var i=0; i<caja_img1.length; i++){
+                            if (caja_img1[i]==r_caja1[i]) {
+                                a77cont1++;
+                                f_ok($('#caja_img'+(i+1)));
+                            }else{
+                                a77cont1;
+                                f_no($('#caja_img'+(i+1)));
+                            }
+                        }
+                        var r_caja2=['Para empezar, ralla el queso.','Pon el queso rallado y las claras en un tazón y mezcla hasta obtener una masa homogénea.','Mete la masa en la refrigeradora por una hora.','Transcurrido ese tiempo, haz bolitas y pásalas por harina.','Fríe las bolitas en abundante aceite.','Saca las bolitas y déjalas escurrir sobre papel absorbente.'];
+                        var caja_img2=[$('#caja_img7 span').text(),$('#caja_img8 span').text(),$('#caja_img9 span').text(),$('#caja_img10 span').text(),$('#caja_img11 span').text(),$('#caja_img12 span').text()];
+                        for(var i=0; i<caja_img2.length; i++){
+                            if (caja_img2[i]==r_caja2[i]) {
+                                a77cont1++;
+                                f_ok($('#caja_img'+(i+7)));
+                            }else{
+                                a77cont1;
+                                f_no($('#caja_img'+(i+7)));
+                            }
+                        }
+                        var result1=(a77cont1*2)/12;
+                        cor=cor+result1;
+                        inc=inc+(2-result1);
+
+                        var nota1_1=$('#nota1_1').val();
+                          if (!nota1_1) {
+                            inc=inc+1;
+                            f_no($('#nota1_1'));
+                            $('#nota1_1').attr('disabled','true');
+                          }else{
+                            cor=cor+parseFloat(nota1_1);
+                            inc=inc+(1-parseFloat(nota1_1));
+                            f_ok($('#nota1_1'));
+                            $('#nota1_1').attr('disabled','true');
+                        }
+                        var nota1_2=$('#nota1_2').val();
+                          if (!nota1_2) {
+                            inc=inc+1;
+                            f_no($('#nota1_2'));
+                            $('#nota1_2').attr('disabled','true');
+                          }else{
+                            cor=cor+parseFloat(nota1_2);
+                            inc=inc+(1-parseFloat(nota1_2));
+                            f_ok($('#nota1_2'));
+                            $('#nota1_2').attr('disabled','true');
+                        }
+                        var nota1_3=$('#nota1_3').val();
+                          if (!nota1_3) {
+                            inc=inc+1;
+                            f_no($('#nota1_3'));
+                            $('#nota1_3').attr('disabled','true');
+                          }else{
+                            cor=cor+parseFloat(nota1_3);
+                            inc=inc+(1-parseFloat(nota1_3));
+                            f_ok($('#nota1_3'));
+                            $('#nota1_3').attr('disabled','true');
+                        }
+                        var nota1_4=$('#nota1_4').val();
+                          if (!nota1_4) {
+                            inc=inc+1;
+                            f_no($('#nota1_4'));
+                            $('#nota1_4').attr('disabled','true');
+                          }else{
+                            cor=cor+parseFloat(nota1_4);
+                            inc=inc+(1-parseFloat(nota1_4));
+                            f_ok($('#nota1_4'));
+                            $('#nota1_4').attr('disabled','true');
+                        }
+                        var nota1_5=$('#nota1_5').val();
+                          if (!nota1_5) {
+                            inc=inc+1;
+                            f_no($('#nota1_5'));
+                            $('#nota1_5').attr('disabled','true');
+                          }else{
+                            cor=cor+parseFloat(nota1_5);
+                            inc=inc+(1-parseFloat(nota1_5));
+                            f_ok($('#nota1_5'));
+                            $('#nota1_5').attr('disabled','true');
+                        }
+                        var a77in1=$('#a77in1').val().toLowerCase();
+                        var a77in2=$('#a77in2').val();
+                        var a77in3=$('#a77in3').val();
+                        var a77cont2=0;
+                        if (a77in1=='secuencia') {
+                            a77cont2++;
+                            f_ok($('#a77in1'));
+                        }else{
+                            a77cont2;
+                            f_no($('#a77in1'));
+                        }
+                        if (a77in2=='1') {
+                            a77cont2++;
+                            f_ok($('#a77in2'));
+                        }else{
+                            a77cont2;
+                            f_no($('#a77in2'));
+                        }
+                        if (a77in3=='10') {
+                            a77cont2++;
+                            f_ok($('#a77in3'));
+                        }else{
+                            a77cont2;
+                            f_no($('#a77in3'));
+                        }
+                        var result2=(a77cont2*1)/3;
+                        cor=cor+result2;
+                        inc=inc+(1-result2);
+                        var a77in4=$('#a77in4').val().toLowerCase();
+                        var a77in5=$('#a77in5').val().toLowerCase();
+                        var a77cont3=0;
+                        if (a77in4=='primero') {
+                            a77cont3++;
+                            f_ok($('#a77in4'));
+                        }else{
+                            a77cont3;
+                            f_no($('#a77in4'));
+                        }
+                        if (a77in5=='para empezar') {
+                            a77cont3++;
+                            f_ok($('#a77in5'));
+                        }else{
+                            a77cont3;
+                            f_no($('#a77in5'));
+                        }
+                        var result3=(a77cont3*1)/2;
+                        cor=cor+result3;
+                        inc=inc+(1-result3);
+
+                        var a77in6=$('#a77in6').val().toLowerCase();
+                        var a77in7=$('#a77in7').val().toLowerCase();
+                        var a77in8=$('#a77in8').val().toLowerCase();
+                        var a77in9=$('#a77in9').val().toLowerCase();
+                        var a77in10=$('#a77in10').val().toLowerCase();
+                        var a77in11=$('#a77in11').val().toLowerCase();
+                        var a77aux1=0;
+                        
+                        var a77vec1=['pan en rodajas','una lata de atún','mayonesa','tomate','lechuga'];
+                        if (a77in6=='sándwiches de atún') {
+                            a77aux1++;
+                            f_ok($('#a77in6'));
+                        }else{
+                            a77aux1;
+                            f_no($('#a77in6'));
+                        }
+                        var a77cont5=0;
+                        for(var i=0; i<a77vec1.length; i++)
+                        {
+                            if (a77in7==a77vec1[i]) {
+                                a77cont5++;
+                                a77vec1[i]=a77cont5;
+                            }    
+                        }
+                        if (a77cont5=='1') {
+                            a77aux1++;
+                            f_ok($('#a77in7'));
+                        }else{
+                            a77aux1;
+                            f_no($('#a77in7'));
+                        }
+                        var a77cont6=0;
+                        for(var i=0; i<a77vec1.length; i++)
+                        {
+                            if (a77in8==a77vec1[i]) {
+                                a77cont6++;
+                                a77vec1[i]=a77cont6;
+                            }    
+                        }
+                        if (a77cont6=='1') {
+                            a77aux1++;
+                            f_ok($('#a77in8'));
+                        }else{
+                            a77aux1;
+                            f_no($('#a77in8'));
+                        }
+                        var a77cont7=0;
+                        for(var i=0; i<a77vec1.length; i++)
+                        {
+                            if (a77in9==a77vec1[i]) {
+                                a77cont7++;
+                                a77vec1[i]=a77cont7;
+                            }    
+                        }
+                        if (a77cont7=='1') {
+                            a77aux1++;
+                            f_ok($('#a77in9'));
+                        }else{
+                            a77aux1;
+                            f_no($('#a77in9'));
+                        }
+                        var a77cont8=0;
+                        for(var i=0; i<a77vec1.length; i++)
+                        {
+                            if (a77in10==a77vec1[i]) {
+                                a77cont8++;
+                                a77vec1[i]=a77cont8;
+                            }    
+                        }
+                        if (a77cont8=='1') {
+                            a77aux1++;
+                            f_ok($('#a77in10'));
+                        }else{
+                            a77aux1;
+                            f_no($('#a77in10'));
+                        }
+                        var a77cont9=0;
+                        for(var i=0; i<a77vec1.length; i++)
+                        {
+                            if (a77in11==a77vec1[i]) {
+                                a77cont9++;
+                                a77vec1[i]=a77cont9;
+                            }    
+                        }
+                        if (a77cont9=='1') {
+                            a77aux1++;
+                            f_ok($('#a77in11'));
+                        }else{
+                            a77aux1;
+                            f_no($('#a77in11'));
+                        }
+                        var result4=(a77aux1*1)/6;
+                        cor=cor+result4;
+                        inc=inc+(1-result4);
+            Calculo_nota();
+        });
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,433 @@
+    <!DOCTYPE HTML>
+    <html>
+
+    <head>
+        <title>Matemática 2</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/icomoon.css" rel="stylesheet">
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #005ca4 solid;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 5px;
+            width: auto;
+            height: 100px
+    
+        }
+        #caja_res, #caja_res1,#caja_res2{
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+        .respuestas{
+                width: 80%;
+                border: none;
+                border-bottom: 1px solid #005ca4;
+            }
+        .c_imagenes{
+            padding: 10px;
+        }
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 140px;
+            height: 30px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 140px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+        .correcto{
+            color: #ffffff;
+            background-color: #8FB435;
+            font-weight: 700;
+        }
+        .incorrecto{
+            color: #ffffff;
+            background-color: #E76E80;
+            font-weight: 700;
+
+        }
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+        
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+        .encierra{
+            border: 3px solid #00ACCD;
+            border-radius: 40%;
+            
+        }
+        .encierra1{
+            border: 3px solid #0067B4;
+            border-radius: 40%;
+        }
+        .respuesta {
+    text-align: center;
+    border: 0;
+    border-top: 2px solid #393939;
+    border-bottom: 1px solid #85BCEB;
+    width: 50px;
+}
+.bordeT {
+    border: 1px #76B82A solid;
+}
+
+
+
+.bordeT2 {
+    border: 1px #76B82A solid;
+    text-align: center;
+}
+
+.paso {
+    background-color: #F9B000;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+}
+.pinta{
+            background: #E5E1D7;
+            
+        }
+        </style>
+    </head>
+
+    <body>
+        <div id="nota-informativa" class="nota-ayuda">
+            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            Para encerrar da click sobre los números de las tablas.<br>
+            <span id="ayudas"></span>
+        </div>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" >
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span class="notificacion actividad ">
+                                <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                        </span>
+                        <span class="btn notificacion nota">
+                                <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span>/ 10
+                        </span>
+                        <span class="notificacion pagina">
+                                <span class="glyphicon glyphicon-bookmark"></span> Pag 75
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--FIN DE NAVBAR QUE SE AÑADE-->
+        <!--contenedor de la actividad-->
+        <div class="container space" style="margin-top: 30px;">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-preparo" id="activity">
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-preparo">
+                    <span class="titulo"><img src="img/icoPRE.png" alt="">Aplico para aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+                </div>
+                <div class="panel-body">
+                    
+                    <!--pregunats de la actividad-->
+                        <div class="col-sm-4">
+                        <img src="img/problema.png" class="img-responsive" alt="">
+                        <br>
+                        <div class="text-question"><p align="justify">Susana estima que hay 20 caramelos y Juana estima que hay 21.</p></div>
+                        </div>
+                        <div class="col-sm-6" align="center" style="border-radius: 10px; border:2px solid #0067B4;">
+                            <img src="img/i1_p75_act76.jpg" class="img-responsive" alt="">
+                        </div>
+                        <div class="row"></div>
+                        <div class="actividad76">
+
+                            <div class="col-sm-6">
+                                <br>
+                                <p align="justify">¿Quién estuvo más cerca de la cantidad real con su estimación?</p>
+                                <p align="justify"><b style="color: #0067B4">a) </b> Utilizo la tabla para comprobar la estimación de Susana y Juana.</p>
+                                <p align="justify"><b style="color: #0067B4">b) </b> <b>Encierro </b> los números en la tabla de acuerdo con el conteo indicado.</p>
+                                <p style="color: #0067B4;"> <img src="img/i2_p75_act76.jpg" alt=""> Cuento de 2 en 2</p>
+                                <p style="color: #0067B4;"> <img src="img/i3_p75_act76.jpg" alt=""> Cuento de 5 en 5</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <br>
+                                <div class="table-responsive">
+                                <table class="table">
+                                    <tr align="center">
+                                        <td style="border: 1px solid black;"><div class="enc1">1</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc2">2</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc3">3</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc4">4</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc5">5</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc6">6</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc7">7</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc8">8</div></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border: 1px solid black;"><div class="enc9">9</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc10">10</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc11">11</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc12">12</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc13">13</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc14">14</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc15">15</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc16">16</div></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border: 1px solid black;"><div class="enc17">17</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc18">18</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc19">19</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc20">20</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc21">21</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc22">22</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc23">23</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc24">24</div></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border: 1px solid black;"><div class="enc25">25</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc26">26</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc27">27</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc28">28</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc29">29</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc30">30</div></td>
+                                        <td style="border: 1px solid black;"></td>
+                                        <td style="border: 1px solid black;"></td>
+                                    </tr>
+                                </table>
+                                </div>
+                                <br>
+                                <div class="table-responsive">
+                                <table class="table">
+                                    <tr align="center">
+                                        <td style="border: 1px solid black;"><div class="enc41">1</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc42">2</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc43">3</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc44">4</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc45">5</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc46">6</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc47">7</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc48">8</div></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border: 1px solid black;"><div class="enc49">9</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc410">10</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc411">11</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc412">12</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc413">13</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc414">14</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc415">15</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc416">16</div></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border: 1px solid black;"><div class="enc417">17</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc418">18</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc419">19</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc420">20</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc421">21</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc422">22</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc423">23</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc424">24</div></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td style="border: 1px solid black;"><div class="enc425">25</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc426">26</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc427">27</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc428">28</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc429">29</div></td>
+                                        <td style="border: 1px solid black;"><div class="enc430">30</div></td>
+                                        <td style="border: 1px solid black;"></td>
+                                        <td style="border: 1px solid black;"></td>
+                                    </tr>
+                                </table>
+                                </div>
+                                <br>
+                                <p align="justify"><b style="color: #0067B4">c) </b> <b>Contesto </b></p>
+                                <p>¿Qué niña estuvo más cerca con su estimación? <input type="text" id="a76dcon1" style=" text-align:center; width:  100px; border: none; border-bottom: 2px solid black;"></p>
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        
+                        <p id="trace" class="alert alert-warning display-none"></p>    
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+<script src="js/activities.js"></script>
+        
+        <script src="js/highcharts.js"></script>
+        <script src="js/exporting.js"></script>
+        <script src="js/export-data.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/actividad76.js"></script>
+        
+        <!---->
+        <script>
+        var titulos = 'aplico'
+        
+        //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+        </script>
+    </body>
+
+    </html>

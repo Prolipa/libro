@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lengua y Literatura 9</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.cajas1 {
+
+    border: 1px #009277 solid;
+}
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+.imagen3 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #FFF0CA;
+}
+.imagen4 {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #F5F0F7;
+}
+.underline{
+        text-decoration: underline;
+        text-decoration-color: rgb(59, 114, 37);
+        
+    }
+.c_origen{
+        border:1px solid #009BDB;
+        border-radius: 10px;
+        min-height: 50px;
+        max-width: 100%;
+        margin-left: 1px;
+    } 
+    .c_destinos2{
+        padding: 5px;
+        border:1px solid #CCAE69;
+        border-radius: 10px;
+        min-height: 70px;
+        min-width: 120px;
+    }
+.bg_palabra{
+            background-color: #F9E8B2;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 8px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+        }
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        
+        <b>Pregunta 1: </b> Determina para cada verso el número de sílabas, el tipo y los acentos tónicos y la rima.<br>
+        <b>Pregunta 2: </b> Lee los siguientes fragmentos y determina el tipo de rima por la ubicación. <br>
+        <b>Pregunta 3: </b> Selecciona V (verdadero) o F (falso), según corresponda. <br>
+        <b>Pregunta 4: </b> Desplaza cada uno de los momentos del simposio con la etapa que corresponde. <br>
+        <b>Pregunta 5: </b> Lee y contesta. <br>
+        <b>Pregunta 6: </b> Selecciona el visto (√) los que sí corresponden a un texto de divulgación científica y con equis (x) los que no corresponden. <br>
+        <b>Pregunta 7: </b> Lee y contesta. <br>
+        <b>Pregunta 8: </b> Subraya la opción que responde correctamente. Para subrayar da click sobre la opción.<br>
+        <b>Pregunta 9: </b> Escribe las oraciones subordinadas sustantivas según la función que te indica la matriz. <br>
+        <b>Pregunta 10: </b> Lee el siguiente texto y subraya las oraciones subordinadas sustantivas. <br>
+        <b>Pregunta 11: </b> Selecciona V (verdadero) o F (falso), según corresponda: <br>
+        <b>Pregunta 12: </b> Marca con una x minúscula los continentes en donde se usa. <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" class="btn btn-warning" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                      Literatura <img src="img/literatura.jpg" class="img-responsive" style="display: inline-block; mix-blend-mode: multiply;" alt="">
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_1" >  <strong style="color: #EF7D2D;">1.</strong><strong> Lee </strong> el siguiente poema. Luego, <strong>determina</strong> para cada verso el número de sílabas, el tipo y los acentos tónicos y la rima. Al final, <strong>señala</strong> si la rima es asonante o consonante y qué tipo de rima es en función de la ubicación.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;"><b>Nanas de la cebolla</b></td>
+                                                        <td style="border: 2px solid #824F94;"><b>N.</b></td>
+                                                        <td style="border: 2px solid #824F94;"><b>Tipo de verso</b></td>
+                                                        <td style="border: 2px solid #824F94;"><b>Acentos</b></td>
+                                                        <td style="border: 2px solid #824F94;"><b>Rima</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">La cebolla es escarcha</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text"  class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">cerrada y pobre.</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">Escarcha de tus días</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">y de mis noches.</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">Hambre y cebolla,</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">hielo negro y escarcha</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">grande y redonda.</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;"><br></td>
+                                                        <td style="border: 2px solid #824F94;"></td>
+                                                        <td style="border: 2px solid #824F94;"></td>
+                                                        <td style="border: 2px solid #824F94;"></td>
+                                                        <td style="border: 2px solid #824F94;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">En la cuna del hambre</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">mi niño estaba.</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">Con sangre de cebolla</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">se amamantaba.</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">Pero tu sangre,</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">escarchada de azúcar</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">cebolla y hambre.</td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" onkeypress="return soloNumeros1(event)" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                        <td style="border: 2px solid #824F94;"><input type="text" class="form-control" style="min-width: 70px; text-align: center;"></td>
+                                                    </tr>
+                                                    <tr align="right">
+                                                        <td colspan="5">
+                                                            <h6>Hernández, Miguel (s/f ). “Nanas de la cebolla”. Ciudad Seva. Recuperado de https://goo.gl/U9pf6x</h6>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <p>En términos fonéticos la rima es:</p>
+                                            <textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_2"  disabled="true" style="display: none;">  <strong style="color: #EF7D2D;">2.</strong><strong> Lee </strong> los siguientes fragmentos y <strong>determina</strong> el tipo de rima por la ubicación.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <div class="col-sm-6 table-responsive">
+                                                <img src="img/i1_p130_uni3a11.jpg" class="img-responsive" style="min-width: 350px;" alt="">
+                                            </div>  
+                                            <div class="col-sm-6 table-responsive">
+                                                <img src="img/i2_p130_uni3a11.jpg" class="img-responsive" style="min-width: 350px;" alt="">
+                                            </div>
+                                            <div class="row">
+                                                
+                                            </div>
+                                            <div class="col-sm-6 table-responsive">
+                                                <img src="img/i3_p130_uni3a11.jpg" class="img-responsive" style="min-width: 350px;" alt="">
+                                            </div>
+                                            <div class="col-sm-6 table-responsive">
+                                                <img src="img/i4_p130_uni3a11.jpg" class="img-responsive" style="min-width: 350px;" alt="">
+                                            </div>
+                                            <div class="row">
+                                                
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <br>
+                                                <p><b style="color: #98007F">1. </b> <input type="text" id="p2dcon1" onkeyup="mayus(this)" style="border: 2px solid #98007F; border-radius: 10px; text-align: center;"></p>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <br>
+                                                <p><b style="color: #98007F">2. </b> <input type="text" id="p2dcon2" onkeyup="mayus(this)" style="border: 2px solid #98007F; border-radius: 10px; text-align: center;"></p>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <br>
+                                                <p><b style="color: #98007F">3. </b> <input type="text" id="p2dcon3" onkeyup="mayus(this)" style="border: 2px solid #98007F; border-radius: 10px; text-align: center;"></p>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <br>
+                                                <p><b style="color: #98007F">4. </b> <input type="text" id="p2dcon4" onkeyup="mayus(this)" style="border: 2px solid #98007F; border-radius: 10px; text-align: center;"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        
+
+                        <div class="panel panel-default" >
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed btn btn-default"  style="color: black;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                      Comunicación oral <img src="img/comunicacion.jpg" class="img-responsive" style="display: inline-block; mix-blend-mode: multiply;" alt="">
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_3" disabled="true" style="display: none;">  <strong style="color: #805C97"> 3.</strong> <strong>Lee</strong> las siguientes oraciones sobre el simposio y <strong>marca</strong> <b style="color: #009BDB;">V</b> (verdadero) o <b style="color: #009BDB;">F</b> (falso), según corresponda.</span>
+                                        </div>
+                                        <div  class="col-sm-12 ">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td style="background: #005CA4; border:2px solid #824F94;"><b style="color: white;">Oración</b></td>
+                                                        <td style="background: #98007F; border:2px solid #824F94;"><b style="color: white;">V o F</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p3im1"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p3sel1" class="form-control" style="min-width: 80px;">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="V">V</option>
+                                                                <option value="F">F</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p3im2"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p3sel2" class="form-control" style="min-width: 80px;">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="V">V</option>
+                                                                <option value="F">F</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p3im3"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p3sel3" class="form-control" style="min-width: 80px;">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="V">V</option>
+                                                                <option value="F">F</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p3im4"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p3sel4" class="form-control">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="V">V</option>
+                                                                <option value="F">F</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>  
+                                        </div>                                
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_4" disabled style="display: none;"> <strong style="color: #805C97">4.</strong> <strong>Relaciona</strong> cada uno de los momentos del simposio con la etapa que corresponde.</span>
+                                        </div>
+                                    
+                                        <div class="col-sm-12">
+                                            <div class="textos" style="display: inline-block;"></div>
+                                            
+                                            <div class="col-sm-12" align="center">
+                                                <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td style="background: #E5B300; border: 2px solid #824F94;"><b style="color: white;">Características</b></td>
+                                                        <td style="background: #005CA4; border: 2px solid #824F94;"><b style="color: white;">Etapa</b></td>                                                       
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop3 p4im1"></div>
+                                                        </td>
+                                                        <td style="border: 2px solid #824F94;">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p4cim11"><b>Inicio</b></div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop4 p4im2"></div>
+                                                        </td>
+                                                        <td style="border: 2px solid #824F94;">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p4cim12"><b>Desarrollo</b></div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 2px solid #824F94;">
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop5 p4im3"></div>
+                                                        </td>
+                                                        <td style="border: 2px solid #824F94;">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p4cim13"><b>Cierre</b></div>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </table>
+                                                </div>
+                                            </div>
+                                        </div>                                
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-danger">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a class="collapsed btn btn-danger" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" style="color: black;" aria-controls="collapseThree">
+                                        Lectura <img src="img/lectura.jpg" class="img-responsive" style="display: inline-block; mix-blend-mode: multiply;" alt="">
+
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_5" > <strong style="color: #E94F6C">5.</strong><strong> Explica </strong> por qué es importante que un artículo de divulgación científica presente la fecha de elaboración o al menos la fecha de publicación.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea>
+                                        </div> 
+                                    </div>
+                                    
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_6" disabled style="display: none;"> <strong style="color: #E94F6C">6.</strong> De la siguiente lista de criterios,<strong> marca </strong> con visto (√) los que sí corresponden a un texto de divulgación científica y con equis (x) los que no corresponden.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td style="background: #005CA4; border:2px solid #824F94;"><b style="color: white;">Característica</b></td>
+                                                        <td style="background: #98007F; border:2px solid #824F94;"><b style="color: white;">visto (√) o equis (x)</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p6im1"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p6sel1" class="form-control" style="min-width: 80px;">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="√">√</option>
+                                                                <option value="x">x</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p6im2"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p6sel2" class="form-control" style="min-width: 80px;">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="√">√</option>
+                                                                <option value="x">x</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p6im3"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p6sel3" class="form-control" style="min-width: 80px;">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="√">√</option>
+                                                                <option value="x">x</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p6im4"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p6sel4" class="form-control">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="√">√</option>
+                                                                <option value="x">x</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p6im5"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p6sel5" class="form-control">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="√">√</option>
+                                                                <option value="x">x</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_7" > <strong style="color: #E94F6C">7.</strong> ¿Para qué se escribe un artículo de divulgación científica?</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading" role="tab" id="headingFour">
+                                <h4 class="panel-title">
+                                    <a class="collapsed btn btn-info" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false"  aria-controls="collapseFour">
+                                        Escritura <img src="img/escritura.jpg" class="img-responsive" style="display: inline-block; mix-blend-mode: multiply;" alt="">
+
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_8" disabled style="display: none;"> <strong style="color: #3599BA">8.</strong> <strong>Relaciona</strong> la característica con la parte del artículo divulgativo a la que corresponde. <strong> Subraya </strong> la opción que responde correctamente. </span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td style="background: #005CA4; border:2px solid #824F94;"><b style="color: white;">Etapa</b></td>
+                                                        <td style="background: #98007F; border:2px solid #824F94;"><b style="color: white;">Características</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p6im1"><b style="color: #98007F;">1</b> La información debe ser veraz y confiable</td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <b style="color: #3599BA">a</b> Introducción
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p6im1"><b style="color: #98007F;">2</b> Motiva a seguir leyendo</td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <b style="color: #3599BA">b</b> Conclusión
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p6im1"><b style="color: #98007F;">3</b> Lo que se dice a partir de todo lo expuesto</td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <b style="color: #3599BA">c</b> Título
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p6im1"><b style="color: #98007F;">4</b> Debe evitar el uso de fórmulas</td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <b style="color: #3599BA">d</b> Cuerpo o desarrollo
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <br>
+                                                <span id="p8res1" class="sub1"><b style="color: #009277;">A. </b> <span id="p8im1"></span></span>
+                                            </div>      
+                                            <div class="col-sm-3">
+                                                <br>
+                                                <span id="p8res2" class="sub2"><b style="color: #009277;">B. </b> <span id="p8im2"></span></span>
+                                            </div>      
+                                            <div class="col-sm-3">
+                                                <br>
+                                                <span id="p8res3" class="sub3"><b style="color: #009277;">C. </b> <span id="p8im3"></span></span>
+                                            </div>      
+                                            <div class="col-sm-3">
+                                                <br>
+                                                <span id="p8res4" class="sub4"><b style="color: #009277;">D. </b> <span id="p8im4"></span></span>
+                                            </div>      
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_9" > <strong style="color: #3599BA">9.</strong> <strong>Escribe</strong> las oraciones subordinadas sustantivas según la función que te indica la matriz. <strong>Subraya</strong> en cada caso la sustantiva subordinada.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <br>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="left">
+                                                        <td style="border: 2px solid #824F94;"><b>Complemento directo</b></td>
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                    </tr>
+                                                    <tr align="left">
+                                                        <td style="border: 2px solid #824F94;"><b>Complemento agente</b></td>
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                    </tr>
+                                                    <tr align="left">
+                                                        <td style="border: 2px solid #824F94;"><b>Complemento del nombre</b></td>
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                    </tr>
+                                                    <tr align="left">
+                                                        <td style="border: 2px solid #824F94;"><b>Sujeto</b></td>
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_10" > <strong style="color: #3599BA">10.</strong> <strong>Lee</strong> el siguiente texto y <strong>subraya</strong> las oraciones subordinadas sustantivas.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <br>
+                                            <p align="justify">No es aconsejable que pidas recalificación en estos momentos. Entendemos que exonerarán del examen a los que estuvieron afectados por la gripe que ocasionó la ausencia de varios días de los afectados. Guarda bien la solicitud que elaboramos ayer.</p>
+                                            <p><b>Escribe</b> en la matriz las oraciones que has subrayado y <strong>determina</strong> la función que cumplen.</p>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="left">
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                    </tr>
+                                                    <tr align="left">
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                    </tr>
+                                                    <tr align="left">
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                    </tr>
+                                                    <tr align="left">
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                        <td style="border: 2px solid #824F94;"><textarea name="" id="" class="form-control cajas vresize" placeholder="Escribe tu respuesta"></textarea></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="panel panel-primary">
+                            <div class="panel-heading" role="tab" id="headingFive">
+                                <h4 class="panel-title">
+                                    <a class="collapsed btn btn-primary" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false"  aria-controls="collapseFive">
+                                        Lengua y Cultura <img src="img/lengua.jpg" class="img-responsive" style="display: inline-block; mix-blend-mode: multiply;" alt="">
+
+                                    </a>
+                                  </h4>
+                            </div>
+                            <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_11" disabled="true" style="display: none;"> <strong style="color: #3599BA">11.</strong><strong> Lee </strong> los siguientes enunciados sobre el alfabeto latino antiguo y <strong>escribe</strong> <b style="color: #009BDB;">V</b> (verdadero) o <b style="color: #009BDB;">F</b> (falso), según corresponda:</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr align="center">
+                                                        <td style="background: #005CA4; border:2px solid #824F94;"><b style="color: white;"></b></td>
+                                                        <td style="background: #98007F; border:2px solid #824F94;"><b style="color: white;">V o F</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p11im1"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p11sel1" class="form-control" style="min-width: 80px;">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="V">V</option>
+                                                                <option value="F">F</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p11im2"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p11sel2" class="form-control" style="min-width: 80px;">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="V">V</option>
+                                                                <option value="F">F</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p11im3"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p11sel3" class="form-control" style="min-width: 80px;">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="V">V</option>
+                                                                <option value="F">F</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p11im4"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p11sel4" class="form-control">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="V">V</option>
+                                                                <option value="F">F</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p11im5"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p11sel5" class="form-control">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="V">V</option>
+                                                                <option value="F">F</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:2px solid #824F94;" id="p11im6"></td>
+                                                        <td style="border:2px solid #824F94;">
+                                                            <select id="p11sel6" class="form-control">
+                                                                <option value="" selected disabled>SELECCIONE</option>}
+                                                                <option value="V">V</option>
+                                                                <option value="F">F</option>
+                                                            </select>   
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>  
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-question">
+                                            <span ><input type="text" class="nota-abierta calif" id="nota1_12" disabled style="display: none;"> <strong style="color: #3599BA">12.</strong> En la actualidad, el alfabeto latino se utiliza en todo el mundo. <strong> Marca </strong> con una <b style="color: #009BDB;">X</b> los continentes en donde se usa.</span>
+                                        </div>
+                                        <div class="col-sm-12 text-question">
+                                            <div class="col-sm-6">
+                                                <p><b style="color: #86AEED;">A.</b> <input maxlength="1" onkeypress="soloNumeros2(event)" type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px;" id="p12dcon1"> <span id="p12im1">América del Norte</span></p>
+                                            </div>  
+                                            <div class="col-sm-6">
+                                                <p><b style="color: #86AEED;">B.</b> <input maxlength="1" onkeypress="soloNumeros2(event)" type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px;" id="p12dcon2"> <span id="p12im2">América del Norte</span></p>
+                                            </div> 
+                                            <div class="row">
+                                                 
+                                             </div>
+                                             <div class="col-sm-6">
+                                                <p><b style="color: #86AEED;">C.</b> <input maxlength="1" onkeypress="soloNumeros2(event)" type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px;" id="p12dcon3"> <span id="p12im3">América del Norte</span></p>
+                                            </div>  
+                                            <div class="col-sm-6">
+                                                <p><b style="color: #86AEED;">D.</b> <input maxlength="1" onkeypress="soloNumeros2(event)" type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px;" id="p12dcon4"> <span id="p12im4">América del Norte</span></p>
+                                            </div> 
+                                            <div class="row">
+                                                 
+                                             </div> 
+                                             <div class="col-sm-6">
+                                                <p><b style="color: #86AEED;">E.</b> <input maxlength="1" onkeypress="soloNumeros2(event)" type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px;" id="p12dcon5"> <span id="p12im5">América del Norte</span></p>
+                                            </div>  
+                                            <div class="col-sm-6">
+                                                <p><b style="color: #86AEED;">F.</b> <input maxlength="1" onkeypress="soloNumeros2(event)" type="text" style="border: none; border-bottom: 2px dotted black; text-align: center; width: 50px;" id="p12dcon6"> <span id="p12im6">América del Norte</span></p>
+                                            </div> 
+                                            <div class="row">
+                                                 
+                                             </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/uni3a11.js"></script>
+    <script type="text/javascript">
+    var titulos = "evaluacion";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("130");
+    //Solo permite introducir numeros.
+        function soloNumeros1(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 48 || key > 57 ) {
+            e.preventDefault();
+          }
+        }
+    function soloNumeros2(e){
+          var key = window.event ? e.which : e.keyCode;
+          if (key < 120 || key > 120 ) {
+            e.preventDefault();
+          }
+        }
+    
+    </script>
+</body>
+
+</html>

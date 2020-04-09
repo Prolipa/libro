@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Lengua y Literatura 4</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+		<link href="css/fraccion.css" rel="stylesheet">
+		<link href="css/jquery-ui.min.css" rel="stylesheet">
+		<link href="css/Comprendo.css" rel="stylesheet">
+                    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+
+        <style type="text/css">
+            .respuestas{
+                font-size: 21px;
+                color: #8819D6;
+            }
+        </style>
+    </head>
+    <body>
+		
+		<div id="nota-informativa" class="nota-ayuda">
+             <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+                            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+                           Para completar la actividad escribe la respuesta correcta en los lugares indicados.<br>
+                           <span id="ayudas"></span>
+
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onClick="" id="Calificar">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad display-none" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" >/ 10</span> 
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág  <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+
+        <!--contenedor de la actividad-->
+        <div class="container espacio">
+            <!--div que contiene la actividad modificar el border- segun la actividad-->
+            <div class="panel border-reflexiono" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-reflexiono">
+                    <span class="titulo"><img src="img/icoR.png" alt="">Reflexiono para avanzar</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>
+                   
+                </div>
+               
+                <div class="panel-body" style="font-size: 21px;">
+                    <!--texto de ayuda de la actividad-->
+
+                    <br>
+                    <span>1. Lee las oraciones y subraya las palabras que reemplazan al nombre o los nombres.</span>
+                    <br><br>
+                   
+                    <ol id="oraciones"></ol>
+
+				</div>
+            </div>
+        </div>
+
+
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+		<script src="js/jquery-ui.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+		<script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+		<script src="js/animate.css.min.js"></script>
+		<script src="js/jquery.animate.css.js"></script>
+		<script src="js/Utilitario.js"></script>
+		
+		<script>
+            $("#n_pagina").html("102"); //impresion de pagina      
+
+
+        $('.btn_mostrar').on('click', function(){ //mostrar todas las preguntas
+        $(".panel-collapse").removeClass('in');
+        $(".panel-collapse").addClass('in');
+        });
+
+
+       
+     
+
+ 
+            
+
+
+    $(document).ready(function() {
+    
+        var contenidos = [
+            ['<span style="border-radius: 20px;" id="rLO1">Mi nombre es Rosa,</span><span style="border-radius: 20px;" id="rLO2"> yo </span> <span style="border-radius: 20px;" id="rLO3">vivo en Quito.</span><br><br>'],
+            ['<span style="border-radius: 20px;" id="rLO4">Felipe dice a Jacinto: </span><span style="border-radius: 20px;" id="rLO5"> tú </span> <span style="border-radius: 20px;" id="rLO6">traerás los libros.</span><br><br>'],
+            [' <span style="border-radius: 20px;" id="rLO7">Peluchina fue vacunada ayer. </span><span style="border-radius: 20px;" id="rLO8"> Ella </span> <span style="border-radius: 20px;" id="rLO9">es muy sana.</span><br><br>'],
+            ['<span style="border-radius: 20px;" id="rLO10">Edwin, Jorge y yo trotamos en las mañanas. </span><span style="border-radius: 20px;" id="rLO11"> Nosotros </span><span style="border-radius: 20px;" id="rLO12"> practicamos deporte.</span><br><br>'],
+            ['<span style="border-radius: 20px;" id="rLO13">Adriana pregunta a Jorge y a Andrés: ¿</span><span style="border-radius: 20px;" id="rLO14"> ustedes </span> <span style="border-radius: 20px;" id="rLO15">son primos?</span><br><br>'],
+            [' <span style="border-radius: 20px;" id="rLO16">El gato y el perro de mi vecino son traviesos. </span><span style="border-radius: 20px;" id="rLO17"> Ellos </span><span style="border-radius: 20px;" id="rLO18"> rompieron una maceta.</span><br><br>'],
+        ]
+          contenidos.sort(f_randomico);
+
+          $.each( contenidos, function( i, item ) {
+            $("#oraciones").append( item );
+          });
+
+
+
+
+/////////////////////////
+
+
+
+           var notaFinalP1 = 0;
+
+
+
+            $('#rLO'+(1)).click(function(){
+            $('#rLO'+(1)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(3)).click(function(){
+            $('#rLO'+(3)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(2)).click(function(){
+            $('#rLO'+(2)).css("background-color", "#05D576");
+            notaFinalP1++;
+            });
+        
+
+            /////////////
+            $('#rLO'+(4)).click(function(){
+            $('#rLO'+(4)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(6)).click(function(){
+            $('#rLO'+(6)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(5)).click(function(){
+            $('#rLO'+(5)).css("background-color", "#05D576");
+            notaFinalP1++;
+            });
+            /////////////
+            $('#rLO'+(7)).click(function(){
+            $('#rLO'+(7)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(9)).click(function(){
+            $('#rLO'+(9)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(8)).click(function(){
+            $('#rLO'+(8)).css("background-color", "#05D576");
+            notaFinalP1++;
+            });
+            ///////////////
+            $('#rLO'+(10)).click(function(){
+            $('#rLO'+(10)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(12)).click(function(){
+            $('#rLO'+(12)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(11)).click(function(){
+            $('#rLO'+(11)).css("background-color", "#05D576");
+            notaFinalP1++;
+            });
+            ///////////////
+            $('#rLO'+(13)).click(function(){
+            $('#rLO'+(13)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(15)).click(function(){
+            $('#rLO'+(15)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(14)).click(function(){
+            $('#rLO'+(14)).css("background-color", "#05D576");
+            notaFinalP1++;
+            });
+            ///////////////
+            $('#rLO'+(16)).click(function(){
+            $('#rLO'+(16)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(18)).click(function(){
+            $('#rLO'+(18)).css("background-color", "#D50545");
+            notaFinalP1--;
+            });
+
+            $('#rLO'+(17)).click(function(){
+            $('#rLO'+(17)).css("background-color", "#05D576");
+            notaFinalP1++;
+            });
+
+
+
+
+
+          function confirmar() {
+
+            var nota1;
+            if (notaFinalP1<0) {nota1=0;}else{nota1=(notaFinalP1*10)/6;}
+            
+            var notaFinal = (nota1).toFixed(2);
+
+                $("#txtNota").text(notaFinal);
+                $('#Calificar').attr('disabled', true);
+                $('#Refrescar').attr('disabled', false);                          
+                  return false
+          }
+      
+
+    $("#Calificar").click(function() {
+          confirmar();
+      });
+
+
+
+
+  });
+
+        </script>
+
+    </body>
+</html>

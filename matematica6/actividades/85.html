@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMATICA 6</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+</head>
+<style type="text/css">
+*{
+    box-sizing: border-box;
+}
+	.actividad1{
+		background: #fff;
+	}
+	.correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+    .set-width{
+        max-width: 90px;
+        display: inline-block;
+    }
+    #pregunta1 .venn1{
+        border-radius: 25px;
+        display: inline-block;
+        padding: 15px;
+        letter-spacing: 10px;
+    }
+    .letra1{
+        width: 1.5cm; 
+        height: 1.5cm; 
+        border: 2px solid #a863a5; 
+        border-radius: 20%; 
+        font-size:1.5em;
+        margin-top: -5px;
+        margin-right: 15px;
+    }
+    .c_imagenes{
+        padding: 5px;
+    }
+    .bordes{
+        padding: 10px;
+        border: 2px dotted #a863a5;
+        border-radius: 10px;
+        min-height: 170px;
+    }
+    #pregunta2 img, #pregunta5 img {
+        mix-blend-mode:multiply;
+    }
+    /*PREGUNTA 3*/
+    .c_imagen{
+        position: relative;
+    }
+    #pregunta3 .c1{background-color: #CFc0DB;font-weight: bold;text-align: center;}
+    #pregunta3 .c2{background-color: #BADAEA;font-weight: bold;text-align: center;}
+    #pregunta3 .c3{background-color: #BED49D;font-weight: bold;text-align: center;}
+    #pregunta3 .c4{background-color: #BADAEA;font-weight: bold;text-align: center;}
+    #pregunta3 .c5{background-color: #CFc0DB;font-weight: bold;text-align: center;}
+    /*FIN PREGUNTA 3*/
+    /*PREGUNTA 4*/
+    #pregunta4 .c1{
+        background-color: #F9EFDF;
+        text-align: center;
+        padding: 5px;
+        border: 1px #D68500 solid;
+        font-size: 18px;
+    }
+    #pregunta4 .c2{
+        text-align: center;
+        padding: 5px;
+        border: 1px #D68500 solid;
+        font-size: 18px;
+    }
+    .input {
+        border: none;
+        border-bottom: 1px solid #0066ff;
+        padding: 6px;
+        width: 80%;
+    }
+    .caja{
+        width: 20%;
+    }
+    .caja1{
+        width: 10%;
+    }
+    .color1{
+        font-weight: bold;
+        color: #BA007C;
+    }
+    .color2{
+        font-weight: bold;
+        color: #009BDB;
+    }
+    .actividad1 input{
+        text-align: center;
+    }
+    .t_head{
+        background-color: #333;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 15px 15px 0 0;
+    }
+    .bg1{background-color: #D68611;}
+    .bg2{background-color: #A23589;}
+    .bg3{background-color: #5A9876;}
+    .bg4{background-color: #2F5FA4;}
+    .i_valor{
+        letter-spacing: 8px;
+        font-weight: bold;
+    }
+    /*pregunta 5*/
+    .borde_p5{
+        border: dotted 2px #444;
+        min-height: 180px;
+        min-width: 80px;
+        border-radius: 5px;
+        padding: 8px;
+    }
+    /*pregunta 6*/
+    .imagenes_p6{
+        min-height: 180px;
+        border: 2px dotted #e5e5e5;
+    }
+    /*pregunta 8*/
+    .imagen_p8{
+        display: inline-block;
+    }
+    @media (max-width: 770px) {
+      .cajas {
+        clear: left;
+      }
+    }
+
+    .mi_canvas {
+    min-width: 320px;
+  }
+  #prueba {
+    margin-top: 2rem;
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    transition: all .3s linear 0s;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#e5e5e5; 
+    /*background-color:rgba(212,185,186,0.2); 
+    background-image: url(imagenes/fondo.jpg);*/ /* SI SE NECESITA UNA IMAGEN DE FONDO */
+    background-size: 100% 100%;
+  }
+  #logo {
+    display: block;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    z-index: 1;
+    width: 30%;
+    height: auto;
+    max-width: 350px;
+    min-width: 100px;
+  }
+  #contenedoropciones {
+    margin-top: 2rem;
+    padding: 2px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #contenedoropciones table {
+  background-color: rgba(220,220,220,1.00);
+  border: .25rem solid rgba(188,185,185,1.00);
+  margin-bottom: .5rem;
+  border-spacing: 5px;
+  border-collapse: separate;
+  }
+  #contenedoropciones table:nth-of-type(2) {
+    border-spacing: 5px;
+  }
+  #contenedoropciones table:nth-of-type(2) td {
+    width: 1px;
+    white-space: nowrap;
+  }
+  #contenedoropciones table:nth-of-type(1) td {
+    cursor: pointer;
+  }
+  #contenedoropciones .titulotabla {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color:rgba(103,103,103,1.00)
+  }
+  #contenedoropciones table {
+    display: inline-table;
+  }
+  
+  .celdascoloresdefondo {
+    width: 20px;
+    height: 10px;
+    border: solid 1px transparent;
+  }
+  @media (max-width: 890px) {
+    /*.mi_canvas {
+      font-size: .750rem;
+    }*/
+    #contenedoropciones, #prueba {
+      width: 98%
+    }
+    #contenedoropciones {
+      margin-left: 1%;
+    }
+  }
+  @media (max-width: 450px) {
+    /*.mi_canvas {
+      font-size: .75rem;
+    }*/
+  }
+  @media (max-width: 1px) {
+    #contenedoropciones #opcionesdedibujo {
+      display: table;
+      width: 100%;
+    }
+    #contenedoropciones #opcionesdedibujo td {
+      display: block;
+      width: auto;
+      text-align: left;
+      margin-top: 5px;    
+    }
+  }
+
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            <b>Pregunta 1:</b> Escribe en los espacios en blanco<br>
+            <b>Pregunta 2:</b> Escribe en los recuadros en blanco<br>
+            <b>Pregunta 3:</b> Ubica la letra del par ordenado que corresponde<br>
+            <b>Pregunta 4:</b> Escribe en los espacios en blanco<br>
+            <b>Pregunta 5:</b> Resuelve las divisiones y escribeel cociente y residuo.<br>
+            <b>Pregunta 6:</b> Escribe en los recuadros en blanco<br>
+            <b>Pregunta 7:</b> Escribe en los recuadros en blanco<br>
+
+           
+            <span id="ayudas"></span>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li >
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li >
+                <li >
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                        <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span  class="notificacion actividad" >
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span  class="notificacion nota" >
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                    </span>
+                    <span  class="notificacion pagina" >
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág 92<i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+	<div class="container espacio">
+		<div class="panel border-aplico" id="activity"> 
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico">
+                <span class="titulo"><img src="img/icoA.png" alt="Aplico para aprender"> Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>                    
+            </div>
+            <div class="panel-body">
+                <!--preguntas de la actividad-->
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+                <div><img src="img/algebra_funciones.jpg" class="img img-responsive"></div>
+                <div class="actividad1">
+                    <!--PREGUNTA 1-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <span class="p_abierta"></span>
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#aion" href="#pregunta1"> Pregunta 1</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;"><b>Aplica</b> el calculo del máximo común denominador para resolver el problema.
+                                    <div class="row">
+                                    <div class="col col-md-5">
+                                        <p style="text-align:justify">Hay 258 reglas y 120 lápices para empacarlas en cajas,
+                                                de manera que en cada caja haya solo reglas o solo
+                                                lápices, pero en la misma cantidad. ¿Cuántas reglas y
+                                                cuántos lápices irán en cada caja? ¿cuántas cajas habrá
+                                                de reglas y cuántas de lápices?</p>
+                                        <p></p>
+                                    </div>
+                                    <div class="col col-md-1"></div>
+                                    <div class="col col-md-6">
+                                        <div class="row">
+                                            <label for="">D <sub>258</sub> = <span id="contenidoa"></span></label>
+                                            <p></p>
+                                            <label for="">D <sub>120</sub> = <span id="contenidob"></span></label>
+                                            <p> En cada caja irán <input type="number" class="caja" id="c0"> unidades de reglas
+                                                o de lápices.
+                                                Habrá <input type="number" class="caja" id="c1"> cajas de reglas y <input type="number" class="caja" id="c2"> de lápices.</p>
+                                                
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--PREGUNTA 2-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta2">Pregunta 2</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta2" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;"><b>Calcula</b> el MCM y el MCD por simple deducción en cada caso.
+                                <div class="row" style="color:black;">
+                                    <ol type="a">
+                                    <div class="col col-md-6">
+                                        <li>MCM (2 y 7) = 14</li>
+                                        <p></p>
+                                        <span id="contenidop2a"></span>
+                                        <p></p>
+                                        <span id="contenidop2b"></span>
+                                        <p></p>
+                                    </div>                                    
+                                    <div class="col col-md-6">
+                                        <span id="contenidop2c"></span>
+                                        <p></p>
+                                        <span id="contenidop2d"></span>
+                                        <p></p>
+                                        <span id="contenidop2e"></span>
+                                        <p></p>
+                                    </div>  
+                                    </ol>                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- pregunta 3-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta3">Pregunta 3</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta3" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;"><input type="number" class="nota-abierta"  id="nota1" min="0" max="2" step="0.1" >En el sistema de coordenadas, <b>ubica</b> la letra del par ordenado que corresponde a cada central hidroeléctrica
+                                        y <b>descubre</b> la provincia en la que se encuentra.
+                                        <div class="row">
+                                            <div class="col col-md-8">
+                                              <img src="img/i1_p94_act85.png" class="img-responsive center-block">
+                                            </div>
+                                            <div class="col col-md-4">
+                                                <div class="bg-info center-block" style="padding:12%">
+                                                    <p>Central Hidroeléctrica</p>
+                                                    <p>Manduriacu M = (5, 7).</p>
+                                                    <p>Provincias: </p>
+                                                    <p><input type="text" class="form-control" ></p>
+                                                </div>
+                                                <div class="bg-danger center-block" style="padding:15%">
+                                                    <p>Central Hidroeléctrica Paute</p>
+                                                    <p>P = (4, 3)</p>
+                                                    <p>Provincia:</p>
+                                                    <p><input type="text" class="form-control" ></p>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-md-8">
+                                                <p class="bg-success">Central Hidroeléctrica Agoyán A = (5, 5) Provincia: <input type="text" class="caja"></p>
+                                                <p class="bg-danger">Central Termoeléctrica Esmeraldas E = (4, 8) Provincia: <input type="text" class="caja"></p>
+                                                <p class="bg-info">Proyecto Hidroeléctrico Toachi - Pilatón T = (5, 6) Provincia:  <input type="text" class="caja"></p>
+                                            </div>
+                                        </div>
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- pregunta 4-->                    
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta4">Pregunta 4</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta4" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;"><b>Encuentra</b> el patrón y <b>completa</b> las sucesiones.
+                                <div class="row" style="color:black;">
+                                    <ol type="a">
+                                        <div class="col col-md-8">
+                                        <li><label for="">848; 968; 1 088;</label><input type="number" class="caja1" id="e0">; <input type="number" class="caja1" id="e1">; <input type="number" class="caja1" id="e2">; <input type="number" class="caja1" id="e3">;</li>
+                                        <li><label for="">10 430; 9 930; 9 430;</label><input type="number" class="caja1" id="f0">; <input type="number" class="caja1" id="f1">; <input type="number" class="caja1" id="f2">; <input type="number" class="caja1" id="f3">;</li>
+                                        </div>
+                                        <div class="col col-md-4">
+                                            <p>Patrón: <input type="number" class="caja" id="e4"></p>
+                                            <p>Patrón: <input type="number" class="caja" id="f4"></p>
+                                        </div>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- pregunta 5-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta5">Pregunta 5</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta5" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;"><b>Resuelve</b> las divisiones y <b>escribe</b>el cociente y residuo.
+                                    <ol type="a">
+                                    <div class="row">    
+                                        <div class="col col-md-6" style="color:black;">
+                                            <li></li>
+                                            <div class="row" style="color:black;">
+                                                <input type="text" class="caja" value="9287" disabled><div class="bg-info" style="background-image: url(img/i1_p68_act9.png); width: 50px; height: 50px; text-align: right; display:inline-block;"><input type="number" class="caja" style="margin-left: 10px;  width: 100px; margin-top: 10px;" value="453" disabled id="g0"></div>
+                                                <p>- <input type="number"  class="caja" id="g1">    <input type="number" class="caja" id="g2"></p> 
+                                                <p> <input type="number"  class="caja" id="g3">    </p>
+                                                <label for="">Cociente</label> <input type="number" class="caja" id="g4">
+                                                <p></p>
+                                                <label for="">Residuo</label> <input type="number" class="caja" id="g5">
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-6" style="color:black;">
+                                            <li></li>
+                                            <div class="row" style="color:black;">
+                                                <input type="text" class="caja" value="1237" disabled><div class="bg-info" style="background-image: url(img/i1_p68_act9.png); width: 50px; height: 50px; text-align: right; display:inline-block;"><input type="number" class="caja" style="margin-left: 10px;  width: 100px; margin-top: 10px;" value="308" disabled id="h0"></div>
+                                                <p>- <input type="number"  class="caja" id="h1">    <input type="number" class="caja" id="h2"></p> 
+                                                <p> <input type="number"  class="caja" id="h3">    </p> 
+                                                <label for="">Cociente</label> <input type="number" class="caja" id="h4">
+                                                <p></p>
+                                                <label for="">Residuo</label> <input type="number" class="caja" id="h5">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div><img src="img/geometria_medida.jpg" class="img img-responsive"></div>
+                    <!--pregunta 6 -->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta6">Pregunta 6</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta6" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">Aurelio coloca cerámica en un piso cuadrangular de 64 metros cuadrados. Si forma triángulos cada
+                                        2 metros, ¿cuál es el área de cada triángulo? ¿Cuántos triángulos forma en el piso? 
+                                    <p><label for="">R.</label>Cada triángulo mide <input type="number" class="caja" id="k0"> cuadrados y en total en el piso se forman <input type="number" class="caja" id="k1">  triángulos.
+                                    </p>
+                                </div>
+                        </div>
+                    </div>
+                    <!--pregunta 7 -->
+                    <div class="panel bg-danger" style="color:white;">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#aion" href="#pregunta7">Pregunta 7</a>
+                                </h4>
+                            </div>
+                            <div id="pregunta7" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="text-question" style="color:black;">Para investigaciones del triángulo de las Bermudas, los científicos bordean el triángulo. ¿Qué distancia recorren los científicos?
+                                    <div class="col col-md-6">
+                                        <img src="img/i1_p95_act85.png" class="center-block img-resposive">
+                                    </div>
+                                    <div class="col col-md-6">
+                                        <div class="bg-danger center-block" style="padding:5%">
+                                            <p>Las medidas de sus lados son, aproximadamente:
+                                                    De Puerto Rico a Bermuda: 1 550 kilómetros.
+                                                    De Bermuda a Cayo Hueso, Florida:
+                                                    1 860 kilómetros.
+                                                    De Cayo Hueso a Puerto Rico: 1 750 kilómetros.</p>
+                                            
+                                        </div>
+                                        <div class="row" style="margin-top:5%">
+
+                                            <p>P = <input type="number" class="caja" id="l0">km + <input type="number" class="caja" id="l1">km + <input type="number" class="caja" id="l2">km </p>
+                                            <p>P = <input type="number" class="caja" id="l3"></p>
+                                            <p><input type="text" class="form-control"></p>
+
+                                        </div>
+
+
+                                    </div>                                
+
+
+                                    </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <p id="trace" class="alert alert-warning display-none"></p>
+        </div>
+                
+    </div>
+
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>  
+                            <div class="col-sm-10"> 
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-su" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>        
+        </div>
+    </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/85.js"></script>
+        <script src="js/dibujarCANVAS.js"></script>
+        <script type="text/javascript">
+            var titulos="evaluacion";
+            
+        </script>
+</body>
+</html>
