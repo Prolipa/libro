@@ -27,10 +27,10 @@ function resolverLetras() {
 
         if ((correctas[0][i]) == ($('#F' + [i] + '').val())) {
             rescorrec2 = rescorrec2 + 1;
-            $('#F' + [i] + '').css("backgroundColor", "#74C75D");
+            $('#F' + [i] + '').addClass('correcto');
             $('#F' + [i] + '').prop("disabled", true);
         } else {
-            $('#F' + [i] + '').css("backgroundColor", "#F97591");
+            $('#F' + [i] + '').addClass('incorrecto');
             $('#F' + [i] + '').prop("disabled", true);
         }
 
@@ -39,10 +39,10 @@ function resolverLetras() {
 
         if ((correctas[1][i]) == ($('#I' + [i] + '').val())) {
             rescorrec3 = rescorrec3 + 1;
-            $('#I' + [i] + '').css("backgroundColor", "#74C75D");
+            $('#I' + [i] + '').addClass('correcto');
             $('#I' + [i] + '').prop("disabled", true);
         } else {
-            $('#I' + [i] + '').css("backgroundColor", "#F97591");
+            $('#I' + [i] + '').addClass('incorrecto');
             $('#I' + [i] + '').prop("disabled", true);
         }
 
@@ -51,10 +51,10 @@ function resolverLetras() {
 
         if ((correctas[2][i]) == ($('#S' + [i] + '').val())) {
             rescorrec4 = rescorrec4 + 1;
-            $('#S' + [i] + '').css("backgroundColor", "#74C75D");
+            $('#S' + [i] + '').addClass('correcto');
             $('#S' + [i] + '').prop("disabled", true);
         } else {
-            $('#S' + [i] + '').css("backgroundColor", "#F97591");
+            $('#S' + [i] + '').addClass('incorrecto');
             $('#S' + [i] + '').prop("disabled", true);
         }
     }
@@ -62,10 +62,10 @@ function resolverLetras() {
 
         if ((correctas[3][i]) == ($('#E' + [i] + '').val())) {
             rescorrec5 = rescorrec5 + 1;
-            $('#E' + [i] + '').css("backgroundColor", "#74C75D");
+            $('#E' + [i] + '').addClass('correcto');
             $('#E' + [i] + '').prop("disabled", true);
         } else {
-            $('#E' + [i] + '').css("backgroundColor", "#F97591");
+            $('#E' + [i] + '').addClass('incorrecto');
             $('#E' + [i] + '').prop("disabled", true);
         }
 
@@ -74,10 +74,10 @@ function resolverLetras() {
 
         if ((correctas[4][i]) == ($('#T' + [i] + '').val())) {
             rescorrec6 = rescorrec6 + 1;
-            $('#T' + [i] + '').css("backgroundColor", "#74C75D");
+            $('#T' + [i] + '').addClass('correcto');
             $('#T' + [i] + '').prop("disabled", true);
         } else {
-            $('#T' + [i] + '').css("backgroundColor", "#F97591");
+            $('#T' + [i] + '').addClass('incorrecto');
             $('#T' + [i] + '').prop("disabled", true);
         }
 
@@ -86,10 +86,10 @@ function resolverLetras() {
 
         if ((correctas[5][i]) == ($('#G' + [i] + '').val())) {
             rescorrec7 = rescorrec7 + 1;
-            $('#G' + [i] + '').css("backgroundColor", "#74C75D");
+            $('#G' + [i] + '').addClass('correcto');
             $('#G' + [i] + '').prop("disabled", true);
         } else {
-            $('#G' + [i] + '').css("backgroundColor", "#F97591");
+            $('#G' + [i] + '').addClass('incorrecto');
             $('#G' + [i] + '').prop("disabled", true);
         }
 
@@ -98,10 +98,10 @@ function resolverLetras() {
 
         if ((correctas[6][i]) == ($('#U' + [i] + '').val())) {
             rescorrec8 = rescorrec8 + 1;
-            $('#U' + [i] + '').css("backgroundColor", "#74C75D");
+            $('#U' + [i] + '').addClass('correcto');
             $('#U' + [i] + '').prop("disabled", true);
         } else {
-            $('#U' + [i] + '').css("backgroundColor", "#F97591");
+            $('#U' + [i] + '').addClass('incorrecto');
             $('#U' + [i] + '').prop("disabled", true);
         }
 
@@ -110,10 +110,10 @@ function resolverLetras() {
 
         if ((correctas[7][i]) == ($('#D' + [i] + '').val())) {
             rescorrec9 = rescorrec9 + 1;
-            $('#D' + [i] + '').css("backgroundColor", "#74C75D");
+            $('#D' + [i] + '').addClass('correcto');
             $('#D' + [i] + '').prop("disabled", true);
         } else {
-            $('#D' + [i] + '').css("backgroundColor", "#F97591");
+            $('#D' + [i] + '').addClass('incorrecto');
             $('#D' + [i] + '').prop("disabled", true);
         }
 

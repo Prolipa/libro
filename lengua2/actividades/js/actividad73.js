@@ -96,60 +96,60 @@ function f_iniciar() {
         var p1cb1 = $('#p1cb1 .radio:checked').val();
         if (!p1cb1) {
             inc++;
-            $('#p1cx1').addClass('no-valid');
-            $('#p1cx2').addClass('no-valid');
+            $('#p1cx1').addClass('incorrecto');
+            $('#p1cx2').addClass('incorrecto');
         } else {
             if (p1cb1 == '1') {
                 cor++;
-                $('#p1cb1 .radio:checked').addClass('valid');
+                $('#p1cb1 .radio:checked').addClass('correcto');
             } else {
                 inc++;
-                $('#p1cb1 .radio:checked').addClass('no-valid');
+                $('#p1cb1 .radio:checked').addClass('incorrecto');
             }
         }
 
         var p1cb2 = $('#p1cb2 .radio:checked').val();
         if (!p1cb2) {
             inc++;
-            $('#p2cx1').addClass('no-valid');
-            $('#p2cx2').addClass('no-valid');
+            $('#p2cx1').addClass('incorrecto');
+            $('#p2cx2').addClass('incorrecto');
         } else {
             if (p1cb2 == '2') {
                 cor++;
-                $('#p1cb2 .radio:checked').addClass('valid');
+                $('#p1cb2 .radio:checked').addClass('correcto');
             } else {
                 inc++;
-                $('#p1cb2 .radio:checked').addClass('no-valid');
+                $('#p1cb2 .radio:checked').addClass('incorrecto');
             }
         }
 
         var p1cb3 = $('#p1cb3 .radio:checked').val();
         if (!p1cb3) {
             inc++;
-            $('#p3cx1').addClass('no-valid');
-            $('#p3cx2').addClass('no-valid');
+            $('#p3cx1').addClass('incorrecto');
+            $('#p3cx2').addClass('incorrecto');
         } else {
             if (p1cb3 == '1') {
                 cor++;
-                $('#p1cb3 .radio:checked').addClass('valid');
+                $('#p1cb3 .radio:checked').addClass('correcto');
             } else {
                 inc++;
-                $('#p1cb3 .radio:checked').addClass('no-valid');
+                $('#p1cb3 .radio:checked').addClass('incorrecto');
             }
         }
 
         var p1cb4 = $('#p1cb4 .radio:checked').val();
         if (!p1cb4) {
             inc++;
-            $('#p4cx1').addClass('no-valid');
-            $('#p4cx2').addClass('no-valid');
+            $('#p4cx1').addClass('incorrecto');
+            $('#p4cx2').addClass('incorrecto');
         } else {
             if (p1cb4 == '1') {
                 cor++;
-                $('#p1cb4 .radio:checked').addClass('valid');
+                $('#p1cb4 .radio:checked').addClass('correcto');
             } else {
                 inc++;
-                $('#p1cb4 .radio:checked').addClass('no-valid');
+                $('#p1cb4 .radio:checked').addClass('incorrecto');
             }
         }
         Calculo_nota();
