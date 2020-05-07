@@ -200,6 +200,5 @@ function NotaFinal() {
     parseFloat(tpre4);
   var Vtotal = Nf.toFixed(2);
   $("#txtNota").html(Vtotal);
-  document.getElementById("bt_comprobar").disabled = true;
-  $("input").attr('disabled','disabled');
+
 }

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.bien {
+    background: #90D961;
+}
+
+.mal {
+    background: #F25F5F;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Responde.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/experimento.jpg" style="width:100px"><span style="color:#FFFFFF;font-size:40px">&nbsp;&nbsp;&nbsp;&nbsp;<span style="background:#951B81;width:500px;padding:10px;border-radius:20px">Experiencia</span></span><br></span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body" style="font-size:20px">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12"><span class="enunciado"><span style="color:orange;font-size:30px"><strong>¿Cómo distinguimos olores, sabores y sensaciones?</strong></span></span><br><br></div>
+                <div class="col-lg-12">
+                    <div class="col-lg-12">
+                        <div class="col-lg-2">
+                            <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">Objetivo:</span><br><br>
+                        </div>
+                        <div class="col-lg-10">
+                            <span class="enunciado"><span style="color:orange">•&nbsp;&nbsp;</span><b>Diferenciar</b> los tipos de receptores sensoriales existentes en los órganos de los sentidos, para comprender su importancia en nuestra relación con el medio ambiente<br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 ">
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">Materiales:</span><br><br>
+                            <div class="col-lg-12">
+                                <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
+                                    <span class="enunciado">
+                                        <span style="color:orange">✔&nbsp;&nbsp;</span><span>un cubo de hielo.</span><br>
+                                        <span style="color:orange">✔&nbsp;&nbsp;</span><span>jugo de limón.</span><br>
+                                        <span style="color:orange">✔&nbsp;&nbsp;</span><span>una pizca de sal, de azúcar y de café.</span><br>
+                                        <span style="color:orange">✔&nbsp;&nbsp;</span><span> perfume.</span><br><br><br>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <span style="color:orange">✔&nbsp;&nbsp;</span><span>alcohol.</span><br>
+                                    <span style="color:orange">✔&nbsp;&nbsp;</span><span>vinagre.</span><br>
+                                    <span style="color:orange">✔&nbsp;&nbsp;</span><span>tres tapas de botellas de plástico.</span><br>
+                                    <span style="color:orange">✔&nbsp;&nbsp;</span><span>venda o bufanda para los ojos.</span><br><br><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <div class="col-lg-12"><span style="color:white;font-size:22px;background:orange;padding:10px;border-radius:10px">Paso a paso</span><br><br></div>
+                    <span>Antes de iniciar, <b>busca</b> la ficha de laboratorio al final para registrar los resultados y respuestas a las preguntas de los pasos que se muestran a continuación:</b></span>
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">1</span><span class="enunciado"><b>Coloca</b> el cubo de hielo sobre la palma de tu mano y luego en la punta de los dedos y escribe tu sensación en cada parte.</span><br>
+                                <center> <img src="img/i1_p104_act1.jpg" style="width:300px"></center>
+                            </div>
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">2</span><span class="enunciado"><b>Coloca</b> una gota de jugo de limón en las distintas zonas de la lengua, consulta la imagen de la página 77 como referencia. <b>Repítelo</b> con la sal, el azúcar y el café.</span>
+                                <center> <img src="img/i2_p104_act1.jpg" style="width:250px"></center>
+                            </div>
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">3</span><span class="enunciado"><b>Ubica</b>, en un dibujo de la lengua, los sabores que percibiste en cada zona.</span>
+                                <center> <img src="img/i3_p104_act1.jpg" style="width:250px"></center>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                    <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">4</span><span class="enunciado"><b>Coloca</b> en cada tapa de botella de plástico una muestra de vinagre, de alcohol y de perfume. <b>Identifica</b> cada tapa con un número.</span><br>
+                                    <center> <img src="img/i4_p104_act1.jpg" style="width:250px"></center>
+                                </div>
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">5</span><span class="enunciado"><b>Véndate</b> los ojos y, con mucho cuidado, revuelve las tapas para que no identifiques su orden. <b>Acerca</b> cada tapa a tu nariz e <b>identifica</b> cada sustancia por su olor.</span>
+                                <center> <img src="img/i5_p104_act1.jpg" style="width:250px"></center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <p style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px;width:300px">Informe de Experiencia</p>
+                    <div class="col-lg-12"><br>
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a">&nbsp;<span class="enunciado" style="color:black">1. Sensaciones<b>&nbsp;&nbsp;( 1 pts.)</b></span><br><br>
+                        <center> <b>Describe cómo sentiste el hielo en cada parte.</b><br>
+                            <table style="width:100%">
+                                <tr>
+                                    <td style="background:#EA7A02;text-align:center;padding:6px;color:white">Palma de mano</td>
+                                    <td style="background:#20B708;text-align:center;padding:6px;color:white">Punta de dedos</td>
+                                </tr>
+                                <tr>
+                                    <td><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="4" placeholder="Texto"></textarea></td>
+                                    <td><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="4" placeholder="Texto"></textarea></td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                    <div class="col-lg-12"><br>
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a">&nbsp;<span class="enunciado" style="color:black">2. Sabores<b>&nbsp;&nbsp;( 1 pts.)</b></span><br><br>
+                        <center>
+                            <b>Ubica los sabores que sentiste en cada zona de la lengua.</b><br><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="4" placeholder="Texto"></textarea>
+                        </center>
+                    </div>
+                    <div class="col-lg-12"><br>
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a">&nbsp;<span class="enunciado" style="color:black">3. Olores.<b>&nbsp;&nbsp;( 1 pts.)</b></span><br><br>
+                        <center>
+                            <b>Coloca un <span style="color:#257FE5">V</span> si acertaste o <span style="color:#257FE5">F</span> si no lo hiciste.</b><br>
+                            <table>
+                                <tr>
+                                    <td style="border:solid 2px #257FE5;background:#EA7A02;text-align:center;padding:6px;width:200px;color:white">Sustancia</td>
+                                    <td style="border:solid 2px #257FE5;background:#20B708;text-align:center;padding:6px;width:200px;color:white">Aciertos</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:solid 2px #257FE5" align="center">Vinagre</td>
+                                    <td style="border:solid 2px #257FE5"><input type="text" maxlength="1" style="text-align:center;text-transform:uppercase;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border:solid 2px #257FE5" align="center">Alcohol</td>
+                                    <td style="border:solid 2px #257FE5"><input type="text" maxlength="1" style="text-align:center;text-transform:uppercase;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border:solid 2px #257FE5" align="center">Perfume</td>
+                                    <td style="border:solid 2px #257FE5"><input type="text" maxlength="1" style="text-align:center;text-transform:uppercase;"></td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <p style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px;width:300px">Analizo resultados y concluyo:</p>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a">&nbsp;<span class="enunciado" style="color:black"><b>&nbsp;&nbsp;( 2 pts.)</b></span><br><br>
+                    <span style="color:#811B95" class="enunciado"><b>1. </b></span>&nbsp;<span class="enunciado">¿Lograste diferenciar todas las sustancias? ¿A qué se debió?</span><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                    <span style="color:#811B95" class="enunciado"><b>2. </b></span>&nbsp;<span class="enunciado">¿Todos percibimos igual?</span><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                    <span style="color:#811B95" class="enunciado"><b>3. </b></span>&nbsp;<span class="enunciado">¿Qué importancia tienen los sentidos?</span><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <div class="col-lg-12">
+                        <p style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px;width:150px">Propongo:</p>
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a">&nbsp;<span class="enunciado" style="color:black"><b>&nbsp;&nbsp;( 2 pts.)</b></span><br><br>
+                        <span style="color:#811B95" class="enunciado"><b>1. </b></span>&nbsp;<span class="enunciado">¿Qué pasa si uno de los sentidos no funciona?</span>
+                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <div class="col-lg-12">
+                        <p style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px;width:250px">Evalúo mi preoceso:</p>
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre6a" readonly="">&nbsp;<span class="enunciado" style="color:black"><b>&nbsp;&nbsp;( 3 pts.)</b></span><br><br>
+                        <span style="color:#811B95" class="enunciado"><b>1. </b></span>&nbsp;<span class="enunciado">Marca con un <span style="color:#15A4B2">✔</span> la casilla que consideres correcta.</span><br>
+                        <table>
+                            <tr>
+                                <td></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#D3D7EE"><span class="enunciado">Muy bien</span></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#E0F1F1"><span class="enunciado">Bien</span></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#FFFCF7"><span class="enunciado">Debo mejorar</span></td>
+                            </tr>
+                            <tr style="border:solid 2px #7ED877">
+                                <td style="width:750px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#D3D7EE"><span class="enunciado"> ¿Sigo las instrucciones dadas en la etapa experimental?</span></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align: center;"><input class="1 enca1" style="width:50px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align: center;"><input class="1 enca2" style="width:50px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align: center;"><input class="1 enca3" style="width:50px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                            </tr>
+                            <tr style="border:solid 2px #7ED877">
+                                <td style="width:750px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#D3D7EE"><span class="enunciado">¿Diferencio los receptores de los órganos de los sentidos trabajados?</span></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align: center;"><input class="1 enca4" style="width:50px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align: center;"><input class="1 enca5" style="width:50px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align: center;"><input class="1 enca6" style="width:50px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                            </tr>
+                            <tr style="border:solid 2px #7ED877">
+                                <td style="width:750px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#D3D7EE"><span class="enunciado">¿Identifico la importancia de los órganos de los sentidos en mi relación con el medio ambiente?</span></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align: center;"><input class="1 enca7" style="width:50px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align: center;"><input class="1 enca8" style="width:50px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align: center;"><input class="1 enca9" style="width:50px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script type="text/javascript">
+    $("#n_pagina").html('104');
+
+
+    document.getElementById("pre1a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre1a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre1a"), 1);
+    });
+    document.getElementById("pre2a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre2a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre2a"), 1);
+    });
+    document.getElementById("pre3a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre3a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre3a"), 1);
+    });
+    document.getElementById("pre4a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre4a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre4a"), 2);
+    });
+    document.getElementById("pre5a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre5a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre5a"), 2);
+    });
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+    var tpre4 = 0;
+    var tpre5 = 0;
+    var tpre6 = 0;
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+
+
+
+    $('.1').click(function() {
+        switch ($(this).attr('class')) {
+            case '1 enca1':
+                $('.enca1').val('✔');
+                $('.enca2').val('');
+                $('.enca3').val('');
+                break;
+            case '1 enca2':
+                $('.enca1').val('');
+                $('.enca2').val('✔');
+                $('.enca3').val('');
+                break;
+            case '1 enca3':
+                $('.enca1').val('');
+                $('.enca2').val('');
+                $('.enca3').val('✔');
+                break;
+            case '1 enca4':
+                $('.enca4').val('✔');
+                $('.enca5').val('');
+                $('.enca6').val('');
+                break;
+            case '1 enca5':
+                $('.enca4').val('');
+                $('.enca5').val('✔');
+                $('.enca6').val('');
+                break;
+            case '1 enca6':
+                $('.enca4').val('');
+                $('.enca5').val('');
+                $('.enca6').val('✔');
+                break;
+
+            case '1 enca7':
+                $('.enca7').val('✔');
+                $('.enca8').val('');
+                $('.enca9').val('');
+                break;
+            case '1 enca8':
+                $('.enca7').val('');
+                $('.enca8').val('✔');
+                $('.enca9').val('');
+                break;
+            case '1 enca9':
+                $('.enca7').val('');
+                $('.enca8').val('');
+                $('.enca9').val('✔');
+                break;
+
+
+        }
+    });
+
+
+    //#region pregunta1
+    function pregunta6() {
+        var nt1 = 0;
+        if ($('.enca1').val() == '✔') {
+            nt1 = nt1 + 3;
+        }
+        // pregunats inscorrectas
+        if ($('.enca2').val() == '✔') {
+            nt1 = nt1 + 2.5;
+        }
+        if ($('.enca3').val() == '✔') {
+            nt1 = nt1 + 2;
+        }
+
+
+        if ($('.enca4').val() == '✔') {
+            nt1 = nt1 + 3;
+        }
+        // pregunats inscorrectas
+        if ($('.enca5').val() == '✔') {
+            nt1 = nt1 + 2.5;
+        }
+        if ($('.enca6').val() == '✔') {
+            nt1 = nt1 + 2;
+        }
+
+
+        if ($('.enca7').val() == '✔') {
+            nt1 = nt1 + 4;
+        }
+        // pregunats inscorrectas
+        if ($('.enca8').val() == '✔') {
+            nt1 = nt1 + 3;
+        }
+        if ($('.enca9').val() == '✔') {
+            nt1 = nt1 + 3;
+        }
+
+        $('.1').off('click');
+        var subtotal = parseFloat(nt1);
+        var pre6a = ((subtotal / 10) * 3);
+
+        if (pre6a < 0) {
+            pre6a = 0;
+            tpre6 = pre6a;
+            $('#pre6a').val(parseFloat(pre6a).toFixed(2));
+
+        } else {
+            $('#pre6a').val(parseFloat(pre6a).toFixed(2));
+            tpre6 = pre6a;
+
+
+        }
+    }
+    // #endregion
+    // #endregion
+    //#region pregunta2
+    function pregunta1() {
+        var pre1 = document.getElementById("pre1a").value;
+        tpre1 = pre1;
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+    // #endregion
+
+    //#region pregunta2
+    function pregunta2() {
+        var pre2 = document.getElementById("pre2a").value;
+        tpre2 = pre2;
+        $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    }
+    // #endregion
+    //#region pregunta2
+    function pregunta3() {
+        var pre3 = document.getElementById("pre3a").value;
+        tpre3 = pre3;
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+    }
+
+    function pregunta4() {
+        var pre4 = document.getElementById("pre4a").value;
+        tpre4 = pre4;
+        $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+    }
+
+    function pregunta5() {
+        var pre5 = document.getElementById("pre5a").value;
+        tpre5 = pre5;
+        $("#pre5a").val(parseFloat(tpre5).toFixed(2));
+    }
+
+
+
+
+    // #region Calculo Nota Final
+    function NotaFinal() {
+        var pre1 = document.getElementById("pre1a").value;
+        if (pre1 == "") {
+            alert(" Califique: 1. Sensaciones");
+        } else {
+            var pre2 = document.getElementById("pre2a").value;
+            if (pre2 == "") {
+                alert(" Califique: 2. Sabores");
+            } else {
+                var pre3 = document.getElementById("pre3a").value;
+                if (pre3 == "") {
+                    alert(" Califique: 3. Olores");
+                } else {
+
+                    var pre4 = document.getElementById("pre4a").value;
+                    if (pre4 == "") {
+                        alert("Califique el: Analizo resultados y concluyo");
+                    } else {
+                        var pre5 = document.getElementById("pre5a").value;
+                        if (pre5 == "") {
+                            alert("Califique el: Propongo");
+                        } else {
+                            pregunta1();
+                            pregunta2();
+                            pregunta3();
+                            pregunta4();
+                            pregunta5();
+                            pregunta6();
+                            cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4) + parseFloat(tpre5) + parseFloat(tpre6);
+                            Calculo_nota();
+                            $("input").attr('disabled', 'disabled');
+                        }
+                    }
+                }
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>

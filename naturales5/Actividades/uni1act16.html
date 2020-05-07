@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+
+.bien {
+    background: #90D961;
+}
+
+.mal {
+    background: #F25F5F;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.subrayar {
+    border-bottom: solid 5px #080808;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Responde.<br>
+        2. Escribe en cada recuadro.<br>
+        3. Da click para subrayar la opcion correcta.<br>
+        4. Llena el crucigrama.<br>
+        5. Responde.<br>
+        6. Responde.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/unidad1.png" style="width:100px"> <span style="color:#C33A99">TEMA 6</span> &nbsp;&nbsp;Importancia y conservación de las plantas.</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 table-responsive">
+                    <img src="img/aplico.jpg" style="width:150px">
+                    <div class="col-lg-12">
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a">&nbsp;
+                        <span class="enunciado" style="color: #00ADED;">1. </span><span class="enunciado"><b>Responde</b> las siguientes preguntas:</b>&nbsp;&nbsp;<b>( 1 pts.)</b></span><br>
+                        <div class="col-lg-12">
+                            <span class="enunciado"><span style="color:#3A9740;font-size:25px">a)</span>¿Por qué son importantes las plantas?</span>
+                            <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea><br><br>
+                            <span class="enunciado"><span style="color:#3A9740;font-size:25px">b)</span>¿En qué se utiliza el musgo?</span>
+                            <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">2. </span><span class="enunciado"><b>Indaga</b> y <b>completa</b> la tabla según corresponda.&nbsp;&nbsp;<b>( 2 pts.)</b></span><br><br>
+                    <center>
+                        <div style="color:#E8962E;font-size:25px"><strong>Importancia de las plantas</strong></div>
+                    </center><br>
+                    <div id="p2ran"></div>
+                </div>
+                <div class="col-lg-12 table-responsive" style="height:450px">
+                    <br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a" readonly="">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">3. </span><span class="enunciado"><b> Lee</b>, <b>analiza</b> y <b>subraya</b> la respuesta correcta.&nbsp;&nbsp;<b>( 2 pts.)</b></span><br><br>
+                    <span class="enunciado"><span style="font-size:25px;color:#3A9740">• </span>Cuando se dice:<br> Estas plantas mantienen el suelo fértil para que pueda fijarse fácilmente una semilla y esta pueda crecer con facilidad, nos referimos a:</span><br>
+                    <div class="col-lg-12">
+                        <center>
+                            <div class="col-lg-6" align="left">
+                                <div><span style="font-size:25px;color:#3A9740">A)</span><span class="p3aran0"></span></div>
+                                <div><span style="font-size:25px;color:#3A9740">B)</span><span class="p3aran1"></span></div>
+                            </div>
+                            <div class="col-lg-6" align="left">
+                                <div><span style="font-size:25px;color:#3A9740">C)</span><span class="p3aran2"></span></div>
+                                <div><span style="font-size:25px;color:#3A9740">D)</span><span class="p3aran3"></span></div>
+                            </div>
+                        </center>
+                    </div>
+                    <div class="col-lg-12"><br><br>
+                        <span class="enunciado"><span style="font-size:25px;color:#3A9740">• </span>Las propiedades funcionales de la fibra del musgo Sphagnum magellanicum se emplea en la elaboración de productos de panadería, corresponde a:</span><br>
+                        <center>
+                            <div class="col-lg-6" align="left">
+                                <div><span style="font-size:25px;color:#3A9740">A)</span><span class="p3bran0"></div>
+                                <div><span style="font-size:25px;color:#3A9740">B)</span><span class="p3bran1"></div>
+                            </div>
+                            <div class="col-lg-6" align="left">
+                                <div><span style="font-size:25px;color:#3A9740">C)</span><span class="p3bran2"></div>
+                                <div><span style="font-size:25px;color:#3A9740">D)</span><span class="p3bran3"></div>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a" readonly="">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">4. </span><span class="enunciado"><b> Resuelve</b> el crucigrama con términos relacionados con el tema de estudio.&nbsp;&nbsp;<b>( 3 pts.)</b></span><br><br>
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <p style="background:#FFE6D0;border-radius:10px;padding:10px">
+                                <span style="font-size:22px;color:#F4866D"><strong>Horizontales</strong></span><br>
+                                <span style="font-size:22px;color:#F4866D">1.</span><span class="enunciado">Comunidad de los seres vivos y cuyos procesos vitales se relacionan entre sí, en el mismo ambiente.</span><br><br>
+                                <span style="font-size:22px;color:#F4866D">2.</span><span class="enunciado">Acto de proteger, resguardar anticipadamente de algún daño o peligro.</span><br><br>
+                                <span style="font-size:22px;color:#F4866D">3.</span><span class="enunciado">Elementos o compuestos químicos necesarios para el metabolismo de un ser vivo.</span><br><br>
+                                <span style="font-size:22px;color:#F4866D">4.</span><span class="enunciado">Cantidad de agua en el ambiente.</span>
+                            </p>
+                        </div>
+                        <div class="col-lg-6">
+                            <p style="background:#D8F2FC;border-radius:10px;padding:10px">
+                                <span style="font-size:22px;color:#41B3CF"><strong>Verticales</strong></span><br>
+                                <span style="font-size:22px;color:#41B3CF">1.</span><span class="enunciado">Materia pulverulenta amarilla, compuesta de esporos de <span style="color:#7052CA">licopodio</span> que tiene la capacidad de encender y formar destellos.</span><br><br>
+                                <span style="font-size:22px;color:#41B3CF">2.</span><span class="enunciado">Acto convulsivo y sonoro del aparato respiratorio para eliminar secreciones.</span><br><br>
+                                <span style="font-size:22px;color:#41B3CF">3.</span><span class="enunciado">Ser o que produce oxígeno.</span><br><br>
+                                <span style="font-size:22px;color:#41B3CF">4.</span><span class="enunciado">Acción de atraer y retener un líquido o un gas o vapor.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <center>
+                            <table>
+                                <tr>
+                                    <td></td>
+                                    <td style="background:#159CEF; text-align: center;"><span style="color:#ffffff;"><b>1</b></span><span style="color:#ffffff;font-size:25px"><b>⇩</b></span></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="A"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="background:#159CEF; text-align: center;"><span style="color:#ffffff;"><b>3</b></span><span style="color:#ffffff;font-size:25px"><b>⇩</b></span></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="Z"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="background:#EF8C15; text-align: center;"><span style="color:#FFFFFF;"><b>2</b></span><span style="color:#FFFFFF;font-size:25px"><b>⇨</b></span></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="P"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="R"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="E"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="V"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="E"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="N"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="I"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="R"></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="U"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="L"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="F"></td>
+                                    <td></td>
+                                    <td style="background:#159CEF; text-align: center;"><span style="color:#ffffff;"><b>2</b></span><span style="color:#ffffff;font-size:25px"><b>⇩</b></span></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="A"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="R"></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="T"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="N"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="background:#159CEF; text-align: center;"><span style="color:#ffffff;"><b>4</b></span><span style="color:#ffffff;font-size:25px"><b>⇩</b></span></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="background:#EF8C15; text-align: center;"><span style="color:#FFFFFF;"><b>1</b></span><span style="color:#FFFFFF;font-size:25px"><b>⇨</b></span></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="E"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="C"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="O"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="S"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="I"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="S"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="T"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="E"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="M"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="A"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="S"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="A"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="B"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="S"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="S"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="O"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="background:#EF8C15; text-align: center;"><span style="color:#FFFFFF;"><b>3</b></span><span style="color:#FFFFFF;font-size:25px"><b>⇨</b></span></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="N"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="U"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="T"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="R"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="I"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="E"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="N"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="T"></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="E"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="S"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="B"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="background:#EF8C15; text-align: center;"><span style="color:#FFFFFF;"><b>4</b></span><span style="color:#FFFFFF;font-size:25px"><b>⇨</b></span></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="H"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="U"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="M"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="E"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="D"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="A"></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="D"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="text" maxlength="1" onKeyUp="this.value=this.value.toUpperCase();" size="1" style="width:40px;height: 40px;text-align: center;border:solid 1px #005CAA;font-size: 30px;font-size: 20px;" class="border-blue respuestas1"><input type="hidden" style="color:blue" class="solucion1" value="R"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <br><br>
+                    <img src="img/practiquemos.jpg" style="width:250px"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">5. </span><span class="enunciado"><b>Formen</b> parejas, <b>reflexionen</b> acerca de la importancia y conservación de las plantas. <b>Escriban</b> su reflexión.&nbsp;&nbsp;<b>( 1 pts.)</b></span><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea><br>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <br><br>
+                    <img src="img/evaluo.jpg" style="width:250px"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre6a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">6. </span><span class="enunciado"> importancia del musgo en la medicina, como alimento, en la industria y en el medio ambiente?&nbsp;&nbsp;<b>( 1 pts.)</b></span><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script type="text/javascript">
+    $("#n_pagina").html('32');
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+    document.getElementById("pre1a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre1a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre1a"), 1);
+    });
+
+    document.getElementById("pre2a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre2a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre2a"), 2);
+    });
+
+    document.getElementById("pre5a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre5a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre5a"), 1);
+    });
+
+    document.getElementById("pre6a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre6a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre6a"), 1);
+    });
+
+
+
+    //#region pregunta1
+    function pregunta1() {
+        var pre1 = document.getElementById("pre1a").value;
+        tpre1 = pre1;
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+    // #endregion
+
+    p2vec = [
+        '<div style="background:#2EB2E8;border-radius:5px;width:120px;text-align:center;"><span class="enunciado" style="color:#ffffff">Medicina</span></div><div><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;border:solid 3px #2EB2E8" cols="60" rows="5" placeholder="Texto"></textarea><br></div>',
+
+        '<div style="background:#C12EE8;border-radius:5px;width:120px;text-align:center;"><span class="enunciado" style="color:#ffffff">Alimento</span></div><div><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;border:solid 3px #C12EE8" cols="60" rows="5" placeholder="Texto"></textarea><br></div>',
+        '<div style="background:#35A72E;border-radius:5px;width:120px;text-align:center;"><span class="enunciado" style="color:#ffffff">Industria</span></div><div><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;border:solid 3px #35A72E" cols="60" rows="5" placeholder="Texto"></textarea><br></div>',
+
+        '<div style="background:#6341BF;border-radius:5px;width:120px;text-align:center;"><span class="enunciado" style="color:#ffffff">Ambiente</span></div><div><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;border:solid 3px #6341BF" cols="60" rows="5" placeholder="Texto"></textarea><br></div>',
+
+    ];
+    p2vec.sort(f_randomico);
+    $('#p2ran').html(p2vec);
+
+
+    //#region pregunta2
+    function pregunta2() {
+        var pre2 = document.getElementById("pre2a").value;
+        tpre2 = pre2;
+        $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    }
+    // #endregion
+
+    p3avec = [
+        '<span class="3 enca1" style="font-size:20px;color:#543B99"> importancia de las plantas para la medicina</span>',
+        '<span class="3 enca2" style="font-size:20px;color:#543B99"> importancia de las plantas para el ambiente </span>',
+        '<span class="3 enca3" style="font-size:20px;color:#543B99"> importancia de las plantas para la industria</span>',
+        '<span class="3 enca4" style="font-size:20px;color:#543B99"> importancia de las plantas para la alimentación</span>'
+    ]
+    p3avec.sort(f_randomico);
+    for (var i = 0; i < p3avec.length; i++) {
+        $('.p3aran' + [i] + '').html(p3avec[i]);
+    }
+
+    p3bvec = [
+        '<span class="3 enca5" style="font-size:20px;color:#543B99"> importancia de las plantas para la industria</span>',
+        '<span class="3 enca6" style="font-size:20px;color:#543B99"> importancia de las plantas para la medicina</span>',
+        '<span class="3 enca7" style="font-size:20px;color:#543B99"> importancia de las plantas para el ambiente</span>',
+        '<span class="3 enca8" style="font-size:20px;color:#543B99"> importancia de las plantas para la alimentación</span>'
+    ]
+    p3bvec.sort(f_randomico);
+    for (var i = 0; i < p3bvec.length; i++) {
+        $('.p3bran' + [i] + '').html(p3bvec[i]);
+    }
+
+
+    // pintar 
+    $(".3").addClass('hvr-grow-shadow2');
+    $(".3").css('cursor', 'pointer');
+    $(".3").click(function() {
+        if ($(this).hasClass("subrayar")) {
+            $(this).removeClass("subrayar");
+        } else {
+            $(this).addClass("subrayar");
+        }
+    });
+
+
+    function pregunta3() {
+        var core = 0,
+            incore = 0;
+        // pregunats correctas
+        if ($('.enca2').hasClass('subrayar') == true) {
+            core = core + 1;
+            $('.enca2').addClass('bien');
+        }
+        if ($('.enca8').hasClass('subrayar') == true) {
+            core = core + 1;
+            $('.enca8').addClass('bien');
+        }
+        // pregunats inscorrectas
+        if ($('.enca1').hasClass('subrayar') == true) {
+            incore = incore + 1;
+            $('.enca1').addClass('mal');
+        }
+        if ($('.enca3').hasClass('subrayar') == true) {
+            incore = incore + 1;
+            $('.enca3').addClass('mal');
+        }
+        if ($('.enca4').hasClass('subrayar') == true) {
+            incore = incore + 1;
+            $('.enca4').addClass('mal');
+        }
+        if ($('.enca5').hasClass('subrayar') == true) {
+            incore = incore + 1;
+            $('.enca5').addClass('mal');
+        }
+        if ($('.enca6').hasClass('subrayar') == true) {
+            incore = incore + 1;
+            $('.enca6').addClass('mal');
+        }
+        if ($('.enca7').hasClass('subrayar') == true) {
+            incore = incore + 1;
+            $('.enca7').addClass('mal');
+        }
+        $('.3').off('click');
+        var subtotal = parseFloat(core) - parseFloat(incore);
+        var pre3a = ((subtotal / 2) * 2);
+
+        if (pre3a < 0) {
+            pre3a = 0;
+            tpre3 = pre3a;
+            $('#pre3a').val(parseFloat(pre3a).toFixed(2));
+
+        } else {
+            $('#pre3a').val(parseFloat(pre3a).toFixed(2));
+            tpre3 = pre3a;
+
+
+        }
+
+    }
+    // #endregion
+
+    //VALIDAR Y CALIFICAR 
+    function pregunta4() {
+        var respuestas = document.getElementsByClassName("respuestas1");
+        var soluciones = document.getElementsByClassName("solucion1");
+        var valor = valor_pregunta(respuestas);
+        var nota = 0;
+        for (var i = 0; i < respuestas.length; i++) {
+            if (
+                verificar_contenido(
+                    respuestas[i].value.toLowerCase(),
+                    soluciones[i].value.toLowerCase().split("*")
+                )
+            ) {
+                respuestas[i].classList.add("valid");
+                respuestas[i].classList.remove("no-valid");
+                nota += valor;
+            } else {
+                respuestas[i].classList.add("no-valid");
+                respuestas[i].classList.remove("valid");
+            }
+        }
+        tpre4 = ((nota / 10) * 3);
+        $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+    }
+
+    function pregunta5() {
+        var pre5 = document.getElementById("pre5a").value;
+        tpre5 = pre5;
+        $("#pre5a").val(parseFloat(tpre5).toFixed(2));
+    }
+    // #endregion
+
+    function pregunta6() {
+        var pre6 = document.getElementById("pre6a").value;
+        tpre6 = pre6;
+        $("#pre6a").val(parseFloat(tpre6).toFixed(2));
+    }
+    // #endregion
+
+
+
+
+    // #region Calculo Nota Final
+    function NotaFinal() {
+        var pre1 = document.getElementById("pre1a").value;
+        if (pre1 == "") {
+            alert("Pregunta 1: Califique la pregunta");
+        } else {
+            var pre2 = document.getElementById("pre2a").value;
+            if (pre2 == "") {
+                alert("Pregunta 2: Califique la pregunta");
+            } else {
+                var pre5 = document.getElementById("pre5a").value;
+                if (pre5 == "") {
+                    alert("Pregunta 5: Califique la pregunta");
+                } else {
+                    var pre6 = document.getElementById("pre6a").value;
+                    if (pre6 == "") {
+                        alert("Pregunta 6: Califique la pregunta");
+                    } else {
+                        pregunta1();
+                        pregunta2();
+                        pregunta3();
+                        pregunta4();
+                        pregunta5();
+                        pregunta6();
+                        cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4) + parseFloat(tpre5) + parseFloat(tpre6);
+                        Calculo_nota();
+                        $("input").attr('disabled', 'disabled');
+                    }
+                }
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>

@@ -36,9 +36,9 @@
       for( var i=1; i<5; i++ ){
           if( $('#rA'+i).val() == resp[i-1] ){
               notaFinalP1++;
-              $('#rA'+i).css('background-color', '#05D576');
+              $('#rA'+i).addClass('biene');
           }else{
-              $('#rA'+i).css('background-color', '#D50545');
+              $('#rA'+i).addClass('male');
           }
       }
     }

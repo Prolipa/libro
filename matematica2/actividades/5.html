@@ -46,6 +46,29 @@
     .cross {
         padding-left: 10px;
     }
+        .mark1 {
+            width: 400px;
+            height: 200px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #0040ff;
+            background-color: transparent
+        }
+                .correcto {
+            color: #ffffff;
+            background-color: #8FB435 !important;
+            -webkit-print-color-adjust: exact; 
+
+        }
+
+        .incorrecto {
+            color: #ffffff;
+            background-color: #E76E80 !important;
+            -webkit-print-color-adjust: exact; 
+
+
+        }
     </style>
 </head>
 
@@ -92,7 +115,7 @@
                     </button>
                 </li>
                 <li>
-                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onclick="comprobar_velas()">
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" onclick="NotaFinal()">
                         <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
                     </button>
                 </li>
@@ -173,26 +196,20 @@
             <!--pregunats de la actividad-->
             <div class="panel-body">
                 <p class="text-question"><b>2. Observo</b> las secuencias gráficas y<b> reconozco</b> el patrón. Luego lo <b>encierro.</b></p>
-                <div id="">
-                    <div class="col-md-12 ">
-                        <table>
-                            <tr>
-                                <td><img src="img/i5_p17_act5.png" alt="" class="img-responsive"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="mark drop"></div>
-                                    <input class="respuestas" type="hidden" value="">
-                                    <input class="solucion" type="hidden" value="ok">
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <img class="img-responsive drag ok" src="img/i6_p17_act5.png" alt="" style="display: inline;">
-                    <img class="img-responsive drag no" src="img/i7_p17_act5.png" alt="" style="display: inline;">
-                </div>
+                
+
+                                        <div class="col-sm-12">
+                                            
+                                            <center><img src="img/i5_p17_act5.png" alt="" class="img-responsive"></center>
+                                        </div>
+                                        <div class="col-sm-12"><div id="p3imag1" class="mark1 drop2" style="display: inline-block;"></div></div>
+                                        <div class="col-sm-12">
+
+                                                <div class="col-sm-3" align="center"><img id="p3img2" style="mix-blend-mode: multiply;"
+                                                        class="img-responsive drag2 " src="img/i6_p17_act5.png" alt="1"></div>
+                                                <div class="col-sm-3" align="center"><img id="p3img2" style="mix-blend-mode: multiply;"
+                                                        class="img-responsive drag2 " src="img/i7_p17_act5.png" alt="2"></div>
+                                        </div>
             </div>
         </div>
     </div>
@@ -247,45 +264,59 @@
     <script src="js/animate.css.min.js"></script>
     <script src="js/jquery.animate.css.js"></script>
     <script>
-    document.body.onload = function() {
-        var html = "";
-        var vals = reorder_array(pregs);
-        $.each(vals, function(index, value) {
-            html += value;
-        })
-        $('#lista').html(html);
-        $(".drag").draggable({
-            revert: 'invalid',
-            helper: 'clone'
-        });
+var tpre1 = 0;
 
-        $(".drop").droppable({
-            accept: ".drag",
-            drop: function(event, ui) {
-                $(this).html('');
-                ui.helper.clone().appendTo(this);
-                $.each($(this).children(), function(index, value) {
-                    $(value).attr("style", "");
-                })
-                $.each($(this).parent().children(), function(index, value) {
-                    if ($(value).hasClass("respuestas")) {
-                        var val = ui.draggable.attr('class');
-                        if (val.indexOf('ok') > -1) {
-                            $(value).val('ok');
-                        }
-                        if (val.indexOf('no') > -1) {
-                            $(value).val('no');
-                        }
-                    }
-                })
-            }
-        });
-
+ $(".drag2").draggable({
+    rever: "invalid",
+    helper: "clone"
+  });
+  $(".drop2").droppable({
+    accept: ".drag2",
+    drop: function(e, ui) {
+      ui.helper.clone().appendTo(this);
+      $.each($(this).children(), function(index, value) {
+        $(this).attr("style", "mix-blend-mode:multiply");
+      });
+      $(this)
+        .find(".drop2")
+        .draggable({ disabled: true });
+      str = ui.draggable.attr("id"); //capturamos los IDS
+      if (str == "b1") {
+        sum_total += 1;
+      }
     }
-    var pregs = [
-        /*'<div class="col-md-6 "><table ><tr><td><img src="img/i4_p39_act1.png" alt=""></td><td><div class="mark drop" ></div><input class="respuestas" type="hidden" value=""><input class="solucion" type="hidden" value="despues"></td></tr></table></div>',*/
+  });
+// #region Pregunta1
+function pregunta1() {
+ 
+  var correcto = 0;
+  var p3imag1 = $("#p3imag1 img").attr("alt");
+  if (p3imag1 == "1") {
+    correcto = correcto + 1;
+    ($("#p3imag1").addClass('correcto'));
+  } else {
+    ($("#p3imag1").addClass('incorrecto'));
+  }
 
-    ];
+
+  
+  var total = (correcto * 10) / 1;
+  tpre1 = total;
+  $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+}
+// #endregion
+
+
+
+// #region Calculo Nota Final
+function NotaFinal() {
+        pregunta1();
+        var Nf =
+          parseFloat(tpre1);
+        var Vtotal = Nf.toFixed(2);
+        $("#txtNota").html(Vtotal);
+      }
+// #endregion
     </script>
 </body>
 

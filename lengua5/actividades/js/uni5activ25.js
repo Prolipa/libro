@@ -33,9 +33,9 @@
      for( var i=1; i<5; i++ ){
         if( $('#rA'+i).val().toLowerCase().replace(/ |\.| /gi, "").replace(/dequito|deportivauniversitaria|sc|cs|cd|ldu/gi, "") == resp[i-1] ){
           notaFinalP1++;
-          $('#rA'+i).css("background-color", "#05D576");
+          $('#rA'+i).addClass('b');
         }else{
-          $('#rA'+i).css("background-color", "#D50545");
+          $('#rA'+i).addClass('m');
         }
       }
     }

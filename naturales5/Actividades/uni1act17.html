@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.bien {
+    background: #90D961;
+}
+
+.mal {
+    background: #F25F5F;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Da click para marcar.<br>
+        2. Responde.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro" style="background: #1B62B7">
+                <span class="titulo"><img src="img/unidad1.png" style="width:100px"><span style="color:#FFFFFF;font-size:40px">&nbsp;&nbsp;&nbsp;&nbsp;Fábrica de proyectos</span><br><span style="color:black">&nbsp;&nbsp;&nbsp;&nbsp;La casa donde viven el helecho y el musgo.</span></span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 table-responsive">
+                    <br>
+                    <span class="enunciado"><span style="color:orange;font-size:22px"><strong>Objetivos:</strong></span><br>
+                        <b>Explorar</b> el lugar donde viven las plantas sin semilla.<br>
+                        <b>Manipular</b>, <b>observar</b> y <b>determinar</b> las características de los helechos y los musgos.<br>
+                        <b>Establecer</b> semejanzas y diferencias entre el hábitat del helecho y del musgo.<br></span>
+                </div>
+                <img src="img/traslapista.jpg" style="width:350px">
+                <div class="col-lg-12 table-responsive" style="border:solid 5px #F06292;border-radius:10px"><br>
+                    <div align="right"><span class="enunciado" style="color: #00ADED;">1. </span><span class="enunciado"><b>Observa</b> las imágenes e <b>identifica</b> el musgo y el helecho.&nbsp;&nbsp;<b>( 5 pts.)</b></span><br><br></div>
+                    <div class="col-lg-9">
+                        <img src="img/i1_p36_act1.jpg" style="width:600px">
+                    </div>
+                    <div class="col-lg-3">
+                        <div><br><br><span class="enunciado">Los helechos y los musgos pueden desarrollarse en casa, en un suelo del bosque, crecen en la sombra, cerca de un arroyo (...). Están adaptados para estas condiciones por muchas razones, cada motivo relacionado con su supervivencia.
+                                <br><br>
+                                <a href="https://bit.ly/2kWfMRf ">https://bit.ly/2kWfMRf </a></span></div>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <img src="img/mepreparo.jpg" style="width:350px">
+                    <div class="col-lg-12" style="border:solid 5px #F1CF9F;padding:10px;border-radius:10px">
+                        <span class="enunciado" style="color: #00ADED;"> •&nbsp;&nbsp;</span><span class="enunciado"> Con la ayuda de un familiar busca un lugar cerca de una vertiente que tenga mucha humedad y vegetación.</span><br>
+                        <span class="enunciado" style="color: #00ADED;"> •&nbsp;&nbsp;</span><span class="enunciado"> Una vez identificado el lugar realiza las siguientes actividades:</span>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <img src="img/manosalaobra.jpg" style="width:350px">
+                    <div class="col-lg-12" style="border:solid 5px #F1CF9F;padding:10px;border-radius:10px">
+                        <span class="enunciado" style="color: #00ADED;"> 1.&nbsp;</span><span class="enunciado"><b>Busquen</b> e identifiquen detenidamente debajo de los árboles, junto a piedras, rocas o troncos, la existencia de helechos y musgos.</span><br><br>
+                        <span class="enunciado" style="color: #00ADED;"> 2.&nbsp;&nbsp;</span><span class="enunciado"><b>Observen</b> el lugar donde crece el musgo.</span><br><br>
+                        <span class="enunciado" style="color: #00ADED;"> 3.&nbsp;&nbsp;</span><span class="enunciado"><b>Analicen</b> las partes del musgo.</span><br><br>
+                        <span class="enunciado" style="color: #00ADED;"> 4.&nbsp;&nbsp;</span><span class="enunciado"><b>Miren</b> la parte de atrás de la hoja del helecho y reconozcan su estructura.</span><br><br>
+                        <span class="enunciado" style="color: #00ADED;"> 5.&nbsp;&nbsp;</span><span class="enunciado"><b>Grafiquen</b> las muestras recogidas con todas sus partes y guárdenlas en fundas plásticas por separado.</span><br><br>
+                        <span class="enunciado" style="color: #00ADED;"> 6.&nbsp;&nbsp;</span><span class="enunciado"><b>Comparen</b> sus muestras con una planta con flores de un jardín.</span><br><br>
+                        <span class="enunciado" style="color: #00ADED;"> 7.&nbsp;&nbsp;</span><span class="enunciado">Finalizada la observación, <b>regresen</b> las muestras a su lugar de origen.</span><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <img src="img/presentamos.jpg" style="width:550px">
+                    <div class="col-lg-12" style="border:solid 5px #F1CF9F;padding:10px;border-radius:10px">
+                        <span class="enunciado" style="color: #00ADED;"> 1.&nbsp;</span><span class="enunciado"><b>Nos</b> reunimos en grupos. <b>Exponemos</b> nuestras conclusiones.</span><br>
+                        <center>
+                            <img src="img/i1_p37_act1.jpg" style="width:900px">
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <img src="img/evaluamosnuestroproceso.jpg" style="width:550px">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div style="color:#B70D7F;font-size:25px"><b>Autoevaluacion</b>&nbsp;&nbsp;<input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a" readonly="">&nbsp;<span class="enunciado" style="color:black"><b>&nbsp;&nbsp;( 5 pts.)</b></span></div><br>
+                            <div class="col-lg-12" style="border-top:solid 3px #B70D7F;">
+                                <span class="enunciado"><b>Marca</b> con un visto ( <span style="color:#00ADED;">✔</span> ) la casilla que consideres adecuada.</span><br>
+                                <table style="border:solid 2px #7ED877">
+                                    <tr style="border:solid 2px #7ED877">
+                                        <td style="width:300px;height:80px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#D3D7EE"><span class="enunciado">Muy bien</span></td>
+                                        <td style="width:300px;height:80px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#E0F1F1"><span class="enunciado">Bien</span></td>
+                                        <td style="width:300px;height:80px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#FFFCF7"><span class="enunciado">Debo mejorar</span></td>
+                                    </tr>
+                                    <tr style="border:solid 2px #7ED877">
+                                        <td colspan="3" style="width:900px;height:80px;text-align:center;padding:10px;"><span class="enunciado">¿Determiné las características del lugar donde se encontraron las muestras de musgo?</span></td>
+                                    </tr>
+                                    <tr style="border:solid 2px #7ED877">
+                                        <td style="width:300px;height:40px;border:solid 2px #7ED877;background:#D3D7EE"><input class="1 enca1" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                        <td style="width:300px;height:40px;border:solid 2px #7ED877;background:#E0F1F1"><input class="1 enca2" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                        <td style="width:300px;height:40px;border:solid 2px #7ED877;background:#FFFCF7"><input class="1 enca3" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                    </tr>
+                                    <tr style="border:solid 2px #7ED877">
+                                        <td colspan="3" style="width:900px;height:80px;text-align:center;padding:10px;"><span class="enunciado">¿Identifiqué las diferencias entre el helecho y el musgo?</span></td>
+                                    </tr>
+                                    <tr style="border:solid 2px #7ED877">
+                                        <td style="width:300px;height:40px;border:solid 2px #7ED877;background:#D3D7EE"><input class="1 enca4" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                        <td style="width:300px;height:40px;border:solid 2px #7ED877;background:#E0F1F1"><input class="1 enca5" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                        <td style="width:300px;height:40px;border:solid 2px #7ED877;background:#FFFCF7"><input class="1 enca6" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                    </tr>
+                                    <tr style="border:solid 2px #7ED877">
+                                        <td colspan="3" style="width:900px;height:80px;text-align:center;padding:10px;"><span class="enunciado">¿Comparé las diferencias entre las muestras investigadas y las plantas con flores del jardín? </span></td>
+                                    </tr>
+                                    <tr style="border:solid 2px #7ED877">
+                                        <td style="width:300px;height:40px;border:solid 2px #7ED877;background:#D3D7EE"><input class="1 enca7" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                        <td style="width:300px;height:40px;border:solid 2px #7ED877;background:#E0F1F1"><input class="1 enca8" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                        <td style="width:300px;height:40px;border:solid 2px #7ED877;background:#FFFCF7"><input class="1 enca9" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div style="color:#23939A;font-size:25px"><b>Coevaluación</b>&nbsp;&nbsp;<input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a">&nbsp;<span class="enunciado" style="color:black"><b>&nbsp;&nbsp;( 5 pts.)</b></span></div><br>
+                            <div class="col-lg-12" style="border-top:solid 3px #23939A">
+                                <span class="enunciado"><b>Comenten</b> en grupo. <b>Argumenten</b> sus respuestas. </span><br><br>
+                                <span class="enunciado">¿Se comprobó que las plantas sin semilla viven en ambientes húmedos y están bajo sombra?</span>
+                                <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                                <span class="enunciado">¿Qué podemos mejorar la próxima vez que expongamos un trabajo?</span>
+                                <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                                <span class="enunciado">¿Aportamos con recomendaciones para mejorar nuestra participación? </span>
+                                <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                                <span class="enunciado">¿Todos participamos de forma respetuosa en las actividades del proyecto? </span>
+                                <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script type="text/javascript">
+    $("#n_pagina").html('34');
+
+     document.getElementById("pre2a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre2a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre2a"), 5);
+    });
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+
+
+
+    $('.1').click(function() {
+        switch ($(this).attr('class')) {
+            case '1 enca1':
+                $('.enca1').val('✔');
+                $('.enca2').val('');
+                $('.enca3').val('');
+                break;
+            case '1 enca2':
+                $('.enca1').val('');
+                $('.enca2').val('✔');
+                $('.enca3').val('');
+                break;
+            case '1 enca3':
+                $('.enca1').val('');
+                $('.enca2').val('');
+                $('.enca3').val('✔');
+                break;
+            case '1 enca4':
+                $('.enca4').val('✔');
+                $('.enca5').val('');
+                $('.enca6').val('');
+                break;
+            case '1 enca5':
+                $('.enca4').val('');
+                $('.enca5').val('✔');
+                $('.enca6').val('');
+                break;
+            case '1 enca6':
+                $('.enca4').val('');
+                $('.enca5').val('');
+                $('.enca6').val('✔');
+                break;
+            case '1 enca7':
+                $('.enca7').val('✔');
+                $('.enca8').val('');
+                $('.enca9').val('');
+                break;
+            case '1 enca8':
+                $('.enca7').val('');
+                $('.enca8').val('✔');
+                $('.enca9').val('');
+                break;
+            case '1 enca9':
+                $('.enca7').val('');
+                $('.enca8').val('');
+                $('.enca9').val('✔');
+                break;
+
+        }
+    });
+
+
+    //#region pregunta1
+    function pregunta1() {
+        var nt1 = 0;
+        if ($('.enca1').val() == '✔') {
+            nt1 = nt1 + 4;
+        }
+        // pregunats inscorrectas
+        if ($('.enca2').val() == '✔') {
+            nt1 = nt1 + 3;
+        }
+        if ($('.enca3').val() == '✔') {
+            nt1 = nt1 + 2;
+        }
+        if ($('.enca4').val() == '✔') {
+            nt1 = nt1 + 3;
+        }
+        // pregunats inscorrectas
+        if ($('.enca5').val() == '✔') {
+            nt1 = nt1 + 2.5;
+        }
+        if ($('.enca6').val() == '✔') {
+            nt1 = nt1 + 2;
+        }
+        if ($('.enca7').val() == '✔') {
+            nt1 = nt1 + 3;
+        }
+        // pregunats inscorrectas
+        if ($('.enca8').val() == '✔') {
+            nt1 = nt1 + 2.5;
+        }
+        if ($('.enca9').val() == '✔') {
+            nt1 = nt1 + 2;
+        }
+
+        $('.1').off('click');
+        var subtotal = parseFloat(nt1);
+        var pre1a = ((subtotal / 10 ) * 5);
+
+        if (pre1a < 0) {
+            pre1a = 0;
+            tpre1 = pre1a;
+            $('#pre1a').val(parseFloat(pre1a).toFixed(2));
+
+        } else {
+            $('#pre1a').val(parseFloat(pre1a).toFixed(2));
+            tpre1 = pre1a;
+
+
+        }
+    }
+    // #endregion
+
+    //#region pregunta2
+    function pregunta2() {
+        var pre2 = document.getElementById("pre2a").value;
+        tpre2 = pre2;
+        $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    }
+    // #endregion
+
+
+    // #region Calculo Nota Final
+    function NotaFinal() {
+        var pre2 = document.getElementById("pre2a").value;
+        if (pre2 == "") {
+            alert("Pregunta 2: Califique la pregunta");
+        } else {
+            pregunta1();
+            pregunta2();
+            cor = parseFloat(tpre1) + parseFloat(tpre2);
+            Calculo_nota();
+            $("input").attr('disabled', 'disabled');
+        }
+    }
+    </script>
+</body>
+
+</html>

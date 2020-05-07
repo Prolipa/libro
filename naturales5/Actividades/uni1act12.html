@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.caja-input {
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px #DC4DF3;
+}
+
+.cajapequeña-input {
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px #DC4DF3;
+}
+
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+table.espaciar {
+    border-collapse: separate;
+    border-spacing: 30px 30px;
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+
+.subrayar {
+    border-bottom: 5px solid #818981;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+span.titulopre {
+    font-size: 20px;
+    color: #39B428;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E58754;
+    font-weight: 700;
+}
+
+.bien {
+    border: solid 3px green;
+    padding: 5px;
+}
+
+.mal {
+    border: solid 3px red;
+    padding: 5px;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 80px;
+    min-width: 150px;
+    width: 60%;
+    margin-left: 1px;
+}
+
+.c_destinos2 {
+
+    padding: 0px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 230px;
+    width: 50%;
+    max-width: 100%;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Arrastra y relaciona correctaente.<br>
+        2. Da click para subrayar la opción correcta.<br>
+        3. Selecciona la opción correcta.<br>
+        4. Dibuja.<br>
+        5. Responde..<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/unidad1.png" style="width:100px"> <span style="color:#C33A99">TEMA 4</span> &nbsp;&nbsp;La nutrición y respiración de las plantas </span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 table-responsive">
+                    <img src="img/aplico.jpg" style="width:200px">
+                    <div class="col-lg-12">
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a" readonly="">&nbsp;
+                        <span class="enunciado"><span style="color: #00ADED;font-size:20px">1. </span> <b>Relaciona</b> las ideas que complementan una acción.<b>&nbsp;&nbsp;( 2 pts.)</b></span><br>
+                        <div class="col-sm-12" id="p8div1">
+                            <div class="col-lg-3 " align="center"><br><br><br><br>
+                                <div class="textos1" style="display: inline-block;"></div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="table-responsive text-question">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im1"></div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim11"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im2"></div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim12"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im3"></div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim13"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im4"></div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim14"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-lg-12">
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">2. </span><span class="enunciado"><b>Lee</b>, <b>analiza</b> y <b>subraya</b> la respuesta correcta.<b>&nbsp;&nbsp;( 2 pts.)</b></span>
+                            <center>
+                                <table style="border-collapse:separate;border-spacing:0px 50px">
+                                    <tr>
+                                        <td colspan="8"><span class="titulopre" style="color:">a)</span><label class="p2ran0"></label></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8"><span class="titulopre" style="color:">b)</span><label class="p2ran1"></label></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8"><span class="titulopre" style="color:">c)</span><label class="p2ran2"></label></td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-lg-6">
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">3. </span><span class="enunciado"><b>Completa</b> el siguiente esquema con respecto a la respiración de las sustancias que absorbe y expulsa.&nbsp;&nbsp;<b>( 2 pts.)</b></span>
+                            <center>
+                                <div style="background: url('img/i1_p27_act2.jpg');width:500px;min-height:476px;background-size: contain; position: relative;background-repeat: no-repeat">
+                                    <select id="3pre0" style="border:solid 2px #E8A24A;text-align:center;width:120px;height:40px;border-radius:10px; position:absolute;right:30px;top:20px">
+                                        <option value="var">--Seleccione--</option>
+                                        <option value="a">Oxígeno</option>
+                                        <option value="b">Dióxido de carbono</option>
+                                        <option value="c">Minerales</option>
+                                        <option value="d">Agua</option>
+                                        <option value="e">Glucosa</option>
+                                        <option value="f">Energía solar</option>
+                                    </select>
+                                    <select id="3pre1" style="border:solid 2px #E8A24A;text-align:center;width:150px;height:40px;border-radius:10px; position:absolute;right:10px;top:135px">
+                                        <option value="var">--Seleccione--</option>
+                                        <option value="a">Oxígeno</option>
+                                        <option value="b">Dióxido de carbono</option>
+                                        <option value="c">Minerales</option>
+                                        <option value="d">Agua</option>
+                                        <option value="e">Glucosa</option>
+                                        <option value="f">Energía solar</option>
+                                    </select>
+                                    <select id="3pre2" style="border:solid 2px #E8A24A;text-align:center;width:120px;height:40px;border-radius:10px; position:absolute;right:10px;top:290px">
+                                        <option value="var">--Seleccione--</option>
+                                        <option value="a">Oxígeno</option>
+                                        <option value="b">Dióxido de carbono</option>
+                                        <option value="c">Minerales</option>
+                                        <option value="d">Agua</option>
+                                        <option value="e">Glucosa</option>
+                                        <option value="f">Energía solar</option>
+                                    </select>
+                                    <select id="3pre3" style="border:solid 2px #E8A24A;text-align:center;width:120px;height:40px;border-radius:10px; position:absolute;right:300px;top:360px">
+                                        <option value="var">--Seleccione--</option>
+                                        <option value="a">Oxígeno</option>
+                                        <option value="b">Dióxido de carbono</option>
+                                        <option value="c">Minerales</option>
+                                        <option value="d">Agua</option>
+                                        <option value="e">Glucosa</option>
+                                        <option value="f">Energía solar</option>
+                                    </select>
+                                    <select id="3pre4" style="border:solid 2px #E8A24A;text-align:center;width:120px;height:40px;border-radius:10px; position:absolute;right:350px;top:300px">
+                                        <option value="var">--Seleccione--</option>
+                                        <option value="a">Oxígeno</option>
+                                        <option value="b">Dióxido de carbono</option>
+                                        <option value="c">Minerales</option>
+                                        <option value="d">Agua</option>
+                                        <option value="e">Glucosa</option>
+                                        <option value="f">Energía solar</option>
+                                    </select>
+                                    <select id="3pre5" style="border:solid 2px #E8A24A;text-align:center;width:120px;height:40px;border-radius:10px; position:absolute;right:340px;top:200px">
+                                        <option value="var">--Seleccione--</option>
+                                        <option value="a">Oxígeno</option>
+                                        <option value="b">Dióxido de carbono</option>
+                                        <option value="c">Minerales</option>
+                                        <option value="d">Agua</option>
+                                        <option value="e">Glucosa</option>
+                                        <option value="f">Energía solar</option>
+                                    </select>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" style="border-left:solid 3px #4BA571">
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">4. </span><span class="enunciado"><b> Dibuja</b> la estructura encargada de inhalar y exhalar gases y <b>ubícala</b> en la planta.<b>&nbsp;&nbsp;( 2 pts.)</b></span>
+                            <div class="col-lg-12">
+                                <div class="my-drawing img-responsive"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <img src="img/evaluo.jpg" style="width:200px">
+                    <div class="col-lg-12">
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">5. </span><span class="enunciado"><b>Responde:</b>&nbsp;&nbsp;<b>( 2 pts.)</b></span><br><br>
+                            <span class="enunciado"><b>Formen</b> parejas, <b>reflexionen</b> acerca de los incendios que se dan en el verano en diferentes lugares del mundo. ¿Qué pasa con el dióxido de carbono?; ¿qué pasa con el oxígeno? <b>Escribe</b> tu reflexión.</span>
+                            <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea><br><br>
+                            <span class="enunciado">¿Conozco el proceso de nutrición y respiración de las plantas?</span>
+                            <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script type="text/javascript">
+    $("#n_pagina").html('25');
+
+    document.getElementById("pre4a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre4a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre4a"), 2);
+    });
+    document.getElementById("pre5a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre5a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre5a"), 2);
+    });
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+    var tpre4 = 0;
+    var tpre5 = 0;
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+    // pregutna 2
+    var p8pal1 = [
+        '<img style="width:550px"class="img-responsive drag8" alt="1" src="img/i1_p27_act1.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>',
+        '<img style="width:550px"class="img-responsive drag8" alt="2" src="img/i2_p27_act1.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>',
+        '<img style="width:550px"class="img-responsive drag8" alt="3" src="img/i3_p27_act1.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>',
+        '<img style="width:550px"class="img-responsive drag8" alt="4" src="img/i4_p27_act1.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>'
+
+    ];
+    var p8pal2 = [
+
+        '<p  style="width:420px;height:50px;padding:10px" class="img-responsive">provoca la combustión o quema de alimentos formada por la acción de la fotosíntesis.</p>',
+        '<p  style="width:420px;height:50px;padding:10px" class="img-responsive">forman la savia bruta.</p>',
+        '<p  style="width:420px;height:50px;padding:10px" class="img-responsive">para convertir la savia bruta en savia elaborada.</p>',
+        '<p  style="width:420px;height:50px;padding:10px" class="img-responsive">porque aspiran oxígeno y exhalan dióxido de carbono y agua.</p>'
+    ];
+
+    p8pal1.sort(f_randomico);
+    var p8vec1 = ['4', '1', '2', '3'];
+    var p8aux2 = [];
+    $(".textos1").append(p8pal1);
+    var p8myArray2 = ['0', '1', '2', '3'];
+    var i, j, k;
+    for (i = p8myArray2.length; i; i--) {
+        j = Math.floor(Math.random() * i);
+        k = p8myArray2[i - 1];
+        p8myArray2[i - 1] = p8myArray2[j];
+        p8myArray2[j] = k;
+    }
+    //aleatorio literal 1
+    for (var i = 1; i <= 4; i++) {
+        var c1 = p8myArray2[i - 1];
+        $(".p8cim1" + i).html(p8pal2[c1]);
+        p8aux2.push(p8vec1[c1]);
+
+    };
+    $(".drag8").draggable({
+        revert: "invalid",
+        zIndex: 5,
+        containment: ".p8div1",
+        scroll: false,
+    });
+
+    $(".drop8").droppable({
+        accept: ".drag8",
+        drop: function(e, ui) {
+            $(ui.draggable).removeClass("drag8");
+            $(ui.draggable).removeClass("bg_palabra");
+            ui.draggable.attr("style", "mix-blend-mode:multiply;");
+            $(this).append(ui.draggable);
+
+        }
+    });
+
+    function pregunta1() {
+        var p8im1 = $('.p8im1 > img').attr('alt');
+        var p8cont1 = 0;
+        if (p8im1 == p8aux2[0]) {
+            p8cont1++;
+            $(".p8im1").addClass("bien");
+        } else {
+            $(".p8im1").addClass("mal");
+        }
+        var p8im2 = $('.p8im2 > img').attr('alt');
+        if (p8im2 == p8aux2[1]) {
+            p8cont1++;
+            $(".p8im2").addClass("bien");
+        } else {
+            $(".p8im2").addClass("mal");
+        }
+        var p8im3 = $('.p8im3 > img').attr('alt');
+        if (p8im3 == p8aux2[2]) {
+            p8cont1++;
+            $(".p8im3").addClass("bien");
+        } else {
+            $(".p8im3").addClass("mal");
+        }
+        var p8im4 = $('.p8im4 > img').attr('alt');
+        if (p8im4 == p8aux2[3]) {
+            p8cont1++;
+            $(".p8im4").addClass("bien");
+        } else {
+            $(".p8im4").addClass("mal");
+        }
+
+
+        var total = ((p8cont1 / 4) * 2)
+        tpre1 = total;
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+
+    p2vec = [
+        '<span class="enunciado">&nbsp;&nbsp;Las plantas realizan los procesos de fotosíntesis y respiración a través de unas estructuras o poros de las plantas llamados:</span><br><center><table style="border-collapse: separate;border-spacing:50px 0px"><tr><td><span class="titulopre">A)</span><label class="p2aran0" ></label></td><td><span class="titulopre">B)</span><label class="p2aran1" ></label></td><td><span class="titulopre">C)</span><label class="p2aran2" ></label></td><td><span class="titulopre">D)</span><label class="p2aran3" ></label></td></tr></table></center>',
+        '<span class="enunciado">&nbsp;&nbsp;En la respiración, las hojas, como todas las partes del vegetal, absorben del medio ambiente:</span><br><center><table style="border-collapse: separate;border-spacing:50px 0px"><tr><td><span class="titulopre">A)</span><label class="p2bran0" ></label></td><td><span class="titulopre">B)</span><label class="p2bran1" ></label></td><td><span class="titulopre">C)</span><label class="p2bran2" ></label></td><td><span class="titulopre">D)</span><label class="p2bran3" ></label></td></tr></table></center>',
+        '<span class="enunciado">&nbsp;&nbsp;Las plantas que son caducifolias pierden sus hojas y para esto tienen otras estructuras llamadas:</span><br><center><table style="border-collapse: separate;border-spacing:50px 0px"><tr><td><span class="titulopre">A)</span><label class="p2cran0" ></label></td><td><span class="titulopre">B)</span><label class="p2cran1" ></label></td><td><span class="titulopre">C)</span><label class="p2cran2" ></label></td><td><span class="titulopre">D)</span><label class="p2cran3" ></label></td></tr></table></center>'
+    ]
+    p2vec.sort(f_randomico);
+    for (var i = 0; i < p2vec.length; i++) {
+        $('.p2ran' + [i] + '').html(p2vec[i]);
+    }
+
+
+    p1avec = [
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca1">&nbsp;&nbsp;clorofila</span>',
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca2">&nbsp;&nbsp;raíz</span>',
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca3">&nbsp;&nbsp;estomas</span>',
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca4">&nbsp;&nbsp;oxígeno</span>'
+    ]
+    p1avec.sort(f_randomico);
+    for (var i = 0; i < p1avec.length; i++) {
+        $('.p2aran' + [i] + '').html(p1avec[i]);
+    }
+
+    p1bvec = [
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca5">&nbsp;&nbsp;dióxido de carbono y oxígeno</span>',
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca6">&nbsp;&nbsp;oxígeno </span>',
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca7">&nbsp;&nbsp;agua</span>',
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca8">&nbsp;&nbsp;sales minerales</span>'
+    ]
+    p1bvec.sort(f_randomico);
+    for (var i = 0; i < p1bvec.length; i++) {
+        $('.p2bran' + [i] + '').html(p1bvec[i]);
+    }
+
+    p1cvec = [
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca9">&nbsp;&nbsp;estomas</span>',
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca10">&nbsp;&nbsp;otoño</span>',
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca11">&nbsp;&nbsp;lenticelas</span>',
+        '<span style="font-size: 18px;color:#4B74A5" class="2 enca12">&nbsp;&nbsp;aerobios</span>'
+    ]
+    p1cvec.sort(f_randomico);
+    for (var i = 0; i < p1cvec.length; i++) {
+        $('.p2cran' + [i] + '').html(p1cvec[i]);
+    }
+    // pintar 
+    $(".2").addClass('hvr-grow-shadow2');
+    $(".2").css('cursor', 'pointer');
+    $(".2").click(function() {
+        if ($(this).hasClass("subrayar")) {
+            $(this).removeClass("subrayar");
+        } else {
+            $(this).addClass("subrayar");
+        }
+    });
+
+
+    // validar casillas pintadas
+    function pregunta2() {
+        var nt1 = 0,
+            nt2 = 0,
+            nt3 = 0,
+            nt4 = 0
+        nt5 = 0,
+            nt6 = 0,
+            nt7 = 0,
+            nt8 = 0
+        nt9 = 0,
+            nt10 = 0,
+            nt11 = 0,
+            nt12 = 0;
+        // pregunats correctas
+
+        if ($('.enca3').hasClass('subrayar') == true) {
+            nt1 = 1;
+            $('.enca3').addClass('bien');
+        }
+        if ($('.enca5').hasClass('subrayar') == true) {
+            nt2 = 1;
+            $('.enca5').addClass('bien');
+        }
+        if ($('.enca11').hasClass('subrayar') == true) {
+            nt3 = 1;
+            $('.enca11').addClass('bien');
+        }
+        // pregunats inscorrectas
+        if ($('.enca1').hasClass('subrayar') == true) {
+            nt4 = 1;
+            $('.enca1').addClass('mal');
+        }
+        if ($('.enca2').hasClass('subrayar') == true) {
+            nt5 = 1;
+            $('.enca2').addClass('mal');
+        }
+        if ($('.enca4').hasClass('subrayar') == true) {
+            nt6 = 1;
+            $('.enca4').addClass('mal');
+        }
+        if ($('.enca6').hasClass('subrayar') == true) {
+            nt7 = 1;
+            $('.enca6').addClass('mal');
+        }
+        if ($('.enca7').hasClass('subrayar') == true) {
+            nt8 = 1;
+            $('.enca7').addClass('mal');
+        }
+        if ($('.enca8').hasClass('subrayar') == true) {
+            nt9 = 1;
+            $('.enca8').addClass('mal');
+        }
+        if ($('.enca9').hasClass('subrayar') == true) {
+            nt10 = 1;
+            $('.enca9').addClass('mal');
+        }
+        if ($('.enca10').hasClass('subrayar') == true) {
+            nt11 = 1;
+            $('.enca10').addClass('mal');
+        }
+        if ($('.enca12').hasClass('subrayar') == true) {
+            nt12 = 1;
+            $('.enca12').addClass('mal');
+        }
+
+        $('.2').off('click');
+        var subtotal = parseFloat(nt1) + parseFloat(nt2) + parseFloat(nt3) - parseFloat(nt4) - parseFloat(nt5) - parseFloat(nt6) - parseFloat(nt7) - parseFloat(nt8) - parseFloat(nt9) - parseFloat(nt10) - parseFloat(nt11) - parseFloat(nt12);
+        var pre2a = ((subtotal / 3) * 2);
+
+        if (pre2a < 0) {
+            pre2a = 0;
+            tpre2 = pre2a;
+            $('#pre2a').val(parseFloat(pre2a).toFixed(2));
+
+        } else {
+            $('#pre2a').val(parseFloat(pre2a).toFixed(2));
+            tpre2 = pre2a;
+
+
+        }
+
+    }
+
+    function pregunta3() {
+        var core = 0;
+
+        if (($("#3pre0").val()) == "a") {
+
+            $("#3pre0").addClass("correcto");
+            core = core + 1;
+        } else {
+
+            $("#3pre0").addClass("incorrecto");
+            core;
+        }
+        if (($("#3pre1").val()) == "b") {
+
+            $("#3pre1").addClass("correcto");
+            core = core + 1;
+        } else {
+
+            $("#3pre1").addClass("incorrecto");
+            core;
+        }
+        if (($("#3pre2").val()) == "c" || ($("#3pre2").val()) == "d" || ($("#3pre2").val()) == "e") {
+
+            $("#3pre2").addClass("correcto");
+            core = core + 1;
+        } else {
+
+            $("#3pre2").addClass("incorrecto");
+            core;
+        }
+        if (($("#3pre3").val()) == "d" || ($("#3pre3").val()) == "c" || ($("#3pre3").val()) == "e") {
+
+            $("#3pre3").addClass("correcto");
+            core = core + 1;
+        } else {
+
+            $("#3pre3").addClass("incorrecto");
+            core;
+        }
+        if (($("#3pre4").val()) == "e" || ($("#3pre4").val()) == "d" || ($("#3pre4").val()) == "c") {
+
+            $("#3pre4").addClass("correcto");
+            core = core + 1;
+        } else {
+
+            $("#3pre4").addClass("incorrecto");
+            core;
+        }
+        if (($("#3pre5").val()) == "f") {
+
+            $("#3pre5").addClass("correcto");
+            core = core + 1;
+        } else {
+
+            $("#3pre5").addClass("incorrecto");
+            core;
+        }
+
+        tpre3 = ((core / 6) * 2);
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+    }
+
+    function pregunta4() {
+        var pre4 = document.getElementById("pre4a").value;
+        tpre4 = pre4;
+        $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+    }
+
+    function pregunta5() {
+        var pre5 = document.getElementById("pre5a").value;
+        tpre5 = pre5;
+        $("#pre5a").val(parseFloat(tpre5).toFixed(2));
+    }
+
+    // #region Calculo Nota Final
+    function NotaFinal() {
+        var pre4 = document.getElementById("pre4a").value;
+        if (pre4 == "") {
+            alert("Pregunta 4: Califique la pregunta");
+        } else {
+            var pre5 = document.getElementById("pre5a").value;
+            if (pre5 == "") {
+                alert("Pregunta 5: Califique la pregunta");
+            } else {
+
+
+                pregunta1();
+                pregunta2();
+                pregunta3();
+                pregunta4();
+                pregunta5();
+                cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4) + parseFloat(tpre5);
+                Calculo_nota();
+                $("input").attr('disabled', 'disabled');
+            }
+        }
+
+    }
+
+    // Wrap every letter in a span
+    $('.ml2').each(function() {
+        $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+    });
+
+    anime.timeline({ loop: true })
+        .add({
+            targets: '.ml2 .letter',
+            scale: [4, 1],
+            opacity: [0, 1],
+            translateZ: 0,
+            easing: "easeOutExpo",
+            duration: 950,
+            delay: function(el, i) {
+                return 70 * i;
+            }
+        });
+    </script>
+    <script>
+    var winHeight = $(window).height();
+    var winWidth = $(window).width();
+    $(document).ready(function() {
+        var watermarkImage = new Image();
+        watermarkImage.src = '';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage,
+                watermarkScale: 1 // you can scale it
+
+            });
+
+    });
+    </script>
+</body>
+
+</html>

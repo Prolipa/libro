@@ -1,4 +1,5 @@
 var titulos = "aplico";
+f_titulos();
 numero_pagina(253);
 
 var tpre1 = 0;
@@ -26,7 +27,7 @@ function pregunta1() {
             respuestas[i].classList.remove("valid");
         }
     }
-    tpre1 = (nota/ 2);
+    tpre1 = (nota / 2);
     $("#pre1a").val(parseFloat(tpre1).toFixed(2));
 }
 // #endregion

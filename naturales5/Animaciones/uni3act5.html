@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/lengu2.css" rel="stylesheet">
+</head>
+<style>
+    .verde{
+    color:#328D25;
+    font-weight: bold;
+}
+.morado{
+    color:#454FB2;
+    font-weight: bold;
+}
+.naranja{
+    color:#F07017;
+    font-weight:bold;
+}
+    
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Para mostrar los contenidos de manera secuencial pulsa sobre <span class="glyphicon glyphicon-play help-ico biniciar" aria-hidden="true"></span><br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_4 btnIniciar mytooltip" data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip display-none" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota display-none">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-comprendo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-comprendo" style="background:#5EA7A8">
+                <span class="titulo">Comprendo para saber</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--texto de ayuda de la actividad-->
+                <!--pregunats de la actividad-->
+                <div class="col-xs-12">
+                    <div class="fondo">
+                        <div class="row anim">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <img src="img/i1_p88_act1.jpg" class="anim" style="max-width: 40%; float: right">
+                                <p class="fuente anim">La <span class="verde">circulación</span> es el recorrido que realiza la sangre por todo el cuerpo para repartir el oxígeno y los nutrientes a todas las células.<br> Durante este recorrido, la sangre recoge las sustancias de desecho que el cuerpo necesita eliminar.</p>
+                                <p class="fuente anim">Estas sustancias son transportadas en la sangre que viaja por <span class="verde">venas</span>, <span class="verde">arterias</span> y <span class="verde">vasos sanguíneos</span> impulsados por una bomba central que es el corazón. Este sistema es el <span class="verde">circulatorio</span>. </p>
+                                <p class="fuente anim naranja" style="font-size:24px">Sangre</p>
+                                <p class="fuente anim">La sangre es un tejido líquido que se encuentra dentro de los vasos sanguíneos y viaja por el organismo transportando nutrientes y desechos.</p>
+                                <p class="fuente anim">Una persona adulta posee entre 4,5 y 5,5 litros de sangre corriendo por sus vasos sanguíneos. Esto equivale a un 8-10 % de su peso corporal. <br> La sangre está formada por una porción líquida llamada <span class="verde">plasma</span> y por un grupo de células y fragmentos celulares llamados elementos figurados, que se clasifican en: <span class="verde">glóbulos rojos</span>, <span class="verde">glóbulos blancos</span> y <span class="verde">plaquetas</span>.</p>
+                                <img src="img/i1_p89_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <p class="fuente anim naranja" style="font-size:24px">Vasos sanguíneos</p>
+                                <p class="fuente anim">Los vasos sanguíneos son conductos que transportan la sangre por todo el cuerpo.<br>Existen tres tipos de vasos según su estructura y el tipo de sangre que transporten: arterias, venas y capilares.</p>
+                                <div class="col-lg-12">
+                                    <img src="img/i1_p89_act2.jpg" class="anim" style="max-width: 33%; float: right;">
+                                    <img src="img/i2_p89_act2.jpg" class="anim" style="max-width: 33%; float: right;">
+                                    <img src="img/i3_p89_act2.jpg" class="anim" style="max-width: 33%; float: right;">
+                                </div>
+                                <p class="fuente anim naranja" style="font-size:24px">Corazón</p>
+                                <p class="fuente anim">El <span class="verde">corazón</span> es un <span class="verde">músculo</span> involuntario muy potente, ubicado en el tórax, en medio de los pulmones. <br>Se divide en dos mitades separadas por un tabique que impide que la sangre de ambos lados se mezcle. La mitad derecha transporta sangre con oxígeno y nutrientes y la izquierda, sangre con dióxido de carbono.</p>
+                                <p class="fuente anim">Cada mitad tiene dos cavidades, dando un total de cuatro: dos superiores llamadas aurículas y dos inferiores llamadas ventrículos. <br>La sangre pasa de aurículas a ventrículos y a los diferentes vasos sanguíneos que entran y salen del corazón, a través de pequeñas válvulas, que se abren y se cierran cada vez que la sangre necesita pasar.<br>Para evitar el roce con otros órganos, el corazón está recubierto por un tejido muy resistente, llamado pericardio.</p>
+                                <img src="img/i1_p90_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <div class="col-lg-12">
+                                    <p class="fuente anim morado" style="font-size:24px">¿Cómo bombea el corazón la sangre por todo el cuerpo?</p>
+                                    <img src="img/i2_p90_act1.jpg" class="anim" style="max-width: 30%; float: right">
+                                    <p class="fuente anim">Las paredes del corazón pueden contraerse y relajarse, lo que permite impulsar la sangre para que se mueva por los vasos sanguíneos.<br>Este movimiento de bombeo se llama <span class="verde">latido</span>.</p>
+                                    <p class="fuente anim">El latido impulsa la sangre, cuyo movimiento puede detectarse como pulso en algunos vasos sanguíneos, como los del cuello y muñecas.</p>
+                                    <p class="fuente anim">Para el movimiento de sustancias por todo el cuerpo, el corazón realiza dos movimientos: diástole y sístole.</p>
+                                </div>
+                                <div class="col-lg-12">
+                                    <img src="img/i3_p91_act1.jpg" class="anim" style="max-width: 28%; float: right">
+                                    <img src="img/i2_p91_act1.jpg" class="anim" style="max-width: 44%; float: right">
+                                    <img src="img/i1_p91_act1.jpg" class="anim" style="max-width: 28%; float: right">
+                                </div>
+                                <div class="col-lg-12">
+                                    <p class="fuente anim"><br></p>
+                                    <p class="fuente anim">La sangre recorre todo el cuerpo gracias a dos circuitos cerrados: <span class="verde">pulmonar o menor</span> y <span class="verde">corporal o mayor</span>.</p>
+                                </div>
+                                <img src="img/i1_p91_act2.jpg" class="anim" style="max-width: 100%; float: right">
+                                <div class="col-lg-12">
+                                    <p class="fuente anim morado" style="font-size:24px">Pulmonar o menor</p>
+                                    <p class="fuente anim">La sangre con oxígeno llega al ventrículo izquierdo desde la aurícula del mismo lado, y sale por la arteria aorta para repartir la sangre por todo el cuerpo. Los vasos sanguíneos llevan esta sangre a cada célula en donde liberan el oxígeno y recogen el dióxido de carbono </p>
+                                    <p class="fuente anim">La sangre con dióxido de carbono regresa a la aurícula derecha por las venas cavas superior e inferior, cerrando el circuito.<br>Esta sangre pasará al ventrículo derecho para reiniciar el circuito con la circulación pulmonar.</p>
+                                </div>
+                                <div class="col-lg-12">
+                                    <p class="fuente anim morado" style="font-size:24px">Corporal o mayor</p>
+                                    <p class="fuente anim">La sangre con dióxido de carbono y desechos sale del ventrículo derecho por las arterias pulmonares hacia los pulmones. Allí la sangre gana oxígeno y deja el dióxido de carbono para liberarlo en la próxima exhalación.</p>
+                                    <p class="fuente anim">La sangre con oxígeno regresa al corazón por las venas pulmonares hacia la aurícula izquierda. Aquí termina la circulación pulmonar e inicia la corporal.</p>
+                                </div>
+                                <p class="fuente anim naranja" style="font-size:24px">Enfermedades del sistema circulatorio</p>
+                                <p class="fuente anim">Un alto porcentaje de las muertes que se producen en nuestro país se debe a enfermedades del corazón y los vasos sanguíneos. Incluso deportistas profesionales han sufrido fallas cardiacas en medio de sus competencias. ¿Te acuerdas de algún caso?</p>
+                                <p class="fuente anim" style="background:#FEEBCC"> <span class="verde">Hipertensión: </span>Elevación de la presión sanguínea por exceso de sal, sobrepeso, consumo de Unidad tres cigarrillo, antecedentes familiares</p>
+                                <p class="fuente anim" style="background:#C0FDBC"> <span class="verde">Angina de pecho: </span>Sensación de ahogo acompañada de un fuerte dolor de pecho que se da cuando disminuye la cantidad de sangre con oxígeno en las paredes del corazón.<br>Se produce por arterioesclerosis</p>
+                                <p class="fuente anim" style="background:#FEEBCC"> <span class="verde">Arterioesclerosis: </span>Endurecimiento de las arterias por depósitos de <span class="morado">colesterol</span> que disminuyen el diámetro de las arterias, lo que dificulta el flujo de la sangre y aumenta la presión arterial.</p>
+                                <p class="fuente anim" style="background:#C0FDBC"> <span class="verde">Leucemia: </span>Cáncer a la sangre: aumenta el número de glóbulos blancos y disminuyen los rojos y plaquetas.</p>
+                                <p class="fuente anim" style="background:#FEEBCC"> <span class="verde">Várices: </span>Engrosamiento de las venas a causa de la acumulación de sangre. Suele presentarse en personas que pasan mucho tiempo en pie</p>
+                                <p class="fuente anim" style="background:#C0FDBC"> <span class="verde">Trombosis: </span>Formación de coágulos en el interior de los vasos sanguíneos.<br>Puede darse por coagulación lenta en personas sedentarias o que han estado en cama muchos días</p>
+                                <p class="fuente anim" style="background:#FEEBCC"> <span class="verde">Infarto cardiaco: </span>Bloqueo del flujo de sangre debido a un coágulo que evita la circulación sanguínea.</p>
+                                <p class="fuente anim" style="background:#C0FDBC"> <span class="verde">Anemia: </span>Disminución en la cantidad de glóbulos rojos.<br>Puede presentarse por hemorragias o deficiencia de hierro.</p>
+                                <p class="fuente anim" style="background:#FEEBCC"> <span class="verde">Hemofilia: </span>Enfermedad de origen genético: la sangre no se coagula.</p>
+                                <p class="fuente anim naranja" style="font-size:24px;text-align:center;">Cuidados del sistema circulatorio</p>
+                                <img src="img/i1_p92_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                            Por favor ingrese el nombre. Es obligatorio</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+            <!--generador de pdf-->
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/animate.css.min.js"></script>
+            <script src="js/jquery.animate.css.js"></script>
+            <script src="js/Utilitario.js"></script>
+            <script>
+            $("#n_pagina").html("88"); //impresion de pagina
+            </script>
+</body>
+
+</html>

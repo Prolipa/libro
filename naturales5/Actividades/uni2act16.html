@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 50px;
+    max-width: 100%;
+    margin-left: 1px;
+    text-align: center;
+}
+
+.c_destinos2 {
+    padding: 2px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 60px;
+    min-width: 80px;
+}
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+
+.bien {
+    background: #90D961;
+}
+
+.mal {
+    background: #F25F5F;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.subrayar {
+    border-bottom: solid 5px #080808;
+}
+
+.pintar {
+    background: #A4B215;
+}
+
+.ingresoCircular {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    text-align: center;
+    color: #00ADED;
+    font-size: 23px;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+.recuadro {
+    font-weight: bold;
+    width: 200px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 20px;
+    height: 40px;
+    padding: 5px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Selecciona la opción correcta.<br>
+        2. Arrastra y relaciona correctamente.<br>
+        3. Seleccioa la opcion correcta.<br>
+        4. Dibuja.<br>
+        5. Completa la tabla.<br>
+        6. Describe.<br>
+        7. Escribe la diferencia.<br>
+        8. Argumente. <br>
+        9. Enlista.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/unidad2.png" style="width:100px">&nbsp;&nbsp;Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 table-responsive">
+                    <span class="enunciado"><span style="color:#3A9740;font-size:25px">Los seres vivos y su ambiente</span></span><br><br>
+                    <div class="col-lg-12">
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a">&nbsp;
+                        <span class="enunciado" style="color: #00ADED;">1. </span><span class="enunciado"><b>Escribe</b> <span style="color:#00ADED">I</span> si la característica pertenece a los invertebrados o <span style="color:#00ADED">V</span> si pertenece a los vertebrados. </b>&nbsp;&nbsp;<b>( 1 pts.)</b></span><br>
+                        <div class="col-lg-12"><br><br>
+                            <center>
+                                <table style="border-collapse: separate;border-spacing: 30px 20px" id="p1ran">
+                                </table>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">2. </span><span class="enunciado"><b>Arrastra</b> y <b>relaciona</b> el tipo de reproducción con el animal que corresponda. &nbsp;&nbsp;<b>( 1 pts.)</b></span><br><br>
+                    <div class="col-lg-12">
+                        <div class="col-sm-12" id="p8div1">
+                            <div class="col-lg-3 " align="center">
+                                <div class="textos1" style="display: inline-block;"></div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="table-responsive text-question">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im1"></div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim11"></div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im2"></div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim12"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im3"></div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim13"></div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im4"></div>
+                                            </td>
+                                            <td>
+                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim14"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a" readonly="">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">3. </span><span class="enunciado"><b>Relaciona</b> el tipo de reproducción con el animal correspondiente.&nbsp;&nbsp;<b>( 1 pts.)</b></span><br>
+                    <div class="col-lg_12">
+                        <center>
+                            <table style="border-collapse: separate; border-spacing: 60px 20px" id="p3ran">
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">4. </span><span class="enunciado"><b>Dibuja</b> el ciclo reproductivo de un insecto y compáralo con el de un anfibio. &nbsp;&nbsp;<b>( 1 pts.)</b></span><br><br>
+                    <div class="my-drawing img-responsive"></div>
+                    <br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="4" placeholder="Comparación"></textarea><br>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">5. </span><span class="enunciado"><b>Escribe</b> dos diferencias y dos semejanzas entre los ciclos reproductivos de los vertebrados e invertebrados. &nbsp;&nbsp;<b>( 1 pts.)</b></span><br><br>
+                    <center>
+                        <table style="border-collapse:separate;border-spacing:0px 0px">
+                            <tr>
+                                <td style="background:#FAD0D4;width:400px;;height:60px;padding:10px;font-size:20px;text-align:center;">Diferencias</td>
+                                <td style="background:#D1FAD0;width:400px;;height:60px;padding:10px;font-size:20px;text-align:center;">Semejanzas</td>
+                            </tr>
+                            <tr>
+                                <td><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="border:solid 2px#98BBCC;" cols="60" rows="4" placeholder="Texto"></textarea></td>
+                                <td><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="border:solid 2px#98BBCC;" cols="60" rows="4" placeholder="Texto"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="border:solid 2px#98BBCC;" cols="60" rows="4" placeholder="Texto"></textarea></td>
+                                <td><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="border:solid 2px#98BBCC;" cols="60" rows="4" placeholder="Texto"></textarea></td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+                <div class="col-lg-12 table-responsive"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre6a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">6. </span><span class="enunciado"><b>Redacta</b> la importancia de la reproducción de los invertebrados en un ecosistema. &nbsp;&nbsp;<b>( 1 pts.)</b></span><br><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="border:solid 2px#98BBCC;" cols="60" rows="6" placeholder="Texto"></textarea>
+                </div>
+                <div class="col-lg-12 table-responsive"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre7a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">7. </span><span class="enunciado"><b>Diferencia</b> un organismo vivíparo y un organismo ovovivíparo.&nbsp;&nbsp;<b>( 1.5 pts.)</b></span><br><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="border:solid 2px#98BBCC;" cols="60" rows="6" placeholder="Texto"></textarea>
+                </div>
+                <div class="col-lg-12 table-responsive"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre8a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">8. </span><span class="enunciado"><b>Argumenta</b> por qué el ser humano es un vivíparo placentario.&nbsp;&nbsp;<b>( 1 pts.)</b></span><br><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="border:solid 2px#98BBCC;" cols="60" rows="6" placeholder="Texto"></textarea>
+                </div>
+                <div class="col-lg-12 table-responsive"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre9a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">9. </span><span class="enunciado"><b>Enlista</b> medidas de protección frente a las amenazas de los animales.&nbsp;&nbsp;<b>( 1.5 pts.)</b></span><br><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="border:solid 2px#98BBCC;" cols="60" rows="6" placeholder="Texto"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script type="text/javascript">
+    $("#n_pagina").html('70');
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+    var tpre4 = 0;
+    var tpre5 = 0;
+    var tpre6 = 0;
+    var tpre7 = 0;
+    var tpre8 = 0;
+    var tpre9 = 0;
+
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+    document.getElementById("pre4a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre4a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre4a"), 1);
+    });
+
+    document.getElementById("pre5a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre5a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre5a"), 3);
+    });
+    document.getElementById("pre6a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre6a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre6a"), 1);
+    });
+    document.getElementById("pre7a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre7a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre7a"), 1.5);
+    });
+
+    document.getElementById("pre8a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre8a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre8a"), 1);
+    });
+    document.getElementById("pre9a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre9a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre9a"), 1.5);
+    });
+
+    p1vec = [
+        '<tr><td style="width:60%;background:#EFA795;padding:10px"><span class="enunciado">Poseen esqueleto interno formado por columna vertebral y huesos.</span></td><td style="width:30%"><select style="font-size:21px;border:solid 2px #82D152;width:50px;padding:5px;height:50px;font-weight:bold" id="p1var0"><option value="a">---</option><option value="i">I</option><option value="v">V</option></select></td></tr>',
+
+        '<tr><td style="width:60%;background:#D4EF95;padding:10px"><span class="enunciado">Poseen exoesqueleto que les protege y les da soporte.</span></td><td><select style="font-size:21px;border:solid 2px #82D152;width:50px;padding:5px;height:50px;font-weight:bold" id="p1var1"><option value="a">---</option><option value="i">I</option><option value="v">V</option></select></td></tr>',
+
+        '<tr><td style="width:60%;background:#95EFC3;padding:10px"><span class="enunciado">Cuerpo blando con sistemas primitivos.</span></td><td><select style="font-size:21px;border:solid 2px #82D152;width:50px;padding:5px;height:50px;font-weight:bold" id="p1var2"><option value="a">---</option><option value="i">I</option><option value="v">V</option></select></td></tr>',
+
+        '<tr><td style="width:60%;background:#95B0EF;padding:10px"><span class="enunciado">Usualmente de tamaño pequeño.</span></td><td><select style="font-size:21px;border:solid 2px #82D152;width:50px;padding:5px;height:50px;font-weight:bold" id="p1var3"><option value="a">---</option><option value="i">I</option><option value="v">V</option></select></td></tr>',
+
+        '<tr><td style="width:60%;background:#EF95EE;padding:10px"><span class="enunciado">La mayoría tiene reproducción sexual.</span></td><td><select style="font-size:21px;border:solid 2px #82D152;width:50px;padding:5px;height:50px;font-weight:bold" id="p1var4"><option value="a">---</option><option value="i">I</option><option value="v">V</option></select></td></tr>'
+    ]
+    p1vec.sort(f_randomico);
+    $('#p1ran').html(p1vec);
+
+
+    function pregunta1() {
+        var core = 0;
+        var p1var1 = ['v', 'i', 'i', 'i', 'v'];
+
+        for (var i = 0; i < p1var1.length; i++) {
+            if (($("#p1var" + [i] + "").val()) == p1var1[i]) {
+
+                $("#p1var" + [i] + "").addClass("bien");
+                core = core + 1;
+            } else {
+
+                $("#p1var" + [i] + "").addClass("mal");
+                core;
+            }
+        }
+
+        tpre1 = ((core / 5) * 1);
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+
+    // pregutna 2
+    var p8pal1 = [
+        '<img style="width:150px"class="img-responsive drag8" alt="1" src="img/i5_p70_act1.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>',
+        '<img style="width:150px"class="img-responsive drag8" alt="2" src="img/i6_p70_act1.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>',
+        '<img style="width:150px"class="img-responsive drag8" alt="3" src="img/i7_p70_act1.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>',
+        '<img style="width:150px"class="img-responsive drag8" alt="4" src="img/i8_p70_act1.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>'
+
+    ];
+    var p8pal2 = [
+
+        '<img src="img/i1_p70_act1.jpg" style="width:150px" class="img-responsive">',
+        '<img src="img/i2_p70_act1.jpg" style="width:150px" class="img-responsive">',
+        '<img src="img/i3_p70_act1.jpg" style="width:150px" class="img-responsive">',
+        '<img src="img/i4_p70_act1.jpg" style="width:150px" class="img-responsive">'
+    ];
+
+    p8pal1.sort(f_randomico);
+    var p8vec1 = ['1', '4', '2', '3'];
+    var p8aux2 = [];
+    $(".textos1").append(p8pal1);
+    var p8myArray2 = ['0', '1', '2', '3'];
+    var i, j, k;
+    for (i = p8myArray2.length; i; i--) {
+        j = Math.floor(Math.random() * i);
+        k = p8myArray2[i - 1];
+        p8myArray2[i - 1] = p8myArray2[j];
+        p8myArray2[j] = k;
+    }
+    //aleatorio literal 1
+    for (var i = 1; i <= 4; i++) {
+        var c1 = p8myArray2[i - 1];
+        $(".p8cim1" + i).html(p8pal2[c1]);
+        p8aux2.push(p8vec1[c1]);
+
+    };
+    $(".drag8").draggable({
+        revert: "invalid",
+        zIndex: 5,
+        containment: ".p8div1",
+        scroll: false,
+    });
+
+    $(".drop8").droppable({
+        accept: ".drag8",
+        drop: function(e, ui) {
+            $(ui.draggable).removeClass("drag8");
+            $(ui.draggable).removeClass("bg_palabra");
+            ui.draggable.attr("style", "mix-blend-mode:multiply;width:150px");
+            $(this).append(ui.draggable);
+
+        }
+    });
+
+    function pregunta2() {
+        var p8im1 = $('.p8im1 > img').attr('alt');
+        var p8cont1 = 0;
+        if (p8im1 == p8aux2[0]) {
+            p8cont1++;
+            $(".p8im1").addClass("bien");
+        } else {
+            $(".p8im1").addClass("mal");
+        }
+        var p8im2 = $('.p8im2 > img').attr('alt');
+        if (p8im2 == p8aux2[1]) {
+            p8cont1++;
+            $(".p8im2").addClass("bien");
+        } else {
+            $(".p8im2").addClass("mal");
+        }
+        var p8im3 = $('.p8im3 > img').attr('alt');
+        if (p8im3 == p8aux2[2]) {
+            p8cont1++;
+            $(".p8im3").addClass("bien");
+        } else {
+            $(".p8im3").addClass("mal");
+        }
+        var p8im4 = $('.p8im4 > img').attr('alt');
+        if (p8im4 == p8aux2[3]) {
+            p8cont1++;
+            $(".p8im4").addClass("bien");
+        } else {
+            $(".p8im4").addClass("mal");
+        }
+
+        var total = ((p8cont1 / 4) * 1)
+        tpre2 = total;
+        $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    }
+
+    //final pregurnta 2
+
+
+
+    p3vec = [
+        '<tr><td><select id="p3var0" style="font-size:21px;font-weight:bold;border:solid 2px #A14AF5;text-align:center;width:150px;height:40px;border-radius:10px;"><option value="a">-----------</option><option value="1">Ovovivíparo</option><option value="3">Vivíparo</option><option value="2">Ovíparo</option> </select></td><td><div class="recuadro" style="background:#E2CDF6;border:solid 2px #A14AF5">Perro</div></td></tr>',
+
+        '<tr><td><select id="p3var1" style="font-size:21px;font-weight:bold;border:solid 2px #BF40AF;text-align:center;width:150px;height:40px;border-radius:10px;"><option value="a">-----------</option><option value="1">Ovovivíparo</option><option value="3">Vivíparo</option><option value="2">Ovíparo</option> </select></td><td><div class="recuadro" style="background:#F3B8EC;border:solid 2px #BF40AF">Tortuga</div></td></tr>',
+
+        '<tr><td><select id="p3var2" style="font-size:21px;font-weight:bold;border:solid 2px #74B15E;text-align:center;width:150px;height:40px;border-radius:10px;"><option value="a">-----------</option><option value="1">Ovovivíparo</option><option value="3">Vivíparo</option><option value="2">Ovíparo</option> </select></td><td><div class="recuadro" style="background:#CCF4BF;border:solid 2px #74B15E">Ballena</div></td></tr>',
+
+        '<tr><td><select id="p3var3" style="font-size:21px;font-weight:bold;border:solid 2px #EDB834;text-align:center;width:150px;height:40px;border-radius:10px;"><option value="a">-----------</option><option value="1">Ovovivíparo</option><option value="3">Vivíparo</option><option value="2">Ovíparo</option> </select></td><td><div class="recuadro" style="background:#F4E5BF;border:solid 2px #EDB834">Tiburón</div></td></tr>',
+
+        '<tr><td><select id="p3var4" style="font-size:21px;font-weight:bold;border:solid 2px #34A4ED;text-align:center;width:150px;height:40px;border-radius:10px;"><option value="a">-----------</option><option value="1">Ovovivíparo</option><option value="3">Vivíparo</option><option value="2">Ovíparo</option> </select></td><td><div class="recuadro" style="background:#D0E9FA;border:solid 2px #34A4ED">Ornitorrinco</div></td></tr>'
+    ];
+    p3vec.sort(f_randomico);
+    $('#p3ran').html(p3vec);
+
+
+    function pregunta3() {
+        var core = 0;
+        var p3var1 = ['3', '2', '3', '1', '3'];
+
+        for (var i = 0; i < p3var1.length; i++) {
+            if (($("#p3var" + [i] + "").val()) == p3var1[i]) {
+
+                $("#p3var" + [i] + "").addClass("bien");
+                core = core + 1;
+            } else {
+
+                $("#p3var" + [i] + "").addClass("mal");
+                core;
+            }
+        }
+
+        tpre3 = ((core / 5) * 1);
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+    }
+
+
+
+    function pregunta4() {
+        var pre4 = document.getElementById("pre4a").value;
+        tpre4 = pre4;
+        $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+    }
+    // #endregion
+
+    function pregunta5() {
+        var pre5 = document.getElementById("pre5a").value;
+        tpre5 = pre5;
+        $("#pre5a").val(parseFloat(tpre5).toFixed(2));
+    }
+    // #endregion
+    function pregunta6() {
+        var pre6 = document.getElementById("pre6a").value;
+        tpre6 = pre6;
+        $("#pre6a").val(parseFloat(tpre6).toFixed(2));
+    }
+    // #endregion
+    function pregunta7() {
+        var pre7 = document.getElementById("pre7a").value;
+        tpre7 = pre7;
+        $("#pre7a").val(parseFloat(tpre7).toFixed(2));
+    }
+    // #endregion
+
+    function pregunta8() {
+        var pre8 = document.getElementById("pre8a").value;
+        tpre8 = pre8;
+        $("#pre8a").val(parseFloat(tpre8).toFixed(2));
+    }
+    // #endregion
+    function pregunta9() {
+        var pre9 = document.getElementById("pre9a").value;
+        tpre9 = pre9;
+        $("#pre9a").val(parseFloat(tpre9).toFixed(2));
+    }
+    // #endregion
+
+
+
+    var winHeight = $(window).height();
+    var winWidth = $(window).width();
+    $(document).ready(function() {
+        var watermarkImage = new Image();
+        watermarkImage.src = '';
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage,
+                watermarkScale: 2 // you can scale it
+
+
+            });
+    });
+    // #region Calculo Nota Final
+    function NotaFinal() {
+
+        var pre4 = document.getElementById("pre4a").value;
+        if (pre4 == "") {
+            alert("Pregunta 4: Califique la pregunta");
+        } else {
+            var pre5 = document.getElementById("pre5a").value;
+            if (pre5 == "") {
+                alert("Pregunta 5: Califique la pregunta");
+            } else {
+                var pre6 = document.getElementById("pre6a").value;
+                if (pre6 == "") {
+                    alert("Pregunta 6: Califique la pregunta");
+                } else {
+                    var pre7 = document.getElementById("pre7a").value;
+                    if (pre7 == "") {
+                        alert("Pregunta 7: Califique la pregunta");
+                    } else {
+                        var pre8 = document.getElementById("pre8a").value;
+                        if (pre8 == "") {
+                            alert("Pregunta 8: Califique la pregunta");
+                        } else {
+                            var pre9 = document.getElementById("pre9a").value;
+                            if (pre9 == "") {
+                                alert("Pregunta 9: Califique la pregunta");
+                            } else {
+                                pregunta1();
+                                pregunta2();
+                                pregunta3();
+                                pregunta4();
+                                pregunta5();
+                                pregunta6();
+                                pregunta7();
+                                pregunta8();
+                                pregunta9();
+                                cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4) + parseFloat(tpre5) + parseFloat(tpre6) + parseFloat(tpre7) + parseFloat(tpre8) + parseFloat(tpre9);
+                                Calculo_nota();
+                                $("input").attr('disabled', 'disabled');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>

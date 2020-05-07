@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Estudios Sociales 3</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+</head>
+<style type="text/css">
+
+    .cajas{
+		max-width: 95%;
+		max-height: 200px;
+		border: 1px #009900 solid;
+		border-radius: 5px;
+		padding: 15px;
+		margin: 5px;
+	}
+	.actividad1{
+		background: #fff;		
+	}
+	.correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+	.desactivar{
+		background-color: #444;
+		color: #888;
+		padding: 8px;
+	}
+	#cabecera .badge{
+		background-color: #232956;
+	}
+    .c_origen {
+    /*border: 1px solid #af539a;*/
+
+    border-radius: 10px;
+    min-height: 50px;
+    width: 800PX;
+    margin-left: 1px;
+    width: auto;
+}
+
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 40px;
+    min-width: 150px;
+}
+.seleccionCaja {
+
+    width: auto;
+    height: auto;
+    border-radius: 50px;
+    border: 10px rgb(34, 197, 29) solid;
+
+
+}
+.correctoi {
+    background-color: #8FB435;
+    border: solid 4px #8FB435;
+
+
+}
+
+.incorrectoi {
+    background-color: #E76E80;
+    border: solid 4px #E76E80;
+
+}
+</style>
+<body>
+<div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Escriba la respuesta correcta según corresponda.<br>
+        2. Escriba la respuesta correcta según corresponda.<br>
+        3. Dibuja la respuesta correcta según corresponda.<br> 
+        4. Escriba la respuesta correcta según corresponda.<br>
+        5. Escriba la respuesta correcta según corresponda.<br>
+        6. Escriba la respuesta correcta según corresponda.<br>
+        7. Escriba la respuesta correcta según corresponda.<br>
+        8. Escriba la respuesta correcta según corresponda.<br>
+        9. Escriba la respuesta correcta según corresponda.<br>
+        
+        <span id="ayudas"></span>
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+	<div class="container espacio">
+		<div class="panel border-evaluacion" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-evaluacion">
+                    <span class="titulo" ><img src='img/icoE.png' alt='Evaluación diagnóstica'> Evaluación sumativa</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>                    
+                </div>
+                <div class="panel-body">
+                    
+                    <!--pregunats de la actividad-->
+                    <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a">&nbsp; <span><span style="color: #28B367;"><b>1. </b></span> <b>Observa</b> la imagen y <b>responde</b> a las preguntas.  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                    <div class="col-lg-5"><center><img src="img/i1_p26_act20.jpg" class="img-responsive"></center></div>
+                    <div class="col-lg-7">
+                        ¿Qué puntos cardinales se encuentran al frente y a la izquierda del niño?
+                   <textarea rows="3" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea><br>
+                   ¿Qué puntos cardinales se encuentran a la derecha y al frente de la niña?
+                   <textarea rows="3" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br></div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a" readonly="">&nbsp; <span><span style="color: #28B367;"><b>2. </b></span> <b>Escribe</b> los puntos colaterales que se encuentran entre los siguientes puntos cardinales:  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                    <div class="col-lg-6"><span style="color: #71498A;"><b>a) </b></span><span id="p2ran0"> </span></div>
+                    <div class="col-lg-6"><span style="color: #71498A;"><b>b) </b></span><span id="p2ran1"> </span></div>
+                    <div class="col-lg-6"><span style="color: #71498A;"><b>c) </b></span><span id="p2ran2"> </span></div>
+                    <div class="col-lg-6"><span style="color: #71498A;"><b>d) </b></span><span id="p2ran3"> </span></div>
+                    
+                </div>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a" >&nbsp; <span><span style="color: #28B367;"><b>3. </b></span> <b>Elabora</b> un croquis de tu escuela. <b>Señala</b> los puntos cardinales y tres puntos de referencia. <b>(2 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                        <div class="my-drawing"></div><br>
+                </div>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a" readonly="">&nbsp; <span><span style="color: #28B367;"><b>4. </b></span> <b>Relaciona</b> la palabra con su significado. Escribe la letra en los espacios, según corresponda <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                    <div class="col-lg-4" style="background: #FFF1DF;border: solid 2px #FAC084; border-radius: 10px;">
+                        <span style="color: #71498A;"><b>a) </b></span> Mapa<br><br>
+                        <span style="color: #71498A;"><b>b) </b></span> Croquis<br><br>
+                        <span style="color: #71498A;"><b>c) </b></span> Globo terráqueo <br><br>
+                        <span style="color: #71498A;"><b>d) </b></span> Planisferio<br><br>
+                    </div>
+                    <div class="col-lg-8" style="background: #F4E6F0;border: solid 2px #914588;border-radius: 10px;" id="p4ran1">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-12"><br></div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a" readonly="">&nbsp; <span><span style="color: #28B367;"><b>5. </b></span> Encuentre los símbolos en el mapa y <b>escribe</b> su significado  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                       <div class="col-lg-6"><center><img src="img/i3_p26_act20.jpg" class="img-responsive"></center></div>
+                       <div class="col-lg-6" id="p5ran1">
+                           
+                            
+                            
+
+                       </div>
+                </div>
+                <div class="col-lg-12"><br></div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre6a" readonly="">&nbsp; <span><span style="color: #28B367;"><b>6. </b></span> <b>Completa</b> las oraciones con las palabras de los siguientes recuadros.  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                    <div class="col-lg-2"></div><div class="col-lg-8"><center><img src="img/i7_p26_act20.jpg" class="img-responsive"></center></div><div class="col-lg-2"></div>
+                    <div class="col-lg-12"><br></div>
+                    <div class="col-lg-12"><span style="color: #71498A;"><b>a) </b></span><span id="p6ran0"> </span></div>
+                    <div class="col-lg-12"><span style="color: #71498A;"><b>b) </b></span><span id="p6ran1">  </span></div>
+                    <div class="col-lg-12"><span style="color: #71498A;"><b>c) </b></span><span id="p6ran2"> </span></div>
+                    <div class="col-lg-12"><span style="color: #71498A;"><b>d) </b></span><span id="p6ran3">  </span></div>
+                </div>
+                <div class="col-lg-12"><br></div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre7a" >&nbsp; <span><span style="color: #28B367;"><b>7. </b></span>  <b>Escribe</b> dos razones por las cuales las normas y señales de tránsito son importantes para la convivencia ciudadana.   <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                    <div class="col-lg-6">
+                        <textarea class="form-control text-question" rows="1" style="background: #FFF6DD ;border: solid 2px #F7BA8E ;"></textarea>
+                    </div>
+                    <div class="col-lg-6">
+                        <textarea class="form-control text-question" rows="1" style="background:#ECF3DD;border: solid 2px #5BBD84 ;"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br></div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre8a" >&nbsp; <span><span style="color: #28B367;"><b>8. </b></span> <b>Observa</b> las señales de tránsito y <b>completa</b> la información que se solicita.   <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive" style="background: #EDF7FA;border-radius: 10px;">
+                          <div class="col-lg-2"><center><img src="img/i8_p26_act20.jpg" class="img-responsive"></center></div>
+                       <div class="col-lg-10 text-question">
+                           <br>Clase de señal:<input  class=" text-question" style="width: 200px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12"><br><br>
+                           Significado:<input  class=" text-question" style="width: 200px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12">
+                       </div>  
+                </div>
+                <div class="col-lg-12 table-responsive" style="background: #FDEFF4;border-radius: 10px;">
+                          <div class="col-lg-2"><center><img src="img/i9_p26_act20.jpg" class="img-responsive"></center></div>
+                       <div class="col-lg-10 text-question">
+                           <br>Clase de señal:<input  class=" text-question" style="width: 200px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12"><br><br>
+                           Significado:<input  class=" text-question" style="width: 200px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12">
+                       </div>  
+                </div>
+                <div class="col-lg-12 table-responsive" style="background: #FFFBE5;border-radius: 10px;">
+                          <div class="col-lg-2"><center><img src="img/i10_p26_act20.jpg" class="img-responsive"></center></div>
+                       <div class="col-lg-10 text-question">
+                           <br>Clase de señal:<input  class=" text-question" style="width: 200px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12"><br><br>
+                           Significado:<input  class=" text-question" style="width: 200px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12">
+                       </div>  
+                </div>
+                <div class="col-lg-12"></div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre9a" >&nbsp; <span><span style="color: #28B367;"><b>9. </b></span> <b>Escribe</b> un derecho (<b>D</b>) y una obligación (<b>O</b>) que tienes como peatón.  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question" style="font-size: 25px;">
+                    <div class="col-lg-6">
+                        <span style="border:solid 2px #215A98;color:#215A98;border-radius: 10px;background: #E4EFF4;width: 50px;height: 50px;"><b>D</b></span><input  class=" text-question" style="width: 400px;border: solid 1px #215A98;text-align: center;border-radius: 10px;height: 35px;" maxlength="12">
+                    </div>
+                    <div class="col-lg-6">
+                        <span style="border:solid 2px #B32F81;color:#B32F81;border-radius: 10px;background: #F1E4EF;width: 50px;height: 50px;"><b>O</b></span><input  class=" text-question" style="width: 400px;border: solid 1px #B32F81;text-align: center;border-radius: 10px;height: 35px;" maxlength="12">
+                    </div>
+                </div>
+
+            </div>		
+	</div>
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+        
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/actividad1.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script>
+        var titulos = 'reflexiono';
+        $("#n_pagina").html('26');
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+    var tpre4 = 0;
+    var tpre5 = 0;
+    var tpre6 = 0;
+    var tpre7 = 0;
+    var tpre8 = 0;
+    var tpre9 = 0;
+
+
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+        return ((key >= 48 && key <= 57) || (key == 8))
+    }
+
+    // #region Pregunta1
+    document.getElementById("pre1a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre1a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre1a"), 1);
+    });
+    function pregunta1() {
+        var pre1a = document.getElementById("pre1a").value;
+        tpre1 = pre1a;
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+    // #endregion
+
+   // #region Pregunta2
+   p2vec2=[
+   'Norte y este <input id="p2var0" class=" text-question" style="width: 150px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12"><br><br>',
+   'Norte y oeste <input id="p2var1" class=" text-question" style="width: 150px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12"><br><br>',
+   'Sur y este <input id="p2var2" class=" text-question" style="width: 150px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12"><br><br>',
+   'Sur y oeste <input id="p2var3" class=" text-question" style="width: 150px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12"><br><br>'
+   ];
+   p2vec2.sort(f_randomico);
+   for (var i = 0; i < p2vec2.length; i++) {
+       $('#p2ran'+[i]+'').html(p2vec2[i]);
+   }
+    function pregunta2() {
+                        var p2vec1 = ['noreste', 'noroeste', 'sureste', 'suroeste']
+            var core = 0;
+            for (var i = 0; i < p2vec1.length; i++) {
+                if (($('#p2var' + [i] + '').val().toLowerCase()) == p2vec1[i]) {
+                    core = core + 1;
+                    $('#p2var' + [i] + '').removeClass("pinta");
+                    $('#p2var' + [i] + '').addClass("correcto");
+                } else {
+                    core;
+                    $('#p2var' + [i] + '').removeClass("pinta");
+                    $('#p2var' + [i] + '').addClass("incorrecto");
+                }
+            }
+            tpre2 = ((core * 1) / p2vec1.length);
+            $("#pre2a").val(parseFloat(tpre2).toFixed(2));   
+    }
+    // #endregion
+
+       // #region Pregunta3
+        document.getElementById("pre3a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre3a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre3a"), 2);
+    });
+    function pregunta3() {
+             var pre3a = document.getElementById("pre3a").value;
+        tpre3 = pre3a;
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));  
+    }
+    // #endregion
+
+    // #region Pregunta4
+    p2vec2=[
+    '<input id="p4var0" class=" text-question" style="width: 30px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="1" > Es un esquema o dibujo rápido a mano alzada.<br><br>',
+    '<input id="p4var1" class=" text-question" style="width: 30px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="1" > Es una representación plana de la superficie de la Tierra (en dos dimensiones).<br><br>',
+    '<input id="p4var2" class=" text-question" style="width: 30px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="1" > Es una representación plana de toda o parte de la superficie de la Tierra.<br><br>',
+    '<input id="p4var3" class=" text-question" style="width: 30px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="1" > Es un modelo a escala tridimensional de la Tierra.<br><br>',
+    ];
+    p2vec2.sort(f_randomico);
+    $('#p4ran1').html(p2vec2);
+    function pregunta4() {
+                                var p4vec1 = ['b', 'd', 'a', 'c']
+            var core = 0;
+            for (var i = 0; i < p4vec1.length; i++) {
+                if (($('#p4var' + [i] + '').val().toLowerCase()) == p4vec1[i]) {
+                    core = core + 1;
+                    $('#p4var' + [i] + '').removeClass("pinta");
+                    $('#p4var' + [i] + '').addClass("correcto");
+                } else {
+                    core;
+                    $('#p4var' + [i] + '').removeClass("pinta");
+                    $('#p4var' + [i] + '').addClass("incorrecto");
+                }
+            }
+            tpre4 = ((core * 1) / p4vec1.length);
+            $("#pre4a").val(parseFloat(tpre4).toFixed(2)); 
+    }
+    // #endregion
+    
+    // #region Pregunta5
+        p5vec2=[
+    '<div class="col-lg-12"><div class="col-lg-4"><center><img src="img/i4_p26_act20.jpg" class="img-responsive"></center></div><div class="col-lg-8"><br><br><input id="p5var0" class=" text-question" style="width: 200px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="25"></div></div>',
+    '<div class="col-lg-12"><div class="col-lg-4"><center><img src="img/i5_p26_act20.jpg" class="img-responsive"></center></div><div class="col-lg-8"><br><br><input id="p5var1" class=" text-question" style="width: 200px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="25"></div></div>',
+    '<div class="col-lg-12"><div class="col-lg-4"><center><img src="img/i6_p26_act20.jpg" class="img-responsive"></center></div><div class="col-lg-8"><br><br><input id="p5var2" class=" text-question" style="width: 200px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="25"></div></div>'
+    ];
+    p5vec2.sort(f_randomico);
+    $('#p5ran1').html(p5vec2);
+    function pregunta5() {
+                                        var p5vec1 = ['capital de la república', 'aeropuerto', 'capital provincial']
+            var core = 0;
+            for (var i = 0; i < p5vec1.length; i++) {
+                if (($('#p5var' + [i] + '').val().toLowerCase()) == p5vec1[i]) {
+                    core = core + 1;
+                    $('#p5var' + [i] + '').removeClass("pinta");
+                    $('#p5var' + [i] + '').addClass("correcto");
+                } else {
+                    core;
+                    $('#p5var' + [i] + '').removeClass("pinta");
+                    $('#p5var' + [i] + '').addClass("incorrecto");
+                }
+            }
+            tpre5 = ((core * 1) / p5vec1.length);
+            $("#pre5a").val(parseFloat(tpre5).toFixed(2)); 
+    }
+    // #endregion
+     
+    // #region Pregunta6
+       p6vec2=[
+   'Uno de los recursos cartográficos que representa las características naturales de la superficie terrestre como ríos, montañas, valles, entre otros , es el mapa <input id="p6var0" class=" text-question" style="width: 150px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12">.<br><br>',
+   'En el globo terráqueo se evidencia la representación de los continentes y los <input id="p6var1" class=" text-question" style="width: 150px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12">.<br><br>',
+   'La relación que hay entre el mapa y la realidad del terreno está señalada en la <input id="p6var2" class=" text-question" style="width: 150px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12">.<br><br>',
+   'Los símbolos que se señalan en los mapas se encuentran en un recuadro llamado <input id="p6var3" class=" text-question" style="width: 150px;border: solid 1px #60C3E5;text-align: center;border-radius: 10px;" maxlength="12">.<br><br>'
+   ];
+   p6vec2.sort(f_randomico);
+   for (var i = 0; i < p6vec2.length; i++) {
+       $('#p6ran'+[i]+'').html(p6vec2[i]);
+   }
+    function pregunta6() {
+                                                var p6vec1 = ['físico', 'océanos', 'escala','leyenda']
+            var core = 0;
+            for (var i = 0; i < p6vec1.length; i++) {
+                if (($('#p6var' + [i] + '').val().toLowerCase()) == p6vec1[i]) {
+                    core = core + 1;
+                    $('#p6var' + [i] + '').removeClass("pinta");
+                    $('#p6var' + [i] + '').addClass("correcto");
+                } else {
+                    core;
+                    $('#p6var' + [i] + '').removeClass("pinta");
+                    $('#p6var' + [i] + '').addClass("incorrecto");
+                }
+            }
+            tpre6 = ((core * 1) / p6vec1.length);
+            $("#pre6a").val(parseFloat(tpre6).toFixed(2)); 
+    }
+    // #endregion
+    
+    // #region Pregunta7
+           document.getElementById("pre7a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre7a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre7a"), 1);
+    });
+    function pregunta7() {
+                        var pre7a = document.getElementById("pre7a").value;
+        tpre7 = pre7a;
+        $("#pre7a").val(parseFloat(tpre7).toFixed(2));    
+    }
+    // #endregion
+    
+    // #region Pregunta8
+               document.getElementById("pre8a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre8a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre8a"), 1);
+    });
+    function pregunta8() {
+                     var pre8a = document.getElementById("pre8a").value;
+        tpre8 = pre8a;
+        $("#pre8a").val(parseFloat(tpre8).toFixed(2));     
+    }
+    // #endregion
+    
+    // #region Pregunta9
+               document.getElementById("pre9a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre9a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre9a"), 1);
+    });
+    function pregunta9() {
+                        var pre9a = document.getElementById("pre9a").value;
+        tpre9 = pre9a;
+        $("#pre9a").val(parseFloat(tpre9).toFixed(2));   
+    }
+    // #endregion
+  
+    
+    // #region Calculo Nota Final
+    function NotaFinal() {
+                var pre1a = document.getElementById("pre1a").value;
+                if (pre1a == "") {
+                alert("Pregunta 1: Califique la pregunta");
+                } else {
+                                    var pre3a = document.getElementById("pre3a").value;
+                if (pre3a == "") {
+                alert("Pregunta 3: Califique la pregunta");
+                } else {
+                                        var pre7a = document.getElementById("pre7a").value;
+                if (pre7a == "") {
+                alert("Pregunta 7: Califique la pregunta");
+                } else {
+                                        var pre8a = document.getElementById("pre8a").value;
+                if (pre8a == "") {
+                alert("Pregunta 8: Califique la pregunta");
+                } else {
+                                        var pre9a = document.getElementById("pre9a").value;
+                if (pre9a == "") {
+                alert("Pregunta 9: Califique la pregunta");
+                } else {
+            pregunta1();
+            pregunta2();
+            pregunta3();
+            pregunta4();
+            pregunta5();
+            pregunta6();
+            pregunta7();
+            pregunta8();
+            pregunta9();
+            cor = parseFloat(tpre1)+parseFloat(tpre2)+parseFloat(tpre3)+parseFloat(tpre4)+parseFloat(tpre5)+parseFloat(tpre6)+parseFloat(tpre7)+parseFloat(tpre8)+parseFloat(tpre9);
+            Calculo_nota();
+        }
+        }
+    }
+    }
+    }
+    }
+        
+    
+    // #endregion1
+    </script>
+        <script>
+    var winHeight = $(window).height();
+    var winWidth = $(window).width();
+    $(document).ready(function() {
+        var watermarkImage = new Image();
+        watermarkImage.src = 'img/i2_p26_act20.jpg';
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage,
+                watermarkScale: 0.8 // you can scale it
+
+            });
+    });
+    </script>
+
+        
+</body>
+</html>

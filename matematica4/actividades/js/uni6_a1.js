@@ -1,4 +1,5 @@
 var titulos = "prueba";
+f_titulos();
 numero_pagina(220);
 
 $(".btn_mostrar").on("click", function() {

@@ -17,7 +17,7 @@
       var lee = [
           '<tr> <td>No tengo camello.</td> <td><input type="text" placeholder="Ej: infantil" class="form-control respuestas input-sm" id="rA1" style="width: 250px;"></td> </tr>',
           '<tr> <td>Te espero a las seis.</td> <td><input type="text" placeholder="Ej: infantil" class="form-control respuestas input-sm" id="rA2" style="width: 250px;"></td> </tr>',
-          '<tr> <td>Degálame un chupete.</td> <td><input type="text" placeholder="Ej: infantil" class="form-control respuestas input-sm" id="rA3" style="width: 250px;"></td> </tr>',
+          '<tr> <td>Regálame un chupete.</td> <td><input type="text" placeholder="Ej: infantil" class="form-control respuestas input-sm" id="rA3" style="width: 250px;"></td> </tr>',
           '<tr> <td>¿Me podría comunicar con Sofía?</td> <td><input type="text" placeholder="Ej: infantil" class="form-control respuestas input-sm" id="rA4" style="width: 250px;"></td> </tr>',
           '<tr> <td>Me voy de jama.</td> <td><input type="text" placeholder="Ej: infantil" class="form-control respuestas input-sm" id="rA5" style="width: 250px;"></td> </tr>',
           '<tr> <td>Quiero hacer pipí.</td> <td><input type="text" placeholder="Ej: infantil" class="form-control respuestas input-sm" id="rA6" style="width: 250px;"></td> </tr>',
@@ -50,9 +50,9 @@
       for(var i=1; i<7; i++){
           if( $('#rA'+i).val().toLowerCase().replace(/ |\.| /gi, "") == resp[i-1] ){
             notaFinalP1++;
-            $('#rA'+i).css("background-color", "#05D576");
+            $('#rA'+i).addClass('b');
           }else{
-            $('#rA'+i).css("background-color", "#D50545");
+            $('#rA'+i).addClass('m');
           }
       }
     }
@@ -64,9 +64,9 @@
       for(var i=1; i<6; i++){
           if( $('#rD'+i).val().toLowerCase().replace(/ |\.| /gi, "") == resp[i-1] ){
             notaFinalP4++;
-            $('#rD'+i).css("background-color", "#05D576");
+            $('#rD'+i).addClass('b');
           }else{
-            $('#rD'+i).css("background-color", "#D50545");
+            $('#rD'+i).addClass('m');
           }
       }
     }
@@ -103,15 +103,15 @@
           if( $('#calificacion'+i).val() !='' ){
             if( $('#calificacion'+i).val()<=punt[i-1] && $('#calificacion'+i).val()>=0 ){
               c++;
-              $('#calificacion'+i).css("background-color", "#05D576");
+              $('#calificacion'+i).addClass('b');
             }else{
               alert('La calificación no es valida, verifique que el puntaje ingresado no exceda los '+punt[i-1]+' puntos.');
               $('#calificacion'+i).focus();
-              $('#calificacion'+i).css("background-color", "#D50545");
+              $('#calificacion'+i).addClass('m');
             }
           }else{
               $('#calificacion'+i).focus();
-              $('#calificacion'+i).css("background-color", "#D50545");
+              $('#calificacion'+i).addClass('m');
           }
         }
         

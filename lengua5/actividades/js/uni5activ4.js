@@ -30,11 +30,11 @@
       for( var i=1; i<4; i++ ){
         if( $('#rA'+i).val().toLowerCase().replace(/ |\.| /gi, "") == resp[i-1] ){
           notaFinalP1++;
-          $('#rA'+i).css('background-color', '#2ED075');
+          $('#rA'+i).addClass('b');
         }else{
-          $('#rA'+i).css('background-color', '#D02E50');
+          $('#rA'+i).addClass('m');
         }
-      }
+      } 
     }
 
     $(document).ready(function() {

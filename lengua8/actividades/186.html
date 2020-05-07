@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 8</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <style>
+        .s{
+            font-size: 2vw;
+        }
+
+        .backnota{
+    background-color: #00e600 !important;
+        -webkit-print-color-adjust: exact;
+}
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Observa con atención las siguientes preguntas y respondelas correctamente.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="total();">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-aplico" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico ">
+                <span class="titulo"><img src="img/icoA.png" alt=""></span>
+                <span class="titulo">Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a">&nbsp;
+                    <span>
+                        <font color="#0166b3"><b>1. </b></font><b> Explica</b>. ¿Qué tipo de párrafo se utiliza en la carta del lector "Ante la discapacidad nos hace falta empatía"?
+                    </span><br><br>
+                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea>
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a">&nbsp;
+                    <span>
+                        <font color="#0166b3"><b>2. </b></font><b>Lee</b> los siguientes párrafos y explica de qué tipo son y por qué.
+                    </span><br><br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div style="background-color: #feecda; border: 5px solid #f58a4b">
+                                <p class="fuente">El ornitorrinco pesa 60 kg; aunque parezca muy pequeño, en verdad pesa mucho. Este animal mide entre 60 cm y 40 cm, la cola mide 30 cm, el pico mide 6 cm de largo y 5 cm de ancho. El ornitorrinco vive generalmente en ríos. Los ojos son pequeños y los oídos carecen de auricular externo; sin embargo, tanto la vista como el oído son excelente. El macho tiene un espolón en la cara interna de las extremidades posteriores que está conectado con una glándula que secreta una sustancia tóxica que —se supone— utiliza como sistema de defensa.</p>
+                            </div>
+                            <div style="border: 5px solid #f58a4b">
+                                <p class="fuente" style="line-height: 40px">Es un párrafo&emsp;<input class="form-control" style="display:inline; max-width: 100%; width: 200px" type="text" placeholder="Texto">&emsp;porque&emsp;<input class="form-control" style="display:inline; max-width: 100%; width: 600px" type="text" placeholder="Texto">
+                                    <br><input class="form-control" style="display:inline; max-width: 100%; width: 900px" type="text" placeholder="continuación"></p>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div style="background-color: #f4f0f7; border: 5px solid #a065aa">
+                                <p class="fuente">
+                                    <font color="#a979b9"><b>Por un boleto rural gratuito</b></font>
+                                </p>
+                                <p class="fuente">Vivo en el interior de la provincia; soy ama de casa y madre de tres niños. Uno cursa la secundaria; otro, la primaria y el último ingresará el año próximo en el nivel inicial. A través de esta columna, quiero plantear a nuestros legisladores locales mi inquietud sobre la posibilidad de que estudien una norma que ponga en vigencia un boleto gratuito para todos los estudiantes secundarios que hayan terminado sus estudios y desean continuar una carrera a nivel terciario en la ciudad capital. El pedido está relacionado con la situación de muchos de estos estudiantes que, por carecer sus familias de recursos económicos, abandonan sus proyectos. Ojalá que mi anhelo se convierta en realidad en algún momento para beneficiar a todos estos jóvenes del interior tucumano. Y que intente el Estado con este gesto, al menos, equilibrar las diferencias de oportunidades con los alumnos de la capital.</p>
+                                <div align="right">
+                                    <font size="3"><i>Herrera, Silvana Paola (8 de noviembre de 2017). "Por un boleto rural gratuito". La Gaceta. Recuperado de <a href="https://goo.gl/2AJHo5">https://goo.gl/2AJHo5</a></i></font>
+                                </div>
+                            </div>
+                            <div style="border: 5px solid #a065aa">
+                                <p class="fuente" style="line-height: 40px">Es un párrafo&emsp;<input class="form-control" style="display:inline; max-width: 100%; width: 200px" type="text" placeholder="Texto">&emsp;porque&emsp;<input class="form-control" style="display:inline; max-width: 100%; width: 600px" type="text" placeholder="Texto"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a">&nbsp;
+                    <span>
+                        <font color="#0166b3"><b>3. </b></font><b> Escoge</b> uno de los dos tipos de párrafos, argumentativo o expositivo,<b> selecciona</b> un tema y<b> redáctalo</b>.
+                    </span><br><br>
+                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="8" placeholder="Texto"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/actividad186.js"></script>
+    <script>
+    $("#n_pagina").html("203"); //impresion de pagina            
+    $(".btnCalificar").bind("click", function() {
+        CalificacionAbierta();
+    });
+    </script>
+</body>
+
+</html>

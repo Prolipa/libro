@@ -80,10 +80,10 @@
 
             $(".i_imgKg"+i+" img").each(function(){
               if( $(this).hasClass("imgKg"+i) &&  cant[i-1] == 1 ){ /// 1 = cantidad de imgs que debe contener cada destino
-                    $('.i_imgKg'+i).css("background-color", "#1AE79C");
+                    $('.i_imgKg'+i).addClass('b');
                     notaFinalP1++;
                 }else{
-                    $('.i_imgKg'+i).css("background-color", "#E71A4E");
+                    $('.i_imgKg'+i).addClass('m');
                 }
             });
         }

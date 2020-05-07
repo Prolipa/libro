@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lengua y Literatura 4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/hover.css" rel="stylesheet" media="all">
+    <link href="css/magic.css" rel="stylesheet" media="all">
+</head>
+<style type="text/css" media="screen">
+.imaf2 {
+    width: 135px;
+    height: 35px;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+.caja {
+    width: 170px;
+    height: 50px;
+    border: 1px #029b23 solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+}
+
+div:empty::before {
+    color: grey;
+    font-size: 20px;
+}
+
+div[data-placeholder]:not([data-placeholder=""]):empty::before {
+    content: attr(data-placeholder);
+}
+
+.circ {
+    position: absolute;
+    font-size: 1.5vw;
+    border: transparent;
+    background-color: transparent;
+}
+
+.subrayar {
+    border-bottom: solid 5px #00a9ab;
+}
+
+.seleccionCaja {
+    background-color: #1c8a00;
+    color: white;
+}
+
+.encierreCaja {
+    border: 5px solid #1c8a00;
+    color: white;
+    border-radius: 50%;
+}
+
+.drag2 {
+    cursor: move;
+    mix-blend-mode: multiply;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        En la actividad 1 arrastra cada imagen hacia cada casillero que corresponda con su respectiva definición.<br>
+        En la actividad 2 escribe el nombre de los animales en la columna correcta.<br>
+        En la actividad 3 selecciona el nombre de hueso según corresponda.<br>
+        En la actividad 4 dibuja dos actividades que realizas para el cuidado de la salud.<br>
+        En la actividad 5 digita V o F según corresponda.<br>
+        En la actividad 6 encierra el objeto adecuado para observar las estrellas haciendo click sobre cada uno y selecciona el nombre correspondiente de cada uno.<br>
+        En la actividad 7 selecciona el tipo de energía correcto.<br>
+        En la actividad 7.1 observa con atención la pregunta y respondela correctamente.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip hvr-icon-pop" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="fa hvr-icon glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip hvr-icon-pop" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="fa hvr-icon glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip hvr-icon-pop" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="fa hvr-icon glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_4 btnIniciar mytooltip hvr-icon-pop" data-info="Iniciar" style="display: none !important;">
+                        <span class="fa hvr-icon glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip hvr-icon-pop" data-info="Repetir" onclick="location.reload()">
+                        <span class="fa hvr-icon glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip hvr-icon-pop" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="total()">
+                        <span class="fa hvr-icon glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-conexionevaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-conexionevaluacion">
+                <div class="row">
+                    <p class="titulex" style="color: #000000"><b>Evaluación diagnóstica</b></p>
+                </div>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="row" style="overflow-x: auto;">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-xs-12" style="border-bottom: 2px solid #000000 ">
+                            <div class="col-xs-12">
+                                <span class="fuente" style="display: inline-flex; width: 100%">
+                                    Nombres y apellidos:&emsp;<input id="act2num1" class="form-control hvr-grow-shadow" style="font-size: 15px; background-color: transparent; border: transparent; border-bottom: 2px solid #000000; width: 600px" type="text" placeholder="Texto">
+                                </span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-xs-12" style="border-bottom: 2px solid #000000 ">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <div>
+                                    <span class="fuente" style="display: inline-flex; width: 100%">
+                                        Año/Curso:&emsp;<input id="act2num1" class="form-control hvr-grow-shadow" style="font-size: 15px; background-color: transparent; border: transparent; border-bottom: 2px solid #000000; width: 200px" type="text" placeholder="Texto">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <div>
+                                    <span class="fuente" style="display: inline-flex; width: 100%">
+                                        Paralelo:&emsp;<input id="act2num1" class="form-control hvr-grow-shadow" style="font-size: 15px; background-color: transparent; border: transparent; border-bottom: 2px solid #000000; width: 200px" type="text" placeholder="Texto">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div>
+                                    <span class="fuente" style="display: inline-flex; width: 100%">
+                                        Fecha:&emsp;<input id="act2num1" class="form-control hvr-grow-shadow" style="font-size: 15px; background-color: transparent; border: transparent; border-bottom: 2px solid #000000; width: 200px" type="text" placeholder="Texto">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-xs-12" style="border-bottom: 2px solid #000000 ">
+                            <div class="col-xs-12">
+                                <span class="fuente" style="display: inline-flex; width: 100%">
+                                    Institución educativa:&emsp;<input id="act2num1" class="form-control hvr-grow-shadow" style="font-size: 15px; background-color: transparent; border: transparent; border-bottom: 2px solid #000000; width: 600px" type="text" placeholder="Texto">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a" readonly="">&nbsp;
+                    <span>
+                        <font color="#03b9ac"><b>1. </b></font><b>Une</b> la definición con la imagen adecuada
+                    </span><br><br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:auto;" id="pregunta2">
+                            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                <br><br>
+                                <table align="center">
+                                    <tr class="act10class" id="act010Txt1">
+                                    </tr>
+                                    <tr style="height: 20px"></tr>
+                                    <tr class="act10class" id="act010Txt2">
+                                    </tr>
+                                </table>
+                                <br>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                <table class="table-bordered trans" align="center">
+                                    <br><br><br>
+                                    <tr class="act11class" id="act011Txt1">
+                                    </tr>
+                                    <tr class="act11class" id="act011Txt2">
+                                    </tr>
+                                </table>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center;" class="nota-abierta" min="0" max="10" id="pre2a" readonly="">&nbsp;
+                    <span>
+                        <font color="#03b9ac"><b>2. </b></font><b>Observa</b> las siguientes imágenes de animales y <b>escribe</b> sus nombres en la columna correspondiente.
+                    </span><br><br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" align="center">
+                                <img src="img/i3_p19_act8.jpg" style="max-width: 100%">
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <table align="center">
+                                    <tr>
+                                        <td style=" background-color: #B41E8D">
+                                            <p class="fuente2" style=" color: #ffffff"><b>Animal vertebrado</b></p>
+                                        </td>
+                                        <td style=" background-color: #03B9B4">
+                                            <p class="fuente2" style=" color: #ffffff"><b>Animal invertebrado</b></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control text-question hvr-grow" id="act3num1" style="border: 2px solid #68CFF5; text-align: center;" onkeyup="this.value=this.value.toLowerCase()" placeholder="Texto"></td>
+                                        <td><input class="form-control text-question hvr-grow" id="act3num6" style="border: 2px solid #68CFF5; text-align: center;" onkeyup="this.value=this.value.toLowerCase()" placeholder="Texto"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control text-question hvr-grow" id="act3num2" style="border: 2px solid #68CFF5; text-align: center;" onkeyup="this.value=this.value.toLowerCase()" placeholder="Texto"></td>
+                                        <td><input class="form-control text-question hvr-grow" id="act3num7" style="border: 2px solid #68CFF5; text-align: center;" onkeyup="this.value=this.value.toLowerCase()" placeholder="Texto"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control text-question hvr-grow" id="act3num3" style="border: 2px solid #68CFF5; text-align: center;" onkeyup="this.value=this.value.toLowerCase()" placeholder="Texto"></td>
+                                        <td><input class="form-control text-question hvr-grow" id="act3num8" style="border: 2px solid #68CFF5; text-align: center;" onkeyup="this.value=this.value.toLowerCase()" placeholder="Texto"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control text-question hvr-grow" id="act3num4" style="border: 2px solid #68CFF5; text-align: center;" onkeyup="this.value=this.value.toLowerCase()" placeholder="Texto"></td>
+                                        <td><input class="form-control text-question hvr-grow" id="act3num9" style="border: 2px solid #68CFF5; text-align: center;" onkeyup="this.value=this.value.toLowerCase()" placeholder="Texto"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-control text-question hvr-grow" id="act3num5" style="border: 2px solid #68CFF5; text-align: center;" onkeyup="this.value=this.value.toLowerCase()" placeholder="Texto"></td>
+                                        <td><input class="form-control text-question hvr-grow" id="act3num10" style="border: 2px solid #68CFF5; text-align: center;" onkeyup="this.value=this.value.toLowerCase()" placeholder="Texto"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center;" class="nota-abierta" min="0" max="10" id="pre3a" readonly="">&nbsp;
+                    <span>
+                        <font color="#03b9ac"><b>3. </b></font><b>Escribe</b> el nombre del hueso que se señala.
+                    </span><br><br>
+                    <div class="row" style="overflow-x: auto;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div style="height: 690px; position: relative;">
+                                                <img src="img/i4_p19_act8.jpg" style="width: 950px; height: 626px; top: 40px; left: 60px; background-color: transparent; position: absolute;" cols="60" rows="3" placeholder="Texto">
+                                                <div style="top: 50px; left: 760px; position: absolute">
+                                                    <p class="fuente"><select class="hvr-bounce-in random1 imaf2" id="sel0" style="font-size: 15px;"></select></p>
+                                                </div>
+                                                <div style="top: 185px; left: 110px; position: absolute">
+                                                    <p class="fuente"><select class="hvr-bounce-in random1 imaf2" id="sel1" style="font-size: 15px;"></select></p>
+                                                </div>
+                                                <div style="top: 375px; left: 755px; position: absolute">
+                                                    <p class="fuente"><select class="hvr-bounce-in random1 imaf2" id="sel2" style="font-size: 15px;"></select></p>
+                                                </div>
+                                                <div style="top: 505px; left: 120px; position: absolute">
+                                                    <p class="fuente"><select class="hvr-bounce-in random1 imaf2" id="sel3" style="font-size: 15px;"></select></p>
+                                                </div>
+                                                <div style="top: 510px; left: 755px; position: absolute">
+                                                    <p class="fuente"><select class="hvr-bounce-in random1 imaf2" id="sel4" style="font-size: 15px;"></select></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center;" class="nota-abierta" min="0" max="10" id="pre4a" placeholder="0">&nbsp;
+                    <span>
+                        <font color="#03b9ac"><b>4. </b></font><b>Dibuja</b> dos actividades que realizas para el cuidado de la salud.
+                    </span>
+                    <div class="row" style="overflow-x: auto;">
+                        <div class="col-lg-12">
+                            <br>
+                            <div class="my-drawing" style="width: 1050px"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center;" class="nota-abierta" min="0" max="10" id="pre5a" readonly="">&nbsp;
+                    <span>
+                        <font color="#03b9ac"><b>5. </b></font><b>Escribe</b> verdadero <b style="color: #00AEF1">V</b> o falso <b style="color: #00AEF1">F</b>, según corresponda.
+                    </span><br><br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow: auto;">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <br>
+                                <table align="center">
+                                    <tr class="act12class" id="act012Txt1">
+                                    </tr>
+                                    <tr class="act12class" id="act012Txt2">
+                                    </tr>
+                                    <tr class="act12class" id="act012Txt3">
+                                    </tr>
+                                    <tr class="act12class" id="act012Txt4">
+                                    </tr>
+                                    <tr class="act12class" id="act012Txt5">
+                                    </tr>
+                                    <tr class="act12class" id="act012Txt6">
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center;" class="nota-abierta" min="0" max="10" id="pre6a" readonly="">&nbsp;
+                    <span>
+                        <font color="#03b9ac"><b>6. </b></font><b>Observa</b> los siguientes objetos. <b>Escribe</b> sus nombres y <b>encierra</b> el adecuado para observar las estrellas.
+                    </span><br><br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <table class="table table-bordered" align="center" style="text-align: center; overflow-x: auto;">
+                                <tr>
+                                    <td class="act13class" id="act013Txt1">
+                                    </td>
+                                    <td class="act13class" id="act013Txt2">
+                                    </td>
+                                    <td class="act13class" id="act013Txt3">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre7a" readonly="">&nbsp;
+                    <span>
+                        <font color="#0166b3"><b>7. </b></font><b>Completa</b> las oraciones con el tipo de energía a la que corresponda. <b>Ayúdate</b> con las palabras del recuadro.
+                    </span><br><br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="act14class" id="act014Txt1">
+                                </div>
+                                <div class="act14class" id="act014Txt2">
+                                </div>
+                                <div class="act14class" id="act014Txt3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center;" class="nota-abierta" min="0" max="10" id="pre8a" placeholder="0">&nbsp;
+                    <span>
+                        <font color="#0166b3"><b>7.1. </b></font><b>Explica</b> la importancia de la energía eléctrica para la vida.
+                    </span><br><br>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <textarea class="form-control no-redimensionar text-question hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" rows="7" placeholder="Texto"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/actividad8.js"></script>
+    <script src="js/anijs-min.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script type="text/javascript">
+    // var cabecera = 'La conciencia como conocimiento de sí';
+    // var derecha = '<img src="img/TEMA1.png" alt="" class="img-responsive" /></img>';
+    // f_titulos();
+    $("#n_pagina").html('19');
+
+    $(".drag2").draggable({
+        revert: "invalid",
+        zIndex: 5,
+        containment: "#pregunta2",
+        scroll: false,
+    });
+
+    $(".pintar").droppable({
+        classes: {
+            "ui-droppable-active": "ui-state-active", //color azul al arrastrar el elemento
+            "ui-droppable-hover": "ui-state-hover"
+        },
+        drop: function(e, ui) {
+            for (i = 1; i < 5; i++) { //4 elementos
+                var nn = 'c' + i; //obtenemos la clase
+                if ($(ui.draggable).hasClass(nn)) { //comparamos la clase del arrastre
+
+                    if ($(this).hasClass(nn)) { //con la clase del destino q tienen el mismo nombre
+                        resp2.push('ok'); //guardamos ok si esta correcta
+                    } else {
+                        resp2.push('no');
+                    }
+                    console.log(resp2);
+                }
+
+            }
+
+            $(ui.draggable).removeClass("bg_palabra"); //quitamos clase de background
+            ui.draggable.attr("style", "");
+            $(this).append(ui.draggable);
+        }
+    });
+
+    $(document).ready(function() {
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        var imageSize = { width: winHeight, height: winHeight };
+        var watermarkImage = new Image();
+        watermarkImage.src = 'img/i1_p20_act8.jpg';
+        //var watermarkImage2 = new Image();
+        //watermarkImage2.src = 'img/i11_p8_act3.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage,
+                watermarkScale: 0.9, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+
+
+            });
+        s
+    });
+    </script>
+</body>
+
+</html>

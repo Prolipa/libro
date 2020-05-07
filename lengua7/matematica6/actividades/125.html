@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Matemática 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <script src="js/116.js"></script>
+    <!-- copy these lines to your document head: -->
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <!-- end copy -->
+    <style>
+        .fraction {
+    display: inline-block;
+    vertical-align: middle; 
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid black;}
+    .fraction span.bar {display: none;}
+    .paso{
+        width: 80px;
+        background: #f0c22a;
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso2{
+        width: 150px;
+        background: #a8e6b6;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso3{
+        width: 150px;
+        background: #88d7f7;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso4{
+        width: 150px;
+        background: #eeda81;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso5{
+        width: 150px;
+        background: #eaacec;
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso6{
+        width: 150px;
+        background: #81cbee;
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .caja1{
+        width: 20%;
+        text-align: center;
+    }
+    .caja{
+        width: 100%;
+        text-align: center;
+    }
+
+    .correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+        margin: 2px;
+        padding: 5px;
+        border: #8FB435;
+
+        }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700px;
+        margin: 20px;
+        padding: 5px;
+        border: #E76E80;
+        }
+    .imagenes1 img{
+        padding: 5px;
+        max-width: 200px;
+        display: inline-table;
+    }
+    .respuestas{
+        width: 60px;
+        display: inline-table;
+
+    }
+    .respuestas1{
+        width: 60px;
+        display: inline-table;
+
+    }
+    .recta{
+        padding: 5px;
+        display: inline-table;
+        max-width: 200px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee el problema atentamente y responde en los espacios en blanco según los valores presentados
+        <br><span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload(true);">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> /
+                    <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"> / 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag 163
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoE.png" alt="">Prueba Diagnóstica</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <img src="img/pguiada.png" ><br><br>
+                <div class="col-sm-12 text-question">
+                    <span>El profesor de Cultura Física registra la estatura y el peso de los 25 niños de 6.° de EGB de su escuela.<br>
+                    <span style="background:#AFDDEB ">Peso en kilogramos:</span> 28, 26, 30, 29, 35, 31, 29, 34, 32, 31, 31, 31, 26, 28, 30, 31, 26, 34, 31, 28, 28, 31, 32, 26, 27<br>
+                    <span style="background:#FBD2C3 ">Estatura en centímetros:</span> 135, 128, 141, 138, 129, 130, 128, 141, 140, 135, 130, 135, 141, 135, 135, 129, 130,
+                    135, 128, 131, 130, 129, 135, 141, 140<br>
+                    Con estos datos y utilizando Excel, calcula la media, la mediana y la moda de la estatura y del peso
+                    de los niños.</span><br><br>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6 table-responsive">
+                        <img src="img/i10_p163_act1.jpg">
+                    </div>
+                        <div class="col-sm-6 table-responsive">
+                            <img src="img/i11_p163_act1.jpg">
+                    </div>
+                            <div class="col-sm-6 table-responsive">
+                                <img src="img/i12_p163_act1.jpg">
+                    </div>
+                                <div class="col-sm-6 table-responsive">
+                                    <img src="img/i13_p163_act1.jpg">
+                    </div>
+                                </div>
+                                <img src="img/pindividual.png">
+                                <div class="col-sm-12 text-question">
+                                    <p class="text-question"><b>Realiza</b> una encuesta a diez compañeros de otros grados de tu escuela, sobre el número de familiares
+                                        que habitan en sus casas y el número de primos que tienen. <b>Ingresa</b> a Excel y <b>calcula</b> la media, la mediana
+                                        y la moda. <b>Presenta</b> el trabajo a la clase.</p>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6">
+                                        <img src="img/problemas.png">
+                                        <p class="text-question">
+                                            Ramiro dispone del diagrama de barras de los ingresos
+                                            y gastos, en dólares, de su negocio de comida,
+                                            para los seis primeros meses del año. Él necesita
+                                            conocer la media, la mediana y la moda de
+                                            ingresos y gastos.
+                                        </p><br>
+                                        <span class="text-question">
+                                        Ingresos<br>
+                                        Media=
+                                        <input type="text" size="1" style="width:90px;text-align: center;"  class="border-blue respuestas1">
+                                        <input type="hidden" style="color:blue" class="solucion1" value="14167">;
+                                        Mediana=
+                                        <input type="text" size="1" style="width:90px;text-align: center;"  class="border-blue respuestas1">
+                                        <input type="hidden" style="color:blue" class="solucion1" value="15000">;
+                                        Moda=<input type="text" size="1" style="width:90px;text-align: center;"  class="border-blue respuestas1">
+                                        <input type="hidden" style="color:blue" class="solucion1" value="15000">
+                                        <br><br>
+                                        Gastos<br>
+                                        Media=<input type="text" size="1" style="width:90px;text-align: center;"  class="border-blue respuestas1">
+                                        <input type="hidden" style="color:blue" class="solucion1" value="5083">;
+                                        Mediana=<input type="text" size="1" style="width:90px;text-align: center;"  class="border-blue respuestas1">
+                                        <input type="hidden" style="color:blue" class="solucion1" value="5000">;
+                                        Moda=<input type="text" size="1" style="width:90px;text-align: center;"  class="border-blue respuestas1">
+                                        <input type="hidden" style="color:blue" class="solucion1" value="5000">
+                                        <br>
+                                    </span>
+                                    </div>
+                                    <div class="col-sm-6 table-responsive">
+                                        <img src="img/i14_p163_act1.jpg">
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade animated pulse" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="modal_form" class="form-horizontal">
+                                            <div class="form-group ">
+                                                <div class="col-sm-2">
+                                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                                        Debes ingresar tu nombre</div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+                        <script src="js/screenfull.js"></script>
+                        <script src="js/helper.js"></script>
+                        <script src="js/activities.js"></script>
+                        <script src="js/highcharts.js"></script>
+                        <script src="js/exporting.js"></script>
+                        <script src="js/export-data.js"></script>
+                        <script src="js/jquery.min.js"></script>
+                        <script src="js/jquery-ui.js"></script>
+                        <script src="js/bootstrap.min.js"></script>
+                        <script src="js/125.js"></script>
+</body>
+
+</html>

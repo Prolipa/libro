@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.caja-input {
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px #DC4DF3;
+}
+
+.cajapequeña-input {
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px #DC4DF3;
+}
+
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+table.espaciar {
+    border-collapse: separate;
+    border-spacing: 30px 30px;
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.bien {
+    background: #5EBF62;
+}
+
+.mal {
+    background: #F05454;
+}
+
+table.table-bordered {
+    border: 2px solid #00ADED;
+    ;
+    margin-top: 20px;
+}
+
+table.table-bordered>thead>tr>th {
+    border: 2px solid #00ADED;
+    ;
+}
+
+table.table-bordered>tbody>tr>td {
+    border: 2px solid #00ADED;
+    ;
+    vertical-align: middle;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.pintar {
+    border-bottom: 3px solid #283747;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 80px;
+    min-width: 80px;
+    width: 100%;
+    margin-left: 1px;
+}
+
+.c_destinos2 {
+
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 70px;
+    width: 40%;
+    max-width: 90%;
+}
+
+td.numeral {
+    color: #23A638;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 50px;
+    max-width: 100%;
+    margin-left: 1px;
+}
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 80px;
+    min-width: 150px;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Seleccione la letra correcta.<br>
+        2. Selecciona la palabra correcta.<br>
+        3. Dibuja.<br>
+        4. Completa la tabla con las características.<br>
+        5. Responde.<br>
+        6. Responde.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/unidad2.png" style="width:100px"> <span style="color:#C33A99">TEMA 2</span> &nbsp;&nbsp;Ciclo reproductivo de los invertebrados</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 table-responsive">
+                    <img src="img/aplico.jpg" style="width:200px"><br>
+                    <div class="col-xs-12">
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">1. </span><span style="font-size:20px"><b>Indica</b> si las siguientes afirmaciones son verdaderas <span style="color:#00ADED">V</span> o falsas <span style="color:#00ADED">F</span>.<b>&nbsp;&nbsp;( 2 pts.)</b></span>
+                            <div class="col-lg-12">
+                                <center>
+                                    <table style="width:auto;border-collapse:separate;border-spacing:0px 10px">
+                                        <tr style="background:#F1B9E5;">
+                                            <td class="numeral">&nbsp;&nbsp;&nbsp;&nbsp;a)</td>
+                                            <td class="p1ran0"></td>
+                                        </tr>
+                                        <tr style="background:#BCB9F1;">
+                                            <td class="numeral">&nbsp;&nbsp;&nbsp;&nbsp;b)</td>
+                                            <td class="p1ran1"></td>
+                                        </tr>
+                                        <tr style="background:#B9F1DF;">
+                                            <td class="numeral">&nbsp;&nbsp;&nbsp;&nbsp;c)</td>
+                                            <td class="p1ran2"></td>
+                                        </tr>
+                                        <tr style="background:#C6F1B9;">
+                                            <td class="numeral">&nbsp;&nbsp;&nbsp;&nbsp;d)</td>
+                                            <td class="p1ran3"></td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">2. </span><span style="font-size:20px"><b>Relaciona</b> los tipos de reproducción con sus respectivas características.<b>&nbsp;&nbsp;( 2 pts.)</b></span><br><br>
+                            <table style="border-collapse: separate;border-spacing: 20px 20px" id="p2ran">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a" >&nbsp;
+                            <span style="color: #00ADED;font-size:20px">3. </span><span style="font-size:20px"><b>Dibuja</b> el ciclo de vida de animales invertebrados según corresponda.<b>&nbsp;&nbsp;( 2 pts.)</b></span><br><br>
+                            <div><span class="enunciado" style="background:#00ADED;padding:10px"><b>Desarrollo directo</b></span></div>
+                            <div class="my-drawing img-responsive"></div>
+                            <br><br>
+                            <div><span class="enunciado" style="background:#00ADED;padding:10px"><b>Metamorfosis completa</b></span></div>
+                            <div class="my-drawing img-responsive"></div>
+                            <br><br>
+                            <div><span class="enunciado" style="background:#00ADED;padding:10px"><b>Metamorfosis incompleta</b></span></div>
+                            <div class="my-drawing img-responsive"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">4. </span><span style="font-size:20px"><b>Clasifica</b> los siguientes animales según su tipo de reproducción:<b>&nbsp;&nbsp;( 2 pts.)</b><br><br> <b>lombriz de tierra, escarabajo, escorpión, medusa, estrella de mar y abeja</b>.</span>
+                            <center><br>
+                                <table style="width:auto;border-collapse: separate;border-spacing: 0px 0px;">
+                                    <tr>
+                                        <td style="border:solid 2px #96C2C3;background: #8DF0C7" align="center" rowspan="2"><span class="enunciado">Reproducción sexual</span></td>
+                                        <td style="border:solid 2px #96C2C3;background: #F0A88D" align="center" colspan="3"><span class="enunciado">
+                                                <center>Reproducción asexual</center>
+                                            </span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:solid 2px #96C2C3;background: #F0A5CE" align="center"><span class="enunciado">Gemación</span></td>
+                                        <td style="border:solid 2px #96C2C3;background: #A7F0A5" align="center"><span class="enunciado">Regeneración</span></td>
+                                        <td style="border:solid 2px #96C2C3;background: #A5BAF0" align="center"><span class="enunciado">Partenogénesis</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                        <td style="border:solid 2px #96C2C3"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive"><br><br>
+                    <img src="img/evaluo.jpg" style="width:300px">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">5. </span><span style="font-size:20px">¿Describo el ciclo reproductivo de un invertebrado?<b>&nbsp;&nbsp;( 1 pts.)</b></span>
+                            <br>
+                            <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre6a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">6. </span><span style="font-size:20px">¿Diferencio invertebrados según su tipo de reproducción?<b>&nbsp;&nbsp;( 1 pts.)</b></span>
+                            <br>
+                            <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                            Debes ingresar tu nombre</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/react-with-addons.js"></script>
+        <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script type="text/javascript">
+        $("#n_pagina").html('48');
+
+        document.getElementById("pre3a").addEventListener("keypress", () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById("pre3a").addEventListener("keyup", () => {
+            validMaxIngreso(document.getElementById("pre3a"), 2);
+        });
+
+        document.getElementById("pre4a").addEventListener("keypress", () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById("pre4a").addEventListener("keyup", () => {
+            validMaxIngreso(document.getElementById("pre4a"), 2);
+        });
+        document.getElementById("pre5a").addEventListener("keypress", () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById("pre5a").addEventListener("keyup", () => {
+            validMaxIngreso(document.getElementById("pre5a"), 1);
+        });
+        document.getElementById("pre6a").addEventListener("keypress", () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById("pre6a").addEventListener("keyup", () => {
+            validMaxIngreso(document.getElementById("pre6a"), 1);
+        });
+
+        var tpre1 = 0;
+        var tpre2 = 0;
+        var tpre3 = 0;
+        var tpre4 = 0;
+        var tpre5 = 0;
+        var tpre6 = 0;
+
+        var cor = 0;
+        cont = 1,
+            ejer = 1,
+            itemsT = 10,
+            inc = 0,
+            calificacion = 10;
+
+        p1vec = [
+            '<span class="enunciado">&nbsp;&nbsp;&nbsp;&nbsp;La reproducción sexual produce descendientes idénticos a uno de los padres.</span><td style="border-collapse:separate;border-spacing:30px 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="1pre0" style="width:50px;height:50px;border-radius:10px;border:solid 3px #B31E91;text-align:center;font-size:20px;font-weight: bolder;"><option value="var">....</option><option value="v">V</option><option value="f">F</option></select></td></tr></table>',
+            '<span class="enunciado">&nbsp;&nbsp;&nbsp;&nbsp;La partenogénesis es una forma de reproducción asexual.</span><td style="border-collapse:separate;border-spacing:30px 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="1pre1" style="width:50px;height:50px;border-radius:10px;border:solid 3px #B31E91;text-align:center;font-size:20px;font-weight: bolder;"><option value="var">....</option><option value="v">V</option><option value="f">F</option></select></td></tr></table>',
+            '<span class="enunciado">&nbsp;&nbsp;&nbsp;&nbsp;La gemación se produce cuando parte del cuerpo de un individuo se rompe y forma una yema.</span><td style="border-collapse:separate;border-spacing:30px 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="1pre2" style="width:50px;height:50px;border-radius:10px;border:solid 3px #B31E91;text-align:center;font-size:20px;font-weight: bolder;"><option value="var">....</option><option value="v">V</option><option value="f">F</option></select></td></tr></table>',
+            '<span class="enunciado">&nbsp;&nbsp;&nbsp;&nbsp;Todos los invertebrados presentan metamorfosis.</span><td style="border-collapse:separate;border-spacing:30px 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="1pre3" style="width:50px;height:50px;border-radius:10px;border:solid 3px #B31E91;text-align:center;font-size:20px;font-weight: bolder;"><option value="var">....</option><option value="v">V</option><option value="f">F</option></select></td></tr></table>'
+
+        ];
+        p1vec.sort(f_randomico);
+        for (var i = 0; i < p1vec.length; i++) {
+            $('.p1ran' + [i] + '').html(p1vec[i]);
+        }
+
+        function pregunta1() {
+            var core = 0;
+            var p1vec1 = ['f', 'v', 'f', 'f'];
+
+            for (var i = 0; i < p1vec1.length; i++) {
+                if (($("#1pre" + [i] + "").val()) == p1vec1[i]) {
+
+                    $("#1pre" + [i] + "").addClass("bien");
+                    core = core + 1;
+                } else {
+
+                    $("#1pre" + [i] + "").addClass("mal");
+                    core;
+                }
+            }
+
+            tpre1 = ((core / 4) * 2);
+            $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+        }
+
+        p2vec = [
+            '<tr><td><select id="2pre0" style="border:solid 2px #E8A24A;text-align:center;width:200px;height:40px;border-radius:10px;font-size:20px"><option value="var">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--------</option><option value="a">Partenogénesis</option><option value="b">Gemación</option><option value="c">Regeneración</option><option value="d">Reproducción sexual</option></select></td><td style="background: #BEE8E5;padding: 20px"><span class="enunciado">El nuevo individuo se forma a partir de una parte rota de otro.</span></td></tr>',
+            '<tr><td><select id="2pre1" style="border:solid 2px #E8A24A;text-align:center;width:200px;height:40px;border-radius:10px;font-size:20px"><option value="var">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--------</option><option value="a">Partenogénesis</option><option value="b">Gemación</option><option value="c">Regeneración</option><option value="d">Reproducción sexual</option></select></td><td style="background: #E8DDBE;padding: 20px"><span class="enunciado">El nuevo individuo proviene de la fecundación entre dos individuos.</span></td></tr>',
+            '<tr><td><select id="2pre2" style="border:solid 2px #E8A24A;text-align:center;width:200px;height:40px;border-radius:10px;font-size:20px"><option value="var">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--------</option><option value="a">Partenogénesis</option><option value="b">Gemación</option><option value="c">Regeneración</option><option value="d">Reproducción sexual</option></select></td><td style="background: #CAE8BE;padding: 20px"><span class="enunciado">El nuevo individuo proviene de un huevo no fecundado.</span></td></tr>',
+            '<tr><td><select id="2pre3" style="border:solid 2px #E8A24A;text-align:center;width:200px;height:40px;border-radius:10px;font-size:20px"><option value="var">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--------</option><option value="a">Partenogénesis</option><option value="b">Gemación</option><option value="c">Regeneración</option><option value="d">Reproducción sexual</option></select></td><td style="background: #E3BEE8;padding: 20px"><span class="enunciado">Se forma una yema en la superficie del cuerpo del organismo y cuando se separa se forma el nuevo individuo.</span></td></tr>'
+
+        ];
+        p2vec.sort(f_randomico);
+        $('#p2ran').html(p2vec);
+
+
+        function pregunta2() {
+            var core = 0;
+            var p2vec1 = ['c', 'd', 'a', 'b'];
+
+            for (var i = 0; i < p2vec1.length; i++) {
+                if (($("#2pre" + [i] + "").val()) == p2vec1[i]) {
+
+                    $("#2pre" + [i] + "").addClass("bien");
+                    core = core + 1;
+                } else {
+
+                    $("#2pre" + [i] + "").addClass("mal");
+                    core;
+                }
+            }
+
+            tpre2 = ((core / 4) * 2);
+            $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+        }
+
+        function pregunta3() {
+            var pre3 = document.getElementById("pre3a").value;
+            tpre3 = pre3;
+            $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+        }
+
+        function pregunta4() {
+            var pre4 = document.getElementById("pre4a").value;
+            tpre4 = pre4;
+            $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+        }
+
+        function pregunta5() {
+            var pre5 = document.getElementById("pre5a").value;
+            tpre5 = pre5;
+            $("#pre5a").val(parseFloat(tpre5).toFixed(2));
+        }
+
+        function pregunta6() {
+            var pre6 = document.getElementById("pre6a").value;
+            tpre6 = pre6;
+            $("#pre6a").val(parseFloat(tpre6).toFixed(2));
+        }
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        $(document).ready(function() {
+            var watermarkImage = new Image();
+            watermarkImage.src = '';
+            var watermarkImage1 = new Image();
+            watermarkImage1.src = '';
+            var watermarkImage2 = new Image();
+            watermarkImage2.src = '';
+            LC.init(
+                document.getElementsByClassName('my-drawing')[0], {
+                    imageURLPrefix: 'imgcanvas',
+                    watermarkImage: watermarkImage,
+                    watermarkScale: 2 // you can scale it
+
+
+                });
+            LC.init(
+                document.getElementsByClassName('my-drawing')[1], {
+                    imageURLPrefix: 'imgcanvas',
+                    watermarkImage: watermarkImage1,
+                    watermarkScale: 2 // you can scale it
+
+
+                });
+            LC.init(
+                document.getElementsByClassName('my-drawing')[2], {
+                    imageURLPrefix: 'imgcanvas',
+                    watermarkImage: watermarkImage2,
+                    watermarkScale: 2 // you can scale it
+
+
+                });
+        });
+
+
+        // #region Calculo Nota Final
+        function NotaFinal() {
+            var pre3 = document.getElementById("pre3a").value;
+            if (pre3 == "") {
+                alert("Pregunta 3: Califique la pregunta");
+            } else {
+                var pre4 = document.getElementById("pre4a").value;
+                if (pre4 == "") {
+                    alert("Pregunta 4: Califique la pregunta");
+                } else {
+                    var pre5 = document.getElementById("pre5a").value;
+                    if (pre5 == "") {
+                        alert("Pregunta 5: Califique la pregunta");
+                    } else {
+                        var pre6 = document.getElementById("pre6a").value;
+                        if (pre6 == "") {
+                            alert("Pregunta 6: Califique la pregunta");
+                        } else {
+                            pregunta1();
+                            pregunta2();
+                            pregunta3();
+                            pregunta4();
+                            pregunta5();
+                            pregunta6();
+                            cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4) + parseFloat(tpre5) + parseFloat(tpre6);
+                            Calculo_nota();
+                            $("input").attr('disabled', 'disabled');
+                        }
+                    }
+                }
+            }
+        }
+        </script>
+</body>
+
+</html>

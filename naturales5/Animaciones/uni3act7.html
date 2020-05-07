@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/lengu2.css" rel="stylesheet">
+</head>
+<style>
+    .verde{
+    color:#328D25;
+    font-weight: bold;
+}
+.morado{
+    color:#454FB2;
+    font-weight: bold;
+}
+.naranja{
+    color:#F07017;
+    font-weight:bold;
+}
+    
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Para mostrar los contenidos de manera secuencial pulsa sobre <span class="glyphicon glyphicon-play help-ico biniciar" aria-hidden="true"></span><br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_4 btnIniciar mytooltip" data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip display-none" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota display-none">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-comprendo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-comprendo" style="background:#5EA7A8">
+                <span class="titulo">Comprendo para saber</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--texto de ayuda de la actividad-->
+                <!--pregunats de la actividad-->
+                <div class="col-xs-12">
+                    <div class="fondo">
+                        <div class="row anim">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <img src="img/i1_p98_act1.jpg" class="anim" style="max-width: 40%; float: right">
+                                <p class="fuente anim">El Ecuador es un país intercultural y pluricultural, de creencias ancestrales que son transmitidas de generación en generación. Se caracteriza por su manera particular y diferente en el diagnóstico y tratamiento de las enfermedades, así como su amplia variedad de plantas medicinales. La <span class="verde">medicina tradicional</span> andina es el conjunto de <span class="verde">conocimientos</span> de <span class="verde">medicina</span> que poseen los pueblos ancestrales de los Andes, desde Colombia hasta Chile, y las prácticas de sanación que practican.</p>
+                                <p class="fuente anim">La medicina tradicional en el Ecuador tiene raíces históricas que se remontan diez mil años en el tiempo. Indios, mestizos, montuvios, campesinos, y otros grupos han encontrado en esta medicina una alternativa menos costosa y de fácil acceso.</p>
+                                <img src="img/i2_p98_act1.jpg" class="anim" style="max-width: 40%; float: right">
+                                <p class="fuente anim">La medicina tradicional andina basa la salud en el equilibrio y el animismo del mundo. Su metodología parte de explicar el sentido integral de la vida, basa su intervención en la restitución del equilibrio con rituales y plantas medicinales.</p>
+                                <p class="fuente anim">Para los indígenas, la vida se basa en el equilibrio y armonía de todos los elementos de la naturaleza, bióticos y abióticos. Una persona está sana cuando se encuentra en equilibrio y armonía con el resto de la naturaleza, y enferma, cuando se rompe ese equilibrio.</p>
+                                <p class="fuente anim">La visión indígena también incluye a los antepasados, que nos protegen, y a espíritus y energías, que influyen en nuestras vidas.</p>
+                                <p class="fuente anim">La medicina tradicional andina busca alejar a los malos espíritus y atraer energías positivas para recuperar el equilibrio y la armonía que el paciente necesita tener con el resto de los seres vivos y con el medio que lo rodea.</p>
+                                <p class="fuente anim naranja" style="font-size:24px">Funcionamiento de la medicina tradicional andina</p>
+                                <img src="img/i1_p99_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <p class="fuente anim">La medicina tradicional busca armonizar el cuerpo físico con el espiritual, emocional y mental. Cura enfermedades partiendo del hecho de que la tierra es la base de la vida y, como la persona necesita equilibrarse con la naturaleza, es importante respetar la tierra, entenderla y apreciarla como a una madre.</p>
+                                <p class="fuente anim">Para ello, los curanderos, llamados <span class="verde">chamanes</span>, yachacs u hombres sabios, utilizan hierbas, plantas, <span class="morado">emplastos</span>, infusiones y variedad de prácticas en las que usan animales, palabras o frases sagradas y objetos simbólicos. Estos curanderos tienen conocimientos profundos de las propiedades medicinales de las plantas.</p>
+                                <p class="fuente anim">Una de las prácticas más conocidas es la limpia, una ceremonia en la que cada elemento utilizado tiene un uso y un poder curativo especiales.</p>
+                                <p class="fuente anim">La limpia varía según la región en que se practique. En Imbabura, por ejemplo, el chamán utiliza un elemento animal que puede ser un huevo o un cuy; un elemento vegetal, que suele ser ortiga y un elemento mineral que generalmente es una piedra. Estos elementos son frotados por todo el cuerpo de la persona para sacarle los malos espíritus y, mientras realiza esto, el chamán fuma un tabaco o toma o escupe licor a fin de que el humo o el alcohol alejen a los espíritus que la limpia saca.</p>
+                                <img src="img/i2_p99_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <p class="fuente anim naranja" style="font-size:24px">Plantas medicinales</p>
+                                <p class="fuente anim">Las plantas poseen muchos poderes curativos, por lo que son utilizadas para curar enfermedades.<br>Entre las plantas medicinales más utilizadas por los chamanes y los yachacs están las siguientes:</p>
+                                <img src="img/i1_p100_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <img src="img/i2_p100_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <img src="img/i3_p100_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <img src="img/i4_p100_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <img src="img/i5_p100_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <img src="img/i6_p100_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <img src="img/i7_p100_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <img src="img/i8_p100_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <img src="img/i9_p100_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <img src="img/i10_p100_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <p class="fuente anim naranja">Descubrimiento de nuevos medicamentos</p>
+                                <p class="fuente anim">Gran parte del conocimiento ancestral acerca de las propiedades curativas que poseen las plantas medicinales y otros componentes de la naturaleza, ha sido validado por los científicos y de ellas han extraído componentes útiles para el desarrollo de nuevos medicamentos.</p>
+                                <img src="img/i1_p101_act1.jpg" class="anim" style="max-width: 30%; float: right">
+                                <p class="fuente anim">Muchos de los remedios empleados actualmente se basan en el conocimiento ancestral acerca de las propiedades curativas de las plantas y algunos de sus componentes.</p>
+                                <p class="fuente anim">Un ejemplo, quizá el más importante, es de BIRM, un medicamento de original natural que actúa sobre el sistema inmunológico fortaleciendo las defensas y que combate el cáncer de próstata y otras enfermedades. Este medicamento está fabricado a partir de la dulcamara, una planta de la Amazonía ecuatoriana.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script>
+        $("#n_pagina").html("98"); //impresion de pagina
+        </script>
+</body>
+
+</html>

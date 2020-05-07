@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+
+.bien {
+    background: #90D961;
+}
+
+.mal {
+    background: #F25F5F;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.subrayar {
+    border-bottom: solid 5px #080808;
+}
+
+input.caracter {
+    width: 40px;
+    height: 40px;
+    border: solid 2px #F07017;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.colorazul {
+    background: blue;
+}
+
+.colorrojo {
+    background: red;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Selecciona la palabra correcta.<br>
+        2. Selecciona la palabra correcta.<br>
+        3. Escribe en la tabla.<br>
+        4. Responde.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro" style="background:#ADECEC">
+                <img src="img/unidad3.png" style="width:270px"> <span class="titulo"><span style="color:#000300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMA 2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;El sistema digestivo.</span></span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 table-responsive"><br>
+                    <img src="img/aplico.jpg" style="width:150px">
+                    <div class="col-lg-12">
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a" readonly="">&nbsp;
+                        <span class="enunciado" style="color: #00ADED;">1. </span><span class="enunciado"><b>Relaciona</b> los órganos y sus funciones..&nbsp;&nbsp;<b>( 3 pts.)</b></span><br>
+                        <div class="col-lg-12">
+                            <center>
+                                <table style="border-collapse:separate;border-spacing: 40px 10px" id="p1ran">
+                                </table>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a" readonly="">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">2. </span><span class="enunciado"><b>Completa</b> las siguientes frases.&nbsp;&nbsp;<b>( 3 pts.)</b></span><br>
+                    <div class="col-lg-12"><br>
+                        <center>
+                            <table style="border-collapse:separate;border-spacing: 30px 5px;width:100%" id="p2ran">
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">3. </span><span class="enunciado"><b>Escoge</b> dos de las enfermedades expuestas y señala sus causas y medidas de prevención.&nbsp;&nbsp;<b>( 2 pts.)</b></span><br>
+                    <div class="col-lg-12"><br>
+                        <center>
+                            <table style="border-collapse:separate;border-spacing: 0px 0px;width:100%">
+                                <tr>
+                                    <td style="background:#129E01;width:33%;height:20%;padding:10px;text-align:center;">
+                                        <div style="font-weight:bold;font-size:20px;text-align:center;color:white">Enfermedad</div>
+                                    </td>
+                                    <td style="background:#0177FB;width:33%;height:20%;padding:10px;text-align:center;">
+                                        <div style="font-weight:bold;font-size:20px;text-align:center;color:white">Causa</div>
+                                    </td>
+                                    <td style="background:#FB7E01;width:33%;height:20%;padding:10px;text-align:center;">
+                                        <div style="font-weight:bold;font-size:20px;text-align:center;color:white">Prevención</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:33%;height:20%;text-align:center;border-radius:20px">
+                                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea>
+                                    </td>
+                                    <td style="width:33%;height:20%;text-align:center;border-radius:20px">
+                                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea>
+                                    </td>
+                                    <td style="width:33%;height:20%;text-align:center;border-radius:20px">
+                                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:33%;height:20%;text-align:center;border-radius:20px">
+                                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea>
+                                    </td>
+                                    <td style="width:33%;height:20%;text-align:center;border-radius:20px">
+                                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea>
+                                    </td>
+                                    <td style="width:33%;height:20%;text-align:center;border-radius:20px">
+                                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive"><br>
+                    <img src="img/evaluo.jpg" style="width:300px"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">4. </span><span class="enunciado"><b>Responde:</b>&nbsp;&nbsp;<b>( 2 pts.)</b></span><br>
+                    <div class="col-lg-12">
+                        <span class="enunciado">¿Describo la estructura y función del sistema digestivo?</span><br>
+                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="4" placeholder="Texto"></textarea><br>
+                        <span class="enunciado">¿Promuevo el cuidado del sistema digestivo?</span><br>
+                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script type="text/javascript">
+    $("#n_pagina").html('83');
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+    var tpre4 = 0;
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+
+    document.getElementById("pre3a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre3a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre3a"), 2);
+    });
+
+    document.getElementById("pre4a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre4a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre4a"), 2);
+    });
+
+
+    p1vec = [
+
+        '<tr><td><select id="p1var0" style="width:200px;text-align-last:center;font-size:20px;padding:10px;border:solid 2px #8257A2;border-radius:6px"><option value=""></option><option value="1">Faringe</option><option value="2">Estómago</option><option value="3">Hígado</option><option value="4">Intestino delgado</option><option value="5">Intestino grueso</option></select></td><td style="background:#FCD5BC;padding:10px;border:solid 2px #F2A06B;border-radius:6px"><span class="enunciado">Degrada las proteínas del bolo alimenticio.</span></td></tr>',
+
+        '<tr><td><select id="p1var1" style="width:200px;text-align-last:center;font-size:20px;padding:10px;border:solid 2px #8257A2;border-radius:6px"><option value=""></option><option value="1">Faringe</option><option value="2">Estómago</option><option value="3">Hígado</option><option value="4">Intestino delgado</option><option value="5">Intestino grueso</option></select></td><td style="background:#FCD5BC;padding:10px;border:solid 2px #F2A06B;border-radius:6px"><span class="enunciado">Reabsorbe el agua.</span></td></tr>',
+
+        '<tr><td><select id="p1var2" style="width:200px;text-align-last:center;font-size:20px;padding:10px;border:solid 2px #8257A2;border-radius:6px"><option value=""></option><option value="1">Faringe</option><option value="2">Estómago</option><option value="3">Hígado</option><option value="4">Intestino delgado</option><option value="5">Intestino grueso</option></select></td><td style="background:#FCD5BC;padding:10px;border:solid 2px #F2A06B;border-radius:6px"><span class="enunciado">Degrada las proteínas y carbohidratos.</span></td></tr>',
+
+        '<tr><td><select id="p1var3" style="width:200px;text-align-last:center;font-size:20px;padding:10px;border:solid 2px #8257A2;border-radius:6px"><option value=""></option><option value="1">Faringe</option><option value="2">Estómago</option><option value="3">Hígado</option><option value="4">Intestino delgado</option><option value="5">Intestino grueso</option></select></td><td style="background:#FCD5BC;padding:10px;border:solid 2px #F2A06B;border-radius:6px"><span class="enunciado">Lleva el bolo alimenticio hacia el esófago.</span></td></tr>',
+
+        '<tr><td><select id="p1var4" style="width:200px;text-align-last:center;font-size:20px;padding:10px;border:solid 2px #8257A2;border-radius:6px"><option value=""></option><option value="1">Faringe</option><option value="2">Estómago</option><option value="3">Hígado</option><option value="4">Intestino delgado</option><option value="5">Intestino grueso</option></select></td><td style="background:#FCD5BC;padding:10px;border:solid 2px #F2A06B;border-radius:6px"><span class="enunciado">Secreta las bilis.</span></td></tr>'
+    ];
+    p1vec.sort(f_randomico);
+    $('#p1ran').html(p1vec);
+
+
+
+    function pregunta1() {
+        var core = 0;
+        var p1var1 = ['2', '5', '4', '1', '3'];
+
+        for (var i = 0; i < p1var1.length; i++) {
+            if (($("#p1var" + [i] + "").val()) == p1var1[i]) {
+
+                $("#p1var" + [i] + "").addClass("bien");
+                core = core + 1;
+            } else {
+
+                $("#p1var" + [i] + "").addClass("mal");
+                core;
+            }
+        }
+
+        tpre1 = ((core / 5) * 3);
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+
+    // random pregutna 1 
+    p2vec = [
+        '<tr><td><div style="font-size:20px;padding:10px;background:#EBC2B2"> El sistema digestivo está formado por: <select id="p2var0" style="width:200px;text-align-last:center;font-size:20px;padding:3px;border:solid 1px #36971C;border-radius:6px"><option value=""></option><option value="1">tubo digestivo</option><option value="2">glándulas anexas</option><option value="3">saliva</option><option value="4">los jugos gástricos</option><option value="5">intestino grueso </option><option value="6">intestino delgado </option></select> y <select id="p2var1" style="width:200px;text-align-last:center;font-size:20px;padding:3px;border:solid 1px #36971C;border-radius:6px"><option value=""></option><option value="1">tubo digestivo</option><option value="2">glándulas anexas</option><option value="3">saliva</option><option value="4">los jugos gástricos</option><option value="5">intestino grueso </option><option value="6">intestino delgado </option></select></div></td></tr>',
+        '<tr><td><div style="font-size:20px;padding:10px;background:#F4EA96"> El alimento disuelto, mezclado con la <select id="p2var2" style="width:200px;text-align-last:center;font-size:20px;padding:3px;border:solid 1px #36971C;border-radius:6px"><option value=""></option><option value="1">tubo digestivo</option><option value="2">glándulas anexas</option><option value="3">saliva</option><option value="4">los jugos gástricos</option><option value="5">intestino grueso </option><option value="6">intestino delgado </option></select> se conoce como bolo alimenticio.</div></td></tr>',
+
+        '<tr><td><div style="font-size:20px;padding:10px;background:#C4F496"> La mezcla entre el bolo alimenticio y <select id="p2var3" style="width:200px;text-align-last:center;font-size:20px;padding:3px;border:solid 1px #36971C;border-radius:6px"><option value=""></option><option value="1">tubo digestivo</option><option value="2">glándulas anexas</option><option value="3">saliva</option><option value="4">los jugos gástricos</option><option value="5">intestino grueso </option><option value="6">intestino delgado </option></select> se conoce como quimo.</div></td></tr>',
+
+        '<tr><td><div style="font-size:20px;padding:10px;background:#96F4DA"> El <select id="p2var4" style="width:200px;text-align-last:center;font-size:20px;padding:3px;border:solid 1px #36971C;border-radius:6px"><option value=""></option><option value="1">tubo digestivo</option><option value="2">glándulas anexas</option><option value="3">saliva</option><option value="4">los jugos gástricos</option><option value="5">intestino grueso </option><option value="6">intestino delgado </option></select> absorbe el agua y expulsa los desechos de la digestión.</div></td></tr>',
+
+        '<tr><td><div style="font-size:20px;padding:10px;background:#ECAFF9"> El hígado y el páncreas secretan sustancias al <select id="p2var5" style="width:200px;text-align-last:center;font-size:20px;padding:3px;border:solid 1px #36971C;border-radius:6px"><option value=""></option><option value="1">tubo digestivo</option><option value="2">glándulas anexas</option><option value="3">saliva</option><option value="4">los jugos gástricos</option><option value="5">intestino grueso </option><option value="6">intestino delgado </option></select></div></td></tr>'
+    ]
+    p2vec.sort(f_randomico);
+    $('#p2ran').html(p2vec);
+
+    // la variable p1ran0 va dentro de una clase
+
+
+    function pregunta2() {
+        var core = 0;
+
+
+        if (($("#p2var0").val()) == '1' || ($("#p2var0").val()) == '2') {
+
+            $("#p2var0").addClass("bien");
+            core = core + 1;
+        } else {
+
+            $("#p2avar0").addClass("mal");
+            core;
+        }
+        if (($("#p2var1").val()) == '1' || ($("#p2var1").val()) == '2') {
+
+            $("#p2var1").addClass("bien");
+            core = core + 1;
+        } else {
+
+            $("#p2var1").addClass("mal");
+            core;
+        }
+        if (($("#p2var2").val()) == '3') {
+
+            $("#p2var2").addClass("bien");
+            core = core + 1;
+        } else {
+
+            $("#p2var2").addClass("mal");
+            core;
+        }
+        if (($("#p2var3").val()) == '4') {
+
+            $("#p2var3").addClass("bien");
+            core = core + 1;
+        } else {
+
+            $("#p2var3").addClass("mal");
+            core;
+        }
+        if (($("#p2var4").val()) == '5') {
+
+            $("#p2var4").addClass("bien");
+            core = core + 1;
+        } else {
+
+            $("#p2var4").addClass("mal");
+            core;
+        }
+        if (($("#p2var5").val()) == '6') {
+
+            $("#p2var5").addClass("bien");
+            core = core + 1;
+        } else {
+
+            $("#p2var5").addClass("mal");
+            core;
+        }
+
+
+
+        tpre2 = ((core / 5) * 2.5);
+        $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    }
+
+    function pregunta3() {
+        var pre3 = document.getElementById("pre3a").value;
+        tpre3 = pre3;
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+    }
+
+    function pregunta4() {
+        var pre4 = document.getElementById("pre4a").value;
+        tpre4 = pre4;
+        $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+    }
+
+
+
+
+    // #region Calculo Nota Final
+    function NotaFinal() {
+        var pre3 = document.getElementById("pre3a").value;
+        if (pre3 == "") {
+            alert("Pregunta 3: Califique la pregunta");
+        } else {
+            var pre4 = document.getElementById("pre4a").value;
+            if (pre4 == "") {
+                alert("Pregunta 4: Califique la pregunta");
+            } else {
+                pregunta1();
+                pregunta2();
+                pregunta3();
+                pregunta4();
+                cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4);
+                Calculo_nota();
+                $("input").attr('disabled', 'disabled');
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>

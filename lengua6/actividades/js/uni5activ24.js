@@ -42,9 +42,9 @@
       for( var i=1; i<6; i++ ){
         if( $('#rA'+i).val().toLowerCase().replace(/ |\.| /gi, "") == resp[i-1] ){
           notaFinalP1++;
-          $('#rA'+i).css('background-color', '#05D576');
+          $('#rA'+i).addClass('biene');
         }else{
-          $('#rA'+i).css('background-color', '#D50545');
+          $('#rA'+i).addClass('male');
         }
       }
     }
@@ -56,9 +56,9 @@
       for( var i=1; i<6; i++ ){
         if( $('#rB'+i).val() == resp[i-1] ){
           notaFinalP2++;
-          $('#rB'+i).css('background-color', '#05D576');
+          $('#rB'+i).addClass('biene');
         }else{
-          $('#rB'+i).css('background-color', '#D50545');
+          $('#rB'+i).addClass('male');
         }
       }
     }
@@ -89,13 +89,13 @@
         if( $('#calificacion1').val() !='' ){
           if( $('#calificacion1').val()<=4 && $('#calificacion1').val()>=0 ){
             confirmar();
-            $('#calificacion1').css("background-color", "#05D576");
+            $('#calificacion1').addClass('biene');
           }else{
             alert('La calificación no es valida, verifique que los puntajes ingresados no excedan lo permitido.');
           }
         }else{
             $('#calificacion1').focus();
-            $('#calificacion1').css("background-color", "#D50545");
+            $('#calificacion1').addClass('male');
         }
       });    
 

@@ -1,0 +1,480 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 8</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <link href="css/Comprendo.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.pintarcorrecto {
+
+    background-color: #32a75b;
+    color: white;
+    border: 5px solid #32a75b;
+    border-radius: 10px 10px 10px 10px;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+    color: white;
+    border: 5px solid #F97591;
+    border-radius: 10px 10px 10px 10px;
+
+}
+
+.cajaprincipal {
+    width: 100%;
+    min-height: 400px;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.titulop,
+.tnumero {
+    font-size: 25px;
+    color: #009ad2;
+    font-weight: bolder;
+    padding: 10px;
+
+}
+
+/*.pregunta {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 15px;
+    padding-bottom: 20px;
+
+}
+
+.opciones {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 20px;
+
+}
+*/
+.opciones img {
+    max-height: 300px;
+
+}
+
+.letraAzul,
+ol {
+    color: #005ca4;
+    font-weight: bold;
+
+}
+
+p {
+    color: #000000;
+}
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+
+.bg-pquimestre {
+    background: #009ad2;
+}
+
+.border-pquimestre {
+    border: 1px solid #009ad2;
+}
+
+.border-squimestre {
+    border-color: #009277 !important;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.bg-squimestre {
+    background-color: #009277;
+}
+
+.panel-body {
+    cursor: pointer;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.<br>
+        Hacer click en la respuesta correcta y solo se podra elegir una vez.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li style="display: none;">
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad" style="display: none !important;">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo">Primer Quimestre</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body" align="justify" style="font-size: 20px;">
+                <p class="fuente"><b>Escoge</b> la opción correcta y <b>pinta</b> la letra en la tabla de respuestas.</p>
+                <br>
+                <div class="panel panel-info cajaprincipal">
+                    <div class="panel-heading"><span class="titulop">Pregunta Nº<span class="tnumero">1</span></span></div>
+                    <div class="panel-body">
+                        <div class="pregunta"></div>
+                        <br><br>
+                        <div class="opciones">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="border: 2px dotted #005da8;">
+                                <p class="letraAzul" style="background: #e1e6f4;border-radius: 15px;padding: 10px;"><b>Opciones de respuesta</b></p>
+                                <ol type="A" class="op1">
+                                </ol>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 imag1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script type="text/javascript">
+    var titulos = "pquimestre";
+    f_titulos();
+    $("#txtNota").html("0");
+    $("#n_pagina").html("133");
+
+    var nota = 0,
+        cor = 0,
+        inc = 0,
+        itemsT = 13,
+        calificacion = 10,
+        cont = 0,
+        ejer = 13;
+    var preg = [];
+    var resp = [];
+    var nn1 = 0;
+
+    preg = [
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> el siguiente fragmento y<b> responde</b> las preguntas: </p> <div style="background-color: #fef4e9; border-radius: 10px"> <p class="fuente2" style="color: #f58222; font-size: 25px"><b>Crónicas marcianas</b></p> <p class="fuente">“Tenían en el planeta Marte, a orillas de un mar seco, una casa de columnas de cristal, y todas las mañanas se podía ver a la señora K mientras comía la fruta dorada que brotaba de las paredes de cristal, o mientras limpiaba la casa con puñados de un polvo magnético que recogía la suciedad y enseguida se dispersaba en el viento cálido</p> <p class="fuente">El señor K y la señora K no eran viejos. Tenían la tez clara, un poco parda, de casi todos los marcianos, los ojos amarillos y rasgados, las voces suaves y musicales. En otro tiempo habían pintado cuadros con fuego químico, habían nadado en los canales, cuando corría por ellos el licor verde de las viñas, y habían hablado hasta el amanecer bajo los azules retratos fosforescentes en la sala de las conversaciones.</p> <div align="right"> <font size="3">Fuente: Bradbury, R. (2015). Crónicas marcianas. Barcelona: Planeta. </font> </div> </div><br><br> <p class="fuente">¿De dónde eran el señor y la señora K? ¿Cómo lucían?</p> </div> </div>', 0, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> el siguiente fragmento y<b> responde</b> las preguntas: </p> <div style="background-color: #fef4e9; border-radius: 10px"> <p class="fuente2" style="color: #f58222; font-size: 25px"><b>Crónicas marcianas</b></p> <p class="fuente">“Tenían en el planeta Marte, a orillas de un mar seco, una casa de columnas de cristal, y todas las mañanas se podía ver a la señora K mientras comía la fruta dorada que brotaba de las paredes de cristal, o mientras limpiaba la casa con puñados de un polvo magnético que recogía la suciedad y enseguida se dispersaba en el viento cálido</p> <p class="fuente">El señor K y la señora K no eran viejos. Tenían la tez clara, un poco parda, de casi todos los marcianos, los ojos amarillos y rasgados, las voces suaves y musicales. En otro tiempo habían pintado cuadros con fuego químico, habían nadado en los canales, cuando corría por ellos el licor verde de las viñas, y habían hablado hasta el amanecer bajo los azules retratos fosforescentes en la sala de las conversaciones.</p> <div align="right"> <font size="3">Fuente: Bradbury, R. (2015). Crónicas marcianas. Barcelona: Planeta. </font> </div> </div><br><br> <p class="fuente">¿En qué época o momento se sitúa la narración?</p> </div> </div>', 1, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> el siguiente fragmento y<b> responde</b> las preguntas: </p> <div style="background-color: #fef4e9; border-radius: 10px"> <p class="fuente2" style="color: #f58222; font-size: 25px"><b>Crónicas marcianas</b></p> <p class="fuente">“Tenían en el planeta Marte, a orillas de un mar seco, una casa de columnas de cristal, y todas las mañanas se podía ver a la señora K mientras comía la fruta dorada que brotaba de las paredes de cristal, o mientras limpiaba la casa con puñados de un polvo magnético que recogía la suciedad y enseguida se dispersaba en el viento cálido</p> <p class="fuente">El señor K y la señora K no eran viejos. Tenían la tez clara, un poco parda, de casi todos los marcianos, los ojos amarillos y rasgados, las voces suaves y musicales. En otro tiempo habían pintado cuadros con fuego químico, habían nadado en los canales, cuando corría por ellos el licor verde de las viñas, y habían hablado hasta el amanecer bajo los azules retratos fosforescentes en la sala de las conversaciones.</p> <div align="right"> <font size="3">Fuente: Bradbury, R. (2015). Crónicas marcianas. Barcelona: Planeta. </font> </div> </div><br><br> <p class="fuente">¿Qué tipo de narrador cuenta la historia?</p> </div> </div>', 2, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> el siguiente fragmento y<b> responde</b> las preguntas: </p> <div style="background-color: #fef4e9; border-radius: 10px"> <p class="fuente2" style="color: #f58222; font-size: 25px"><b>Crónicas marcianas</b></p> <p class="fuente">“Tenían en el planeta Marte, a orillas de un mar seco, una casa de columnas de cristal, y todas las mañanas se podía ver a la señora K mientras comía la fruta dorada que brotaba de las paredes de cristal, o mientras limpiaba la casa con puñados de un polvo magnético que recogía la suciedad y enseguida se dispersaba en el viento cálido</p> <p class="fuente">El señor K y la señora K no eran viejos. Tenían la tez clara, un poco parda, de casi todos los marcianos, los ojos amarillos y rasgados, las voces suaves y musicales. En otro tiempo habían pintado cuadros con fuego químico, habían nadado en los canales, cuando corría por ellos el licor verde de las viñas, y habían hablado hasta el amanecer bajo los azules retratos fosforescentes en la sala de las conversaciones.</p> <div align="right"> <font size="3">Fuente: Bradbury, R. (2015). Crónicas marcianas. Barcelona: Planeta. </font> </div> </div><br><br> <p class="fuente">¿A qué parte de la estructura del texto podría corresponder este fragmento?</p> </div> </div>', 3, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Ordena</b> secuencialmente los siguientes fragmentos para reconstruir un relato corto de viajes y aventuras.</p> <div style="background-color: #fef4e9; border-radius: 10px"> <p class="fuente"> <font color="#1eacd5"><b>1)</b></font> “Se sentía como interesado en esta apuesta” </p> <p class="fuente"> <font color="#1eacd5"><b>2)</b></font> “Pero ahora, desde que corría a todo vapor al través de la India, se había verificado un cambio en su ánimo”. </p> <p class="fuente"> <font color="#1eacd5"><b>3)</b></font> “Volvía a sus caprichosas ideas de la juventud, tomaba por lo serio los proyectos de su amo, creía en la realidad de la apuesta, y por consiguiente en la vuelta al mundo y en el máximum de tiempo que no debía excederse”. </p> <p class="fuente"> <font color="#1eacd5"><b>4)</b></font> “Hasta su llegada a Bombay, había creído y podido creer que las cosas no pasarían de aquí”. </p> <div align="right"> <font size="3">Fuente: Verne, J. (2003). La vuelta al mundo en 80 días. <br>Recuperado de <a href="https://goo.gl/x5UxDh">https://goo.gl/x5UxDh</a></font> </div> </div> </div> </div>', 4, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <div style="background-color: #fef4e9; border-radius: 10px"> <p class="fuente"> <font color="#1eacd5"><b>1)</b></font> “Se sentía como interesado en esta apuesta” </p> <p class="fuente"> <font color="#1eacd5"><b>2)</b></font> “Pero ahora, desde que corría a todo vapor al través de la India, se había verificado un cambio en su ánimo”. </p> <p class="fuente"> <font color="#1eacd5"><b>3)</b></font> “Volvía a sus caprichosas ideas de la juventud, tomaba por lo serio los proyectos de su amo, creía en la realidad de la apuesta, y por consiguiente en la vuelta al mundo y en el máximum de tiempo que no debía excederse”. </p> <p class="fuente"> <font color="#1eacd5"><b>4)</b></font> “Hasta su llegada a Bombay, había creído y podido creer que las cosas no pasarían de aquí”. </p> <div align="right"> <font size="3">Fuente: Verne, J. (2003). La vuelta al mundo en 80 días. <br>Recuperado de <a href="https://goo.gl/x5UxDh">https://goo.gl/x5UxDh</a></font> </div> </div><br><br> <p class="fuente"><b>Identifica</b> en el fragmento anterior la trama textual. </p> </div> </div>', 5, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> y<b> analiza</b> los dos siguientes fragmentos de noticias.<b> Responde</b> las preguntas.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f5e8f2; border-radius: 10px"> <p class="fuente2" style="color: #f04b74; font-size: 25px"><b>Bolivia demanda a Chile en la corte de La Haya</b></p> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">Chile sostiene que la corte no tiene competencia para tratar este asunto. Esto lo justifica en el artículo VI del Pacto de Bogotá firmado en 1948. En ese pacto, los países se comprometen a solucionar de forma pacífica sus conflictos regionales, antes de acudir al Consejo Nacional de las Naciones Unidas. </p> <p class="fuente">Sin embargo, en el artículo VI de dicho tratado se establece que estos procedimientos, entre ellos la mediación de la Corte Internacional de Justicia, no se pueden aplicar a asuntos ya zanjados por las partes, o que se encuentren regidos por tratados internacionales previos al Pacto de Bogotá de 1948.</p> <p class="fuente">En ese sentido, el Tratado de Paz de Amistad firmado en 1904 continuaría estando vigente, restándole a la corte competencia para tratar el tema.</p> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">Bolivia apela a un contexto histórico que se remonta a la Guerra del Pacífico. Su argumento es que fue invadida y que el tratado de 1904 no tiene validez. “Discrepo con el término guerra, para mí ha sido una invasión y no una guerra”, afirmó Evo Morales.</p> <p class="fuente">Chile tendría una obligación para negociar, ya que desde 1895 habría estado dispuesto a tratar una salida al mar para Bolivia. En ese sentido, Bolivia enumera distintos momentos en la historia en que esto ha sucedido: como en el Abrazo de Charaña, protagonizado por Augusto Pinochet y Hugo Banzer. </p> <p class="fuente">Bolivia culpa a Chile de no haber cumplido con dicha obligación, por lo que el Estado chileno se ve obligado a cumplir con esas conversaciones de "buena fe"entre naciones.</p> <div align="right"> <font size="3">Adaptado de: Tele13. (2 de mayo de 2015). <br>Los argumentos de Chile y Bolivia ante La Haya. <br>Recuperado de <a href="https://goo.gl/1MfMCZ">https://goo.gl/1MfMCZ</a></font> </div> </div> </div><br><br> <p class="fuente">¿Sobre qué tratan los dos fragmentos?</p> </div> </div>', 6, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> y<b> analiza</b> los dos siguientes fragmentos de noticias.<b> Responde</b> las preguntas.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f5e8f2; border-radius: 10px"> <p class="fuente2" style="color: #f04b74; font-size: 25px"><b>Bolivia demanda a Chile en la corte de La Haya</b></p> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">Chile sostiene que la corte no tiene competencia para tratar este asunto. Esto lo justifica en el artículo VI del Pacto de Bogotá firmado en 1948. En ese pacto, los países se comprometen a solucionar de forma pacífica sus conflictos regionales, antes de acudir al Consejo Nacional de las Naciones Unidas. </p> <p class="fuente">Sin embargo, en el artículo VI de dicho tratado se establece que estos procedimientos, entre ellos la mediación de la Corte Internacional de Justicia, no se pueden aplicar a asuntos ya zanjados por las partes, o que se encuentren regidos por tratados internacionales previos al Pacto de Bogotá de 1948.</p> <p class="fuente">En ese sentido, el Tratado de Paz de Amistad firmado en 1904 continuaría estando vigente, restándole a la corte competencia para tratar el tema.</p> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">Bolivia apela a un contexto histórico que se remonta a la Guerra del Pacífico. Su argumento es que fue invadida y que el tratado de 1904 no tiene validez. “Discrepo con el término guerra, para mí ha sido una invasión y no una guerra”, afirmó Evo Morales.</p> <p class="fuente">Chile tendría una obligación para negociar, ya que desde 1895 habría estado dispuesto a tratar una salida al mar para Bolivia. En ese sentido, Bolivia enumera distintos momentos en la historia en que esto ha sucedido: como en el Abrazo de Charaña, protagonizado por Augusto Pinochet y Hugo Banzer. </p> <p class="fuente">Bolivia culpa a Chile de no haber cumplido con dicha obligación, por lo que el Estado chileno se ve obligado a cumplir con esas conversaciones de "buena fe"entre naciones.</p> <div align="right"> <font size="3">Adaptado de: Tele13. (2 de mayo de 2015). <br>Los argumentos de Chile y Bolivia ante La Haya. <br>Recuperado de <a href="https://goo.gl/1MfMCZ">https://goo.gl/1MfMCZ</a></font> </div> </div> </div><br><br> <p class="fuente">¿Quién debe decidir sobre el conflicto entre los Estados?</p> </div> </div>', 7, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> y<b> analiza</b> los dos siguientes fragmentos de noticias.<b> Responde</b> las preguntas.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f5e8f2; border-radius: 10px"> <p class="fuente2" style="color: #f04b74; font-size: 25px"><b>Bolivia demanda a Chile en la corte de La Haya</b></p> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">Chile sostiene que la corte no tiene competencia para tratar este asunto. Esto lo justifica en el artículo VI del Pacto de Bogotá firmado en 1948. En ese pacto, los países se comprometen a solucionar de forma pacífica sus conflictos regionales, antes de acudir al Consejo Nacional de las Naciones Unidas. </p> <p class="fuente">Sin embargo, en el artículo VI de dicho tratado se establece que estos procedimientos, entre ellos la mediación de la Corte Internacional de Justicia, no se pueden aplicar a asuntos ya zanjados por las partes, o que se encuentren regidos por tratados internacionales previos al Pacto de Bogotá de 1948.</p> <p class="fuente">En ese sentido, el Tratado de Paz de Amistad firmado en 1904 continuaría estando vigente, restándole a la corte competencia para tratar el tema.</p> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">Bolivia apela a un contexto histórico que se remonta a la Guerra del Pacífico. Su argumento es que fue invadida y que el tratado de 1904 no tiene validez. “Discrepo con el término guerra, para mí ha sido una invasión y no una guerra”, afirmó Evo Morales.</p> <p class="fuente">Chile tendría una obligación para negociar, ya que desde 1895 habría estado dispuesto a tratar una salida al mar para Bolivia. En ese sentido, Bolivia enumera distintos momentos en la historia en que esto ha sucedido: como en el Abrazo de Charaña, protagonizado por Augusto Pinochet y Hugo Banzer. </p> <p class="fuente">Bolivia culpa a Chile de no haber cumplido con dicha obligación, por lo que el Estado chileno se ve obligado a cumplir con esas conversaciones de "buena fe"entre naciones.</p> <div align="right"> <font size="3">Adaptado de: Tele13. (2 de mayo de 2015). <br>Los argumentos de Chile y Bolivia ante La Haya. <br>Recuperado de <a href="https://goo.gl/1MfMCZ">https://goo.gl/1MfMCZ</a></font> </div> </div> </div><br><br> <p class="fuente">¿Cuál es el argumento central de Chile?</p> </div> </div>', 8, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> y<b> analiza</b> los dos siguientes fragmentos de noticias.<b> Responde</b> las preguntas.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f5e8f2; border-radius: 10px"> <p class="fuente2" style="color: #f04b74; font-size: 25px"><b>Bolivia demanda a Chile en la corte de La Haya</b></p> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">Chile sostiene que la corte no tiene competencia para tratar este asunto. Esto lo justifica en el artículo VI del Pacto de Bogotá firmado en 1948. En ese pacto, los países se comprometen a solucionar de forma pacífica sus conflictos regionales, antes de acudir al Consejo Nacional de las Naciones Unidas. </p> <p class="fuente">Sin embargo, en el artículo VI de dicho tratado se establece que estos procedimientos, entre ellos la mediación de la Corte Internacional de Justicia, no se pueden aplicar a asuntos ya zanjados por las partes, o que se encuentren regidos por tratados internacionales previos al Pacto de Bogotá de 1948.</p> <p class="fuente">En ese sentido, el Tratado de Paz de Amistad firmado en 1904 continuaría estando vigente, restándole a la corte competencia para tratar el tema.</p> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">Bolivia apela a un contexto histórico que se remonta a la Guerra del Pacífico. Su argumento es que fue invadida y que el tratado de 1904 no tiene validez. “Discrepo con el término guerra, para mí ha sido una invasión y no una guerra”, afirmó Evo Morales.</p> <p class="fuente">Chile tendría una obligación para negociar, ya que desde 1895 habría estado dispuesto a tratar una salida al mar para Bolivia. En ese sentido, Bolivia enumera distintos momentos en la historia en que esto ha sucedido: como en el Abrazo de Charaña, protagonizado por Augusto Pinochet y Hugo Banzer. </p> <p class="fuente">Bolivia culpa a Chile de no haber cumplido con dicha obligación, por lo que el Estado chileno se ve obligado a cumplir con esas conversaciones de "buena fe"entre naciones.</p> <div align="right"> <font size="3">Adaptado de: Tele13. (2 de mayo de 2015). <br>Los argumentos de Chile y Bolivia ante La Haya. <br>Recuperado de <a href="https://goo.gl/1MfMCZ">https://goo.gl/1MfMCZ</a></font> </div> </div> </div><br><br> <p class="fuente">¿Cuál es el argumento central de Bolivia?</p> </div> </div>', 9, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> y<b> analiza</b> los dos siguientes fragmentos de noticias.<b> Responde</b> las preguntas.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f5e8f2; border-radius: 10px"> <p class="fuente2" style="color: #f04b74; font-size: 25px"><b>Bolivia demanda a Chile en la corte de La Haya</b></p> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">Chile sostiene que la corte no tiene competencia para tratar este asunto. Esto lo justifica en el artículo VI del Pacto de Bogotá firmado en 1948. En ese pacto, los países se comprometen a solucionar de forma pacífica sus conflictos regionales, antes de acudir al Consejo Nacional de las Naciones Unidas. </p> <p class="fuente">Sin embargo, en el artículo VI de dicho tratado se establece que estos procedimientos, entre ellos la mediación de la Corte Internacional de Justicia, no se pueden aplicar a asuntos ya zanjados por las partes, o que se encuentren regidos por tratados internacionales previos al Pacto de Bogotá de 1948.</p> <p class="fuente">En ese sentido, el Tratado de Paz de Amistad firmado en 1904 continuaría estando vigente, restándole a la corte competencia para tratar el tema.</p> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">Bolivia apela a un contexto histórico que se remonta a la Guerra del Pacífico. Su argumento es que fue invadida y que el tratado de 1904 no tiene validez. “Discrepo con el término guerra, para mí ha sido una invasión y no una guerra”, afirmó Evo Morales.</p> <p class="fuente">Chile tendría una obligación para negociar, ya que desde 1895 habría estado dispuesto a tratar una salida al mar para Bolivia. En ese sentido, Bolivia enumera distintos momentos en la historia en que esto ha sucedido: como en el Abrazo de Charaña, protagonizado por Augusto Pinochet y Hugo Banzer. </p> <p class="fuente">Bolivia culpa a Chile de no haber cumplido con dicha obligación, por lo que el Estado chileno se ve obligado a cumplir con esas conversaciones de "buena fe"entre naciones.</p> <div align="right"> <font size="3">Adaptado de: Tele13. (2 de mayo de 2015). <br>Los argumentos de Chile y Bolivia ante La Haya. <br>Recuperado de <a href="https://goo.gl/1MfMCZ">https://goo.gl/1MfMCZ</a></font> </div> </div> </div><br><br> <p class="fuente">¿En qué pacto o tratado se comprometen los dos países a resolver sus problemas en La Haya?</p> </div> </div>', 10, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Relaciona</b> la trama o la secuencia textual con cada párrafo de la derecha.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <table align="center" class="table table-bordered"> <tr> <td> <p class="fuente"> <font color="#f58345"><b>1)</b></font> <font color="#05aaea"><b> narrativo</b></font> </p> </td> <td> <p class="fuente"> <font color="#b51e8d"><b>a)</b></font> Isaac Hernández hizo vibrar el Conjunto de Artes Escénicas de la Universidad de Guadalajara, durante dos noches seguidas en las que estrenó EXPRESIONES-Triple Bill, gala de ballet en las que artistas de diferentes compañías presentaron coreografías como Adagio Hammerklavier, Dust, Tango, el “Pas de Deux”, del ballet Don Quixote; así como Greatest hits of Shadowland. </p> </td> </tr> <tr> <td> <p class="fuente"> <font color="#f58345"><b>2)</b></font> <font color="#05aaea"><b> expositivo</b></font> </p> </td> <td> <p class="fuente"> <font color="#b51e8d"><b>b)</b></font> El público de todas las edades que se dio cita en la Sala Plácido Domingo del complejo, ovacionaron desde el primer instante al Primer Bailarín del English National Ballet, cuando salió al escenario junto a Fernanda Oliveira, James Forbat, Allison McWhinney, Fabian Reimair y Tamara Rojo. </p> </td> </tr> <tr> <td> <p class="fuente"> <font color="#f58345"><b>3)</b></font> <font color="#05aaea"><b> conversacional</b></font> </p> </td> <td> <p class="fuente"> <font color="#b51e8d"><b>c)</b></font> “Entiendo que todas las artes son cuestión de gustos. Me gustaría crear una conversación alrededor de estos temas. Mi intención es acercar a que la gente tenga su opinión. No entiendo cuándo se empezó a decir que la danza no era un tema profesional, algo de lo que no se pudiera vivir, algo muy elitista, que los hombres no bailan y que sólo es para las niñas. Es tiempo de que esas cosas dejen de ser parte de nuestra mente”, dijo en conferencia en el marco de las presentaciones. </p> <div align="right"> <font size="3">Fuente: Díaz, A. (5 de noviembre de 2017). “La danza no es elitista ni sólo para niñas: Isaac Hernández”. Diario Crónica [versión digital]: <br>Recuperado de <a href="https://goo.gl/4G4Uxi">https://goo.gl/4G4Uxi</a></font> </div> </td> </tr> </table> </div> </div> </div>', 11, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> el siguiente fragmento y<b> responde.</b></p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f1f4fa"> <p class="fuente2" style="color: #f58222; font-size: 25px"><b>La medicina natural</b></p> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente"> <font color="#b4219f"><b>1)</b></font> Medicina natural es un concepto amplio para definir una gran variedad de medicinas complementarias y alternativas. Ha sido usada desde tiempos inmemoriales y se mantiene como una opción en la actualidad. </p> <p class="fuente"> <font color="#b4219f"><b>2)</b></font> La medicina natural abarca la medicina herbaria, suplementos dietéticos, homeopatía, acupuntura, terapia neural, biomagnetismo, digitopuntura, y otras de las muchas medicinas alternativas que existen actualmente. </p> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente"> <font color="#b4219f"><b>3)</b></font> En fin, los caminos de la ciencia crecen a la par con el prestigio de la medicina natural, por lo que es conveniente que tanto los médicos como los pacientes no subestimen las bondades y ventajas que, desde siempre, han ofrecido estos a la hora de tratar problemas de salud. </p> </div> </div><br><br> <p class="fuente"><b>Identifica</b> qué tipo de párrafo es el 1).</p> </div> </div>', 12, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> el siguiente fragmento y<b> responde.</b></p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f1f4fa"> <p class="fuente2" style="color: #f58222; font-size: 25px"><b>La medicina natural</b></p> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente"> <font color="#b4219f"><b>1)</b></font> Medicina natural es un concepto amplio para definir una gran variedad de medicinas complementarias y alternativas. Ha sido usada desde tiempos inmemoriales y se mantiene como una opción en la actualidad. </p> <p class="fuente"> <font color="#b4219f"><b>2)</b></font> La medicina natural abarca la medicina herbaria, suplementos dietéticos, homeopatía, acupuntura, terapia neural, biomagnetismo, digitopuntura, y otras de las muchas medicinas alternativas que existen actualmente. </p> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente"> <font color="#b4219f"><b>3)</b></font> En fin, los caminos de la ciencia crecen a la par con el prestigio de la medicina natural, por lo que es conveniente que tanto los médicos como los pacientes no subestimen las bondades y ventajas que, desde siempre, han ofrecido estos a la hora de tratar problemas de salud. </p> </div> </div><br><br> <p class="fuente"><b>Identifica</b> qué tipo de párrafo es el 3).</p> </div> </div>', 13, ],
+    ];
+
+
+
+    resp = [
+
+        [
+            '<li><p class="fuente no">El señor y la señora K eran de la Tierra. Eran jóvenes, de tez oscura, con ojos verdes y de voces suaves.</p></li>',
+            '<li><p class="fuente no">El señor y la señora K eran de la Tierra. Eran viejos, de tez oscura, con ojos amarillos y de voces fuertes.</p></li>',
+            '<li><p class="fuente no">El señor y la señora K eran de Marte. Eran viejos, de tez clara, con ojos azules y de voces fuertes.</p></li>',
+            '<li><p class="fuente si">El señor y la señora K eran de Marte. Eran jóvenes, de tez clara, con ojos amarillos y de voces suaves.</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">En el pasado histórico</p></li>',
+            '<li><p class="fuente no">En el presente</p></li>',
+            '<li><p class="fuente no">En un pasado ficticio</p></li>',
+            '<li><p class="fuente si">En el futuro</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">Protagonista</p></li>',
+            '<li><p class="fuente no">Personaje presente</p></li>',
+            '<li><p class="fuente no">Testigo y personaje</p></li>',
+            '<li><p class="fuente si">Omnisciente</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">Desarrollo o nudo</p></li>',
+            '<li><p class="fuente no">Acontecimiento intermedio</p></li>',
+            '<li><p class="fuente no">Desenlace o fin</p></li>',
+            '<li><p class="fuente si">Introducción o inicio</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">1, 3, 4, 2</p></li>',
+            '<li><p class="fuente no">3, 2, 1, 4</p></li>',
+            '<li><p class="fuente no">4, 1, 2, 3</p></li>',
+            '<li><p class="fuente si">2, 4, 3, 1</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">Trama descriptiva</p></li>',
+            '<li><p class="fuente no">Trama expositiva</p></li>',
+            '<li><p class="fuente no">Trama publicitaria</p></li>',
+            '<li><p class="fuente si">Trama narrativa</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">El pacto de Bogotá de 1948</p></li>',
+            '<li><p class="fuente no">La guerra del Pacífico de 1904</p></li>',
+            '<li><p class="fuente no">Las funciones de La Haya</p></li>',
+            '<li><p class="fuente si">Una salida al mar para Bolivia</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">Los dos Estados</p></li>',
+            '<li><p class="fuente no">El Estado boliviano</p></li>',
+            '<li><p class="fuente no">El Estado chileno</p></li>',
+            '<li><p class="fuente si">La Corte de La Haya</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">Bolivia fue invadida y está obligada a negociar de “buena fe”</p></li>',
+            '<li><p class="fuente no">Chile y Bolivia son amigos y no deben pelear</p></li>',
+            '<li><p class="fuente no">El problema con Bolivia no se ha resuelto y La Haya debe decidir.</p></li>',
+            '<li><p class="fuente si">El problema con Bolivia ya fue resuelto y La Haya no debe intervenir.</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">El tratado de 1904 es válido y Chile debe negociar una salida. </p></li>',
+            '<li><p class="fuente no">La Haya tiene la obligación de mediar entre los países.</p></li>',
+            '<li><p class="fuente no">Todos los conflictos se resuelven en La Haya.</p></li>',
+            '<li><p class="fuente si">El problema con Chile no se ha resuelto y debe negociar.</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">El Abrazo de Charaña</p></li>',
+            '<li><p class="fuente no">Tratado de Paz de Amistad de 1904</p></li>',
+            '<li><p class="fuente no">Tratado de rendición de la Guerra del Pacífico</p></li>',
+            '<li><p class="fuente si">Pacto de Bogotá de 1948</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">1a, 3b, 2c</p></li>',
+            '<li><p class="fuente no">2c, 3d, 1d</p></li>',
+            '<li><p class="fuente no">3b, 2b, 1c</p></li>',
+            '<li><p class="fuente si">1b, 2a, 3c</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">De ejemplificación</p></li>',
+            '<li><p class="fuente no">De exposición</p></li>',
+            '<li><p class="fuente no">De conclusión</p></li>',
+            '<li><p class="fuente si">De descripción</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">De ampliación</p></li>',
+            '<li><p class="fuente no">De definición</p></li>',
+            '<li><p class="fuente no">De deducción</p></li>',
+            '<li><p class="fuente si">De conclusión</p></li>',
+        ],
+
+    ];
+    preg.sort(f_randomico);
+
+    $(".titulop").hide();
+
+
+    f_iniciar();
+
+
+    function f_iniciar() {
+
+        $(".titulop").show(500);
+        $(".principal").hide(500);
+        nn1 = (preg[cont][1]);
+        console.log(preg);
+        for (i = 0; i < resp.length; i++) {
+
+            resp[i].sort(f_randomico);
+        }
+        console.log(resp[nn1]);
+
+        $(".tnumero").html('').append(cont + 1)
+        $(".pregunta").html('').append(preg[cont][0])
+        $(".imag1").html('').append(preg[cont][2])
+        $(".op1").html('').append(resp[nn1])
+        $(".si").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarcorrecto");
+            cor++;
+            calificar_preg();
+        });
+        $(".no").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarincorrecto");
+            inc++;
+            calificar_preg();
+        });
+
+        function calificar_preg() {
+            cont++;
+            $(this).unbind("click");
+
+            var timer = setTimeout(f_condicion, 1000);
+
+            function f_condicion() {
+                if (cont == itemsT) {
+                    $('.cajaprincipal').html('<table class="table table-bordered" style="text-align:center; font-size: 30px;">' +
+                        '<tr>' +
+                        '<td colspan="2"><b>Tu Calificación es:</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td colspan="2"><b><span class="notaq1"></span>/10</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td><b style="color:  green;">Respuestas Correctas</b></td>' +
+                        '<td><b style="color:  red;">Respuestas Incorrectas</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td>' + cor + '</td>' +
+                        '<td>' + inc + '</td>' +
+                        '</tr>' +
+                        '</table>');
+                }
+                clearTimeout(timer);
+                Calculo_notaQ();
+            }
+
+
+        }
+
+    }
+    </script>
+</body>
+
+</html>

@@ -14,35 +14,34 @@
     <link href="css/custom.css" rel="stylesheet">
     <link href="css/jquery-ui.min.css" rel="stylesheet">
     <style type="text/css">
-    p {
-        font-size: 16px;
-    }
-
-    td {
-        text-align: left;
-        padding: 20px;
-    }
-
-    .mark {
-        width: 90%;
-        height: 100PX;
-        border: none;
-        border-bottom: 1px solid #ccc;
-        background-color: transparent;
-    }
-
-    .img {
-        margin-left: 14px;
-    }
-
-    .heart {
-        padding-right: 10px;
-    }
-
-    .cross {
-        padding-left: 10px;
-    }
-
+        p {
+            font-size: 16px;
+        }
+        
+        td {
+            text-align: left;
+            padding: 20px;
+        }
+        
+        .mark {
+            width: 90%;
+            height: 100PX;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            background-color: transparent;
+        }
+        
+        .img {
+            margin-left: 14px;
+        }
+        
+        .heart {
+            padding-right: 10px;
+        }
+        
+        .cross {
+            padding-left: 10px;
+        }
     </style>
 </head>
 
@@ -124,7 +123,7 @@
                 <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
 
             </div>
-            
+
             <!--preguntas de la actividad-->
             <div class="panel-body">
                 <div class="col-md-12 text-question space">
@@ -132,16 +131,24 @@
                 </div>
                 <div class="text-center">
                     <img class="img drag cir img-responsive" src="img/i1_p40_act47.png" alt="" style="display: inline;">
-                    
+
                     <img class="img drag ra img-responsive" src="img/i3_p40_act47.png" alt="" style="display: inline;">
-                    <img class="img drag cen img-responsive" src="img/i4_p40_act47.png" alt="" style="display: inline;"> 
-                    <img class="img drag circulo img-responsive" src="img/i2_p40_act47.png" alt="" style="display: inline;">                   
+                    <img class="img drag cen img-responsive" src="img/i4_p40_act47.png" alt="" style="display: inline;">
+                    <img class="img drag circulo img-responsive" src="img/i2_p40_act47.png" alt="" style="display: inline;">
                 </div>
                 <div class="col-md-12 text-question">
-                    <div class="col-md-2 space"><div class="col-md-1 mark drop"></div><input class="respuestas text-center" type="hidden" value=""><input class="solucion" type="hidden" value="cir"><span>Circunferencia</span></div><div class="col-md-1"></div>
-                    <div class="col-md-2 space"><div class="col-md-1 mark drop"></div><input class="respuestas text-center" type="hidden" value=""><input class="solucion" type="hidden" value="cc"><span>Círculo</span></div><div class="col-md-1"></div>
-                    <div class="col-md-2 space"><div class="col-md-1 mark drop"></div><input class="respuestas text-center" type="hidden" value=""><input class="solucion" type="hidden" value="ra"><span>Radio</span></div><div class="col-md-1"></div>
-                    <div class="col-md-2 space"><div class="col-md-1 mark drop"></div><input class="respuestas text-center" type="hidden" value=""><input class="solucion" type="hidden" value="cen"><span>Centro</span></div><div class="col-md-1"></div>               
+                    <div class="col-md-2 space">
+                        <div class="col-md-1 mark drop"></div><input class="respuestas text-center" type="hidden" value=""><input class="solucion" type="hidden" value="cir"><span>Circunferencia</span></div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2 space">
+                        <div class="col-md-1 mark drop"></div><input class="respuestas text-center" type="hidden" value=""><input class="solucion" type="hidden" value="cc"><span>Círculo</span></div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2 space">
+                        <div class="col-md-1 mark drop"></div><input class="respuestas text-center" type="hidden" value=""><input class="solucion" type="hidden" value="ra"><span>Radio</span></div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2 space">
+                        <div class="col-md-1 mark drop"></div><input class="respuestas text-center" type="hidden" value=""><input class="solucion" type="hidden" value="cen"><span>Centro</span></div>
+                    <div class="col-md-1"></div>
                 </div>
             </div>
         </div>
@@ -195,52 +202,53 @@
     <script src="js/jquery.animate.css.js"></script>
     <script>
         var titulos = 'aplico';
-    document.body.onload = function() {
-        var html = "";
-        var vals = reorder_array(pregs);
-        $.each(vals, function(index, value) {
-            html += value;
-        })
-        $('#lista').html(html);
-        $(".drag").draggable({
-            revert: 'invalid',
-            helper: 'clone'
-        });
+        f_titulos();
+        document.body.onload = function() {
+            var html = "";
+            var vals = reorder_array(pregs);
+            $.each(vals, function(index, value) {
+                html += value;
+            })
+            $('#lista').html(html);
+            $(".drag").draggable({
+                revert: 'invalid',
+                helper: 'clone'
+            });
 
-        $(".drop").droppable({
-            accept: ".drag",
-            drop: function(event, ui) {
-                $(this).html('');
-                ui.helper.clone().appendTo(this);
-                $.each($(this).children(), function(index, value) {
-                    $(value).attr("style", "");
-                })
-                $.each($(this).parent().children(), function(index, value) {
-                    if ($(value).hasClass("respuestas")) {
-                        var val = ui.draggable.attr('class');
-                        
-                        if (val.indexOf('cc') > -1) {
-                            $(value).val('cc');
-                        }
-                        if (val.indexOf('ra') > -1) {
-                            $(value).val('ra');
-                        }
-                        if (val.indexOf('cen') > -1) {
-                            $(value).val('cen');
-                        }
-                        if (val.indexOf('cir') > -1) {
-                            $(value).val('cir');
-                        }
+            $(".drop").droppable({
+                accept: ".drag",
+                drop: function(event, ui) {
+                    $(this).html('');
+                    ui.helper.clone().appendTo(this);
+                    $.each($(this).children(), function(index, value) {
+                        $(value).attr("style", "");
+                    })
+                    $.each($(this).parent().children(), function(index, value) {
+                        if ($(value).hasClass("respuestas")) {
+                            var val = ui.draggable.attr('class');
 
-                    }
-                })
-            }
-        });
+                            if (val.indexOf('cc') > -1) {
+                                $(value).val('cc');
+                            }
+                            if (val.indexOf('ra') > -1) {
+                                $(value).val('ra');
+                            }
+                            if (val.indexOf('cen') > -1) {
+                                $(value).val('cen');
+                            }
+                            if (val.indexOf('cir') > -1) {
+                                $(value).val('cir');
+                            }
 
-    }
-    var pregs = [
+                        }
+                    })
+                }
+            });
 
-    ];
+        }
+        var pregs = [
+
+        ];
     </script>
 </body>
 

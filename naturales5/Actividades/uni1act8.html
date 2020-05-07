@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.caja-input {
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px #DC4DF3;
+}
+
+.cajapequeña-input {
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px #DC4DF3;
+}
+
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+table.espaciar {
+    border-collapse: separate;
+    border-spacing: 30px 30px;
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.bien {
+    background: #5EBF62;
+}
+
+.mal {
+    background: #F05454;
+}
+
+table.table-bordered {
+    border: 2px solid #00ADED;
+    ;
+    margin-top: 20px;
+}
+
+table.table-bordered>thead>tr>th {
+    border: 2px solid #00ADED;
+    ;
+}
+
+table.table-bordered>tbody>tr>td {
+    border: 2px solid #00ADED;
+    ;
+    vertical-align: middle;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.pintar {
+    border-bottom: 6px solid #283747;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 80px;
+    min-width: 80px;
+    width: 100%;
+    margin-left: 1px;
+}
+
+.c_destinos2 {
+
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 70px;
+    width: 40%;
+    max-width: 90%;
+}
+
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Arrastra y relaciona correctamente.<br>
+        2. Da click para subrayar los enunciados correctos.<br>
+        3. Escribe las palabras de los recuadros.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro" style="background:green">
+                <span class="titulo"><img src="img/unidad1.png" style="width:100px">&nbsp;&nbsp;&nbsp;Evaluación Diagnóstica </span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12">
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">1. </span><span style="font-size:20px"><b>Relaciona</b> los objetos con su denominación según dejen o no pasar la luz.<b>&nbsp;&nbsp;( 3 pts.)</b></span>
+                            <div class="col-lg-12">
+                                <div class="col-sm-12" id="p8div1">
+                                    <div class="col-lg-3 " align="center"><br><br><br><br><br>
+                                        <div class="textos1" style="display: inline-block;"></div>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="table-responsive text-question">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im1"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim11"></div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im2"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim12"></div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop8 p8im3"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p8cim13"></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">2. </span><span style="font-size:20px"><b> Subraya</b> las afirmaciones correctas. <b>&nbsp;&nbsp;( 3 pts.)</b></span>
+                            <center>
+                                <table style="border-collapse: separate;border-spacing: 10px 30px;">
+                                    <tr>
+                                        <td> <span style="color: #00ADED;font-size:20px">a) </span></td>
+                                        <td class="p2ran0"></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <span style="color: #00ADED;font-size:20px">b) </span></td>
+                                        <td class="p2ran1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <span style="color: #00ADED;font-size:20px">c) </span></td>
+                                        <td class="p2ran2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <span style="color: #00ADED;font-size:20px">c) </span></td>
+                                        <td class="p2ran3"></td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">3. </span><span style="font-size:20px"><b> Completa</b> las oraciones con las palabras claves.<b>&nbsp;&nbsp;( 4 pts.)</b></span>
+                            <center>
+                                <table>
+                                    <tr>
+                                        <td rowspan="4"><img src="img/i1_p20_act4.jpg" style="width:300px"></td>
+                                        <td class="p3ran0"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p3ran1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p3ran2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p3ran3"></td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                            Debes ingresar tu nombre</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+            <!--generador de pdf-->
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/react-with-addons.js"></script>
+            <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/Utilitario.js"></script>
+            <script src="js/validacionesExtras.js"></script>
+            <script type="text/javascript">
+            $("#n_pagina").html('18');
+
+            var tpre1 = 0;
+            var tpre2 = 0;
+            var tpre3 = 0;
+
+            var cor = 0;
+            cont = 1,
+                ejer = 1,
+                itemsT = 10,
+                inc = 0,
+                calificacion = 10;
+
+            // pregutna 2
+            var p8pal1 = [
+
+                '<img style="width:200px"class="img-responsive drag8" alt="1" src="img/i4_p20_act3.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>',
+                '<img style="width:200px"class="img-responsive drag8" alt="2" src="img/i5_p20_act3.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>',
+                '<img style="width:200px"class="img-responsive drag8" alt="3" src="img/i6_p20_act3.jpg"  style="display:inline-block; mix-blend-mode:multiply;"><br>'
+
+            ];
+            var p8pal2 = [
+
+                '<img src="img/i1_p20_act3.jpg" style="width:150px" class="img-responsive">',
+                '<img src="img/i2_p20_act3.jpg" style="width:150px" class="img-responsive">',
+                '<img src="img/i3_p20_act3.jpg" style="width:150px" class="img-responsive">'
+            ];
+
+            p8pal1.sort(f_randomico);
+            var p8vec1 = ['2', '3', '1'];
+            var p8aux2 = [];
+            $(".textos1").append(p8pal1);
+            var p8myArray2 = ['0', '1', '2'];
+            var i, j, k;
+            for (i = p8myArray2.length; i; i--) {
+                j = Math.floor(Math.random() * i);
+                k = p8myArray2[i - 1];
+                p8myArray2[i - 1] = p8myArray2[j];
+                p8myArray2[j] = k;
+            }
+            //aleatorio literal 1
+            for (var i = 1; i <= 3; i++) {
+                var c1 = p8myArray2[i - 1];
+                $(".p8cim1" + i).html(p8pal2[c1]);
+                p8aux2.push(p8vec1[c1]);
+
+            };
+            $(".drag8").draggable({
+                revert: "invalid",
+                zIndex: 5,
+                containment: ".p8div1",
+                scroll: false,
+            });
+
+            $(".drop8").droppable({
+                accept: ".drag8",
+                drop: function(e, ui) {
+                    $(ui.draggable).removeClass("drag8");
+                    $(ui.draggable).removeClass("bg_palabra");
+                    ui.draggable.attr("style", "mix-blend-mode:multiply;");
+                    $(this).append(ui.draggable);
+
+                }
+            });
+
+            function pregunta1() {
+                var p8im1 = $('.p8im1 > img').attr('alt');
+                var p8cont1 = 0;
+                if (p8im1 == p8aux2[0]) {
+                    p8cont1++;
+                    $(".p8im1").addClass("bien");
+                } else {
+                    $(".p8im1").addClass("mal");
+                }
+                var p8im2 = $('.p8im2 > img').attr('alt');
+                if (p8im2 == p8aux2[1]) {
+                    p8cont1++;
+                    $(".p8im2").addClass("bien");
+                } else {
+                    $(".p8im2").addClass("mal");
+                }
+                var p8im3 = $('.p8im3 > img').attr('alt');
+                if (p8im3 == p8aux2[2]) {
+                    p8cont1++;
+                    $(".p8im3").addClass("bien");
+                } else {
+                    $(".p8im3").addClass("mal");
+                }
+
+
+                var total = ((p8cont1 / 3) * 3)
+                tpre1 = total;
+                $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+            }
+
+            //final pregurnta 1
+
+            // random pregunta 2 
+            p2vec = [
+                '<div class="2 enca1" style="background: #A1E3AD;padding:5px;width:800px"><span style="font-size:20px">Las plantas se clasifican en fanerógamas y criptógamas.</span></div>',
+                '<div class="2 enca2" style="background: #D2B4DE;padding:5px;width:800px"><span style="font-size:20px">Entre las fanerógamas tenemos plantas con semilla y sin semilla.</span></div>',
+                '<div class="2 enca3" style="background: #FDEBD0;padding:5px;width:800px"><span style="font-size:20px">Las Criptógamas no tienen semilla, se reproducen por esporas, entre ellas están los musgos, helechos, algas, y líquenes.</span></div>',
+                '<div class="2 enca4" style="background: #D6EAF8;padding:5px;width:800px"><span style="font-size:20px">El pino y las habas son plantas sin semillas.</span></div>'
+
+            ];
+            p2vec.sort(f_randomico);
+            for (var i = 0; i < p2vec.length; i++) {
+                $('.p2ran' + [i] + '').html(p2vec[i]);
+            }
+
+            // pintar 
+            $(".2").addClass('hvr-grow-shadow2');
+            $(".2").css('cursor', 'pointer');
+            $(".2").click(function() {
+                if ($(this).hasClass("pintar")) {
+                    $(this).removeClass("pintar");
+                } else {
+                    $(this).addClass("pintar");
+                }
+            });
+
+
+            // validar casillas pintadas
+            function pregunta2() {
+                var nt1 = 0,
+                    nt2 = 0,
+                    nt3 = 0,
+                    nt4 = 0;
+                // pregunats correctas
+
+                if ($('.enca1').hasClass('pintar') == true) {
+                    nt1 = 1;
+                    $('.enca1').addClass('bien');
+                }
+                if ($('.enca3').hasClass('pintar') == true) {
+                    nt2 = 1;
+                    $('.enca3').addClass('bien');
+                }
+                // pregunats inscorrectas
+                if ($('.enca2').hasClass('pintar') == true) {
+                    nt3 = 1;
+                    $('.enca2').addClass('mal');
+                }
+                if ($('.enca4').hasClass('pintar') == true) {
+                    nt4 = 1;
+                    $('.enca4').addClass('mal');
+                }
+                $('.2').off('click');
+                var subtotal = parseFloat(nt1) + parseFloat(nt2) - parseFloat(nt3) - parseFloat(nt4);
+                var pre2a = ((subtotal / 2) * 3);
+
+                if (pre2a < 0) {
+                    pre2a = 0;
+                    tpre2 = pre2a;
+                    $('#pre2a').val(parseFloat(pre2a).toFixed(2));
+
+                } else {
+                    $('#pre2a').val(parseFloat(pre2a).toFixed(2));
+                    tpre2 = pre2a;
+
+
+                }
+
+            }
+            // #endregion
+
+
+
+            //final pregurnta 2
+            p3vec = [
+                '<p><span style="font-size:20px">&nbsp;&nbsp;&nbsp;&nbsp;La zona de unión entre los huesos se conoce como <input id="3var0" class="cajapequeña-input"></span></p>',
+                '<p><span style="font-size:20px">&nbsp;&nbsp;&nbsp;&nbsp;Producir movimiento es una de las funciones de los <input id="3var1" class="cajapequeña-input"></span></p>',
+                '<p><span style="font-size:20px">&nbsp;&nbsp;&nbsp;&nbsp;Los <input id="3var2" class="cajapequeña-input">soportan y protegen al cuerpo.</span></p>',
+                '<p><span style="font-size:20px">&nbsp;&nbsp;&nbsp;&nbsp;Los <input id="3var3" class="cajapequeña-input"> unen los huesos de las articulaciones.</span></p>'
+
+            ];
+            p3vec.sort(f_randomico);
+            for (var i = 0; i < p3vec.length; i++) {
+                $('.p3ran' + [i] + '').html(p3vec[i]);
+            }
+
+            function pregunta3() {
+                var core = 0;
+                var p3var1 = ['articulación', 'músculos', 'huesos', 'ligamentos'];
+
+                for (var i = 0; i < p3var1.length; i++) {
+                    if (($("#3var" + [i] + "").val().toLowerCase()) == p3var1[i]) {
+
+                        $("#3var" + [i] + "").addClass("bien");
+                        core = core + 1;
+                    } else {
+
+                        $("#3var" + [i] + "").addClass("mal");
+                        core;
+                    }
+                }
+
+                tpre3 = ((core / 4) * 4);
+                $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+            }
+
+
+            // #region Calculo Nota Final
+            function NotaFinal() {
+                pregunta1();
+                pregunta2();
+                pregunta3();
+                cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3);
+                Calculo_nota();
+                $("input").attr('disabled', 'disabled');
+            }
+            </script>
+</body>
+
+</html>

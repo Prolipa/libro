@@ -1,20 +1,35 @@
 function save_to_pdf(htmlElementId) {
     var element = document.getElementById(htmlElementId);
-    // html2pdf(element);
+    var txtAlumno = document.getElementById('txtAlumno').value;
+    // html2pdf().set(opt).from(element).save();
+    // 
+    var nota = parseInt($('#txtNota').text());
+    //var title = $(this).attr('title');
+    var libro = '1';
+    var pagina = $('#n_pagina').text();
+    var html = self.location.href.match(/\/([^/]+)$/)[1];
 
-    html2pdf(element, {
-        margin: 0.5,
-        filename: 'actividad.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { dpi: 192, letterRendering: true },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+
+
+    $.post("https://prolipadigital.com.ec/software/PlataformaProlipa/public/api/notaEstudiante", {
+        "nota": nota,
+        "libro": libro,
+        "pagina": pagina,
+        "html": html
+    }, function(result) {
+
     });
+
+
+    $('#myModal').modal('hide');
+    window.print();
+    // New Promise-based usage:
+
 }
 
-$(".btn").click(function(e) {
-    if (!$(this).hasClass("disabled")) {
-        $(this).mouseenter();
-    }
+$(".btnCalificar").bind("click", function() {
+    $('#myModal').modal('show');
+
 });
 
 function mostrar_ayuda() {
@@ -39,23 +54,23 @@ function full_screen_change() {
 function demoFromHTML() {
     var pdf = new jsPDF('p', 'pt', 'letter')
 
-        // source can be HTML-formatted string, or a reference
-        // to an actual DOM element from which the text will be scraped.
-        ,
-        source = $('#activity')[0]
+    // source can be HTML-formatted string, or a reference
+    // to an actual DOM element from which the text will be scraped.
+    ,
+    source = $('#activity')[0]
 
-        // we support special element handlers. Register them with jQuery-style 
-        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-        // There is no support for any other type of selectors 
-        // (class, of compound) at this time.
-        ,
-        specialElementHandlers = {
-            // element with id of "bypass" - jQuery style selector
-            '#bypassme': function(element, renderer) {
-                // true = "handled elsewhere, bypass text extraction"
-                return true
-            }
+    // we support special element handlers. Register them with jQuery-style 
+    // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+    // There is no support for any other type of selectors 
+    // (class, of compound) at this time.
+    ,
+    specialElementHandlers = {
+        // element with id of "bypass" - jQuery style selector
+        '#bypassme': function(element, renderer) {
+            // true = "handled elsewhere, bypass text extraction"
+            return true
         }
+    }
 
     margins = {
         top: 80,
@@ -125,8 +140,6 @@ function save_open_activity_to_local(alumno) {
         //$('#nombre_alumno').attr('hidden', true);
         $(nom).val('');
         $('#myModal').modal('hide');
-        ocultar_by_class('alert');
-        ocultar_by_class('txtAlumno');
     }
     mostrar_by_class('ocultable');
 }

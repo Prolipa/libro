@@ -96,7 +96,7 @@
           if( $('#calificacion'+i).val() !='' ){
             if( $('#calificacion'+i).val()<=punt[i-1] && $('#calificacion'+i).val()>=0 ){
               c++;
-              $('#calificacion'+i).css("background-color", "#05D576");
+              $('#calificacion'+i).addClass('biene');
             }else{
               alert('La calificación no es valida, verifique que el puntaje ingresado no exceda los '+punt[i-1]+' puntos.');
               $('#calificacion'+i).focus();
@@ -104,7 +104,7 @@
             }
           }else{
               $('#calificacion'+i).focus();
-              $('#calificacion'+i).css("background-color", "#D50545");
+              $('#calificacion'+i).addClass('male');
           }
         }
         

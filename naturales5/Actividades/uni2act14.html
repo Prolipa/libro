@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.bien {
+    background: #90D961;
+}
+
+.mal {
+    background: #F25F5F;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Responde.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/experimento.jpg" style="width:100px"><span style="color:#FFFFFF;font-size:40px">&nbsp;&nbsp;&nbsp;&nbsp;<span style="background:#951B81;width:500px;padding:10px;border-radius:20px">Experiencia</span></span><br></span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12"><span class="enunciado"><span style="color:orange;font-size:30px"><strong>Identifiquemos el ciclo reproductivo de una mosca</strong></span></span><br><br></div>
+                <div class="col-lg-12">
+                    <div class="col-lg-12">
+                        <div class="col-lg-2">
+                            <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">Objetivo:</span><br><br>
+                        </div>
+                        <div class="col-lg-10">
+                            <span class="enunciado"><span style="color:orange">•&nbsp;&nbsp;</span><b>Identificar</b> las etapas del ciclo reproductivo de la mosca en la fruta y la duración de cada una de ellas<br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 ">
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">Materiales:</span><br><br>
+                            <div class="col-lg-12">
+                                <div class="col-lg-6">
+                                    <span class="enunciado">
+                                        <span style="color:orange">✔&nbsp;&nbsp;</span><span>Una maceta con una planta de muchas hojas.<br>
+                                            <span style="color:orange">✔&nbsp;&nbsp;</span><span>Una regadera pequeña.</span><br>
+                                            <span style="color:orange">✔&nbsp;&nbsp;</span><span>Una funda de plástico transparente.<br>
+                                                <span style="color:orange">✔&nbsp;&nbsp;</span><span>Un cordel.</span><br>
+                                                <span style="color:orange">✔&nbsp;&nbsp;</span><span>Una funda de plástico transparente.<br>
+                                                    <span style="color:orange">✔&nbsp;&nbsp;</span><span>Un cordel.</span><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <img src="img/i1_p68_act1.jpg" style="width:400px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-lg-12"><span style="color:white;font-size:22px;background:orange;padding:10px;border-radius:10px">Paso a paso</span><br><br></div>
+                    <span class="enunciado"><b>Se debe registrar los resultados y respuestas a las preguntas en la tabla que está al finaliar los pasos que se muestran a continuación:</b></span>
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">1</span><span class="enunciado"><b>Coloca</b> el plátano sin pelar dentro del frasco.</span><br>
+                                <center> <img src="img/i2_p68_act1.jpg" style="width:300px"></center>
+                            </div>
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">2</span><span class="enunciado"><b>Ubica</b> el frasco destapado en un lugar seguro, protegido de la lluvia, durante una semana.</span><br>
+                            </div>
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">3</span><span class="enunciado"><b>Revisa</b> el frasco todos los días y <b>registra</b> tus observaciones.</span><br>
+                            </div>
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">4</span><span class="enunciado">Una vez transcurrida la semana, <b>cubre</b> el frasco con la gasa y <b>asegúrala</b> con la liga.</span><br>
+                                <center> <img src="img/i3_p68_act1.jpg" style="width:250px"></center>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">5</span><span class="enunciado"><b>Observa</b> con la lupa a través del frasco y registra todos los cambios.</span><br>
+                                <center> <img src="img/i4_p68_act1.jpg" style="width:250px"></center>
+                            </div>
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">6</span><span class="enunciado"><b>Deja</b> el frasco en un lugar cerrado y <b>obsérvalo</b> diariamente con la lupa durante 21 días.</span><br>
+                                <center> <img src="img/i5_p68_act1.jpg" style="width:200px"></center>
+                            </div>
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">7</span><span class="enunciado"><b>Llena</b> el informe de Experiencia experiencia.</span><br>
+                            </div>
+                            <div class="col-lg-12" style="background:#FEF5E9;padding:20px">
+                                <span style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px">8</span><span class="enunciado"><b>Desecha</b> el recipiente en una funda al terminar la experiencia.</span><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <p style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px;width:300px">Informe de Experiencia</p>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a">&nbsp;<span class="enunciado" style="color:black"><b>&nbsp;&nbsp;( 2.5 pts.)</b></span><br><br>
+                    <center>
+                        <table>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16b4ad; background:#D8EDCB;width:50px;text-align:center;"><span class="enunciado">Día</span></td>
+                                <td style="border:solid 3px #16b4ad; background:#FCD8ED;width:300px;text-align:center;"><span class="enunciado">Observaciones con frasco destapado </span></td>
+                                <td style="border:solid 3px #16b4ad; background:#CCECDA;width:500px;text-align:center;"><span class="enunciado">Gráficos</span></td>
+                            </tr>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16B4AD;width:50px;text-align:center;"><span class="enunciado">1</span></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="16" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;text-align:center;">
+                                    <div class="my-drawing img-responsive"></div>
+                                </td>
+                            </tr>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16B4AD;width:50px;text-align:center;"><span class="enunciado">2</span></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="16" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;text-align:center;">
+                                    <div class="my-drawing img-responsive"></div>
+                                </td>
+                            </tr>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16B4AD;width:50px;text-align:center;"><span class="enunciado">3</span></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="16" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;text-align:center;">
+                                    <div class="my-drawing img-responsive"></div>
+                                </td>
+                            </tr>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16B4AD;width:50px;text-align:center;"><span class="enunciado">4</span></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="16" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;text-align:center;">
+                                    <div class="my-drawing img-responsive"></div>
+                                </td>
+                            </tr>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16B4AD;width:50px;text-align:center;"><span class="enunciado">5</span></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="16" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;text-align:center;">
+                                    <div class="my-drawing img-responsive"></div>
+                                </td>
+                            </tr>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16B4AD;width:50px;text-align:center;"><span class="enunciado">6</span></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="16" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;text-align:center;">
+                                    <div class="my-drawing img-responsive"></div>
+                                </td>
+                            </tr>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16B4AD;width:50px;text-align:center;"><span class="enunciado">7</span></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="16" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;text-align:center;">
+                                    <div class="my-drawing img-responsive"></div>
+                                </td>
+                            </tr>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16B4AD;width:50px;text-align:center;"><span class="enunciado">8</span></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="16" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;text-align:center;">
+                                    <div class="my-drawing img-responsive"></div>
+                                </td>
+                            </tr>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16B4AD;width:50px;text-align:center;"><span class="enunciado">9</span></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="16" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;text-align:center;">
+                                    <div class="my-drawing img-responsive"></div>
+                                </td>
+                            </tr>
+                            <tr style="border:solid 3px #16B4AD">
+                                <td style="border:solid 3px #16B4AD;width:50px;text-align:center;"><span class="enunciado">10</span></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;"><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="16" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 3px #16B4AD;width:300px;text-align:center;">
+                                    <div class="my-drawing img-responsive"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <p style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px;width:300px">Analizo resultados y concluyo:</p>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a">&nbsp;<span class="enunciado" style="color:black"><b>&nbsp;&nbsp;( 2.5 pts.)</b></span><br><br>
+                    <span style="color:#811B95" class="enunciado"><b>1. </b></span>&nbsp;<span class="enunciado">¿Cuántas formas diferentes observaste?</span><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                    <span style="color:#811B95" class="enunciado"><b>2. </b></span>&nbsp;<span class="enunciado">¿Hay diferencia en la cantidad de gotas de agua en el contorno de la funda plástica en el día o la noche?</span><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                    <span style="color:#811B95" class="enunciado"><b>3. </b></span>&nbsp;<span class="enunciado">¿En cuánto tiempo las moscas se convirtieron en adultos?</span><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <div class="col-lg-12">
+                        <p style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px;width:150px">Propongo:</p>
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a">&nbsp;<span class="enunciado" style="color:black"><b>&nbsp;&nbsp;( 2.5 pts.)</b></span><br><br>
+                        <span style="color:#811B95" class="enunciado"><b>1. </b></span>&nbsp;<span class="enunciado">¿Qué pasaría si los insectos desaparecían de un ecosistema?</span>
+                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br><br>
+                    <div class="col-lg-12">
+                        <p style="color:white;font-size:22px;background:#811B95;padding:10px;border-radius:10px;width:250px">Evalúo mi preoceso:</p>
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a" readonly="">&nbsp;<span class="enunciado" style="color:black"><b>&nbsp;&nbsp;( 2.5 pts.)</b></span><br><br>
+                        <span style="color:#811B95" class="enunciado"><b>1. </b></span>&nbsp;<span class="enunciado">Marca con un <span style="color:#15A4B2">✔</span> la casilla que consideres correcta.</span><br>
+                        <table>
+                            <tr>
+                                <td></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#D3D7EE"><span class="enunciado">Muy bien</span></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#E0F1F1"><span class="enunciado">Bien</span></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#FFFCF7"><span class="enunciado">Debo mejorar</span></td>
+                            </tr>
+                            <tr style="border:solid 2px #7ED877">
+                                <td style="width:750px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#D3D7EE"><span class="enunciado">¿Sigo las instrucciones dadas en la etapa experimental?</span></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;"><input class="1 enca1" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;"><input class="1 enca2" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;"><input class="1 enca3" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                            </tr>
+                            <tr style="border:solid 2px #7ED877">
+                                <td style="width:750px;height:40px;border:solid 2px #7ED877;text-align:center;padding:10px;background:#D3D7EE"><span class="enunciado">¿Respeto el tiempo dado para el experimento?</span></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;"><input class="1 enca4" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;"><input class="1 enca5" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                                <td style="width:70px;height:40px;border:solid 2px #7ED877;"><input class="1 enca6" style="width:152px;height:40px;background:transparent;text-align:center;color:#00ADED;font-size:22px" readonly=""></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script type="text/javascript">
+    $("#n_pagina").html('68');
+
+
+    document.getElementById("pre1a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre1a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre1a"), 2.5);
+    });
+    document.getElementById("pre2a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre2a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre2a"), 2.5);
+    });
+    document.getElementById("pre3a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre3a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre3a"), 2.5);
+    });
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+    var tpre4 = 0;
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+
+
+
+    $('.1').click(function() {
+        switch ($(this).attr('class')) {
+            case '1 enca1':
+                $('.enca1').val('✔');
+                $('.enca2').val('');
+                $('.enca3').val('');
+                break;
+            case '1 enca2':
+                $('.enca1').val('');
+                $('.enca2').val('✔');
+                $('.enca3').val('');
+                break;
+            case '1 enca3':
+                $('.enca1').val('');
+                $('.enca2').val('');
+                $('.enca3').val('✔');
+                break;
+            case '1 enca4':
+                $('.enca4').val('✔');
+                $('.enca5').val('');
+                $('.enca6').val('');
+                break;
+            case '1 enca5':
+                $('.enca4').val('');
+                $('.enca5').val('✔');
+                $('.enca6').val('');
+                break;
+            case '1 enca6':
+                $('.enca4').val('');
+                $('.enca5').val('');
+                $('.enca6').val('✔');
+                break;
+
+        }
+    });
+
+
+    //#region pregunta1
+    function pregunta4() {
+        var nt1 = 0;
+        if ($('.enca1').val() == '✔') {
+            nt1 = nt1 + 5;
+        }
+        // pregunats inscorrectas
+        if ($('.enca2').val() == '✔') {
+            nt1 = nt1 + 4;
+        }
+        if ($('.enca3').val() == '✔') {
+            nt1 = nt1 + 3;
+        }
+        if ($('.enca4').val() == '✔') {
+            nt1 = nt1 + 5;
+        }
+        // pregunats inscorrectas
+        if ($('.enca5').val() == '✔') {
+            nt1 = nt1 + 4;
+        }
+        if ($('.enca6').val() == '✔') {
+            nt1 = nt1 + 3;
+        }
+
+        $('.1').off('click');
+        var subtotal = parseFloat(nt1);
+        var pre4a = ((subtotal / 10) * 2.5);
+
+        if (pre4a < 0) {
+            pre4a = 0;
+            tpre4 = pre4a;
+            $('#pre4a').val(parseFloat(pre4a).toFixed(2));
+
+        } else {
+            $('#pre4a').val(parseFloat(pre4a).toFixed(2));
+            tpre4 = pre4a;
+
+
+        }
+    }
+    // #endregion
+
+    //#region pregunta2
+    function pregunta2() {
+        var pre2 = document.getElementById("pre2a").value;
+        tpre2 = pre2;
+        $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    }
+    // #endregion
+    //#region pregunta2
+    function pregunta3() {
+        var pre3 = document.getElementById("pre3a").value;
+        tpre3 = pre3;
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+    }
+    // #endregion
+    //#region pregunta2
+    function pregunta1() {
+        var pre1 = document.getElementById("pre1a").value;
+        tpre1 = pre1;
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+    // #endregion
+    var winHeight = $(window).height();
+    var winWidth = $(window).width();
+    $(document).ready(function() {
+        var watermarkImage = new Image();
+        var watermarkImage1 = new Image();
+        var watermarkImage2 = new Image();
+        var watermarkImage3 = new Image();
+        var watermarkImage4 = new Image();
+        var watermarkImage5 = new Image();
+        var watermarkImage6 = new Image();
+        var watermarkImage7 = new Image();
+        var watermarkImage8 = new Image();
+        var watermarkImage9 = new Image();
+        watermarkImage.src = '';
+        watermarkImage1.src = '';
+        watermarkImage2.src = '';
+        watermarkImage3.src = '';
+        watermarkImage4.src = '';
+        watermarkImage5.src = '';
+        watermarkImage6.src = '';
+        watermarkImage7.src = '';
+        watermarkImage8.src = '';
+        watermarkImage9.src = '';
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage,
+                watermarkScale: 1 // you can scale it
+
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[1], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage1,
+                watermarkScale: 1 // you can scale it
+
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[2], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage2,
+                watermarkScale: 1 // you can scale it
+
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[3], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage3,
+                watermarkScale: 1 // you can scale it
+
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[4], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage4,
+                watermarkScale: 1 // you can scale it
+
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[5], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage5,
+                watermarkScale: 1 // you can scale it
+
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[6], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage6,
+                watermarkScale: 1 // you can scale it
+
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[7], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage7,
+                watermarkScale: 1 // you can scale it
+
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[8], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage8,
+                watermarkScale: 1 // you can scale it
+
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[9], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage9,
+                watermarkScale: 1 // you can scale it
+
+
+            });
+    });
+
+
+    // #region Calculo Nota Final
+    function NotaFinal() {
+        var pre1 = document.getElementById("pre1a").value;
+        if (pre1 == "") {
+            alert(" Califique el: Informe de Experiencia");
+        } else {
+            var pre2 = document.getElementById("pre2a").value;
+            if (pre2 == "") {
+                alert("Califique el: Analizo resultados y concluyo");
+            } else {
+                var pre3 = document.getElementById("pre3a").value;
+                if (pre3 == "") {
+                    alert("Califique el: Propongo");
+                } else {
+                    pregunta1();
+                    pregunta2();
+                    pregunta3();
+                    pregunta4();
+                    cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4);
+                    Calculo_nota();
+                    $("input").attr('disabled', 'disabled');
+                }
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>

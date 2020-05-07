@@ -156,11 +156,11 @@
             if( i<11 ){
                 if($('#oMRR'+(i) +'.pinta').text()){
                   notaFinalP++;
-                  $('#oMR'+i).css("background-color", "#5ED188");
+                  $('#oMR'+i).addClass('b');
                 }
             }else{
                 if($('#oMRR'+(i) +'.pinta').text()){
-                  $('#oMR'+i).css("background-color", "#EF87A7");
+                  $('#oMR'+i).addClass('m');
                   notaFinalM++;
                 }
             }
@@ -200,7 +200,7 @@
             $("#nAC").text(notaFinalP);
             $("#nER").text(notaFinalM);
                       $("#txtNota").text(notaFinal);
-                      $('#Calificar').attr('disabled', true);
+                      $('#Calificar').attr('disabled', false);
                       $('#Refrescar').attr('disabled', false);                          
               return false
       }

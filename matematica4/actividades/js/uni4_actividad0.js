@@ -1,4 +1,5 @@
 var titulos = "refuerzo";
+f_titulos();
 numero_pagina(154);
 
 $(".btn_mostrar").on("click", function() {
@@ -589,7 +590,7 @@ function pregunta7() {
     var ace4 = 0;
 
 
-var lec=['a','b'];
+    var lec = ['a', 'b'];
     for (var i = 0; i < 6; i++) {
         if (cj == vec7arre1[i]) {
             ace1 = 1;
@@ -612,12 +613,12 @@ var lec=['a','b'];
     }
 
     for (var i = 0; i < 6; i++) {
-        if (cj !=ck) {
+        if (cj != ck) {
             if (ck == vec7arre1[i]) {
-            ace2 = 1;
-        } else {
-            ace2;
-        }
+                ace2 = 1;
+            } else {
+                ace2;
+            }
         } else {
             ace2;
         }
@@ -658,12 +659,12 @@ var lec=['a','b'];
     }
 
     for (var i = 0; i < 6; i++) {
-        if (cl !=cm) {
+        if (cl != cm) {
             if (cm == vec7arre2[i]) {
-            ace4 = 1;
-        } else {
-            ace4;
-        }
+                ace4 = 1;
+            } else {
+                ace4;
+            }
         } else {
             ace4;
         }

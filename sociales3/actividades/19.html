@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Estudios Sociales 3</title>
+    <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+</head>
+<style type="text/css">
+
+    .cajas{
+        max-width: 95%;
+        max-height: 200px;
+        border: 1px #009900 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+    }
+    .actividad1{
+        background: #fff;       
+    }
+    .correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+    .desactivar{
+        background-color: #444;
+        color: #888;
+        padding: 8px;
+    }
+    #cabecera .badge{
+        background-color: #232956;
+    }
+    .c_origen {
+    /*border: 1px solid #af539a;*/
+
+    border-radius: 10px;
+    min-height: 50px;
+    width: 800PX;
+    margin-left: 1px;
+    width: auto;
+}
+
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 40px;
+    min-width: 150px;
+}
+</style>
+<body>
+<div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Escribe la respuesta correcta en el recuadro según corresponda.<br>
+        2. Escribe la respuesta correcta en el recuadro según corresponda.<br>
+        3. Arrastre las imágenes a la respuesta correcta en el recuadro según corresponda.<br>
+        <span id="ayudas"></span>
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-aplico" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-aplico">
+                    <span class="titulo" style="background: #005ca4;"><img src='img/icoA.png' alt='Aplico para aprender'> Aplico para Aprender</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>                    
+                </div>
+                <div class="panel-body">
+                    
+                    <!--pregunats de la actividad-->
+                    <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a">&nbsp; <span><span style="color: #215A98;"><b>1. </b></span> <b>Observa</b> las imágenes y <b>escribe</b> en el espacio indicado las obligaciones que cumplen los peatones y conductores.  <b>(4 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 text-question table-responsive">
+                    <div class="col-lg-4 table-responsive">
+                        <center>
+                            <img src="img//i1_p20_act19.jpg" class="img-responsive"><br>
+                            <textarea class="text-question form-control" style="border: dashed 1px #F3842A;" rows="4"></textarea>
+                        </center>
+                    </div>
+                    <div class="col-lg-4 table-responsive">
+                        <center>
+                            <img src="img//i2_p20_act19.jpg" class="img-responsive"><br>
+                            <textarea class="text-question form-control" style="border: dashed 1px #F3842A;" rows="4"></textarea>
+                        </center>
+                    </div>
+                    <div class="col-lg-4 table-responsive">
+                        <center>
+                            <img src="img//i3_p20_act19.jpg" class="img-responsive"><br>
+                            <textarea class="text-question form-control" style="border: dashed 1px #F3842A;" rows="4"></textarea>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br></div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a">&nbsp; <span><span style="color: #215A98;"><b>2. </b></span> <b>Observa</b> las fotografías y <b>escribe</b> lo que podría pasar si no se respetan las leyes y señales de tránsito.  <b>(2 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                    <div class="col-lg-4 table-responsive">
+                        <center>
+                            <img src="img//i4_p20_act19.jpg" class="img-responsive"><br>
+                            <textarea class="text-question form-control" style="border: dashed 1px #F3842A;" rows="4"></textarea>
+                        </center>
+                    </div>
+                    <div class="col-lg-4 table-responsive">
+                        <center>
+                            <img src="img//i5_p20_act19.jpg" class="img-responsive"><br>
+                            <textarea class="text-question form-control" style="border: dashed 1px #F3842A;" rows="4"></textarea>
+                        </center>
+                    </div>
+                    <div class="col-lg-4 table-responsive">
+                        <center>
+                            <img src="img//i6_p20_act19.jpg" class="img-responsive"><br>
+                            <textarea class="text-question form-control" style="border: dashed 1px #F3842A;" rows="4"></textarea>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br></div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a" readonly="">&nbsp; <span><span style="color: #215A98;"><b>3. </b></span> <b>Relaciona</b> con líneas las señales de tránsito con su significado y la clase de señal.  <b>(4 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                        <div class="col-sm-12" align="center">
+                            <div class="table-responsive">
+                                <table class="table-responsive" align="center">
+                                    <tr>
+                                        <td>
+                                            <div class="textos" style="display: inline-block;"></div>
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <div class="textos1" style="display: inline-block;"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="40%" class="actividad1">
+                                            <div class="col-lg-12 c_destinos2 drop3 p2im1"></div>
+                                            <div class="col-lg-12"><br></div>
+                                            <div class="col-lg-12 c_destinos2 drop3 p2im2"></div>
+                                            <div class="col-lg-12"><br></div>
+                                            <div class="col-lg-12 c_destinos2 drop3 p2im3"></div>
+                                            <div class="col-lg-12"><br></div>
+                                            <div class="col-lg-12 c_destinos2 drop3 p2im4"></div>
+                                            <div class="col-lg-12"><br></div>
+                                        </td>
+                                        <td width="20%" align="center">
+                                            <div class="c_origen p2cim11"></div>
+                                            <div class="col-lg-12"><br></div>
+                                            <div class="c_origen p2cim12"></div>
+                                            <div class="col-lg-12"><br></div>
+                                            <div class="c_origen p2cim13"></div>
+                                            <div class="col-lg-12"><br></div>
+                                            <div class="c_origen p2cim14"></div>
+                                            <div class="col-lg-12"><br></div>
+                                        </td>
+                                        <td width="40%" class="actividad2">
+                                            <div class="col-lg-12 c_destinos2 drop4 p2im5"></div>
+                                            <div class="col-lg-12"><br></div>
+                                            <div class="col-lg-12 c_destinos2 drop4 p2im6"></div>
+                                            <div class="col-lg-12"><br></div>
+                                            <div class="col-lg-12 c_destinos2 drop4 p2im7"></div>
+                                            <div class="col-lg-12"><br></div>
+                                            <div class="col-lg-12 c_destinos2 drop4 p2im8"></div>
+                                            <div class="col-lg-12"><br></div>
+                                        </td>
+                                    </tr>
+                                </table><br>
+                            </div>
+                        </div>
+                    </div>   
+
+                </div>
+                
+            </div>      
+    </div>
+
+    <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+        
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/actividad1.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script>
+        var titulos = 'reflexiono';
+    $("#n_pagina").html('21');
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+
+
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+        return ((key >= 48 && key <= 57) || (key == 8))
+    }
+
+    
+    // #region Pregunta1
+    document.getElementById("pre1a").addEventListener("keypress", () => {
+    validNumero(0, 1, 1);
+    });
+    document.getElementById("pre1a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre1a"), 4);
+    });
+
+    function pregunta1() {
+        var pre1a = document.getElementById("pre1a").value;
+        tpre1 = pre1a;
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+    // #endregion
+
+   // #region Pregunta2
+   
+    document.getElementById("pre2a").addEventListener("keypress", () => {
+    validNumero(0, 1, 1);
+    });
+    document.getElementById("pre2a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre2a"), 2);
+    });
+    function pregunta2() {
+        var pre2a = document.getElementById("pre2a").value;
+        tpre2 = pre2a;
+        $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    }
+
+
+       // #region Pregunta3
+
+    var pal1 = [
+        '<img class="img-responsive drag3 c1" alt="1" src="img/i11_p20_act19.jpg"  style="display:inline-block; mix-blend-mode:multiply;">',
+        '<img class="img-responsive drag3 c2" alt="2" src="img/i12_p20_act19.jpg" style="display:inline-block; mix-blend-mode:multiply;">',
+        '<img class="img-responsive drag3 c3" alt="3" src="img/i13_p20_act19.jpg" style="display:inline-block; mix-blend-mode:multiply;">',
+        '<img class="img-responsive drag3 c4" alt="4" src="img/i14_p20_act19.jpg" style="display:inline-block; mix-blend-mode:multiply;">'
+    ];
+
+    var pal10 = [
+        '<img class="img-responsive drag4 c1" alt="1" src="img/i15_p20_act19.jpg"  style="display:inline-block; mix-blend-mode:multiply;">',
+        '<img class="img-responsive drag4 c2" alt="2" src="img/i16_p20_act19.jpg" style="display:inline-block; mix-blend-mode:multiply;">',
+        '<img class="img-responsive drag4 c3" alt="3" src="img/i17_p20_act19.jpg" style="display:inline-block; mix-blend-mode:multiply;">'
+    ];
+
+    var pal2 = [
+        '<img src="img/i7_p20_act19.jpg" class="img-responsive">',
+        '<img src="img/i8_p20_act19.jpg" class="img-responsive">',
+        '<img src="img/i9_p20_act19.jpg" class="img-responsive">',
+        '<img src="img/i10_p20_act19.jpg" class="img-responsive">'
+    ];
+
+    pal1.sort(f_randomico);
+    pal10.sort(f_randomico);
+
+    var p2vec1 = ["1", "2", "3", "4"];
+    var p2vec10 = ["1", "2", "2", "3"];
+    var p2aux2 = [];
+    var p2aux20 = [];
+    $(".textos").append(pal1);
+    $(".textos1").append(pal10);
+    var myArray2 = ["0", "1", "2", "3"];
+    var i, j, k;
+    for (i = myArray2.length; i; i--) {
+        j = Math.floor(Math.random() * i);
+        k = myArray2[i - 1];
+        myArray2[i - 1] = myArray2[j];
+        myArray2[j] = k;
+    }
+    //aleatorio literal 1
+    for (var i = 1; i <= 4; i++) {
+        var c1 = myArray2[i - 1];
+        $(".p2cim1" + i).html(pal2[c1]);
+        p2aux2.push(p2vec1[c1]);
+        p2aux20.push(p2vec10[c1]);
+    }
+
+
+    $(".drag3").draggable({
+        revert: 'invalid',
+        helper: 'clone',
+        containment: "#actividad1",
+    });
+
+    $(".drop3").droppable({
+        accept: ".drag3",
+        drop: function(event, ui) {
+            $(this).html('');
+            ui.helper.clone().appendTo(this);
+            $.each($(this).children(), function(index, value) {
+                $(value).attr("style", "mix-blend-mode: multiply;width: 50px;");
+            })
+
+        }
+    });
+
+
+    $(".drag4").draggable({
+        revert: 'invalid',
+        helper: 'clone',
+        containment: "#actividad1",
+    });
+
+    $(".drop4").droppable({
+        accept: ".drag4",
+        drop: function(event, ui) {
+            $(this).html('');
+            ui.helper.clone().appendTo(this);
+            $.each($(this).children(), function(index, value) {
+                $(value).attr("style", "mix-blend-mode: multiply;width: 70px;");
+            })
+
+        }
+    });
+    function pregunta3() {
+        var p2im1 = $(".p2im1 > img").attr("alt");
+        var p2cont1 = 0;
+        if (p2im1 == p2aux2[0]) {
+            p2cont1++;
+            f_ok($(".p2im1"));
+        } else {
+            f_no($(".p2im1"));
+        }
+        var p2im2 = $(".p2im2 > img").attr("alt");
+        if (p2im2 == p2aux2[1]) {
+            p2cont1++;
+            f_ok($(".p2im2"));
+        } else {
+            f_no($(".p2im2"));
+        }
+        var p2im3 = $(".p2im3 > img").attr("alt");
+        if (p2im3 == p2aux2[2]) {
+            p2cont1++;
+            f_ok($(".p2im3"));
+        } else {
+            f_no($(".p2im3"));
+        }
+        var p2im4 = $(".p2im4 > img").attr("alt");
+        if (p2im4 == p2aux20[3]) {
+            p2cont1++;
+            f_ok($(".p2im4"));
+        } else {
+            f_no($(".p2im4"));
+        }
+
+        ////////////////////////////////////////////////////////////
+        
+        var p2im5 = $(".p2im5 > img").attr("alt");
+        if (p2im5 == p2aux20[0]) {
+            p2cont1++;
+            f_ok($(".p2im5"));
+        } else {
+            f_no($(".p2im5"));
+        }
+        var p2im6 = $(".p2im6 > img").attr("alt");
+        if (p2im6 == p2aux20[1]) {
+            p2cont1++;
+            f_ok($(".p2im6"));
+        } else {
+            f_no($(".p2im6"));
+        }
+        var p2im7 = $(".p2im7 > img").attr("alt");
+        if (p2im7 == p2aux20[2]) {
+            p2cont1++;
+            f_ok($(".p2im7"));
+        } else {
+            f_no($(".p2im7"));
+        }
+        var p2im8 = $(".p2im8 > img").attr("alt");
+        if (p2im8 == p2aux20[3]) {
+            p2cont1++;
+            f_ok($(".p2im8"));
+        } else {
+            f_no($(".p2im8"));
+        }
+
+        var total = (p2cont1 * 4) / 8;
+        tpre3 = total;
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+    }
+
+
+    // #region Calculo Nota Final
+    function NotaFinal() {
+        var pre1a = document.getElementById("pre1a").value;
+        if (pre1a == "") {
+            alert("Pregunta 1: Califique la pregunta");
+        } else {
+            var pre2a = document.getElementById("pre2a").value;
+            if (pre2a == "") {
+            alert("Pregunta 2: Califique la pregunta");
+            } else {
+                pregunta1();
+                pregunta2();
+                pregunta3();
+                cor = parseFloat(tpre1)+parseFloat(tpre2)+parseFloat(tpre3);
+                Calculo_nota();
+        }
+    }
+}
+    // #endregion
+    
+    </script>
+        
+</body>
+</html>

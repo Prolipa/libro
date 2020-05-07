@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Matemática 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <script src="js/100.js"></script>
+    <!-- copy these lines to your document head: -->
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <!-- end copy -->
+    <style>
+    hr {
+        border-color: black;
+        border-width: 2px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin: 3px;
+    }
+    .fondo{
+    background-image: url(img/i1_p105_act92.png);
+    }
+    .radical {
+    position: relative;
+    font-size: 1.0em;
+    vertical-align: middle;
+    width: 5%
+    }
+    .n-root {
+       
+        margin-top: 0px;
+       width: 5%;
+        height:5%;
+    }
+    .radicand { 
+        padding: 0.5em 0.25em;
+        border-top: thin black solid;
+        width: 5%
+    } 
+    .paso{
+        width: 80px;
+        background: #f0c22a;
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .caja1{
+        width: 30%;
+        text-align: center;
+        border-radius: 94px 94px 94px 94px;
+        -moz-border-radius: 94px 94px 94px 94px;
+        -webkit-border-radius: 94px 94px 94px 94px;
+        border: 0px solid #000000;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+    .caja{
+        width: 70%;
+        text-align: center;
+        margin-top: 20px;
+        margin-left: 25px;
+        border: none;
+    }
+    .cajaa{
+        width: 5%;
+        text-align: center;
+    }
+    .cajab{
+        width: 15%;
+        text-align: center;
+    }
+    .cajax{
+        width: 10%;
+        text-align: center;
+    }
+    .cajac{
+        width: 60%;
+        text-align: center;
+        
+    }
+    .select {
+        background-color: green;
+    }
+    .combo{
+	font-family: Tahoma, Verdana, Arial;
+	font-size: 100%;
+	background-color: #FFFFFF;
+	border-width:0;
+    padding: 2%;
+    }
+
+    th{
+        text-align: center;
+    }
+    .td{
+        text-align: center;
+        width: 100%;
+    }
+    td{
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+   <div id="nota-informativa" class="nota-ayuda">
+            <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee el problema atentamente y responde en los espacios en blanco según los valores presentados
+        <br><span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload(true);">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                    
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none"  data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"> / 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                            <span class="glyphicon glyphicon-bookmark"></span> Pag 112
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+                <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoE.png" alt="">Prueba Diagnóstica</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="col col-md-12 space"><span class="text-question">
+                    <img src="img/pguiada.png" alt="">
+                    <p><b>Escribe</b> las potencias en forma de radicación, con su respectivo resultado.</p>                    
+                    <img src="img/i1_p112_act_100.png" alt="">
+                    <div class="row">
+                        <label class="paso">Paso 1</label>
+                        <p><b>Observamos</b> los términos de la potenciación y los relacionamos con la radicación: la base será el radicando,
+                                el exponente será el índice de radical y el resultado, la raíz. </p>
+                        <label class="paso">Paso 2</label>
+                        <p><b>Escribimos</b> en forma de radicación y calculamos el resultado, o sea, la raíz.</p>
+                    </div> 
+                    <div class="row">
+                        <ol type="a">
+                        <div class="col col-md-6">
+                        <li><label>5</label><sup>3</sup>=125 → <span class="radical"><sup class="n-root"><input type="number" class="cajaa" id="a0"></sup>&radic;</span><span class="radicand"><input type="number" class="cajab" id="b0"></span> = <input type="number" class="cajab" id="c0"></li>
+                        <li><label>3</label><sup>3</sup>=27 → <span class="radical"><sup class="n-root"><input type="number" class="cajaa" id="a1"></sup>&radic;</span><span class="radicand"><input type="number" class="cajab" id="b1"></span> = <input type="number" class="cajab" id="c1"></li>
+                        <li><label>3</label><sup>4</sup>=81 → <span class="radical"><sup class="n-root"><input type="number" class="cajaa" id="a2"></sup>&radic;</span><span class="radicand"><input type="number" class="cajab" id="b2"></span> = <input type="number" class="cajab" id="c2"></li>
+                        </div>
+                        <div class="col col-md-6">
+                        <li><label>2</label><sup>5</sup>=32 → <span class="radical"><sup class="n-root"><input type="number" class="cajaa" id="a3"></sup>&radic;</span><span class="radicand"><input type="number" class="cajab" id="b3"></span> = <input type="number" class="cajab" id="c3"></li>
+                        <li><label>14</label><sup>2</sup>=196 → <span class="radical"><sup class="n-root"><input type="number" class="cajaa" id="a4"></sup>&radic;</span><span class="radicand"><input type="number" class="cajab" id="b4"></span> = <input type="number" class="cajab" id="c4"></li>
+                        <li><label>9</label><sup>2</sup>=81 → <span class="radical"><sup class="n-root"><input type="number" class="cajaa" id="a5"></sup>&radic;</span><span class="radicand"><input type="number" class="cajab" id="b5"></span> = <input type="number" class="cajab" id="c5"></li>
+                        </div>
+                        </ol>
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/highcharts.js"></script>
+            <script src="js/exporting.js"></script>
+            <script src="js/export-data.js"></script>
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script>
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var lc = LC.init(
+                document.getElementsByClassName('my-drawing')[0], { imageURLPrefix: 'imgcanvas' }
+            );
+            var lc = LC.init(
+                document.getElementsByClassName('my-drawing1')[0], { imageURLPrefix: 'imgcanvas' }
+            );
+            var lc = LC.init(
+                document.getElementsByClassName('my-drawing2')[0], { imageURLPrefix: 'imgcanvas' }
+            );
+            lc.respondToSizeChange();
+            </script>
+</body>
+
+</html>

@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.caja-input {
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px #DC4DF3;
+}
+
+.cajapequeña-input {
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px #DC4DF3;
+}
+
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+table.espaciar {
+    border-collapse: separate;
+    border-spacing: 30px 30px;
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.bien {
+    background: #5EBF62;
+}
+
+.mal {
+    background: #F05454;
+}
+
+table.table-bordered {
+    border: 2px solid #00ADED;
+    ;
+    margin-top: 20px;
+}
+
+table.table-bordered>thead>tr>th {
+    border: 2px solid #00ADED;
+    ;
+}
+
+table.table-bordered>tbody>tr>td {
+    border: 2px solid #00ADED;
+    ;
+    vertical-align: middle;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.pintar {
+    border-bottom: 3px solid #283747;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 80px;
+    min-width: 80px;
+    width: 100%;
+    margin-left: 1px;
+}
+
+.c_destinos2 {
+
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 70px;
+    width: 40%;
+    max-width: 90%;
+}
+
+td.numeral {
+    color: #23A638;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 80px;
+    min-width: 80px;
+    width: 100%;
+    margin-left: 1px;
+}
+
+.c_destinos2 {
+
+    padding: 1px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 70px;
+    width: 80%;
+    max-width: 90%;
+}
+
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Arrastra y relaciona.<br>
+        2. Dibuja.<br>
+        3. Completa.<br>
+        4. Selecciona correctamente.<br>
+        5. Responde.<br>
+        6. Responde.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/unidad2.png" style="width:100px"> <span style="color:#C33A99">TEMA 3</span> &nbsp;&nbsp;Ciclo reproductivo de los vertebrados</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 table-responsive">
+                    <img src="img/aplico.jpg" style="width:200px"><br>
+                    <div class="col-xs-12">
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">1. </span><span style="font-size:20px"><b>Une</b> con líneas cada animal con el tipo de fecundación que le corresponde.</span>.<b>&nbsp;&nbsp;( 2 pts.)</b></span>
+                            <div class="col-sm-12" id="p4div1">
+                                <div class="col-lg-2 " align="center">
+                                    <br><br>
+                                    <div class="textos" style="display: inline-block;"></div>
+                                </div>
+                                <div class="col-lg-10">
+                                    <div class="table-responsive text-question"><br>
+                                        <table class="table">
+                                            <tr>
+                                                <td>
+                                                    <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop4 p4im1"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p4cima1"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop4 p4im2"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p4cima2"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop4 p4im3"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p4cima3"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop4 p4im4"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p4cima4"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">2. </span><span style="font-size:20px"><b>Dibuja</b> el ciclo de vida de un animal vivíparo.<b>&nbsp;&nbsp;( 2 pts.)</b></span><br><br>
+                            <div class="my-drawing img-responsive"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">3. </span><span style="font-size:20px"><b>Compara</b> la reproducción ovovivípara con la ovípara en el siguiente diagrama de Venn.<b>&nbsp;&nbsp;( 2 pts.)</b></span><br><br>
+                            <center>
+                                <table style="width:80%">
+                                    <tr>
+                                        <td align="center"><img src="img/i1_p53_act2.jpg" style="width:80%;height:50%"></td>
+                                        <td align="center"><img src="img/i2_p53_act2.jpg" style="width:80%;height:50%"></td>
+                                        <td align="center"><img src="img/i3_p53_act2.jpg" style="width:80%;height:50%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="6" placeholder="Texto"></textarea></td>
+                                        <td><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="6" placeholder="Texto"></textarea></td>
+                                        <td><textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="6" placeholder="Texto"></textarea></td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">4. </span><span style="font-size:20px"><b>Clasifica</b> los siguientes animales según su tipo de reproducción: <b>&nbsp;&nbsp;( 2 pts.)</b><br><br> <b></b></span>
+                            <div class="col-lg-12">
+                                <center><span style="background:#B2FA9D;width:60%;font-size:20px;padding:20px">tiburón, atún, tortuga, águila, vaca, humano, anaconda, sapo, gato, ratón.</span><br><br><br>
+                                    <table style="border-collapse: separate;border-spacing: 0px 0px;">
+                                        <tr>
+                                            <td style="text-align:center;width:150px;font-size:20px;background:#319618;color:white">Ovíparo </td>
+                                            <td style="text-align:center;width:150px;font-size:20px;background:#681896;color:white">Ovovivíparo</td>
+                                            <td style="text-align:center;width:150px;font-size:20px;background:#F9830D;color:white">Vivíparo</td>
+                                        </tr>
+                                        <tr>
+                                            <td><select id="4pre0" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                            <td><select id="4pre1" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                            <td><select id="4pre2" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                        </tr>
+                                        <tr>
+                                            <td><select id="4pre3" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                            <td><select id="4pre4" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                            <td><select id="4pre5" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                        </tr>
+                                        <tr>
+                                            <td><select id="4pre6" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                            <td><select id="4pre7" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                            <td><select id="4pre8" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                        </tr>
+                                        <tr>
+                                            <td><select id="4pre9" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                            <td><select id="4pre10" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                            <td><select id="4pre11" style="border:solid 2px #5ADADA;text-align:center;width:150px;height:40px;font-size:20px;font-weight:bold;">
+                                                    <option value="var">.......</option>
+                                                    <option value="a">Atún</option>
+                                                    <option value="b">Tiburón</option>
+                                                    <option value="c">Vaca</option>
+                                                    <option value="a">Tortuga</option>
+                                                    <option value="b">Anaconda</option>
+                                                    <option value="c">Humano</option>
+                                                    <option value="a">Aguila</option>
+                                                    <option value="c">Gato</option>
+                                                    <option value="a">Sapo</option>
+                                                    <option value="c">Ratón</option>
+                                                </select></td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive"><br><br>
+                    <img src="img/evaluo.jpg" style="width:300px">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">5. </span><span style="font-size:20px">¿Describo el ciclo reproductivo de un vertebrado? <b>&nbsp;&nbsp;( 1 pts.)</b></span>
+                            <br>
+                            <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-xs-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre6a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">6. </span><span style="font-size:20px">¿Diferencio vertebrados según su tipo de reproducción?<b>&nbsp;&nbsp;( 1 pts.)</b></span>
+                            <br>
+                            <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                            Debes ingresar tu nombre</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/react-with-addons.js"></script>
+        <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script type="text/javascript">
+        $("#n_pagina").html('53');
+
+        document.getElementById("pre2a").addEventListener("keypress", () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById("pre2a").addEventListener("keyup", () => {
+            validMaxIngreso(document.getElementById("pre2a"), 2);
+        });
+
+        document.getElementById("pre3a").addEventListener("keypress", () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById("pre3a").addEventListener("keyup", () => {
+            validMaxIngreso(document.getElementById("pre3a"), 2);
+        });
+        document.getElementById("pre5a").addEventListener("keypress", () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById("pre5a").addEventListener("keyup", () => {
+            validMaxIngreso(document.getElementById("pre5a"), 1);
+        });
+        document.getElementById("pre6a").addEventListener("keypress", () => {
+            validNumero(0, 1, 1);
+        });
+        document.getElementById("pre6a").addEventListener("keyup", () => {
+            validMaxIngreso(document.getElementById("pre6a"), 1);
+        });
+
+        var tpre1 = 0;
+        var tpre2 = 0;
+        var tpre3 = 0;
+        var tpre4 = 0;
+        var tpre5 = 0;
+        var tpre6 = 0;
+
+        var cor = 0;
+        cont = 1,
+            ejer = 1,
+            itemsT = 10,
+            inc = 0,
+            calificacion = 10;
+
+
+
+        // #region Pregunta1
+
+        var pal1 = [
+            '<img class="img-responsive drag4" alt="1" src="img/i5_p53_act1.jpg"  style="display:inline-block; mix-blend-mode:multiply;width:150px"><br>',
+            '<img class="img-responsive drag4" alt="2" src="img/i6_p53_act1.jpg"  style="display:inline-block; mix-blend-mode:multiply;width:150px"<br>'
+        ];
+        var pal2 = [
+            '<img src="img/i1_p53_act1.jpg" style="250px;height:150px" class="img-responsive">',
+            '<img src="img/i2_p53_act1.jpg" style="250px;height:150px" class="img-responsive">',
+            '<img src="img/i3_p53_act1.jpg" style="250px;height:150px" class="img-responsive">',
+            '<img src="img/i4_p53_act1.jpg" style="250px;height:150px" class="img-responsive">'
+        ];
+
+        pal1.sort(f_randomico);
+        var p4vec1 = ['1', '2', '2', '1'];
+        var p4aux2 = [];
+        $(".textos").append(pal1);
+        var myArray2 = ['0', '1', '2', '3'];
+        var i, j, k;
+        for (i = myArray2.length; i; i--) {
+            j = Math.floor(Math.random() * i);
+            k = myArray2[i - 1];
+            myArray2[i - 1] = myArray2[j];
+            myArray2[j] = k;
+        }
+        //aleatorio literal 1
+        for (var i = 1; i <= 12; i++) {
+            var c1 = myArray2[i - 1];
+            $(".p4cima" + i).html(pal2[c1]);
+            p4aux2.push(p4vec1[c1]);
+
+        };
+        $(".drag4").draggable({
+            revert: 'invalid',
+            helper: 'clone',
+            containment: "#p4div1",
+        });
+
+        $(".drop4").droppable({
+            accept: ".drag4",
+            drop: function(event, ui) {
+                $(this).html('');
+                ui.helper.clone().appendTo(this);
+                $.each($(this).children(), function(index, value) {
+                    $(value).attr("style", "mix-blend-mode: multiply;");
+                })
+
+            }
+        });
+
+
+        function pregunta1() {
+            var p8im1 = $('.p4im1  > img').attr('alt');
+            var p8cont1 = 0;
+            if (p8im1 == p4aux2[0]) {
+                p8cont1++;
+                $(".p4im1").addClass("bien");
+            } else {
+                $(".p4im1").addClass("mal");
+            }
+            var p8im2 = $('.p4im2 > img').attr('alt');
+            if (p8im2 == p4aux2[1]) {
+                p8cont1++;
+                $(".p4im2").addClass("bien");
+            } else {
+                $(".p4im2").addClass("mal");
+            }
+            var p8im3 = $('.p4im3 > img').attr('alt');
+            if (p8im3 == p4aux2[2]) {
+                p8cont1++;
+                $(".p4im3").addClass("bien");
+            } else {
+                $(".p4im3").addClass("mal");
+            }
+            var p8im4 = $('.p4im4 > img').attr('alt');
+            if (p8im4 == p4aux2[3]) {
+                p8cont1++;
+                $(".p4im4").addClass("bien");
+            } else {
+                $(".p4im4").addClass("mal");
+            }
+
+            var total = ((p8cont1 / 4) * 2)
+            tpre1 = total;
+            $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+        }
+        // #endregion 
+        function pregunta2() {
+            var pre2 = document.getElementById("pre2a").value;
+            tpre2 = pre2;
+            $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+        }
+
+       
+        function pregunta3() {
+            var pre3 = document.getElementById("pre3a").value;
+            tpre3 = pre3;
+            $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+        }
+
+        function pregunta4() {
+            var core = 0;
+            var p4vec1 = ['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c'];
+
+            for (var i = 0; i < p4vec1.length; i++) {
+                if (($("#4pre" + [i] + "").val()) == p4vec1[i]) {
+
+                    $("#4pre" + [i] + "").addClass("bien");
+                    core = core + 1;
+                } else {
+
+                    $("#4pre" + [i] + "").addClass("mal");
+                    core;
+                }
+            }
+
+            tpre4 = ((core / 10) * 2);
+            $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+        }
+
+
+        function pregunta5() {
+            var pre5 = document.getElementById("pre5a").value;
+            tpre5 = pre5;
+            $("#pre5a").val(parseFloat(tpre5).toFixed(2));
+        }
+
+        function pregunta6() {
+            var pre6 = document.getElementById("pre6a").value;
+            tpre6 = pre6;
+            $("#pre6a").val(parseFloat(tpre6).toFixed(2));
+        }
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        $(document).ready(function() {
+            var watermarkImage = new Image();
+            watermarkImage.src = '';
+            LC.init(
+                document.getElementsByClassName('my-drawing')[0], {
+                    imageURLPrefix: 'imgcanvas',
+                    watermarkImage: watermarkImage,
+                    watermarkScale: 2 // you can scale it
+
+
+                });
+            
+        });
+
+
+        // #region Calculo Nota Final
+        function NotaFinal() {
+            var pre2 = document.getElementById("pre2a").value;
+            if (pre2 == "") {
+                alert("Pregunta 2: Califique la pregunta");
+            } else {
+                var pre3 = document.getElementById("pre3a").value;
+                if (pre3 == "") {
+                    alert("Pregunta 3: Califique la pregunta");
+                } else {
+                    var pre5 = document.getElementById("pre5a").value;
+                    if (pre5 == "") {
+                        alert("Pregunta 5: Califique la pregunta");
+                    } else {
+                        var pre6 = document.getElementById("pre6a").value;
+                        if (pre6 == "") {
+                            alert("Pregunta 6: Califique la pregunta");
+                        } else {
+                            pregunta1();
+                            pregunta2();
+                            pregunta3();
+                            pregunta4();
+                            pregunta5();
+                            pregunta6();
+                            cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4) + parseFloat(tpre5) + parseFloat(tpre6);
+                            Calculo_nota();
+                            $("input").attr('disabled', 'disabled');
+                        }
+                    }
+                }
+            }
+        }
+        </script>
+</body>
+
+</html>

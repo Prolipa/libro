@@ -1,0 +1,823 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 8</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/colorPick.min.css" rel="stylesheet">
+    <link href="css/paintToolBar.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <style>
+        table td {
+        padding: 5px;
+    }
+
+    .question {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .answer {
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .sobre {
+        padding: 4px;
+        border-style: none;
+        border-width: 2px;
+        border-radius: 15%;
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: #1a75ff;
+        color: #1a75ff;
+    }
+
+    .cajas {
+        border: 1px #005ca4 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+        width: auto;
+    }
+    .correcto {
+    color: #ffffff;
+    background-color: #00e600;
+    }
+
+    .incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+    }
+
+
+    .subrayar {
+        text-decoration: underline;
+    }
+
+    .vacio {}
+
+    .bordeCaja {
+        border: 1px #005CA9 solid;
+    }
+
+    .bordeCaja2 {
+        border: 1px #283583 solid;
+    }
+
+
+    .encierra {
+        background: rgba(255, 102, 0, 0.8);
+        color: #fff;
+        padding: 2px;
+        border-radius: 15px;
+    }
+
+    .encierra2 {
+        background: #FDE1C6;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .imagen64 {
+        background-image: url('img/i1_p44_act64.png');
+        width: 990px;
+        height: 367px;
+        display: flex;
+    }
+
+    .bordeTabla {
+        border: 1px #F7AB59 solid;
+    }
+
+
+    .pintar {
+
+    border: 5px solid #008FFF;
+    border-radius: 10px 10px 10px 10px;
+}
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+.punteado{ 
+  border-style: dotted; 
+    border-width: 3px; 
+    border-color: #67cc9d; 
+    background-color: cc3366; 
+    font-family: verdana, arial; 
+    font-size: 15pt; 
+} 
+.s{ font-size: 2vw;
+ }
+ .correcto {
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+
+    .incorrecto {
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+    
+    .cajas3{
+        width: 20%;
+        height: 50px;
+        border: 1px #029b23 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+    }
+    .seleccionCaja{
+        background-color: #1c8a00;
+        color: white;
+    }
+
+    .correcto {
+        color: #ffffff;
+        background-color: #8FB435;
+
+    }
+
+    .incorrecto {
+        color: #ffffff;
+        background-color: #E76E80;
+
+    }
+    .deseleccionCaja{
+        background-color: white;
+        color: black;
+    }
+
+    .backnota{
+    background-color: #00e600 !important;
+        -webkit-print-color-adjust: exact;
+}
+    </style>
+    }
+</head>
+
+<body>
+    <div id="nota-informativa" onclick="cerrar_ayuda()" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        En la actividad 1 observa con atención las preguntas y selecciona el casillero que mas asemeje su respuesta.<br>
+        Lee cuidadosamente las siguientes preguntas, contesta cada una de ellas.
+        <br> <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip disabled" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip " style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="total();">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> / <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoTST.png" alt="">Evaluación sumativa</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <img class="img-responsive" src="img/literatura.png"></img>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingCero">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseCero" aria-expanded="true" aria-controls="collapseCero">
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseCero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingCero">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <span> <b>Lee</b> el texto con atención.</span>
+                                        <br><br>
+                                        <div class="col-xs-12" style="background-color: #b3cdee; border-radius: 15px">
+                                            <div align="center">
+                                                <font size="6" color="#f36f42"><b>Mito africano</b></font>
+                                                <p class="fuente2">(Fragmento)</p>
+                                            </div>
+                                            <p class="fuente">Hubo un tiempo en que el ser superior Mulukú -en las poblaciones centroafricanas, a la deidad suprema se la conocía con el nombre de Woka- se propuso hacer brotar, de la tierra misma, a la primera pareja de la que todos descendemos. Mulukú, que dominaba el oficio de la siembra o, por mejor decir, era el sembrador por excelencia, hizo dos agujeros en el suelo. De uno surgió una mujer, del otro surgió un hombre.</p>
+                                            <p class="fuente">Ambos gozaban de la simpatía y el cariño de su hacedor y, por lo mismo, decidió enseñarles todo lo relativo a la tierra y su cultivo. Les proveyó, además, de herramientas para cavar y mullir el suelo y para cortar, o podar, árboles secos, y para clavar estacas. Puso en sus manos semillas de mijo para sembrar en la tierra y, en fin, les mostró la manera de vivir por sí mismos, sin dependencia alguna de cualesquiera otras criaturas.</p>
+                                            <p class="fuente">Sin embargo, se cuenta que la primera pareja de nuestra especie desatendió todos los consejos que la deidad les había dado y que, por lo mismo, abandonaron las tierras, las cuales terminaron convirtiéndose en eriales y campos yermos. Y, así, la primera pareja consumó su desobediencia, con lo que su hacedor los trastocó en monos. </p>
+                                            <div class="row">
+                                                <img src="img/i1_p216_act199.jpg" style="max-width: 100%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="html2pdf__page-break"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota1" class="nota-abierta" style="background: white;text-align: center;" readonly="">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <b>1. Subraya</b> <span class="sobre">1.25</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <br>
+                                        <span><b style="color: #EC6608">1.-</b><b>Subraya</b> la frase correcta que<b> completa</b> el sentido de la afirmación. </span>
+                                        <br><br>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <br>
+                                                    <div style="background-color: #e0daec; border: 5px solid #914f9e; border-radius: 20px; width: 600px; max-width: 100%">
+                                                        <p class="fuente" style="text-align: center;"><b>La idea global en el Mito africano es:</b></p>
+                                                    </div>
+                                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+                                                    </div>
+                                                    <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                        <table>
+                                                            <tr class="act1class" id="act01Txt1">
+                                                            </tr>
+                                                            <tr class="act1class" id="act01Txt2">
+                                                            </tr>
+                                                            <tr class="act1class" id="act01Txt3">
+                                                            </tr>
+                                                            <tr class="act1class" id="act01Txt4">
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <br>
+                                                    <div style="background-color: #e0daec; border: 5px solid #914f9e; border-radius: 20px; width: 600px; max-width: 100%">
+                                                        <p class="fuente" style="text-align: center;"><b>Los personajes son:</b></p>
+                                                    </div>
+                                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+                                                    </div>
+                                                    <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                        <table>
+                                                            <tr class="act2class" id="act02Txt1">
+                                                            </tr>
+                                                            <tr class="act2class" id="act02Txt2">
+                                                            </tr>
+                                                            <tr class="act2class" id="act02Txt3">
+                                                            </tr>
+                                                            <tr class="act2class" id="act02Txt4">
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <br>
+                                                    <div style="background-color: #e0daec; border: 5px solid #914f9e; border-radius: 20px; width: 600px; max-width: 100%">
+                                                        <p class="fuente" style="text-align: center;"><b>Los recursos literarios utilizados en el texto son:</b></p>
+                                                    </div>
+                                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+                                                    </div>
+                                                    <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                        <table>
+                                                            <tr class="act3class" id="act03Txt1">
+                                                            </tr>
+                                                            <tr class="act3class" id="act03Txt2">
+                                                            </tr>
+                                                            <tr class="act3class" id="act03Txt3">
+                                                            </tr>
+                                                            <tr class="act3class" id="act03Txt4">
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <br>
+                                                    <div style="background-color: #e0daec; border: 5px solid #914f9e; border-radius: 20px; width: 600px; max-width: 100%">
+                                                        <p class="fuente" style="text-align: center;"><b>La razón de la existencia de los mitos es:</b></p>
+                                                    </div>
+                                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+                                                    </div>
+                                                    <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                        <table>
+                                                            <tr class="act4class" id="act04Txt1">
+                                                            </tr>
+                                                            <tr class="act4class" id="act04Txt2">
+                                                            </tr>
+                                                            <tr class="act4class" id="act04Txt3">
+                                                            </tr>
+                                                            <tr class="act4class" id="act04Txt4">
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <br>
+                                                <div style="background-color: #e0daec; border: 5px solid #914f9e; border-radius: 20px; width: 600px; max-width: 100%">
+                                                    <p class="fuente" style="text-align: center;"><b>Marca con un √ las características del relato mitológico.</b></p>
+                                                </div>
+                                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+                                                </div>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                    <table>
+                                                        <tr class="act5class" id="act05Txt1">
+                                                        </tr>
+                                                        <tr class="act5class" id="act05Txt2">
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/comunicacion.png"></img>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota2" class="nota-abierta" style="background: white;text-align: center;">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <b>2. Escribe</b> <span class="sobre">0.25 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <br>
+                                    <span><b style="color: #8e499b">2.- </b>¿Cuáles son las partes de una narración?</span> <br><br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea>
+                                    <div class="html2pdf__page-break"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota3" class="nota-abierta" style="background: white;text-align: center;">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <b>3. Explica</b> <span class="sobre">1.25 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div>
+                                    <div class="text-question">
+                                        <br>
+                                        <span><b style="color: #8e499b">3.-</b><b>Explica</b> cada uno de las pautas para una buena narración oral.</span>
+                                        <br><br>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <table align="center">
+                                                    <tr>
+                                                        <td rowspan="6">
+                                                            <div align="center" style="background-color: #71bf44; border-radius: 10px;border: 3px solid #dadada">
+                                                                <p class="fuente2" style="padding-top: 10px">&nbsp;&nbsp;<font size="4" color="#ffffff"><b>Pautas para una narración oral </b></font>
+                                                                </p>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 4px"></td>
+                                                        <td>
+                                                            <textarea style="border-radius: 0 20px 0; border: 3px solid #61c05d" class="form-control text-question no-redimensionar" cols="60" rows="3">Presentación del narrador:</textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 4px"></td>
+                                                        <td>
+                                                            <textarea style="border-radius: 0 20px 0; border: 3px solid #c552a7" class="form-control text-question no-redimensionar " cols="60" rows="3">Modulación de la voz:</textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 4px"></td>
+                                                        <td>
+                                                            <textarea style="border-radius: 0 20px 0; border: 3px solid #09adce" class="form-control text-question no-redimensionar " cols="60" rows="3">Pausas:</textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 4px"></td>
+                                                        <td>
+                                                            <textarea style="border-radius: 0 20px 0; border: 3px solid #c85bac" class="form-control text-question no-redimensionar " cols="60" rows="3">Lenguaje gestual: 
+                                                                </textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 4px"></td>
+                                                        <td>
+                                                            <textarea style="border-radius: 0 20px 0; border: 3px solid #519ace" class="form-control text-question no-redimensionar " cols="60" rows="3">Postura:
+                                                                </textarea>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/lectura.png"></img>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <input type="text" id="nota4" class="nota-abierta" style="background: white;text-align: center;">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    <b>4. Define</b> <span class="sobre">1 pt</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <span><b style="color: #ec1163">4.- </b><b>Define</b> qué es para ti una carta de lector.</span><br>
+                                    <br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingFive">
+                        <h4 class="panel-title">
+                            <input type="text" id="nota5" class="nota-abierta" style="background: white;text-align: center;">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                <b>5. Infiere</b> <span class="sobre">0.5 pts</span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                        <div class="panel-body">
+                            <div>
+                                <div class="text-question">
+                                    <br>
+                                    <span><b style="color: #ec1163">5.- </b>De acuerdo con el propósito de la carta de lector, <b>infiere</b> dos posibles temas que podríamos encontrar en estos textos periodísticos. </span>
+                                    <br><br>
+                                    <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea>
+                                </div>
+                            </div>
+                            <div class="html2pdf__page-break"></div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSix">
+                        <h4 class="panel-title">
+                            <input type="text" id="nota6" class="nota-abierta" style="background: white;text-align: center;">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                <b>6. Completa</b> <span class="sobre">1.5 pts</span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                        <div class="panel-body">
+                            <div>
+                                <div class="text-question">
+                                    <br>
+                                    <span><b style="color: #ec1163">6.- </b><b>Completa</b> el siguiente esquema para elaborar una carta de lector.</span>
+                                    <br><br>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <table align="center">
+                                                <tr>
+                                                    <td>
+                                                        <div style="background-color: #dbe9b8; border-radius: 20px 0; line-height: 20px">
+                                                            <p class="fuente2">Fecha</p>
+                                                        </div>
+                                                    </td>
+                                                    <td> <img src="img/i1_p217_act199.jpg" style="max-width: 100%"></td>
+                                                    <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div style="background-color: #fdd0a6; border-radius: 20px 0; line-height: 60px">
+                                                            <p class="fuente2">Destinario</p>
+                                                        </div>
+                                                    </td>
+                                                    <td><img src="img/i1_p217_act199.jpg" style="max-width: 100%"></td>
+                                                    <td>
+                                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="3" placeholder="Texto"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div style="background-color: #ffe192; border-radius: 20px 0; line-height: 20px">
+                                                            <p class="fuente2">Vocativo</p>
+                                                        </div>
+                                                    </td>
+                                                    <td> <img src="img/i1_p217_act199.jpg" style="max-width: 100%"></td>
+                                                    <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div style="background-color: #f9b281; border-radius: 20px 0; line-height: 20px">
+                                                            <p class="fuente2">Título</p>
+                                                        </div>
+                                                    </td>
+                                                    <td> <img src="img/i1_p217_act199.jpg" style="max-width: 100%"></td>
+                                                    <td><textarea class="form-control text-question no-redimensionar " cols="60" rows="1" placeholder="Texto"></textarea></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="html2pdf__page-break"></div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <img class="img-responsive" src="img/escritura.png"></img>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSeven">
+                        <h4 class="panel-title">
+                            <input type="text" id="nota7" class="nota-abierta" style="background: white;text-align: center;">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                <b>7. Define</b> <span class="sobre">1.5 pts</span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                        <div class="panel-body">
+                            <div>
+                                <div class="text-question">
+                                    <span><b style="color: #00abcd">7.-</b><b>Define</b> en qué consisten los siguientes tipos de párrafos. </span><br><br>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div style="background-color: #fee0bf; border-radius: 10px">
+                                                <p class="fuente2"><b>Tipos de párrafo</b></p>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 act6class" id="act06Txt1" style="border: 3px #0a88cc dotted; border-radius: 20px">
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 act6class" id="act06Txt2" style="border: 3px #ad7ab6 dotted; border-radius: 20px">
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 act6class" id="act06Txt3" style="border: 3px #0485ca dotted; border-radius: 20px">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="html2pdf__page-break"></div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingEight">
+                        <h4 class="panel-title">
+                            <input type="text" id="nota8" class="nota-abierta" style="background: white;text-align: center;">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                <b>8. Escribe</b> <span class="sobre">0.25 pts</span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">
+                        <div class="panel-body">
+                            <div>
+                                <div class="text-question">
+                                    <br>
+                                    <span><b style="color: #00abcd">8.- </b><b>Escribe</b> una oración en las que apliques la siguiente regla ortográfica. </span>
+                                    <br><br>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <table align="center">
+                                                <tr>
+                                                    <td style="border: 2px solid #c8afd3; background-color: #f2eef6">
+                                                        <p class="fuente">Se escriben con<font color="#bd3a90"><b> b</b></font> los verbos<font color="#bd3a90"><b> haber</b></font>,<font color="#bd3a90"><b> caber y saber</b></font> con todas sus conjugaciones.</p>
+                                                    </td>
+                                                    <td style="border: 2px solid #c8afd3">
+                                                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="3" placeholder="Texto"></textarea>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="html2pdf__page-break"></div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingNine">
+                        <h4 class="panel-title">
+                            <input type="text" id="nota9" class="nota-abierta" style="background: white;text-align: center;">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                <b>9. Observa</b> <span class="sobre">1 pt</span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
+                        <div class="panel-body">
+                            <div>
+                                <div class="text-question">
+                                    <br>
+                                    <span><b style="color: #00abcd">9.- </b><b>Observa</b> los ejemplos y<b> escribe</b> las reglas ortográficas correspondientes.</span>
+                                    <br><br>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 act7class" id="act07Txt1">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 act7class" id="act07Txt2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="html2pdf__page-break"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img class="img-responsive" src="img/lengua.png"></img>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTen">
+                        <h4 class="panel-title">
+                            <input type="text" id="nota10" class="nota-abierta" style="background: white;text-align: center;"></input>
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                                <b>10. Escribe </b><span class="sobre">1.5 pt</span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">
+                        <div class="panel-body">
+                            <div>
+                                <div class="text-question">
+                                    <span><b style="color: #00abcd">10.- </b><b>Escribe</b> un ejemplo de variantes lingüísticas presentes en los dialectos ecuatorianos.</span>
+                                    <br><br>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <table style="border: 2px solid #14b4f0" align="center">
+                                                <tr>
+                                                    <td style="border: 2px solid #14b4f0; background-color: #d5e6a9">
+                                                        <p class="fuente2"><b>Palabras kichwas incorporadas</b></p>
+                                                    </td>
+                                                    <td style="border: 2px solid #14b4f0;"><textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border: 2px solid #14b4f0; background-color: #d5e6a9">
+                                                        <p class="fuente2"><b>Uso de diminutivos</b></p>
+                                                    </td>
+                                                    <td style="border: 2px solid #14b4f0;"><textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border: 2px solid #14b4f0; background-color: #d5e6a9">
+                                                        <p class="fuente2"><b>Uso de gerundios</b></p>
+                                                    </td>
+                                                    <td style="border: 2px solid #14b4f0;"><textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/actividad199.js"></script>
+    <script type="text/javascript">
+    var titulos = "evaluacion";
+    $("#txtNota").html("0");
+    $("#n_pagina").html("216");
+    $('.btnGuardar').removeClass('disabled');
+    </script>
+</body>
+
+</html>

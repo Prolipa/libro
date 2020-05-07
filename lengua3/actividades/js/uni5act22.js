@@ -461,16 +461,40 @@ function f_iniciar() {
 
     function preg2() {
         cor = 0;
-        var nota1_2 = $('#nota1_2').val();
-        if (!nota1_2) {
-            alert('Ingrese la calificación en la pregunta 2.')
-        } else {
-            cor = cor + parseFloat(nota1_2);
-            inc = inc + (2 - parseFloat(nota1_2));
-            $('#nota1_2').val(parseFloat(nota1_2).toFixed(2));
-            $('#nota1_2').attr('disabled', 'true');
-            f_comprobar();
+        //var nota1_2 = $('#nota1_2').val();
+        if ($('#1').val().toLowerCase() =='juega') {
+            $('#1').addClass('correcto');
+            cor = cor + 1;
+        }else{
+            $('#1').addClass('incorrecto');
         }
+         if ($('#2').val().toLowerCase() =='toca') {
+            $('#2').addClass('correcto');
+            cor = cor + 1;
+        }else{
+            $('#2').addClass('incorrecto');
+        }
+         if ($('#3').val().toLowerCase() =='cuida') {
+            $('#3').addClass('correcto');
+            cor = cor + 1;
+        }else{
+            $('#3').addClass('incorrecto');
+        }
+         if ($('#4').val().toLowerCase() =='bota') {
+            $('#4').addClass('correcto');
+            cor = cor + 1;
+        }else{
+            $('#4').addClass('incorrecto');
+        }
+        var nota2 = ((cor/4)*2);
+        if (nota2 == 0) {
+            $('#nota1_2').addClass('incorrecto');
+        }else{
+            $('#nota1_2').addClass('correcto');
+        }
+
+        $('#nota1_2').val(nota2);
+        
     }
 
     function f_comprobar() {

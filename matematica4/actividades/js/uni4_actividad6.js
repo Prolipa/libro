@@ -1,11 +1,12 @@
 var titulos = "preparo";
+f_titulos();
 numero_pagina(170);
 
 
 $(".btn_mostrar").on("click", function() {
-  //mostrar todas las preguntas
-  $(".panel-collapse").removeClass("in");
-  $(".panel-collapse").addClass("in");
+    //mostrar todas las preguntas
+    $(".panel-collapse").removeClass("in");
+    $(".panel-collapse").addClass("in");
 });
 
 

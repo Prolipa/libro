@@ -1,4 +1,5 @@
 var titulos = "aplico";
+f_titulos();
 numero_pagina(245);
 
 var tpre1 = 0;

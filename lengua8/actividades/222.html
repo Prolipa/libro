@@ -1,0 +1,460 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 8</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+</head>
+<style>
+    <style>
+    .imagen img {
+        display: inline-flex;
+
+    }
+    .correcto {
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+
+    .incorrecto {
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+    
+    .cajas3{
+        width: 20%;
+        height: 50px;
+        border: 1px #029b23 solid;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 5px;
+        text-align: center;
+    }
+    .seleccionCaja{
+        background-color: #1c8a00;
+        color: white;
+    }
+
+    .correctoi {
+        color: #ffffff;
+        background-color: #8FB435;
+
+    }
+
+    .incorrectoi {
+        color: #ffffff;
+        background-color: #E76E80;
+
+    }
+    .deseleccionCaja{
+        background-color: white;
+        color: black;
+    }
+    .caja {
+width: 200px;
+height: 40px;
+padding: 10px;
+border: 1px solid #aaaaaa;
+}
+.punteado{ 
+  border-style: dotted; 
+    border-width: 5px; 
+    border-color: #1bb3d2; 
+    background-color: cc3366; 
+    font-family: verdana, arial; 
+    font-size: 30pt; 
+} 
+
+
+
+   .triangulo.derecha{
+    border-color: transparent transparent transparent #bc2b92;
+}
+.triangulo.derecha>div {
+    border-color: transparent transparent transparent transparent;
+    top: 10px;
+    left:-21px;
+}
+.triangulo {
+    border-style: solid;
+    border-width: 2.4641288433382138vw;
+    width: 0;
+    height: 0;
+}
+.triangulo>div {
+    border-style: solid;
+    border-width: 10px;
+    width: 0;
+    height: 0;
+    }
+.s{
+    font-size: 2vw;
+}
+.binferior{
+   border-radius: 0px 0px 0px 43px;
+-moz-border-radius: 0px 0px 0px 43px;
+-webkit-border-radius: 0px 0px 0px 43px;
+border: 0px solid #000000;
+}
+.bsuperior{
+    border-radius: 0px 53px 0px 0px;
+-moz-border-radius: 0px 53px 0px 0px;
+-webkit-border-radius: 0px 53px 0px 0px;
+border: 0px solid #000000;
+}
+.bsuperior2{
+    border-radius: 41px 0px 0px 0px;
+-moz-border-radius: 41px 0px 0px 0px;
+-webkit-border-radius: 41px 0px 0px 0px;
+border: 0px solid #000000;
+}
+ .enc3a{
+    cursor: pointer;
+}
+</style>
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        En la actividad 1 observa con atención cada pregunta y respondela a tu criterio.<br>
+        En la actividad 2 escribe la versión final de tu crónica. <br>
+        En la actividad 3 verifica tu trabajo y selecciona el o los casilleros que cumplan los elementos que contengan tu trabajo.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="total()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-escritura" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-escritura ">
+                <span class="titulo"><img src="img/icoES.jpg" alt=""></span>
+                <span class="titulo">ESCRITURA</span>
+            </div>
+            <div class="panel-body">
+                <div align="left">
+                    <img src="img/planificotxt.png" style="max-width: 100%">
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a">&nbsp;
+                    <span>
+                        <b>Responde</b> las preguntas.<b> Organiza</b> la crónica utilizando el siguiente esquema:
+                    </span><br><br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <table>
+                                <tr>
+                                    <td style="background-color: #c4e2bd; width: 300px">
+                                        <div class="col-xs-12">
+                                            <div style="background-color: #ffffff; border-radius: 20px">
+                                                <p class="fuente2"><b>¿De qué tipo va a ser tu crónica?</b></p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="background-color: #f0f9fb">
+                                            <table align="center" style="text-align: center; border-radius: 50px; ">
+                                                <tr class="act1class" id="act01Txt1">
+                                                </tr>
+                                                <tr style="height: 10px"></tr>
+                                                <tr class="act1class" id="act01Txt2">
+                                                </tr>
+                                                <tr style="height: 10px"></tr>
+                                                <tr class="act1class" id="act01Txt3">
+                                                </tr>
+                                                <tr style="height: 10px"></tr>
+                                                <tr class="act1class" id="act01Txt4">
+                                                </tr>
+                                                <tr style="height: 10px"></tr>
+                                                <tr class="act1class" id="act01Txt5">
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #c4e2bd">
+                                        <div class="col-xs-12">
+                                            <div style="background-color: #ffffff; border-radius: 20px">
+                                                <p class="fuente2"><b>¿Sobre qué tema vas a escribir?</b></p>
+                                                <p class="fuente"><b>Describe</b> el tema específico sobre el que va a tratar tu crónica.</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <textarea style="background-color: #ffffff; border: 4px #43c1e0 dotted" class="form-control text-question no-redimensionar" rows="10" placeholder="Texto"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #f6faef">
+                                        <div class="col-xs-12">
+                                            <div style="background-color: #ffffff; border-radius: 20px">
+                                                <p class="fuente2"><b>¿A quién va a estar dirigida tu crónica?</b></p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <textarea style="background-color: #ffffff; border: 4px #43c1e0 dotted" class="form-control text-question no-redimensionar" rows="5" placeholder="Texto"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #fdd09e;">
+                                        <div class="col-xs-12">
+                                            <br>
+                                            <div style="background-color: #ffffff; border-radius: 20px;">
+                                                <p class="fuente2"><b>Realiza un esquema de las ideas que vas a desarrollar en tu crónica</b></p>
+                                                <p class="fuente"><b>Escoge</b> el tipo de esta estructura:
+                                                    <br> Cronológica: inicio, desarrollo, final.
+                                                    <br>De acción:
+                                                    <br><br><b>Inicia</b> con el suceso de actualidad.
+                                                    <br><br><b>Engancha</b> con la narración del suceso pasado.
+                                                    <br><br><b>Relaciona</b> el suceso de actualidad con el suceso pasado.
+                                                    <br><br><b>Finaliza</b> con un dato especial o poco conocido sobre el tema.</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <textarea style="border-radius: 20px; border: 4px solid #faaf18; text-align: center;" class="form-control text-question no-redimensionar" rows="2">Título de la crónica</textarea>
+                                        <br><br>
+                                        <textarea style="border-radius: 20px; border: 4px solid #faaf18;" class="form-control text-question no-redimensionar" rows="5">Inicio</textarea>
+                                        <br><br>
+                                        <textarea style="border-radius: 20px; border: 4px solid #faaf18;" class="form-control text-question no-redimensionar" rows="8">Desarrollo</textarea>
+                                        <br><br>
+                                        <textarea style="border-radius: 20px; border: 4px solid #faaf18;" class="form-control text-question no-redimensionar" rows="3">Final</textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div align="left">
+                    <img src="img/redactartxt.png" style="max-width: 100%">
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a">&nbsp;
+                    <span><b>Escribe</b> la versión final de tu crónica.
+                    </span><br><br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <p class="fuente2"><b>Título</b></p>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                <textarea style="border-radius: 20px; border: 6px solid #fdd5b0; text-align: center;" class="form-control text-question no-redimensionar" rows="1" placeholder="Título"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border: 4px solid #247bbd">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                    <br>
+                                    <div style="background-color: #00acd5; border-radius: 20px">
+                                        <p class="titulo s" style="text-align: center;"><b>Inicio</b></p>
+                                    </div>
+                                </div>
+                                <textarea class="form-control text-question no-redimensionar" rows="4" placeholder="Inicio"></textarea>
+                                <br>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border: 4px solid #247bbd">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                    <br>
+                                    <div style="background-color: #00acd5; border-radius: 20px">
+                                        <p class="titulo s" style="text-align: center;"><b>Desarrollo</b></p>
+                                    </div>
+                                </div>
+                                <textarea class="form-control text-question no-redimensionar" rows="8" placeholder="Desarrollo"></textarea>
+                                <br>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border: 4px solid #247bbd">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                    <br>
+                                    <div style="background-color: #00acd5; border-radius: 20px">
+                                        <p class="titulo s" style="text-align: center;"><b>Final</b></p>
+                                    </div>
+                                </div>
+                                <textarea class="form-control text-question no-redimensionar" rows="3" placeholder="Final"></textarea>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div align="left">
+                    <img src="img/revisotxt.png" style="max-width: 100%">
+                </div>
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a">&nbsp;
+                    <span><b>Verifica</b>, una vez terminado tu trabajo, si contiene los siguientes elementos.<b> Realiza</b> los ajustes necesarios.
+                    </span><br><br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <table style="text-align: center; border-radius: 50px; ">
+                                    <tr class="act2class" id="act02Txt1">
+                                    </tr>
+                                    <tr style="height: 10px"></tr>
+                                    <tr class="act2class" id="act02Txt2">
+                                    </tr>
+                                    <tr style="height: 10px"></tr>
+                                    <tr class="act2class" id="act02Txt3">
+                                    </tr>
+                                    <tr style="height: 10px"></tr>
+                                    <tr class="act2class" id="act02Txt4">
+                                    </tr>
+                                    <tr style="height: 10px"></tr>
+                                    <tr class="act2class" id="act02Txt5">
+                                    </tr>
+                                    <tr style="height: 10px"></tr>
+                                    <tr class="act2class" id="act02Txt6">
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div align="left">
+                        <img src="img/publicotxt.png" style="max-width: 100%">
+                    </div>
+                    <div class="text-question">
+                        <br>
+                        <span><b>Publica</b> tu trabajo en la página web de tu institución, en una cartelera o mediante otra forma que propongas.
+                        </span><br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/actividad222.js"></script>
+    <script>
+    $("#n_pagina").html("248"); //impresion de pagina            
+    $(".btnCalificar").bind("click", function() {
+        CalificacionAbierta();
+    });
+    </script>
+</body>
+
+</html>

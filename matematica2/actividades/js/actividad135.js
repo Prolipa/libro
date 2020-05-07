@@ -66,88 +66,88 @@ function pregunta1() {
   var p3imag14 = $("#p3imag14 img").attr("alt");
   if (p3imag1 == "1") {
     correcto = correcto + 1;
-    f_ok($("#p3imag1"));
+    ($("#p3imag1").addClass('correcto'));
   } else {
-    f_no($("#p3imag1"));
+    ($("#p3imag1").addClass('incorrecto'));
   }
 
   if (p3imag2 == "2") {
     correcto = correcto + 1;
-    f_ok($("#p3imag2"));
+    ($("#p3imag2").addClass('correcto'));
   } else {
-    f_no($("#p3imag2"));
+    ($("#p3imag2").addClass('incorrecto'));
   }
   if (p3imag3 == "3") {
     correcto = correcto + 1;
-    f_ok($("#p3imag3"));
+    ($("#p3imag3").addClass('correcto'));
   } else {
-    f_no($("#p3imag3"));
+    ($("#p3imag3").addClass('incorrecto'));
   }
   if (p3imag4 == "4") {
     correcto = correcto + 1;
-    f_ok($("#p3imag4"));
+    ($("#p3imag4").addClass('correcto'));
   } else {
-    f_no($("#p3imag4"));
+    ($("#p3imag4").addClass('incorrecto'));
   }
   if (p3imag5 == "1") {
     correcto = correcto + 1;
-    f_ok($("#p3imag5"));
+    ($("#p3imag5").addClass('correcto'));
   } else {
-    f_no($("#p3imag5"));
+    ($("#p3imag5").addClass('incorrecto'));
   }
   if (p3imag6 == "2") {
     correcto = correcto + 1;
-    f_ok($("#p3imag6"));
+    ($("#p3imag6").addClass('correcto'));
   } else {
-    f_no($("#p3imag6"));
+    ($("#p3imag6").addClass('incorrecto'));
   }
   if (p3imag7 == "3") {
     correcto = correcto + 1;
-    f_ok($("#p3imag7"));
+    ($("#p3imag7").addClass('correcto'));
   } else {
-    f_no($("#p3imag7"));
+    ($("#p3imag7").addClass('incorrecto'));
   }
   if (p3imag8 == "4") {
     correcto = correcto + 1;
-    f_ok($("#p3imag8"));
+    ($("#p3imag8").addClass('correcto'));
   } else {
-    f_no($("#p3imag8"));
+    ($("#p3imag8").addClass('incorrecto'));
   }
   if (p3imag9 == "5") {
     correcto = correcto + 1;
-    f_ok($("#p3imag9"));
+    ($("#p3imag9").addClass('correcto'));
   } else {
-    f_no($("#p3imag9"));
+    ($("#p3imag9").addClass('incorrecto'));
   }
   if (p3imag10 == "6") {
     correcto = correcto + 1;
-    f_ok($("#p3imag10"));
+    ($("#p3imag10").addClass('correcto'));
   } else {
-    f_no($("#p3imag10"));
+    ($("#p3imag10").addClass('incorrecto'));
   }
   if (p3imag11 == "7") {
     correcto = correcto + 1;
-    f_ok($("#p3imag11"));
+    ($("#p3imag11").addClass('correcto'));
   } else {
-    f_no($("#p3imag11"));
+    ($("#p3imag11").addClass('incorrecto'));
   }
   if (p3imag12 == "5") {
     correcto = correcto + 1;
-    f_ok($("#p3imag12"));
+    ($("#p3imag12").addClass('correcto'));
   } else {
-    f_no($("#p3imag12"));
+    ($("#p3imag12").addClass('incorrecto'));
   }
   if (p3imag13 == "6") {
     correcto = correcto + 1;
-    f_ok($("#p3imag13"));
+    ($("#p3imag13").addClass('correcto'));
   } else {
-    f_no($("#p3imag13"));
+    ($("#p3imag13").addClass('incorrecto'));
   }
   if (p3imag14 == "7") {
     correcto = correcto + 1;
-    f_ok($("#p3imag14"));
+    ($("#p3imag14").addClass('correcto'));
   } else {
-    f_no($("#p3imag14"));
+    ($("#p3imag14").addClass('incorrecto'));
   }
   var total = (correcto * 2) / 14;
   tpre1 = total;
@@ -311,8 +311,6 @@ function NotaFinal() {
           parseFloat(tpre6);
         var Vtotal = Nf.toFixed(2);
         $("#txtNota").html(Vtotal);
-        document.getElementById("bt_comprobar").disabled = true;
-        $("input").attr('disabled','disabled');
       }
     }
   }

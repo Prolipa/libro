@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.caja-input {
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px #DC4DF3;
+}
+
+.cajapequeña-input {
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    border: solid 2px #DC4DF3;
+}
+
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+table.espaciar {
+    border-collapse: separate;
+    border-spacing: 30px 30px;
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+
+.subrayar {
+    border-bottom: 5px solid #818981;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+span.titulopre {
+    font-size: 20px;
+    color: #39B428;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E58754;
+    font-weight: 700;
+}
+
+.bien {
+    background: #82E0AA;
+}
+
+.mal {
+    background: #F1948A;
+}
+
+.pintar {
+    background: #3DE8B7;
+}
+
+.c_origen {
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 80px;
+    min-width: 150px;
+    width: 60%;
+    margin-left: 1px;
+}
+
+.c_destinos2 {
+
+    padding: 0px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 230px;
+    width: 50%;
+    max-width: 100%;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Pinta.<br>
+        2. Da click para marcar la opción correcta.<br>
+        3. Selecciona la opción correcta.<br>
+        4. Responde.<br>
+        5. Responde..<br>
+        6. Pinta la opción A y B correctamente.<br>
+        7. Responde.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/unidad1.png" style="width:100px"> <span style="color:#C33A99">TEMA 4</span> &nbsp;&nbsp;Diversidad de plantas sin semillas del Ecuador</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 table-responsive">
+                    <img src="img/aplico.jpg" style="width:200px">
+                    <div class="col-lg-12">
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a" >&nbsp;
+                        <span class="enunciado"><span style="color: #00ADED;font-size:20px">1. </span> <b>Lee</b> la información del recuadro, <b>ubica</b> en el mapa del Ecuador y <b>pinta</b> los lugares de la región Interandina. <b>&nbsp;&nbsp;( 1 pts.)</b></span><br>
+                        <center>
+                            <div style="width:600px;border-radius:10px;background:#FEE7D1;text-align:center;padding:10px;font-size:20px">En la región Interandina del Ecuador existe mayor variedad de plantas sin semilla que en el Litoral, debido al clima que es templado húmedo y frío de páramo.</div>
+                        </center>
+                        <center>
+                            <div style="width:600px"><br>
+                                <div class="my-drawing img-responsive"></div>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-lg-12"><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">2. </span><span class="enunciado"><b> Marca</b> con una <span style="color:#00ADED;">X</span> la alternativa correcta.<b>&nbsp;&nbsp;( 2 pts.)</b></span><br>
+                            <span class="enunciado">Las plantas sin semilla predominan más en la región Interandina que en el Litoral porque:</span><br>
+                            <center>
+                                <table style="border-collapse:separate;border-spacing:3px 20px" id="p2ran">
+                                </table><br>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-lg-12">
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">3. </span><span class="enunciado"><b>Observa</b> los gráficos, <b>identifica</b> y <b>escribe</b> el nombre del lugar donde habitan las plantas sin semilla.&nbsp;&nbsp;<b>( 2 pts.)</b></span><br>
+                            <center>
+                                <table style="border-collapse:separate;border-spacing:40px 0px">
+                                    <tr id="p3ran">
+                                    </tr>
+                                </table>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-lg-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">4. </span><span class="enunciado"><b> Conoce</b> más acerca de las regiones naturales y los bosques del Ecuador, ingresa a <a href="http://bit.ly/2ZA2Wb6">http://bit.ly/2ZA2Wb6</a> y escribe dos ideas que te llamen la atención.&nbsp;&nbsp;<b>( 1 pts.)</b></span><br><br>
+                            <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="8" placeholder="Texto"></textarea><br>
+                            <span class="enunciado">
+                                <span class="titulopre">a)</span> Los árboles de los bosques están cubiertos por musgos, orquídeas, bromelias y helechos.<br><br>
+                                <span class="titulopre">b)</span> La degradación del hábitat de la región del bosque Húmedo Tropical del Chocó es una de las más altas en el Ecuador; casi el 75 % del bosque ha sido destruido por actividades humanas.<br><br>
+                                <span class="titulopre">c)</span> El páramo es importante como fuente de agua para zonas urbanas. En Quito el 90 % del agua potable proviene del páramo.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-lg-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">5. </span><span class="enunciado"><b>Lee</b> el siguiente texto y <b>propón</b> una alternativa para evitar la destrucción de los bosques ecuatorianos.&nbsp;&nbsp;<b>( 1 pts.)</b></span><br><br>
+                            <div style="border-radius:10px;background:#F1C490;text-align:center;padding:20px"><span class="enunciado">El impacto humano en los bosques primarios de la Costa ha sido severo. Más del 60 % de su área ha sido destruido por actividades humanas, para destinarlas a la agricultura y a la ganadería.</span></div><br>
+                            <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="4" placeholder="Texto"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-lg-12"><br><br>
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre6a" readonly="">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">6. </span><span class="enunciado"><b>Pinta</b> la respuesta correcta. &nbsp;&nbsp;<b>( 2 pts.)</b><br>La planta que aparece en el gráfico y habita en los lugares húmedos de las montañas y entre los árboles es:<br></span><br>
+                            <div class="col-lg-3">
+                                <div>
+                                    <span style="font-size:25px" class="titulopre">a)</span>
+                                    <span class="enunciado" id="p6aran">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div>
+                                    <span style="font-size:25px" class="titulopre">b)</span>
+                                    <span class="enunciado" id="p6bran">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6"><img src="img/i1_p31_act2.jpg" style="width:400px"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-lg-12"><br><br>
+                        <img src="img/evaluo.jpg" style="width:200px">
+                        <div><input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre7a">&nbsp;
+                            <span style="color: #00ADED;font-size:20px">7. </span><span class="enunciado"><b>¿Identifico</b> la diversidad de plantas sin semilla que existen en el Ecuador? &nbsp;&nbsp;<b>( 1 pts.)</b><br>
+                                <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="4" placeholder="Texto"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script type="text/javascript">
+    $("#n_pagina").html('28');
+
+    document.getElementById("pre1a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre1a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre1a"), 1);
+    });
+    document.getElementById("pre4a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre4a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre4a"), 1);
+    });
+    document.getElementById("pre5a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre5a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre5a"), 1);
+    });
+    document.getElementById("pre7a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre7a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre7a"), 1);
+    });
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+    var tpre4 = 0;
+    var tpre5 = 0;
+    var tpre6 = 0;
+    var tpre7 = 0;
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+    function pregunta1() {
+        var pre1 = document.getElementById("pre1a").value;
+        tpre1 = pre1;
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+
+    p2vec = [
+        '<tr><td style="width:600px;padding:10px;background:#E8DAEF"><span class="enunciado">No se han sembrado en el Litoral.</td><td><input class="2 enca1" id="p2var0" style="width:40px;height:35px;text-align:center;font-size:22px;border:solid 2px #BB8FCE"></span></td></tr>',
+        '<tr><td style="width:600px;padding:10px;background:#D6EAF8"><span class="enunciado">Existe mayor humedad en el suelo de la región Interandina.</td><td><input class="2 enca2" id="p2var1" style="width:40px;height:35px;text-align:center;font-size:22px;border:solid 2px #7FB3D5"></span></td></tr>',
+        '<tr><td style="width:600px;padding:10px;background:#FAE5D3"><span class="enunciado">El clima en la región Interandina es cálido.</td><td><input class="2 enca3" id="p2var2" style="width:40px;height:35px;text-align:center;font-size:22px;border:solid 2px #F1948A"></span></td></tr>'
+    ];
+    p2vec.sort(f_randomico);
+    $('#p2ran').html(p2vec);
+
+    // poner x
+    $('.2').click(function() {
+        switch ($(this).attr('class')) {
+            case '2 enca1':
+                $('.enca1').val('X');
+                $('.enca2').val('');
+                $('.enca3').val('');
+                break;
+            case '2 enca2':
+                $('.enca1').val('');
+                $('.enca2').val('X');
+                $('.enca3').val('');
+                break;
+            case '2 enca3':
+                $('.enca1').val('');
+                $('.enca2').val('');
+                $('.enca3').val('X');
+                break;
+        }
+    });
+
+    //validar casillas pintadas
+
+    function pregunta2() {
+        var core = 0;
+
+        if (($("#p2var1").val()) == "X") {
+
+            $("#p2var1").addClass("correcto");
+            $("#p2var0").addClass("correcto");
+            $("#p2var2").addClass("correcto");
+            core = core + 1;
+        } else {
+            $("#p2var0").addClass("incorrecto");
+            $("#p2var2").addClass("incorrecto");
+            $("#p2var1").addClass("incorrecto");
+
+        }
+        $('.2').off('click');
+        var subtotal = core;
+        var pre2a = (subtotal * 2);
+
+        if (pre2a < 0) {
+            pre2a = 0;
+            tpre2 = pre2a;
+            $('#pre2a').val(parseFloat(pre2a).toFixed(2));
+
+        } else {
+            $('#pre2a').val(parseFloat(pre2a).toFixed(2));
+            tpre2 = pre2a;
+
+
+        }
+    }
+    // #endregion
+
+    p3vec = [
+        '<td align="center"><img src="img/i1_p31_act1.jpg" style="width:200px;height:200px"><br><select id="3pre0" style="border:solid 2px #E8A24A;text-align:center;width:180px;font-size:20px;height:30px;border-radius:10px;"><option value="var">--Selecciona--</option><option value="a">Bosque nublado </option><option value="b">Páramo </option><option value="c">Bosque tropical</option></select></td>',
+
+
+        '<td align="center"><img src="img/i2_p31_act1.jpg" style="width:200px;height:200px"><br><select id="3pre1" style="border:solid 2px #E8A24A;text-align:center;width:180px;font-size:20px;height:30px;border-radius:10px;"><option value="var">--Selecciona--</option><option value="a">Bosque nublado </option><option value="b">Páramo </option><option value="c">Bosque tropical</option></select></td>',
+
+        '<td align="center"><img src="img/i3_p31_act1.jpg" style="width:200px;height:200px"><br><select id="3pre2" style="border:solid 2px #E8A24A;text-align:center;width:180px;font-size:20px;height:30px;border-radius:10px;"><option value="var">--Selecciona--</option><option value="a">Bosque nublado </option><option value="b">Páramo </option><option value="c">Bosque tropical</option></select></td>'
+
+    ];
+    p3vec.sort(f_randomico);
+    $('#p3ran').html(p3vec);
+
+    function pregunta3() {
+        var core = 0;
+        var p3var1 = ['a', 'b', 'c'];
+
+        for (var i = 0; i < p3var1.length; i++) {
+            if (($("#3pre" + [i] + "").val().toLowerCase()) == p3var1[i]) {
+
+                $("#3pre" + [i] + "").addClass("bien");
+                core = core + 1;
+            } else {
+
+                $("#3pre" + [i] + "").addClass("mal");
+                core;
+            }
+        }
+
+        tpre3 = ((core / 3) * 2);
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+    }
+
+    function pregunta4() {
+        var pre4 = document.getElementById("pre4a").value;
+        tpre4 = pre4;
+        $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+    }
+
+    function pregunta5() {
+        var pre5 = document.getElementById("pre5a").value;
+        tpre5 = pre5;
+        $("#pre5a").val(parseFloat(tpre5).toFixed(2));
+    }
+
+    p6avec = [
+        '<p class="6 opc0">una orquídea.</p>',
+        '<p class="6 opc1">un helecho.</p>',
+        '<p class="6 opc2">un alga.</p>',
+        '<p class="6 opc3">una hierba.</p>'
+
+    ];
+    p6avec.sort(f_randomico);
+    $('#p6aran').html(p6avec);
+
+    p6bvec = [
+        '<p class="6 opc4">una planta con semilla.</p>',
+        '<p class="6 opc5">una planta sin semilla.</p>',
+        '<p class="6 opc6">una planta con flores.</p>',
+        '<p class="6 opc7">una planta con frutos.</p>'
+
+    ];
+    p6bvec.sort(f_randomico);
+    $('#p6bran').html(p6bvec);
+
+
+
+    // pintar 
+    $(".6").addClass('hvr-grow-shadow2');
+    $(".6").css('cursor', 'pointer');
+    $(".6").click(function() {
+        if ($(this).hasClass("pintar")) {
+            $(this).removeClass("pintar");
+        } else {
+            $(this).addClass("pintar");
+        }
+    });
+
+
+    // validar casillas pintadas
+    function pregunta6() {
+        var nt0 = 0,
+            nt1 = 0,
+            nt2 = 0,
+            nt3 = 0,
+            nt4 = 0,
+            nt5 = 0,
+            nt6 = 0,
+            nt7 = 0;
+        // pregunats correctas
+        if ($('.opc1').hasClass('pintar') == true) {
+            nt0 = 1;
+            $('.opc1').addClass('bien');
+        }
+        if ($('.opc5').hasClass('pintar') == true) {
+            nt1 = 1;
+            $('.opc5').addClass('bien');
+        }
+        // pregunats inscorrectas
+        if ($('.opc0').hasClass('pintar') == true) {
+            nt2 = 1;
+            $('.opc0').addClass('mal');
+        }
+        if ($('.opc2').hasClass('pintar') == true) {
+            nt3 = 1;
+            $('.opc2').addClass('mal');
+        }
+        if ($('.opc3').hasClass('pintar') == true) {
+            nt4 = 1;
+            $('.opc3').addClass('mal');
+        }
+        if ($('.opc4').hasClass('pintar') == true) {
+            nt5 = 1;
+            $('.opc4').addClass('mal');
+        }
+        if ($('.opc6').hasClass('pintar') == true) {
+            nt6 = 1;
+            $('.opc6').addClass('mal');
+        }
+        if ($('.opc7').hasClass('pintar') == true) {
+            nt7 = 1;
+            $('.opc7').addClass('mal');
+        }
+        $('.6').off('click');
+        var subtotal = parseFloat(nt0) + parseFloat(nt1) - parseFloat(nt2) - parseFloat(nt3) - parseFloat(nt4) - parseFloat(nt5) - parseFloat(nt6) - parseFloat(nt7);
+        var pre6a = ((subtotal / 2) * 2);
+
+        if (pre6a < 0) {
+            pre6a = 0;
+            tpre6 = pre6a;
+            $('#pre6a').val(parseFloat(pre6a).toFixed(2));
+
+        } else {
+            $('#pre6a').val(parseFloat(pre6a).toFixed(2));
+            tpre6 = pre6a;
+
+
+        }
+
+    }
+    // #endregion
+    function pregunta7() {
+        var pre7 = document.getElementById("pre7a").value;
+        tpre7 = pre7;
+        $("#pre7a").val(parseFloat(tpre7).toFixed(2));
+    }
+
+    // #region Calculo Nota Final
+    function NotaFinal() {
+        var pre1 = document.getElementById("pre1a").value;
+        if (pre1 == "") {
+            alert("Pregunta 1: Califique la pregunta");
+        } else {
+            var pre4 = document.getElementById("pre4a").value;
+            if (pre4 == "") {
+                alert("Pregunta 4: Califique la pregunta");
+            } else {
+                var pre5 = document.getElementById("pre5a").value;
+                if (pre5 == "") {
+                    alert("Pregunta 5: Califique la pregunta");
+                } else {
+                    var pre7 = document.getElementById("pre7a").value;
+                    if (pre7 == "") {
+                        alert("Pregunta 7: Califique la pregunta");
+                    } else {
+                        pregunta1();
+                        pregunta2();
+                        pregunta3();
+                        pregunta4();
+                        pregunta5();
+                        pregunta6();
+                        pregunta7();
+                        cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4) + parseFloat(tpre5) + parseFloat(tpre6) + parseFloat(tpre7);
+                        Calculo_nota();
+                        $("input").attr('disabled', 'disabled');
+                    }
+                }
+            }
+
+        }
+    }
+
+    // Wrap every letter in a span
+    $('.ml2').each(function() {
+        $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+    });
+
+    anime.timeline({ loop: true })
+        .add({
+            targets: '.ml2 .letter',
+            scale: [4, 1],
+            opacity: [0, 1],
+            translateZ: 0,
+            easing: "easeOutExpo",
+            duration: 950,
+            delay: function(el, i) {
+                return 70 * i;
+            }
+        });
+    </script>
+    <script>
+    var winHeight = $(window).height();
+    var winWidth = $(window).width();
+    $(document).ready(function() {
+        var watermarkImage = new Image();
+        watermarkImage.src = 'img/i2_p30_act1.jpg';
+
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage,
+                watermarkScale: .20 // you can scale it
+
+            });
+
+    });
+    </script>
+</body>
+
+</html>

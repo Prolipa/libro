@@ -1,4 +1,5 @@
 var titulos = "aplico";
+f_titulos();
 numero_pagina(101);
 
 var tpre1 = 0;
@@ -11,19 +12,19 @@ function pregunta1() {
     var valor = valor_pregunta(respuestas);
     var nota = 0;
     for (var i = 0; i < respuestas.length; i++) {
-      if (
-        verificar_contenido(
-          respuestas[i].value.toLowerCase(),
-          soluciones[i].value.toLowerCase().split("*")
-        )
-      ) {
-        respuestas[i].classList.add("valid");
-        respuestas[i].classList.remove("no-valid");
-        nota += valor;
-      } else {
-        respuestas[i].classList.add("no-valid");
-        respuestas[i].classList.remove("valid");
-      }
+        if (
+            verificar_contenido(
+                respuestas[i].value.toLowerCase(),
+                soluciones[i].value.toLowerCase().split("*")
+            )
+        ) {
+            respuestas[i].classList.add("valid");
+            respuestas[i].classList.remove("no-valid");
+            nota += valor;
+        } else {
+            respuestas[i].classList.add("no-valid");
+            respuestas[i].classList.remove("valid");
+        }
     }
     tpre1 = nota / 2;
     $("#pre1a").val(parseFloat(tpre1).toFixed(2));
@@ -32,41 +33,41 @@ function pregunta1() {
 
 // #region Pregunta2
 function pregunta2() {
-  var respuestas = document.getElementsByClassName("respuestas2");
-  var soluciones = document.getElementsByClassName("solucion2");
-  var valor = valor_pregunta(respuestas);
-  var nota = 0;
-  for (var i = 0; i < respuestas.length; i++) {
-    if (
-      verificar_contenido(
-        respuestas[i].value.toLowerCase(),
-        soluciones[i].value.toLowerCase().split("*")
-      )
-    ) {
-      respuestas[i].classList.add("valid");
-      respuestas[i].classList.remove("no-valid");
-      nota += valor;
-    } else {
-      respuestas[i].classList.add("no-valid");
-      respuestas[i].classList.remove("valid");
+    var respuestas = document.getElementsByClassName("respuestas2");
+    var soluciones = document.getElementsByClassName("solucion2");
+    var valor = valor_pregunta(respuestas);
+    var nota = 0;
+    for (var i = 0; i < respuestas.length; i++) {
+        if (
+            verificar_contenido(
+                respuestas[i].value.toLowerCase(),
+                soluciones[i].value.toLowerCase().split("*")
+            )
+        ) {
+            respuestas[i].classList.add("valid");
+            respuestas[i].classList.remove("no-valid");
+            nota += valor;
+        } else {
+            respuestas[i].classList.add("no-valid");
+            respuestas[i].classList.remove("valid");
+        }
     }
-  }
-  tpre2 = nota / 2;
-  $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    tpre2 = nota / 2;
+    $("#pre2a").val(parseFloat(tpre2).toFixed(2));
 }
 // #endregion
 
 // #region Calculo Nota Final
 function NotaFinal() {
-  pregunta1();
-  pregunta2();
-  var Nf =
-    parseFloat(tpre1) +
-    parseFloat(tpre2);
+    pregunta1();
+    pregunta2();
+    var Nf =
+        parseFloat(tpre1) +
+        parseFloat(tpre2);
 
-  var Vtotal = Nf.toFixed(2);
-  $("#txtNota").html(Vtotal);
-  document.getElementById("bt_comprobar").disabled = true;
+    var Vtotal = Nf.toFixed(2);
+    $("#txtNota").html(Vtotal);
+    document.getElementById("bt_comprobar").disabled = true;
 }
 
 // #endregion

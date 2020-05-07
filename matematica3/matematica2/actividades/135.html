@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Matemática 2</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/icomoon.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+
+    <style>
+        .cajas {
+            max-width: 100%;
+            max-height: 100%;
+            border: 1px #9600a4 solid;
+            border-radius: 5px;
+            text-align: center;
+
+        }
+
+        #caja_res,
+        #caja_res1,
+        #caja_res2 {
+            padding: 20px;
+            border: 2px dotted #0066AD;
+            border-radius: 10px;
+            height: 100px;
+            width: 80px;
+        }
+
+        .tab {
+            margin: 5px auto;
+            border: 1px solid #FAC183;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .ancho {
+            width: 100px;
+        }
+
+        .respuestas {
+            width: 80%;
+            border: none;
+            border-bottom: 1px solid #005ca4;
+        }
+
+        .c_imagenes {
+            padding: 10px;
+        }
+
+        .mark1 {
+            width: 80px;
+            height: 90px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark2 {
+            width: 100px;
+            height: 155px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .mark3 {
+            width: 180px;
+            height: 120px;
+            border-style: dashed;
+            border-width: 1px;
+            border-radius: 15px;
+            border-color: #2eb8b8;
+            background-color: transparent
+        }
+
+        .correcto {
+            color: #ffffff;
+            background-color: #8FB435 !important;
+            -webkit-print-color-adjust: exact; 
+
+        }
+
+        .incorrecto {
+            color: #ffffff;
+            background-color: #E76E80 !important;
+            -webkit-print-color-adjust: exact; 
+
+
+        }
+
+        .img {
+            margin-left: 14px;
+        }
+
+        .heart {
+            padding-right: 10px;
+        }
+
+        .cross {
+            padding-left: 10px;
+        }
+
+
+
+        .img1 {
+            margin-left: 14px;
+        }
+
+        .heart1 {
+            padding-right: 10px;
+        }
+
+        .cross1 {
+            padding-left: 10px;
+        }
+
+        .encierra {
+            border: 1px solid blue;
+            border-radius: 40%;
+
+        }
+
+        .respuesta {
+            text-align: center;
+            border: 0;
+            border-top: 2px solid #393939;
+            border-bottom: 1px solid #85BCEB;
+            width: 50px;
+        }
+
+        .bordeT {
+            border: 1px #76B82A solid;
+        }
+
+
+
+        .bordeT2 {
+            border: 1px #76B82A solid;
+            text-align: center;
+        }
+
+        .paso {
+            background-color: #F9B000;
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 5px;
+        }
+
+        .pinta {
+            background: #9B8600;
+
+        }
+
+        .c_destino {
+            padding: 0.5px;
+            border: 3px dotted #7899CC;
+            border-radius: 10px;
+            min-height: 212px;
+        }
+
+        .c_destino1 {
+            padding: 0.5px;
+            border: 3px dotted #7899CC;
+            border-radius: 10px;
+            min-height: 212px;
+        }
+
+        .c_destino2 {
+            padding: 0.5px;
+            border: 3px dotted #7899CC;
+            border-radius: 10px;
+            min-height: 212px;
+        }
+
+        .c_destinos {
+            padding: 0.5px;
+            border: 3px dotted #7899CC;
+            border-radius: 10px;
+            min-height: 212px;
+        }
+
+        .c_destinos1 {
+            padding: 0.5px;
+            border: 3px dotted #7899CC;
+            border-radius: 10px;
+            min-height: 212px;
+        }
+
+        .c_destinos2 {
+            padding: 5px;
+            border: 1px solid #CCAE69;
+            border-radius: 10px;
+            min-height: 70px;
+            min-width: 120px;
+        }
+
+        .c_origen {
+
+            border: 1px solid #009BDB;
+            border-radius: 10px;
+            min-height: 110px;
+            max-width: 24%;
+            margin-left: 1px;
+            min-width: 100px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        <b>Pregunta 1:</b> Desplaza los gráficos a los recuadros para completar la secuencia.<br>
+        <b>Pregunta 2:</b> Resuelve los problemas. <br>
+        <b>Pregunta 3:</b> Resuelve las adiciones y sustracciones. <br>
+        <b>Pregunta 4:</b> Dibuja lo requerido. <br>
+        <b>Pregunta 5:</b> Une los puntos <br>
+        <b>Pregunta 6:</b> Resuelve y escribe las respuesta correcta en los recuadros. <br>
+
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style=";" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> /
+                        <span id='act_total'>1</span>
+                    </span>
+                    <span class="btn notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Tú puntaje <span id="txtNota"> </span>/ 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag 138
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio" style="margin-top: 30px;">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-aplico" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico">
+                <span class="titulo"><img src="img/icoPRE.png" alt="">Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Álgebra y funciones (click aqui)
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="text-question">
+                                        <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a" readonly>&nbsp;
+                                        <span><b>1. Completo </b>la secuencia y <b>pinto</b>. Luego <b>encierro</b> el patrón.
+                                            <b>(2 pts.)</b></span></div><br>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-1"><span style="color: white; background: #005DA8 !important; border-radius: 5px;">&nbsp;&nbsp;Patrón&nbsp;&nbsp;</span></div>
+                                            <div class="col-sm-7" style="border-radius: 10px; border: 1px dotted #005DA8 !important;" align="center">
+
+                                                <div class="col-sm-3" align="center"><img id="p3img2" style="mix-blend-mode: multiply;"
+                                                        class="img-responsive drag2 " src="img/i3_p148_act1.jpg" alt="2"></div>
+                                                <div class="col-sm-3" align="center"><img id="p3img2" style="mix-blend-mode: multiply;"
+                                                        class="img-responsive drag2 " src="img/i5_p148_act1.jpg" alt="4"></div>
+                                                <div class="col-sm-3" align="center"><img id="p3img1" style="mix-blend-mode: multiply;"
+                                                        class="img-responsive drag2 " src="img/i2_p148_act1.jpg" alt="1"></div>
+                                                <div class="col-sm-3" align="center"><img id="p3img1" style="mix-blend-mode: multiply;"
+                                                        class="img-responsive drag2 " src="img/i4_p148_act1.jpg" alt="3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12"><br></div>
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-1"><span style="color: white; background: #005DA8 !important; border-radius: 5px;">&nbsp;&nbsp;Secuencia&nbsp;&nbsp;</span></div>
+                                            <div class="col-sm-12" style="border-radius: 10px; border: 1px dotted #005DA8 !important;" align="center">
+
+                                                <div class="col-md-12" style="display: inline-block;">
+                                                    <div class="col-sm-3" id="a39caim1">
+                                                        <img style="mix-blend-mode: multiply; min-width: 60px;" class="img-responsive" src="img/i1_p148_act1.jpg" alt="">
+                                                    </div>
+                                                    <div id="p3imag1" class="mark1 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag2" class="mark1 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag3" class="mark1 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag4" class="mark1 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag5" class="mark1 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag6" class="mark1 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag7" class="mark1 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag8" class="mark1 drop2" style="display: inline-block;"></div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-12"><br></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-1"><span style="color: white; background: #005DA8; border-radius: 5px;">&nbsp;&nbsp;Patrón&nbsp;&nbsp;</span></div>
+                                            <div class="col-sm-7" style="border-radius: 10px; border: 1px dotted #005DA8;" align="center">
+
+                                                <div class="col-sm-4" align="center"><img id="p3img2" style="mix-blend-mode: multiply;"
+                                                        class="img-responsive drag2 " src="img/i8_p148_act1.jpg" alt="6"></div>
+                                                <div class="col-sm-4" align="center"><img id="p3img2" style="mix-blend-mode: multiply;"
+                                                        class="img-responsive drag2 " src="img/i7_p148_act1.jpg" alt="5"></div>
+                                                <div class="col-sm-4" align="center"><img id="p3img1" style="mix-blend-mode: multiply;"
+                                                        class="img-responsive drag2 " src="img/i9_p148_act1.jpg" alt="7"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12"><br></div>
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-1"><span style="color: white; background: #005DA8; border-radius: 5px;">&nbsp;&nbsp;Secuencia&nbsp;&nbsp;</span></div>
+                                            <div class="col-sm-12" style="border-radius: 10px; border: 1px dotted #005DA8;" align="center">
+
+                                                <div class="col-md-12" style="display: inline-block;">
+                                                    <div class="col-sm-3" id="a39caim1">
+                                                        <img style="mix-blend-mode: multiply; min-width: 40px;" class="img-responsive" src="img/i6_p148_act1.jpg" alt="">
+                                                    </div>
+                                                    <div id="p3imag9" class="mark2 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag10" class="mark2 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag11" class="mark2 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag12" class="mark2 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag13" class="mark2 drop2" style="display: inline-block;"></div>
+                                                    <div id="p3imag14" class="mark2 drop2" style="display: inline-block;"></div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-12"><br></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="text-question">
+                                        <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a" readonly>&nbsp;
+                                        <span><b>2. Leo </b> y resuelvo los problemas. <b>(2 pts.)</b></span></div><br>
+                                    <div class="row text-question">
+                                        <ol type="a">
+                                            <div class="col-lg-6">
+
+                                                <li>
+                                                    <h4>En una granja hay 24 caballos y se escapan 13. <br>¿Cuántos caballos
+                                                        quedan en la granja?</h4>
+                                                    <h4>
+                                                        <b><font color="purple">Comprendo el problema.</font></b>
+                                                    </h4>
+                                                    <h4>Hay <input type="text" size="1" style="width:50px" class="cajas border-blue respuestas3"><input
+                                                            type="hidden" style="color:blue" class="solucion3" value="24">caballos.<br>                                                        Se
+                                                        escapan <input type="text" size="1" style="width:50px" class="cajas border-blue respuestas3"><input
+                                                            type="hidden" style="color:blue" class="solucion3" value="13"> .</h4>
+                                                    <h4>
+                                                        <b><font color="purple">Hago un plan</font></b>
+                                                    </h4>
+                                                    <h4>Debo realizar una <input type="text" size="1" style="width:100px"
+                                                            class="cajas border-blue respuestas3"><input type="hidden" style="color:blue"
+                                                            class="solucion3" value="resta"> </h4>
+                                                    <h4>
+                                                        <b><font color="purple">Ejecuto el plan.</font></b>
+                                                    </h4>
+                                                    <h4>
+                                                        <table class="table-bordered" style="text-align: center">
+                                                            <tr>
+                                                                <td width="4%"></td>
+                                                                <td width="48%">
+                                                                    <h4>
+                                                                        <font color="#EC407A"><b>D</b></font>
+                                                                    </h4>
+                                                                </td>
+                                                                <td width="48%">
+                                                                    <h4>
+                                                                        <font color="#2196F3"><b>U</b></font>
+                                                                    </h4>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>
+                                                                    <h4><b><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                                class="border-blue respuestas2"><input type="hidden"
+                                                                                style="color:blue" class="solucion2" value="2"></b></h4>
+                                                                </td>
+                                                                <td>
+                                                                    <h4><b><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                                class="border-blue respuestas2"><input type="hidden"
+                                                                                style="color:blue" class="solucion2" value="4"></b></h4>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <h4><b><input type="text" maxlength="1" size="1" style="width:15px"
+                                                                                class="border-blue respuestas2"><input type="hidden"
+                                                                                style="color:blue" class="solucion2" value="-"></b></h4>
+                                                                </td>
+                                                                <td>
+                                                                    <h4><b><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                                class="border-blue respuestas2"><input type="hidden"
+                                                                                style="color:blue" class="solucion2" value="1"></b></h4>
+                                                                </td>
+                                                                <td>
+                                                                    <h4><b><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                                class="border-blue respuestas2"><input type="hidden"
+                                                                                style="color:blue" class="solucion2" value="3"></b></h4>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border-top:2px solid #303F9F">
+                                                                <td></td>
+                                                                <td><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                        class="border-blue respuestas2"><input type="hidden"
+                                                                        style="color:blue" class="solucion2" value="1"></td>
+                                                                <td><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                        class="border-blue respuestas2"><input type="hidden"
+                                                                        style="color:blue" class="solucion2" value="1"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </h4>
+                                                    <h4>Quedan <input type="text"  size="1" style="width:50px"
+                                                            class="cajas border-blue respuestas2"><input type="hidden" style="color:blue"
+                                                            class="solucion2" value="11"> caballos.</h4><br>
+                                                </li>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <li>
+                                                        <h4>Rocío lee el lunes 15 páginas de
+                                                                su cuento favorito y el martes 12.<br>
+                                                                ¿Cuántas páginas ha leído Rocío
+                                                                en los dos días?</h4>
+                                                            <h4>
+                                                                <b><font color="purple">Comprendo el problema.</font></b>
+                                                            </h4>
+                                                            <h4>El lunes lee <input type="text" size="1" style="width:50px" class="cajas border-blue respuestas3"><input
+                                                                    type="hidden" style="color:blue" class="solucion3" value="15"> páginas.<br>                                                        Se
+                                                                    El martes lee <input type="text" size="1" style="width:50px" class="cajas border-blue respuestas3"><input
+                                                                    type="hidden" style="color:blue" class="solucion3" value="12"> páginas.</h4>
+                                                            <h4>
+                                                                <b><font color="purple">Hago un plan</font></b>
+                                                            </h4>
+                                                            <h4>Debo realizar una <input type="text" size="1" style="width:100px"
+                                                                    class="cajas border-blue respuestas3"><input type="hidden" style="color:blue"
+                                                                    class="solucion3" value="suma"> </h4>
+                                                            <h4>
+                                                                <b><font color="purple">Ejecuto el plan.</font></b>
+                                                            </h4>
+                                                            <h4>
+                                                                <table class="table-bordered" style="text-align: center">
+                                                                    <tr>
+                                                                        <td width="4%"></td>
+                                                                        <td width="48%">
+                                                                            <h4>
+                                                                                <font color="#EC407A"><b>D</b></font>
+                                                                            </h4>
+                                                                        </td>
+                                                                        <td width="48%">
+                                                                            <h4>
+                                                                                <font color="#2196F3"><b>U</b></font>
+                                                                            </h4>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <h4><b><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                                        class="border-blue respuestas2"><input type="hidden"
+                                                                                        style="color:blue" class="solucion2" value="1"></b></h4>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h4><b><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                                        class="border-blue respuestas2"><input type="hidden"
+                                                                                        style="color:blue" class="solucion2" value="5"></b></h4>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h4><b><input type="text" maxlength="1" size="1" style="width:15px"
+                                                                                        class="border-blue respuestas2"><input type="hidden"
+                                                                                        style="color:blue" class="solucion2" value="+"></b></h4>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h4><b><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                                        class="border-blue respuestas2"><input type="hidden"
+                                                                                        style="color:blue" class="solucion2" value="1"></b></h4>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h4><b><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                                        class="border-blue respuestas2"><input type="hidden"
+                                                                                        style="color:blue" class="solucion2" value="2"></b></h4>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="border-top:2px solid #303F9F">
+                                                                        <td></td>
+                                                                        <td><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                                class="border-blue respuestas2"><input type="hidden"
+                                                                                style="color:blue" class="solucion2" value="2"></td>
+                                                                        <td><input type="text" maxlength="1" size="1" style="width:50px"
+                                                                                class="border-blue respuestas2"><input type="hidden"
+                                                                                style="color:blue" class="solucion2" value="7"></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </h4>
+                                                            <h4>Rocío ha leído <input type="text"  size="1" style="width:50px"
+                                                                    class="cajas border-blue respuestas2"><input type="hidden" style="color:blue"
+                                                                    class="solucion2" value="27"> páginas.</h4><br>
+                                                </li>
+                                            </div>
+                                        </ol>
+                                    </div>
+
+                                    <div class="text-question">
+                                        <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a" readonly>&nbsp;
+                                        <span><b>3. Resuelvo </b> las adiciones y sustracciones. <b>(2 pts.)
+                                            </b></span></div><br>
+                                    <div class="col-md-12">
+
+                                        <div class="col-md-12 text-question">
+
+                                            <ol type="a">
+                                                <div class="col-lg-3">
+                                                    <li>
+                                                        <div class="col-lg-12  imagen3" id="rantres1"></div>
+
+                                                    </li>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <li>
+                                                        <div class="col-lg-12  imagen3" id="rantres2"></div>
+
+                                                    </li>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <li>
+                                                        <div class="col-lg-12  imagen3" id="rantres3"></div>
+
+                                                    </li>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <li>
+                                                        <div class="col-lg-12  imagen3" id="rantres4"></div>
+
+                                                    </li>
+                                                </div>
+
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <div class="text-question">
+                                        <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a" value="0" readonly="">&nbsp;
+                                        <span><b>4. Dibujo</b> una figura geométrica con líneas rectas y una figura geométrica
+                                            con líneas curvas. <b>(2 pts.)
+                                            </b></span></div><br>
+                                    <div class="col-sm-12">
+                                        <div class="my-drawing"></div><br>
+                                    </div>
+
+                                    <div class="text-question">
+                                        <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre5a" value="0" readonly="">&nbsp;
+                                        <span><b>5. Uno </b> los puntos y trazo dos cuadrados y dos rectángulos. <b>(1 pts.)</b></span></div><br>
+
+                                    <div class="col-sm-12">
+                                        <div class="my-drawing"></div><br>
+                                    </div>
+
+                                    <div class="text-question">
+                                        <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre6a" value="0" readonly="">&nbsp;
+                                        <span><b>6. Mido </b> el largo de estos objetos con mi dedo pulgar y con una regla
+                                            y <b>escribo</b> su medida. <b>(1 pts.)</b></span></div><br>
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="col-md-9">
+                                                <img class="img-responsive " src="img/i1_p148_act6.jpg"></div>
+                                        </div>
+                                        <div class="col-md-3 mark3">
+                                            <h3>Mide <input type="text" maxlength="2" size="1" style="width:30px" class="cajas "></h3>
+                                            <h3>Mide <input type="text" maxlength="2" size="1" style="width:30px" class="cajas ">cm.</h3>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="col-md-9">
+                                                <img class="img-responsive " src="img/i2_p148_act6.jpg"></div>
+                                        </div>
+                                        <div class="col-md-3 mark3">
+                                            <h3>Mide <input type="text" maxlength="2" size="1" style="width:30px" class="cajas "></h3>
+                                            <h3>Mide <input type="text" maxlength="2" size="1" style="width:30px" class="cajas ">cm.</h3>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txt_alumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!--<script src="../js/jquery.ui.touch-punch.min.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+<script src="js/activities.js"></script>
+    
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/export-data.js"></script>
+    <script src="js/animate.css.min.js"></script>
+    <script src="js/jquery.animate.css.js"></script>
+    
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/actividad135.js"></script>
+    <script>
+
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+        //var imageSize = { width: winHeight , height: winHeight };
+        var watermarkImage = new Image();
+        var watermarkImage1 = new Image();
+        watermarkImage.src = 'img/i1_p148_act4.jpg';
+        watermarkImage.src = 'img/i1_p148_act5.jpg';
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+
+                watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[1], {
+                imageURLPrefix: 'imgcanvas',
+
+                watermarkImage: watermarkImage,
+                watermarkScale: 0.8, // you can scale it
+                //imageSize: imageSize
+                backgroundColor: 'white'
+
+            });
+    </script>
+    <script>
+        $(".drag2").draggable({
+            revert: 'invalid',
+            helper: 'clone'
+        });
+
+        $(".drop2").droppable({
+            accept: ".drag2",
+            drop: function (event, ui) {
+                $(this).html('');
+                ui.helper.clone().appendTo(this);
+                $.each($(this).children(), function (index, value) {
+                    $(value).attr("style", "mix-blend-mode: multiply;");
+                })
+
+            }
+        });
+
+
+    </script>
+
+</body>
+
+</html>

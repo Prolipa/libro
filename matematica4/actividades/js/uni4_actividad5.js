@@ -1,4 +1,5 @@
 var titulos = "refuerzo";
+f_titulos();
 numero_pagina(168);
 
 var tpre1 = 0;
@@ -104,6 +105,7 @@ for (i = 0; i < rancuatro.length; i++) {
         '<span width="50px">' + random4[i][0] + "</span> "
     );
 }
+
 function pregunta4() {
     var respuestas = document.getElementsByClassName("respuestas4");
     var soluciones = document.getElementsByClassName("solucion4");
@@ -158,14 +160,14 @@ function pregunta5() {
 
 // #region Calculo Nota Final
 function NotaFinal() {
-   var pre2a = document.getElementById("pre2a").value;
-   if (pre2a == "") {
-       alert("Pregunta 2: Califiqué la pregunta");
-   } else {
-       var pre3a = document.getElementById("pre3a").value;
-       if (pre3a == "") {
-           alert("Pregunta 3: Califiqué la pregunta");
-       } else {
+    var pre2a = document.getElementById("pre2a").value;
+    if (pre2a == "") {
+        alert("Pregunta 2: Califiqué la pregunta");
+    } else {
+        var pre3a = document.getElementById("pre3a").value;
+        if (pre3a == "") {
+            alert("Pregunta 3: Califiqué la pregunta");
+        } else {
             pregunta1();
             pregunta2();
             pregunta3();

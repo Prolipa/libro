@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Estudios Sociales 3</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/literallycanvas.css">
+        <link href="css/fraccion.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+</head>
+<style type="text/css">
+
+    .cajas{
+		max-width: 95%;
+		max-height: 200px;
+		border: 1px #009900 solid;
+		border-radius: 5px;
+		padding: 15px;
+		margin: 5px;
+	}
+	.actividad1{
+		background: #fff;		
+	}
+	.correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+	.desactivar{
+		background-color: #444;
+		color: #888;
+		padding: 8px;
+	}
+	#cabecera .badge{
+		background-color: #232956;
+	}
+    .c_origen {
+    /*border: 1px solid #af539a;*/
+
+    border-radius: 10px;
+    min-height: 50px;
+    width: 800PX;
+    margin-left: 1px;
+    width: auto;
+}
+
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 40px;
+    min-width: 150px;
+}
+.seleccionCaja {
+
+    width: auto;
+    height: auto;
+    border-radius: 50px;
+    border: 10px rgb(34, 197, 29) solid;
+
+
+}
+.correctoi {
+    background-color: #8FB435;
+    border: solid 4px #8FB435;
+
+
+}
+
+.incorrectoi {
+    background-color: #E76E80;
+    border: solid 4px #E76E80;
+
+}
+</style>
+<body>
+<div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Selecciona la respuesta correcta según corresponda.<br> 
+        2. Escriba la respuesta correcta según corresponda.<br>
+        3. Escriba la respuesta correcta según corresponda.<br>
+        4. Dibuja la respuesta correcta según corresponda.<br> 
+        5. Escriba la respuesta correcta según corresponda.<br>
+        6. Escriba la respuesta correcta según corresponda.<br>
+        7. Escriba la respuesta correcta según corresponda.<br>
+        8. Escriba la respuesta correcta según corresponda.<br>
+        9. Escriba la respuesta correcta según corresponda.<br>
+        10. Escriba la respuesta correcta según corresponda.<br>
+        
+        <span id="ayudas"></span>
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                            <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                            <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li >
+                        <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                            <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </button>
+                    </li >
+                    <li >
+                        <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                            <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                            <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                    <li><span  class="notificacion actividad" >
+                            <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                        </span>
+                        <span  class="notificacion nota" >
+                            <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                        </span>
+                        <span  class="notificacion pagina" >
+                            <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+	<div class="container espacio">
+		<div class="panel border-evaluacion" id="activity"> 
+                <!--modificar el bg- segun la actividad-->
+                <div class="panel-heading bg-evaluacion">
+                    <span class="titulo" ><img src='img/icoE.png' alt='Evaluación diagnóstica'> Evaluación diagnóstica</span>
+                    <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>                    
+                </div>
+                <div class="panel-body">
+                    
+                    <!--pregunats de la actividad-->
+                    <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a" readonly="">&nbsp; <span><span style="color: #28B367;"><b>1. </b></span> Selecciona con un <span style="color:#00B1A6;"><b>✓</b></span> la respuesta correcta.  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                    <div class="col-lg-12">
+                        <div class="col-lg-1"><span style="color: #215A98;"><b>a) </b></span> </div>
+                        <div class="col-lg-11" id="p1ran0">
+                        </div>
+                    </div>
+                    <div class="col-lg-12"><br></div>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-1"><span style="color: #215A98;"><b>b) </b></span> </div>
+                        <div class="col-lg-11" id="p1ran1">
+                        </div>
+                    </div>
+                    <div class="col-lg-12"><br></div>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-1"><span style="color: #215A98;"><b>c) </b></span> </div>
+                        <div class="col-lg-11" id="p1ran2">
+                        </div>
+                    </div>
+                    <div class="col-lg-12"><br></div>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-1"><span style="color: #215A98;"><b>d) </b></span> </div>
+                        <div class="col-lg-11" id="p1ran3">
+                        </div>
+                    </div>
+                    <div class="col-lg-12"><br></div>
+
+                            
+                </div>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a" >&nbsp; <span><span style="color: #28B367;"><b>2. </b></span> <b>Escribe</b> dos responsabilidades que cumples en casa de acuerdo con tu edad.  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                   <textarea rows="3" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea><br>
+                </div>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a" >&nbsp; <span><span style="color: #28B367;"><b>3. </b></span> <b>Responde</b> a las preguntas.  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                        <span style="color: #215A98;"><b>a) </b></span>¿Cuál es el nombre de tu escuela?
+                        <textarea rows="1" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea><br>
+                        <span style="color: #215A98;"><b>b) </b></span>¿Qué colores tiene la bandera de tu escuela?
+                        <textarea rows="1" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea><br>
+                </div>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a" >&nbsp; <span><span style="color: #28B367;"><b>4. </b></span> <b>Dibuja</b> dos puntos de referencia que ayuden a ubicar tu escuela.       <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive">
+                    <div class="col-lg-6 table-responsive">
+                        <div class="my-drawing"></div><br>
+                    </div>
+                    <div class="col-lg-6 table-responsive">
+                        <div class="my-drawing"></div><br>
+                    </div> 
+                </div>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre5a" >&nbsp; <span><span style="color: #28B367;"><b>5. </b></span> <b>Observa</b> el gráfico y <b>escribe</b> el tipo de vivienda y el nombre de los materiales con los que se construyó.    <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question">
+                       <div class="col-lg-5"><center><img src="img/i2_p19_act15.jpg" class="img-responsive"><br></center></div>
+                       <div class="col-lg-7">
+                           Tipo de casa:
+                           <textarea rows="1" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea><br>
+                           Materiales:
+                           <textarea rows="1" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea><br>
+                       </div>
+                </div>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre6a" >&nbsp; <span><span style="color: #28B367;"><b>6. </b></span> <b>Escribe</b> los posibles riesgos a los que están expuestas las viviendas de las siguientes imágenes.  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question" id="p6ran1">
+                    <div class="col-lg-4"><center><img src="img/i3_p19_act15.jpg" class="img-responsive"><br>
+                    <span style="color: #215A98;display: inline-block;"><b>a) </b></span> <input class=" text-question" style="width: 250px;border: solid 1px #60C3E5;text-align: center;"></center>
+                    </div>
+                    <div class="col-lg-4"><center><img src="img/i4_p19_act15.jpg" class="img-responsive"><br>
+                    <span style="color: #215A98;display: inline-block;"><b>b) </b></span> <input class=" text-question" style="width: 250px;border: solid 1px #60C3E5;text-align: center;"></center>
+                    </div>
+                    <div class="col-lg-4"><center><img src="img/i5_p19_act15.jpg" class="img-responsive"><br>
+                    <span style="color: #215A98;display: inline-block;"><b>c) </b></span> <input class=" text-question" style="width: 250px;border: solid 1px #60C3E5;text-align: center;"></center>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br></div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre7a" >&nbsp; <span><span style="color: #28B367;"><b>7. </b></span> <b>Menciona</b> tres acciones que podría llevar a cabo tu familia durante un movimiento sísmico.   <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question" id="p6ran1">
+                    <textarea rows="3" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea><br>
+                </div>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre8a" >&nbsp; <span><span style="color: #28B367;"><b>8. </b></span> <b>Completa</b> el organizador gráfico  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive">
+                            <center>
+                                <div style="background: url('img/i10_p19_act15.jpg');width: 900px;min-height: 289px;background-size: contain; position: relative;background-repeat: no-repeat;">
+                                    <textarea row="4" style="width: 255px;position: absolute;top: 15px; left:320px; text-align: center;font-size: 20px;border-bottom: 1px dashed black;border-left: 1px solid white;border-right: 1px solid white;border-top: 1px solid white;" ></textarea>
+                                    <textarea row="4" style="width: 255px;position: absolute;top: 15px; left:630px; text-align: center;font-size: 20px;border-bottom: 1px dashed black;border-left: 1px solid white;border-right: 1px solid white;border-top: 1px solid white;" ></textarea>
+                                    <textarea row="4" style="width: 255px;position: absolute;top: 210px; left:320px; text-align: center;font-size: 20px;border-bottom: 1px dashed black;border-left: 1px solid white;border-right: 1px solid white;border-top: 1px solid white;" ></textarea>
+                                    <textarea row="4" style="width: 255px;position: absolute;top: 210px; left:630px; text-align: center;font-size: 20px;border-bottom: 1px dashed black;border-left: 1px solid white;border-right: 1px solid white;border-top: 1px solid white;" ></textarea>
+                                    <textarea row="4" style="width: 255px;position: absolute;top: 210px; left:10px; text-align: center;font-size: 20px;border-bottom: 1px dashed black;border-left: 1px solid white;border-right: 1px solid white;border-top: 1px solid white;" ></textarea>
+                                </div>
+                            </center>
+                        </div>
+
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre9a" >&nbsp; <span><span style="color: #28B367;"><b>9. </b></span> <b>Escribe</b> el significado de las siguientes señales de tránsito:  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question" id="p6ran1">
+                    <div class="col-lg-4"><center><img src="img/i3_p19_act15.jpg" class="img-responsive"><br>
+                    <input class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></center>
+                    </div>
+                    <div class="col-lg-4"><center><img src="img/i4_p19_act15.jpg" class="img-responsive"><br>
+                    <input class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></center>
+                    </div>
+                    <div class="col-lg-4"><center><img src="img/i5_p19_act15.jpg" class="img-responsive"><br>
+                    <input class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></center>
+                    </div>
+                </div>
+                <div class="col-lg-12"><br></div>
+                <div class="text-question">
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre10a" >&nbsp; <span><span style="color: #28B367;"><b>10. </b></span> <b>Describe</b> lo que indica cada uno de los colores del semáforo.  <b>(1 pts.)</b><br><br></span></div>
+                <div class="col-lg-12 table-responsive text-question" id="p6ran1">
+                    <div class="col-lg-4"><center><img src="img/i9_p19_act15.jpg" class="img-responsive"><br></center></div>
+                       <div class="col-lg-8">
+                           <br><textarea rows="1" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea><br>
+                           <textarea rows="1" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea><br>
+                           <textarea rows="1" class="form-control text-question" style="border: solid 1px #60C3E5;text-align: center;"></textarea><br>
+                       </div>
+                </div>
+
+            </div>		
+	</div>
+
+	<!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>  
+                                <div class="col-sm-10"> 
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                        Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>        
+            </div>
+        </div>
+        
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/actividad1.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script>
+        var titulos = 'reflexiono';
+        $("#n_pagina").html('19');
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+    var tpre4 = 0;
+    var tpre5 = 0;
+    var tpre6 = 0;
+    var tpre7 = 0;
+    var tpre8 = 0;
+    var tpre9 = 0;
+    var tpre10 = 0;
+
+
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+        return ((key >= 48 && key <= 57) || (key == 8))
+    }
+
+    // #region Pregunta1
+    p1vec1=[
+    '<span class="col-lg-6">El papá de mi mamá es mi:</span><span class="col-lg-2">tío <input type="text" class="1 enca1" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span><span class="col-lg-2">abuelo <input type="text" class="1 enca2" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span><span class="col-lg-2">primo <input type="text" class="1 enca3" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span>',
+    '<span class="col-lg-6">Mi papá tiene una hermana y ella es mi:</span><span class="col-lg-2">prima <input type="text" class="2 encb1" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span><span class="col-lg-2">abuela <input type="text" class="2 encb2" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span><span class="col-lg-2">tía <input type="text" class="2 encb3" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span>',
+    '<span class="col-lg-6">Los hijos de mis tíos son mis:</span><span class="col-lg-2">primos <input type="text" class="3 encc1" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span><span class="col-lg-2">hermanos <input type="text" class="3 encc2" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span><span class="col-lg-2">abuelos <input type="text" class="3 encc3" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span>',
+    '<span class="col-lg-6">El hermano de mi tío que no es mi tío   es mi:</span><span class="col-lg-2">tío <input type="text" class="4 encd1" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span><span class="col-lg-2">papá <input type="text" class="4 encd2" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span><span class="col-lg-2">primo <input type="text" class="4 encd3" style="font-weight: bold;width: 40px;text-align: center;border: solid 2px #00B1A6;border-radius: 10px;" readonly></span>'
+    ];
+    p1vec1.sort(f_randomico);
+    for (var i = 0; i < p1vec1.length; i++) {
+        $('#p1ran'+[i]+'').html(p1vec1[i]);
+    }
+
+    $('.1').click(function() {
+        switch ($(this).attr('class')) {
+            case '1 enca1':
+                $('.enca1').val('✓');
+                $('.enca2').val('');
+                $('.enca3').val('');
+                break;
+            case '1 enca2':
+                $('.enca2').val('✓');
+                $('.enca1').val('');
+                $('.enca3').val('');
+                break;
+            case '1 enca3':
+                $('.enca3').val('✓');
+                $('.enca1').val('');
+                $('.enca2').val('');
+                break;
+        }
+    });
+
+        $('.2').click(function() {
+        switch ($(this).attr('class')) {
+            case '2 encb1':
+                $('.encb1').val('✓');
+                $('.encb2').val('');
+                $('.encb3').val('');
+                break;
+            case '2 encb2':
+                $('.encb2').val('✓');
+                $('.encb1').val('');
+                $('.encb3').val('');
+                break;
+            case '2 encb3':
+                $('.encb3').val('✓');
+                $('.encb1').val('');
+                $('.encb2').val('');
+                break;
+        }
+    });
+
+            $('.3').click(function() {
+        switch ($(this).attr('class')) {
+            case '3 encc1':
+                $('.encc1').val('✓');
+                $('.encc2').val('');
+                $('.encc3').val('');
+                break;
+            case '3 encc2':
+                $('.encc2').val('✓');
+                $('.encc1').val('');
+                $('.encc3').val('');
+                break;
+            case '3 encc3':
+                $('.encc3').val('✓');
+                $('.encc1').val('');
+                $('.encc2').val('');
+                break;
+        }
+    });
+
+                $('.4').click(function() {
+        switch ($(this).attr('class')) {
+            case '4 encd1':
+                $('.encd1').val('✓');
+                $('.encd2').val('');
+                $('.encd3').val('');
+                break;
+            case '4 encd2':
+                $('.encd2').val('✓');
+                $('.encd1').val('');
+                $('.encd3').val('');
+                break;
+            case '4 encd3':
+                $('.encd3').val('✓');
+                $('.encd1').val('');
+                $('.encd2').val('');
+                break;
+        }
+    });
+
+    
+
+    function pregunta1() {
+        var core1 = 0;
+        if ($('.enca2').val() == "✓") {
+            core1 = core1 + 1;
+            $('.enca2').addClass('correcto');
+        } else if ($('.enca1').val() == "✓") {
+            $('.enca1').addClass('incorrecto');
+        } else if ($('.enca3').val() == "✓") {
+            $('.enca3').addClass('incorrecto');
+        }
+
+        if ($('.encb3').val() == "✓") {
+            core1 = core1 + 1;
+            $('.encb3').addClass('correcto');
+        } else if ($('.encb1').val() == "✓") {
+            $('.encb1').addClass('incorrecto');
+        } else if ($('.encb2').val() == "✓") {
+            $('.encb2').addClass('incorrecto');
+        }
+
+        if ($('.encc1').val() == "✓") {
+            core1 = core1 + 1;
+            $('.encc1').addClass('correcto');
+        } else if ($('.encc3').val() == "✓") {
+            $('.encc3').addClass('incorrecto');
+        } else if ($('.encc2').val() == "✓") {
+            $('.encc2').addClass('incorrecto');
+        }
+
+        if ($('.encd2').val() == "✓") {
+            core1 = core1 + 1;
+            $('.encd2').addClass('correcto');
+        } else if ($('.encd1').val() == "✓") {
+            $('.encd1').addClass('incorrecto');
+        } else if ($('.encd3').val() == "✓") {
+            $('.encd3').addClass('incorrecto');
+        }
+
+        tpre1 = ((core1 * 1) / 4);
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+    // #endregion
+
+   // #region Pregunta2
+   document.getElementById("pre2a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre2a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre2a"), 1);
+    });
+    function pregunta2() {
+        var pre2a = document.getElementById("pre2a").value;
+        tpre2 = pre2a;
+        $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    }
+    // #endregion
+
+       // #region Pregunta3
+    document.getElementById("pre3a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre3a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre3a"), 1);
+    }); 
+    function pregunta3() {
+        var pre3a = document.getElementById("pre3a").value;
+        tpre3 = pre3a;
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+    }
+    // #endregion
+
+    document.getElementById("pre4a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre4a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre4a"), 1);
+    });// #region Pregunta4
+    function pregunta4() {
+            var pre4a = document.getElementById("pre4a").value;
+        tpre4 = pre4a;
+        $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+    }
+    // #endregion
+    
+    // #region Pregunta5
+    document.getElementById("pre5a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre5a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre5a"), 1);
+    });
+    function pregunta5() {
+           var pre5a = document.getElementById("pre5a").value;
+        tpre5 = pre5a;
+        $("#pre5a").val(parseFloat(tpre5).toFixed(2));
+    }
+    // #endregion
+     
+    // #region Pregunta6
+    document.getElementById("pre6a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre6a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre6a"), 1);
+    });
+    function pregunta6() {
+           var pre6a = document.getElementById("pre6a").value;
+        tpre6 = pre6a;
+        $("#pre6a").val(parseFloat(tpre6).toFixed(2));    
+    }
+    // #endregion
+    
+    // #region Pregunta7
+    document.getElementById("pre7a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre7a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre7a"), 1);
+    });
+    function pregunta7() {
+        var pre7a = document.getElementById("pre7a").value;
+        tpre7 = pre7a;
+        $("#pre7a").val(parseFloat(tpre7).toFixed(2));       
+    }
+    // #endregion
+    
+    // #region Pregunta8
+    document.getElementById("pre8a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre8a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre8a"), 1);
+    });
+    function pregunta8() {
+             var pre8a = document.getElementById("pre8a").value;
+        tpre8 = pre8a;
+        $("#pre8a").val(parseFloat(tpre8).toFixed(2));  
+    }
+    // #endregion
+    
+    // #region Pregunta9
+    document.getElementById("pre9a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre9a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre9a"), 1);
+    });
+    function pregunta9() {
+         var pre9a = document.getElementById("pre9a").value;
+        tpre9 = pre9a;
+        $("#pre9a").val(parseFloat(tpre9).toFixed(2));      
+    }
+    // #endregion
+    
+    // #region Pregunta10
+    document.getElementById("pre10a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre10a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre10a"), 1);
+    });
+    function pregunta10() {
+              var pre10a = document.getElementById("pre10a").value;
+        tpre10 = pre10a;
+        $("#pre10a").val(parseFloat(tpre10).toFixed(2)); 
+    }
+    // #endregion   
+    
+    // #region Calculo Nota Final
+    function NotaFinal() {
+                var pre2a = document.getElementById("pre2a").value;
+                if (pre2a == "") {
+                alert("Pregunta 2: Califique la pregunta");
+                } else {
+                    var pre3a = document.getElementById("pre3a").value;
+                if (pre3a == "") {
+                alert("Pregunta 3: Califique la pregunta");
+                } else {
+                    var pre4a = document.getElementById("pre4a").value;
+                if (pre4a == "") {
+                alert("Pregunta 4: Califique la pregunta");
+                } else {
+                    var pre5a = document.getElementById("pre5a").value;
+                if (pre5a == "") {
+                alert("Pregunta 5: Califique la pregunta");
+                } else {
+                    var pre6a = document.getElementById("pre6a").value;
+                if (pre6a == "") {
+                alert("Pregunta 6: Califique la pregunta");
+                } else {
+                    var pre7a = document.getElementById("pre7a").value;
+                if (pre7a == "") {
+                alert("Pregunta 7: Califique la pregunta");
+                } else {
+                    var pre8a = document.getElementById("pre8a").value;
+                if (pre8a == "") {
+                alert("Pregunta 8: Califique la pregunta");
+                } else {
+                    var pre9a = document.getElementById("pre9a").value;
+                if (pre9a == "") {
+                alert("Pregunta 9: Califique la pregunta");
+                } else {
+                    var pre10a = document.getElementById("pre10a").value;
+                if (pre10a == "") {
+                alert("Pregunta 10: Califique la pregunta");
+                } else {
+            pregunta1();
+            pregunta2();
+            pregunta3();
+            pregunta4();
+            pregunta5();
+            pregunta6();
+            pregunta7();
+            pregunta8();
+            pregunta9();
+            pregunta10();
+            cor = parseFloat(tpre1)+parseFloat(tpre2)+parseFloat(tpre3)+parseFloat(tpre4)+parseFloat(tpre5)+parseFloat(tpre6)+parseFloat(tpre7)+parseFloat(tpre8)+parseFloat(tpre9)+parseFloat(tpre10);
+            Calculo_nota();
+            $("input").attr('disabled', 'disabled');
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+    
+    // #endregion1
+    </script>
+        <script>
+    var winHeight = $(window).height();
+    var winWidth = $(window).width();
+    $(document).ready(function() {
+        var watermarkImage = new Image();
+        var watermarkImage1 = new Image();
+        watermarkImage.src = 'img/i1_p19_act15.jpg';
+        watermarkImage1.src = 'img/i1_p19_act15.jpg';
+        LC.init(
+            document.getElementsByClassName('my-drawing')[0], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage,
+                watermarkScale: 0.8 // you can scale it
+
+            });
+        LC.init(
+            document.getElementsByClassName('my-drawing')[1], {
+                imageURLPrefix: 'imgcanvas',
+                watermarkImage: watermarkImage1,
+                watermarkScale: 0.8 // you can scale it
+
+            });
+    });
+    </script>
+
+        
+</body>
+</html>

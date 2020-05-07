@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Matemática 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <script src="js/jquery.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <script src="js/133.js"></script>
+    <!-- copy these lines to your document head: -->
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <!-- end copy -->
+    <style>
+        .fraction {
+    display: inline-block;
+    vertical-align: middle; 
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+    }
+    .fraction > span {
+        display: block;
+        padding-top: 0.15em;
+    }
+    .fraction span.fdn {border-top: thin solid black;}
+    .fraction span.bar {display: none;}
+    .paso{
+        width: 80px;
+        background: #f0c22a;
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .seleccionar{
+        background: rgb(110, 138, 231);
+    }
+    .error{
+        background: #E76E80;
+    }
+    .item{
+        display: inline-table;
+        width: 30%;
+        font-size: 14px;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 2px solid #da802c;
+    }
+    th {
+        text-align: center;
+    }
+    .paso4{
+        width: 150px;
+        background: #eeda81;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso5{
+        width: 150px;
+        background: #eaacec;
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .paso6{
+        width: 150px;
+        background: #81cbee;
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        border-radius: 10px 0px 10px 0px;
+        -moz-border-radius: 10px 0px 10px 0px;
+        -webkit-border-radius: 10px 0px 10px 0px;
+        border: 0px solid #000000;
+    }
+    .caja1{
+        width: 20%;
+        text-align: center;
+    }
+    .caja{
+        width: 100%;
+        text-align: center;
+    }
+
+              .correcto {
+            color: #ffffff;
+            background-color: #8FB435 !important;
+            -webkit-print-color-adjust: exact; 
+
+        }
+
+        .incorrecto {
+            color: #ffffff;
+            background-color: #E76E80 !important;
+            -webkit-print-color-adjust: exact; 
+        }
+    .imagenes1 img{
+        padding: 5px;
+        max-width: 200px;
+        display: inline-table;
+    }
+    .respuestas{
+        width: 60px;
+        display: inline-table;
+
+    }
+    .respuestas1{
+        width: 60px;
+        display: inline-table;
+
+    }
+    .recta{
+        padding: 5px;
+        display: inline-table;
+        max-width: 200px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign"
+                aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee el problema atentamente y responde en los espacios en blanco según los valores presentados
+        <br><span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled
+                        data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload(true);">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad ">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='act_actual'>1</span> /
+                        <span id='act_total'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"> / 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pag 183
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container espacio">
+        <div class="panel border-evaluacion" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-evaluacion">
+                <span class="titulo"><img src="img/icoE.png" alt="">Prueba Diagnóstica</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="col col-md-12 space"><span class="text-question">
+                        <img src="img/pguiada.png" alt="">
+                        <div class="row space">
+                            <div class="col col-md-6">
+                                <p><b>Realiza</b> estas sumas y restas de números decimales.</p>
+                                <p><b>a)</b> <span class="bg-danger"> 23,16 + 614,695 </span> <b>b)</b> <span class="bg-success">
+                                        519,830 – 36,701 </span></p>
+                            </div>
+                            <div class="col col-md-6">
+                                <label class="paso">Paso 1</label>
+                                <p><b>Ubicamos</b> los números decimales en la tabla posicional.</p>
+                            </div>
+
+                        </div>
+                        <div class="row space">
+                            <label class="paso">Paso 2</label>
+                            <br>
+                            <p><b>Sumamos</b> o <b>restamos</b> los números decimales con el algoritmo respectivo</p>
+                            <div class="row">
+                                <div class="col col-md-6">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th class="bg-info" colspan="3">Parte entera</th>
+                                            <th class="bg-danger" colspan="1">Coma</th>
+                                            <th class="bg-success" colspan="3">Parte decimal</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-info">c</th>
+                                            <th class="bg-info">d</th>
+                                            <th class="bg-info">u</th>
+                                            <th>,</th>
+                                            <th class="bg-success">d</th>
+                                            <th class="bg-success">c</th>
+                                            <th class="bg-success">m</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>2</th>
+                                            <th>3</th>
+                                            <th>,</th>
+                                            <th>1</th>
+                                            <th>6</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th>6</th>
+                                            <th>1</th>
+                                            <th>4</th>
+                                            <th>,</th>
+                                            <th>6</th>
+                                            <th>9</th>
+                                            <th>5</th>
+                                        </tr>
+                                        <tr>
+                                            <th><input type="number" class="form-control a0"></th>
+                                            <th><input type="number" class="form-control a1"></th>
+                                            <th><input type="number" class="form-control a2"></th>
+                                            <th><input type="text" class="form-control a3"></th>
+                                            <th><input type="number" class="form-control a4"></th>
+                                            <th><input type="number" class="form-control a5"></th>
+                                            <th><input type="number" class="form-control a6"></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col col-md-6">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th class="bg-info" colspan="3">Parte entera</th>
+                                            <th class="bg-danger" colspan="1">Coma</th>
+                                            <th class="bg-success" colspan="3">Parte decimal</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-info">c</th>
+                                            <th class="bg-info">d</th>
+                                            <th class="bg-info">u</th>
+                                            <th>,</th>
+                                            <th class="bg-success">d</th>
+                                            <th class="bg-success">c</th>
+                                            <th class="bg-success">m</th>
+                                        </tr>
+                                        <tr>
+                                            <th>5</th>
+                                            <th>1</th>
+                                            <th>9</th>
+                                            <th>,</th>
+                                            <th>8</th>
+                                            <th>3</th>
+                                            <th>0</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>3</th>
+                                            <th>6</th>
+                                            <th>,</th>
+                                            <th>7</th>
+                                            <th>0</th>
+                                            <th>1</th>
+                                        </tr>
+                                        <tr>
+                                            <th><input type="number" class="form-control a7"></th>
+                                            <th><input type="number" class="form-control a8"></th>
+                                            <th><input type="number" class="form-control a9"></th>
+                                            <th><input type="text" class="form-control a10"></th>
+                                            <th><input type="number" class="form-control a11"></th>
+                                            <th><input type="number" class="form-control a12"></th>
+                                            <th><input type="number" class="form-control a13"></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="img/pindividual.png" alt="">
+                        <p> <b>Ubica</b> los números en las tablas de valor posicional y <b>resuelve</b>.</p>
+                        <div class="row">
+                            <ol type="a">
+                                <div class="col col-md-6">
+                                    <li>389,522 + 271,82</li>
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th class="bg-info" colspan="3">Parte entera</th>
+                                            <th class="bg-danger" colspan="1">Coma</th>
+                                            <th class="bg-success" colspan="3">Parte decimal</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-info">c</th>
+                                            <th class="bg-info">d</th>
+                                            <th class="bg-info">u</th>
+                                            <th>,</th>
+                                            <th class="bg-success">d</th>
+                                            <th class="bg-success">c</th>
+                                            <th class="bg-success">m</th>
+                                        </tr>
+                                        <tr>
+                                            <th>3</th>
+                                            <th>8</th>
+                                            <th>9</th>
+                                            <th>,</th>
+                                            <th>5</th>
+                                            <th>2</th>
+                                            <th>2</th>
+                                        </tr>
+                                        <tr>
+                                            <th>2</th>
+                                            <th>7</th>
+                                            <th>1</th>
+                                            <th>,</th>
+                                            <th>8</th>
+                                            <th>2</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th><input type="number" class="form-control a14"></th>
+                                            <th><input type="number" class="form-control a15"></th>
+                                            <th><input type="number" class="form-control a16"></th>
+                                            <th><input type="text" class="form-control a17"></th>
+                                            <th><input type="number" class="form-control a18"></th>
+                                            <th><input type="number" class="form-control a19"></th>
+                                            <th><input type="number" class="form-control a20"></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col col-md-6">
+                                    <li>902,520 – 84,286</li>
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th class="bg-info" colspan="3">Parte entera</th>
+                                            <th class="bg-danger" colspan="1">Coma</th>
+                                            <th class="bg-success" colspan="3">Parte decimal</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-info">c</th>
+                                            <th class="bg-info">d</th>
+                                            <th class="bg-info">u</th>
+                                            <th>,</th>
+                                            <th class="bg-success">d</th>
+                                            <th class="bg-success">c</th>
+                                            <th class="bg-success">m</th>
+                                        </tr>
+                                        <tr>
+                                            <th>9</th>
+                                            <th>0</th>
+                                            <th>2</th>
+                                            <th>,</th>
+                                            <th>5</th>
+                                            <th>2</th>
+                                            <th>0</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>8</th>
+                                            <th>4</th>
+                                            <th>,</th>
+                                            <th>2</th>
+                                            <th>8</th>
+                                            <th>6</th>
+                                        </tr>
+                                        <tr>
+                                            <th><input type="number" class="form-control a21"></th>
+                                            <th><input type="number" class="form-control a22"></th>
+                                            <th><input type="number" class="form-control a23"></th>
+                                            <th><input type="text" class="form-control a24"></th>
+                                            <th><input type="number" class="form-control a25"></th>
+                                            <th><input type="number" class="form-control a26"></th>
+                                            <th><input type="number" class="form-control a27"></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </ol>
+                        </div>
+                        <p>Resuelve las operaciones en tu cuaderno y pinta la respuesta correcta.</p>
+                        <div class="row">
+                            <div class="col col-md-6 space">
+                                <ol type="a">
+                                    <li>(268,13 – 139,53) + 95,75</li><br>
+                                    <li>(728,37 + 243,68) – 592,852</li><br>
+                                    <li>7 890,8 – (1 685,61 + 3 915,491)</li><br>
+                                    <li>(2 030,49 + 2 124,53) – 3 741,935</li><br>
+                                    <li>972,756 + (2 810,1 – 1 645,527)</li><br>
+                                    <li>(8 570,124 – 5 349,218) + 3 019,704</li><br>
+                                    <li>4 269,36 – (851,74 + 763,297)</li><br>
+                                </ol>
+                            </div>
+                            <div class="col col-md-6">
+                                <ol type="a">
+                                    <li><span class="item item1">224,3</span> <span class="item item1 a">224,35</span> <span
+                                            class="item item1">225,35</span></li> <br>
+                                    <li><span class="item item2">359,198</span> <span class="item item2">379,197</span> <span
+                                            class="item item2 a">379,198</span></li> <br>
+                                    <li><span class="item item3 a">2 289,699</span> <span class="item item3">2 298,699</span>
+                                        <span class="item item3">2 289,70</span></li> <br>
+                                    <li><span class="item item4 a">413,085</span> <span class="item item4">423,085</span> <span
+                                            class="item item4">413,084</span></li> <br>
+                                    <li><span class="item item5">2 127,329</span> <span class="item item5 a">2 137,329</span>
+                                        <span class="item item5">2 137,529</span></li> <br>
+                                    <li><span class="item item6">6 241,61</span> <span class="item item6 a">6 240,61</span>
+                                        <span class="item item6">6 240,51</span></li> <br>
+                                    <li><span class="item item7">2 754,323</span> <span class="item item7">2 654,325</span>
+                                        <span class="item item7 a">2 654,323</span></li> <br>
+                                </ol>
+                            </div>
+                        </div>
+                        <img src="img/problemas.png" alt="">
+                        <p class="space">Milena, Efraín y Fernanda fueron al supermercado, encontraron frutas variadas
+                            y realizaron las siguientes compras:</p>
+                        <img src="img/i1_p183_act133.png" class="center-block">
+                        <p class="space">Milena compró una sandía, dos melones y dos naranjas. Efraín compró un melón,
+                            cuatro
+                            naranjas y dos
+                            libras de uvas. Fernanda compró una fruta de cada clase y una libra de uvas.
+                            Si cada uno tenía 10 dólares, ¿cuánto le sobró a cada uno?</p>
+                        <p class="space">R. A Milena le sobraron <input type="number" class="form-control a28" style="width:100px; display: inline-table">
+                            ; a Efraín, <input type="number" class="form-control a29" style="width:100px; display: inline-table">
+                            ; y a Fernanda, <input type="number" class="form-control a30" style="width:100px; display: inline-table">
+                        </p>
+                </div>
+            </div>
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')"
+                                                aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                            Debes ingresar tu nombre</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/highcharts.js"></script>
+            <script src="js/exporting.js"></script>
+            <script src="js/export-data.js"></script>
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+</body>
+
+
+</html>

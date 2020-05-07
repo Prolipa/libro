@@ -284,44 +284,45 @@ $('.4').click(function() {
             break;
     }
 });
+
 function f_iniciar() {
     var p3vec1 = [
         '<div style="display: inline-block;" class="11 enc1">' +
         '<img src="img/i2_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="1">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc2">' +
         '<img src="img/i3_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="2">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc3">' +
         '<img src="img/i4_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="3">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc4">' +
         '<img src="img/i5_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="4">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc5">' +
         '<img src="img/i6_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="5">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc6">' +
         '<img src="img/i7_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="6">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc7">' +
         '<img src="img/i8_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="7">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc8">' +
         '<img src="img/i9_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="8">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc9">' +
         '<img src="img/i10_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="9">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc10">' +
         '<img src="img/i11_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="10">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc11">' +
         '<img src="img/i12_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="11">' +
-        '</div>' ,
+        '</div>',
         '<div style="display: inline-block;" class="11 enc12">' +
         '<img src="img/i13_p204_u5a10.jpg" class="img-responsive" style="mix-blend-mode: multiply;" alt="12">' +
-        '</div>' 
+        '</div>'
     ];
     p3vec1.sort(f_randomico);
     $('#p3im1').html(p3vec1);
@@ -352,10 +353,6 @@ function f_iniciar() {
         '</td>' +
         '<td>' +
         '<div class="1 p4im5" style="width: 40px; height: 40px; border: 2px solid #009BDB; padding: 30%;" align="center" id="5">' +
-        '</div>' +
-        '</td>' +
-        '<td>' +
-        '<div class="1 p4im6" style="width: 40px; height: 40px; border: 2px solid #009BDB; padding: 30%;" align="center" id="6">' +
         '</div>' +
         '</td>' +
         '</tr>' +
@@ -397,10 +394,7 @@ function f_iniciar() {
         '<div class="2 p41im7" style="width: 40px; height: 40px; border: 2px solid #009BDB; padding: 30%;" align="center" id="17">' +
         '</div>' +
         '</td>' +
-        '<td>' +
-        '<div class="2 p41im8" style="width: 40px; height: 40px; border: 2px solid #009BDB; padding: 30%;" align="center" id="18">' +
-        '</div>' +
-        '</td>' +
+
         '</tr>' +
         '</table>' +
         '</div>' +
@@ -440,10 +434,6 @@ function f_iniciar() {
         '<div class="3 p42im7" style="width: 40px; height: 40px; border: 2px solid #009BDB; padding: 30%;" align="center" id="27">' +
         '</div>' +
         '</td>' +
-        '<td>' +
-        '<div class="3 p42im8" style="width: 40px; height: 40px; border: 2px solid #009BDB; padding: 30%;" align="center" id="28">' +
-        '</div>' +
-        '</td>' +
         '</tr>' +
         '</table>' +
         '</div>' +
@@ -479,6 +469,7 @@ function f_iniciar() {
     p4vec1.sort(f_randomico);
     $('#p4im1').html(p4vec1);
     bt_comprobar.addEventListener("click", preg5);
+
     function preg5() {
         cor = 0;
         var nota1_5 = $('#nota1_5').val();
@@ -493,6 +484,7 @@ function f_iniciar() {
         }
 
     }
+
     function f_comprobar() {
         cont++;
         AgregaClase(".nota", claseAnimada);
@@ -508,7 +500,7 @@ function f_iniciar() {
         } else {
             for (var i = 0; i < 12; i++) {
                 if ($('.enc' + (i + 1)).hasClass('encierra')) {
-                    var p3res1 = $('.enc' + (i + 1)+' img').attr('alt');
+                    var p3res1 = $('.enc' + (i + 1) + ' img').attr('alt');
                     var p3cont2 = 0;
                     for (var j = 0; j < p3vec1.length; j++) {
                         if (p3res1 == p3vec1[j]) {

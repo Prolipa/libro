@@ -30,9 +30,9 @@
       for( var i=1; i<4; i++ ){
         if( $('#rA'+i).val().toLowerCase().replace(/ |\.| /gi, "") == resp[i-1] ){
           notaFinalP1++;
-          $('#rA'+i).css('background-color', '#2ED075');
+          $('#rA'+i).addClass('b');
         }else{
-          $('#rA'+i).css('background-color', '#D02E50');
+          $('#rA'+i).addClass('m');
         }
       }
     }
@@ -56,13 +56,13 @@
         if( $('#calificacion1').val() !='' ){
           if( $('#calificacion1').val()<=10 && $('#calificacion1').val()>=0 ){
             confirmar();
-            $('#calificacion1').css("background-color", "#05D576");
+            $('#calificacion1').addClass('b');
           }else{
             alert('La calificación no es valida, verifique que los puntajes ingresados no excedan lo permitido.');
           }
         }else{
             $('#calificacion1').focus();
-            $('#calificacion1').css("background-color", "#D50545");
+            $('#calificacion1').addClass('m');
         }
       });    
 

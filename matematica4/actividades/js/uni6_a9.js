@@ -1,4 +1,5 @@
 var titulos = "refuerzo";
+f_titulos();
 numero_pagina(240);
 
 var tpre1 = 0;

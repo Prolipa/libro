@@ -206,11 +206,11 @@
             if( i<15 ){//cantidad de preguntas
                 if($('#oMRR'+(i) +'.pinta').text()){
                   notaFinalP++;
-                  $('#oMR'+i).css("background-color", "#5ED188");
+                  $('#oMR'+i).addClass('biene');
                 }
             }else{
                 if($('#oMRR'+(i) +'.pinta').text()){
-                  $('#oMR'+i).css("background-color", "#EF87A7");
+                  $('#oMR'+i).addClass('male');
                   notaFinalM++;
                 }
             }
@@ -256,7 +256,7 @@
 
             $("#nAC").text(notaFinalP);
             $("#nER").text(notaFinalM);
-            $('#Calificar').attr('disabled', true);
+            $('#Calificar').attr('disabled', false);
             $('#Refrescar').attr('disabled', false);
             return false
         }

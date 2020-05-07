@@ -69,13 +69,13 @@
         if( $('#calificacion1').val() !='' ){
           if( $('#calificacion1').val()<=10 && $('#calificacion1').val()>=0 ){
             confirmar();
-            $('#calificacion1').css("background-color", "#05D576");
+            $('#calificacion1').addClass('biene');
           }else{
             alert('La calificación no es valida, verifique que los puntajes ingresados no excedan lo permitido.');
           }
         }else{
             $('#calificacion1').focus();
-            $('#calificacion1').css("background-color", "#D50545");
+            $('#calificacion1').addClass('male');
         }
       });    
 

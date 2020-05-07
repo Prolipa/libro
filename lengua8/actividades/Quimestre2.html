@@ -1,0 +1,483 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 8</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <link href="css/Comprendo.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.pintarcorrecto {
+
+    background-color: #32a75b;
+    color: white;
+    border: 5px solid #32a75b;
+    border-radius: 10px 10px 10px 10px;
+
+}
+
+.pintarincorrecto {
+
+    background-color: #F97591;
+    color: white;
+    border: 5px solid #F97591;
+    border-radius: 10px 10px 10px 10px;
+
+}
+
+.cajaprincipal {
+    width: 100%;
+    min-height: 400px;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.titulop,
+.tnumero {
+    font-size: 25px;
+    color: #009ad2;
+    font-weight: bolder;
+    padding: 10px;
+
+}
+
+/*.pregunta {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 15px;
+    padding-bottom: 20px;
+
+}
+
+.opciones {
+    font-size: 18px;
+
+    font-weight: bolder;
+    padding-left: 20px;
+
+}
+*/
+.principal {}
+
+.opciones img {
+    max-height: 300px;
+
+}
+
+.letraAzul,
+ol {
+    color: #005ca4;
+    font-weight: bold;
+
+}
+
+p {
+    color: #000000;
+}
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+
+.bg-pquimestre {
+    background: #009ad2;
+}
+
+.border-pquimestre {
+    border: 1px solid #009ad2;
+}
+
+.border-squimestre {
+    border-color: #009277 !important;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.bg-squimestre {
+    background-color: #009277;
+}
+
+.panel-body {
+    cursor: pointer;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee con atención las preguntas presentadas a continuación.<br>
+        Hacer click en la respuesta correcta y solo se podra elegir una vez.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li style="display: none;">
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad" style="display: none !important;">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo">Segundo Quimestre</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body" align="justify" style="font-size: 20px;">
+                <p class="fuente"><b>Escoge</b> la opción correcta y <b>pinta</b> la letra en la tabla de respuestas.</p>
+                <br>
+                <div class="panel panel-info cajaprincipal">
+                    <div class="panel-heading"><span class="titulop">Pregunta Nº<span class="tnumero">1</span></span></div>
+                    <div class="panel-body">
+                        <div class="pregunta"></div>
+                        <br><br>
+                        <div class="opciones">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="border: 2px dotted #005da8;">
+                                <p class="letraAzul" style="background: #e1e6f4;border-radius: 15px;padding: 10px;"><b>Opciones de respuesta</b></p>
+                                <ol type="A" class="op1">
+                                </ol>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 imag1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Por favor ingrese el nombre. Es obligatorio</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script type="text/javascript">
+    var titulos = "squimestre";
+    f_titulos();
+    $("#txtNota").html("0");
+    $("#n_pagina").html("261");
+
+    var nota = 0,
+        cor = 0,
+        inc = 0,
+        itemsT = 13,
+        calificacion = 10,
+        cont = 0,
+        ejer = 13;
+    var preg = [];
+    var resp = [];
+    var nn1 = 0;
+
+    preg = [
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> y<b> completa</b> el texto con la opción que consideres pertinente.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f1f4fa; border-radius: 15px"> <p class="fuente">“Alguien ________ también los utensilios (…). Los utensilios más ________ debieron de haber sido simples ramas o piedras. Pero, pronto, esas piedras se tallaron en forma de martillos puntiagudos. Se han encontrado enterradas muchas de esas piedras talladas. Y como entonces todos los utensilios eran aún de piedra, este período se llama_ _________________. Sin embargo, por aquellas fechas, la gente no sabía construir casas. Eso suponía una gran incomodidad, pues en aquel tiempo solía hacer a menudo mucho frío. A veces, mucho más que hoy. (…). Los hombres primitivos debían de vivir helados y se alegraban cuando ________ cuevas que podían protegerlos a medias del viento y el frío. Por eso se les llama también hombres de las cavernas, aunque es muy improbable que habitaran siempre en ellas”. </p> <div align="right"> <font size="3">Fuente: Gombrich, Ernst (1935). Breve Historia del Mundo. <br>Barcelona: Editorial Península.</font> </div> </div> </div> </div>', 0, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f1f4fa; border-radius: 15px"> <p class="fuente">“Alguien ________ también los utensilios (…). Los utensilios más ________ debieron de haber sido simples ramas o piedras. Pero, pronto, esas piedras se tallaron en forma de martillos puntiagudos. Se han encontrado enterradas muchas de esas piedras talladas. Y como entonces todos los utensilios eran aún de piedra, este período se llama_ _________________. Sin embargo, por aquellas fechas, la gente no sabía construir casas. Eso suponía una gran incomodidad, pues en aquel tiempo solía hacer a menudo mucho frío. A veces, mucho más que hoy. (…). Los hombres primitivos debían de vivir helados y se alegraban cuando ________ cuevas que podían protegerlos a medias del viento y el frío. Por eso se les llama también hombres de las cavernas, aunque es muy improbable que habitaran siempre en ellas”. </p> <div align="right"> <font size="3">Fuente: Gombrich, Ernst (1935). Breve Historia del Mundo. <br>Barcelona: Editorial Península.</font> </div> </div> <p class="fuente">¿A qué tipo de texto corresponde el fragmento anterior?</p> </div> </div>', 1, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Selecciona</b> las oraciones que tienen elipsis.</p> <p class="fuente">1. A mí no me gusta el puré pero a mi hermano sí.</p> <p class="fuente">2. Las cosas se ponen interesantes en casa.</p> <p class="fuente">3. Tus compañeros de trabajo ya han cobrado y tú no.</p> <p class="fuente">4. Agustín sabe nadar, pero ella no.</p> <p class="fuente">5. Las vacaciones fueron muy interesantes para ambos.</p> <p class="fuente">6. Los hombres tomaron sus armas y aguantaron la respiración.</p> </div> </div>', 2, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Ordena</b> las siguientes oraciones coordinadas para elaborar un texto que guarde coherencia: </p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f1f4fa; border-radius: 15px"> <p class="fuente"> <font color="#c6238d"><b>1. </b></font>De tal modo la lectura puede llegar a ser una experiencia, en la medida de que estas dos visiones de mundo pueden llegar a coincidir o incluso pueden llegar a disentir. </p> <p class="fuente"> <font color="#c6238d"><b>2. </b></font>Cuando un lector se abre y se apropia de lo que el texto le aporta de novedoso, el horizonte se amplía. </p> <p class="fuente"> <font color="#c6238d"><b>3. </b></font>Frente a esta apertura, se puede decir que en la lectura hay dos mundos en interacción: uno que presenta las estrategias con las que el texto intenta atrapar a quien lee; otro en donde estará quien interpreta. </p> <p class="fuente"> <font color="#c6238d"><b>4. </b></font>Es decir, cuando un lector se abre, transitará un camino distinto: más íntimo, más simbólico. </p> <div align="right"> <font size="3">Carrillo, C.et al. (Junio 2017). “Poéticas del agua. Entre la experiencia estética y la conciencia ambiental” [Adaptación]. Revista <br>iberoamericana de ciencia, tecnología y sociedad. vol.12, no.35. <br>Recuperado de <a href="https://goo.gl/ifQ1vU">https://goo.gl/ifQ1vU</a></font> </div> </div> </div> </div>', 3, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f1f4fa; border-radius: 15px"> <p class="fuente"> <font color="#c6238d"><b>1. </b></font>De tal modo la lectura puede llegar a ser una experiencia, en la medida de que estas dos visiones de mundo pueden llegar a coincidir o incluso pueden llegar a disentir. </p> <p class="fuente"> <font color="#c6238d"><b>2. </b></font>Cuando un lector se abre y se apropia de lo que el texto le aporta de novedoso, el horizonte se amplía. </p> <p class="fuente"> <font color="#c6238d"><b>3. </b></font>Frente a esta apertura, se puede decir que en la lectura hay dos mundos en interacción: uno que presenta las estrategias con las que el texto intenta atrapar a quien lee; otro en donde estará quien interpreta. </p> <p class="fuente"> <font color="#c6238d"><b>4. </b></font>Es decir, cuando un lector se abre, transitará un camino distinto: más íntimo, más simbólico. </p> <div align="right"> <font size="3">Carrillo, C.et al. (Junio 2017). “Poéticas del agua. Entre la experiencia estética y la conciencia ambiental” [Adaptación]. Revista <br>iberoamericana de ciencia, tecnología y sociedad. vol.12, no.35. <br>Recuperado de <a href="https://goo.gl/ifQ1vU">https://goo.gl/ifQ1vU</a></font> </div> </div> </div> </div><br> <p class="fuente">¿Cuál de los párrafos anteriores es deductivo?</p>', 4, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #f1f4fa; border-radius: 15px"> <p class="fuente"> <font color="#c6238d"><b>1. </b></font>De tal modo la lectura puede llegar a ser una experiencia, en la medida de que estas dos visiones de mundo pueden llegar a coincidir o incluso pueden llegar a disentir. </p> <p class="fuente"> <font color="#c6238d"><b>2. </b></font>Cuando un lector se abre y se apropia de lo que el texto le aporta de novedoso, el horizonte se amplía. </p> <p class="fuente"> <font color="#c6238d"><b>3. </b></font>Frente a esta apertura, se puede decir que en la lectura hay dos mundos en interacción: uno que presenta las estrategias con las que el texto intenta atrapar a quien lee; otro en donde estará quien interpreta. </p> <p class="fuente"> <font color="#c6238d"><b>4. </b></font>Es decir, cuando un lector se abre, transitará un camino distinto: más íntimo, más simbólico. </p> <div align="right"> <font size="3">Carrillo, C.et al. (Junio 2017). “Poéticas del agua. Entre la experiencia estética y la conciencia ambiental” [Adaptación]. Revista <br>iberoamericana de ciencia, tecnología y sociedad. vol.12, no.35. <br>Recuperado de <a href="https://goo.gl/ifQ1vU">https://goo.gl/ifQ1vU</a></font> </div> </div> </div> </div><br> <p class="fuente">¿En qué párrafos se emplean pronombres átonos?</p>', 5, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> el texto y<b> responde</b> las preguntas.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #fef4d6; border-radius: 15px"> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">“Bajé de un salto y toqué el timbre impaciente. (…) Oí entonces el ruido de la cadena y Parker, impasible como siempre, apareció en el umbral.</p> <p class="fuente">Le aparté y penetré en el vestíbulo.</p> <p class="fuente">—¿Dónde está? —pregunté secamente.</p> <p class="fuente">—Dispense, señor.</p> <p class="fuente">—Su amo, Mr. Ackroyd. No se quede mirándome de ese modo, hombre. ¿Ha avisado a la policía? (…)</p> <p class="fuente">— ¿Qué le pasa, Parker? Si, como dice usted, su amo ha sido asesinado... </p> <p class="fuente">Parker lanzó una exclamación ahogada.</p> <p class="fuente">—¿El amo? ¿Asesinado? ¡Imposible!</p> <p class="fuente">—¿No me ha telefoneado usted, hace cinco minutos, para decirme que habían encontrado asesinado a mister Ackroyd?</p> <p class="fuente">—¿Yo, señor? ¡De ninguna manera! ¡Jamás se me ocurriría hacer algo así! <br>(…)</p> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">—¿Dónde está Mr. Ackroyd?</p> <p class="fuente">—Creo que sigue en el despacho, señor (…)</p> <p class="fuente">—Voy a verle un momento (…). Quiero comprobar personalmente que está bien. (…)</p> <p class="fuente">Moví el picaporte al tiempo que llamaba: </p> <p class="fuente">— ¡Ackroyd! ¡Ackroyd! ¡Abra un momento nada más! (…) </p> <p class="fuente">Ackroyd estaba sentado tal como lo había dejado en su sillón, colocado delante del fuego. Tenía la cabeza caída a un lado y, saliendo del cuello de su chaqueta, se veía un objeto de metal brillante y retorcido. (…) El mayordomo respiró hondamente y exclamó:</p> <p class="fuente">—¡Apuñalado por la espalda! ¡Horrible! —“</p> <div align="right"> <font size="3">Fuente: Christie, A. (1928) El asesinato de Roger Ackroyd. Barcelona: Editorial <br>Molino.</font> </div> </div> </div> </div> </div><br> <p class="fuente">¿A qué género podría decirse que pertenece este relato? ¿Por qué?</p>', 6, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> el texto y<b> responde</b> las preguntas.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #fef4d6; border-radius: 15px"> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">“Bajé de un salto y toqué el timbre impaciente. (…) Oí entonces el ruido de la cadena y Parker, impasible como siempre, apareció en el umbral.</p> <p class="fuente">Le aparté y penetré en el vestíbulo.</p> <p class="fuente">—¿Dónde está? —pregunté secamente.</p> <p class="fuente">—Dispense, señor.</p> <p class="fuente">—Su amo, Mr. Ackroyd. No se quede mirándome de ese modo, hombre. ¿Ha avisado a la policía? (…)</p> <p class="fuente">— ¿Qué le pasa, Parker? Si, como dice usted, su amo ha sido asesinado... </p> <p class="fuente">Parker lanzó una exclamación ahogada.</p> <p class="fuente">—¿El amo? ¿Asesinado? ¡Imposible!</p> <p class="fuente">—¿No me ha telefoneado usted, hace cinco minutos, para decirme que habían encontrado asesinado a mister Ackroyd?</p> <p class="fuente">—¿Yo, señor? ¡De ninguna manera! ¡Jamás se me ocurriría hacer algo así! <br>(…)</p> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">—¿Dónde está Mr. Ackroyd?</p> <p class="fuente">—Creo que sigue en el despacho, señor (…)</p> <p class="fuente">—Voy a verle un momento (…). Quiero comprobar personalmente que está bien. (…)</p> <p class="fuente">Moví el picaporte al tiempo que llamaba: </p> <p class="fuente">— ¡Ackroyd! ¡Ackroyd! ¡Abra un momento nada más! (…) </p> <p class="fuente">Ackroyd estaba sentado tal como lo había dejado en su sillón, colocado delante del fuego. Tenía la cabeza caída a un lado y, saliendo del cuello de su chaqueta, se veía un objeto de metal brillante y retorcido. (…) El mayordomo respiró hondamente y exclamó:</p> <p class="fuente">—¡Apuñalado por la espalda! ¡Horrible! —“</p> <div align="right"> <font size="3">Fuente: Christie, A. (1928) El asesinato de Roger Ackroyd. Barcelona: Editorial <br>Molino.</font> </div> </div> </div> </div> </div><br> <p class="fuente">¿Qué datos o hechos crean el ambiente de misterio?</p>', 7, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> el texto y<b> responde</b> las preguntas.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #fef4d6; border-radius: 15px"> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">“Bajé de un salto y toqué el timbre impaciente. (…) Oí entonces el ruido de la cadena y Parker, impasible como siempre, apareció en el umbral.</p> <p class="fuente">Le aparté y penetré en el vestíbulo.</p> <p class="fuente">—¿Dónde está? —pregunté secamente.</p> <p class="fuente">—Dispense, señor.</p> <p class="fuente">—Su amo, Mr. Ackroyd. No se quede mirándome de ese modo, hombre. ¿Ha avisado a la policía? (…)</p> <p class="fuente">— ¿Qué le pasa, Parker? Si, como dice usted, su amo ha sido asesinado... </p> <p class="fuente">Parker lanzó una exclamación ahogada.</p> <p class="fuente">—¿El amo? ¿Asesinado? ¡Imposible!</p> <p class="fuente">—¿No me ha telefoneado usted, hace cinco minutos, para decirme que habían encontrado asesinado a mister Ackroyd?</p> <p class="fuente">—¿Yo, señor? ¡De ninguna manera! ¡Jamás se me ocurriría hacer algo así! <br>(…)</p> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <p class="fuente">—¿Dónde está Mr. Ackroyd?</p> <p class="fuente">—Creo que sigue en el despacho, señor (…)</p> <p class="fuente">—Voy a verle un momento (…). Quiero comprobar personalmente que está bien. (…)</p> <p class="fuente">Moví el picaporte al tiempo que llamaba: </p> <p class="fuente">— ¡Ackroyd! ¡Ackroyd! ¡Abra un momento nada más! (…) </p> <p class="fuente">Ackroyd estaba sentado tal como lo había dejado en su sillón, colocado delante del fuego. Tenía la cabeza caída a un lado y, saliendo del cuello de su chaqueta, se veía un objeto de metal brillante y retorcido. (…) El mayordomo respiró hondamente y exclamó:</p> <p class="fuente">—¡Apuñalado por la espalda! ¡Horrible! —“</p> <div align="right"> <font size="3">Fuente: Christie, A. (1928) El asesinato de Roger Ackroyd. Barcelona: Editorial <br>Molino.</font> </div> </div> </div> </div> </div><br> <p class="fuente">¿Señala los adverbios del fragmento anterior?</p>', 8, ],
+        ['<p class="fuente">¿Qué significa la palabra impasible?</p>', 9, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> los siguientes fragmentos:</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #fdebec; border-radius: 15px"> <p class="fuente">“Hitler escribía que la radio "es un arma terrible en manos de quienes sepan hacer uso de ella"(Mein Kampf, 1925). Así cuando en 1933 alcanza la cancillería, una de sus primeras preocupaciones es hacerse con el dominio de las ondas”</p> <p class="fuente">”Al comienzo de la guerra (…) todas las radios vendidas llevaban una advertencia: "Piense en esto: escuchar emisiones extranjeras es un crimen contra la seguridad nacional y contra nuestro pueblo. Es una orden del Fuhrer (Hitler) castigada con prisión y trabajos forzados". Las cosas empeorarían cuando la Gestapo recibió órdenes de ejecutar a cualquiera que fuera descubierto escuchando emisiones enemigas".</p> <div align="right" style="line-height: 20px"> <font size="3">Fuente: El cajón de Grinson (23 de noviembre de 2011). <br>La Radio durante la Segunda Guerra Mundial. <br>Recuperado de <a href="https://goo.gl/PF7ZKF">https://goo.gl/PF7ZKF</a></font> </div> </div> </div> </div> <br> <p class="fuente">A partir del texto, completa la siguiente idea:</p> <p class="fuente">Escuchar emisoras extranjeras era concebido como un peligro para la seguridad nacional por el gobierno de Hitler porque _________. </p>', 10, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Lee</b> los siguientes fragmentos:</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #fdebec; border-radius: 15px"> <p class="fuente">“Hitler escribía que la radio "es un arma terrible en manos de quienes sepan hacer uso de ella"(Mein Kampf, 1925). Así cuando en 1933 alcanza la cancillería, una de sus primeras preocupaciones es hacerse con el dominio de las ondas”</p> <p class="fuente">”Al comienzo de la guerra (…) todas las radios vendidas llevaban una advertencia: "Piense en esto: escuchar emisiones extranjeras es un crimen contra la seguridad nacional y contra nuestro pueblo. Es una orden del Fuhrer (Hitler) castigada con prisión y trabajos forzados". Las cosas empeorarían cuando la Gestapo recibió órdenes de ejecutar a cualquiera que fuera descubierto escuchando emisiones enemigas".</p> <div align="right" style="line-height: 20px"> <font size="3">Fuente: El cajón de Grinson (23 de noviembre de 2011). <br>La Radio durante la Segunda Guerra Mundial. <br>Recuperado de <a href="https://goo.gl/PF7ZKF">https://goo.gl/PF7ZKF</a></font> </div> </div> </div> </div> <br> <p class="fuente">¿Cómo se entendía la comunicación en la época?</p>', 11, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Escoge</b> la equivalencia léxica pertinente para sustituir los términos subrayados. </p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente">1) Laura me dijo que <u>se fue a volver.</u> </p> <p class="fuente">2) <u>Acolita</u> a tu hermano, por favor.</p> <p class="fuente">3) Martín <u>camella</u> toda la semana. </p> <p class="fuente">4) <u>¡Atatay</u>, no toques eso!</p> </div> </div> </div>', 12, ],
+        ['<div class="row"> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente"><b>Señala</b> de la siguiente lista, aquellas variantes lingüísticas kichwas que se han incorporado en el habla cotidiana del Ecuador.</p> <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <p class="fuente">1. Por favor, ve </p> <p class="fuente">2. Dame viendo</p> <p class="fuente">3. Acacito</p> <p class="fuente">4. Acá</p> <p class="fuente">5. Me fui cocinando</p> <p class="fuente">6. Vengo comiendo</p> </div> </div> </div>', 13, ],
+    ];
+
+
+
+    resp = [
+
+        [
+            '<li><p class="fuente no">inventaban- antiguos- Edad De Piedra- encontró</p></li>',
+            '<li><p class="fuente no">inventa- Antiguos- Edad de piedra- encontrarían</p></li>',
+            '<li><p class="fuente no">inventaba- Antiguos- edad de piedra- encuentran</p></li>',
+            '<li><p class="fuente si">inventó- antiguos- Edad de Piedra- encontraban</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">Artículo de opinión</p></li>',
+            '<li><p class="fuente no">Relato policial</p></li>',
+            '<li><p class="fuente no">Relato fantástico</p></li>',
+            '<li><p class="fuente si">Artículo científico</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">1, 2, 5</p></li>',
+            '<li><p class="fuente no">2, 5, 6</p></li>',
+            '<li><p class="fuente no">3, 4, 6</p></li>',
+            '<li><p class="fuente si">1, 3, 4</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">1, 2, 3, 4</p></li>',
+            '<li><p class="fuente no">3, 4, 1, 2</p></li>',
+            '<li><p class="fuente no">4, 1, 3, 2</p></li>',
+            '<li><p class="fuente si">2, 4, 3, 1</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">1</p></li>',
+            '<li><p class="fuente no">2</p></li>',
+            '<li><p class="fuente no">4</p></li>',
+            '<li><p class="fuente si">3</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">1, 2</p></li>',
+            '<li><p class="fuente no">1, 3</p></li>',
+            '<li><p class="fuente no">3, 4</p></li>',
+            '<li><p class="fuente si">2, 4</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">Relato de viajes y aventuras, porque su narración involucra temas como la conquista e incluye las reflexiones que pueden tener los personajes como viajantes.</p></li>',
+            '<li><p class="fuente no">Relato de fantasía épica, porque cuenta las hazañas conseguidas por el héroe.</p></li>',
+            '<li><p class="fuente no">Relato mitológico, porque explica el surgimiento de ciertos de elementos del mundo.</p></li>',
+            '<li><p class="fuente si">Relato policial, porque su narración se enfoca en la exposición de un hecho criminal.</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">La actitud impasible del mayordomo Parker ante la muerte de Mr. Ackroyd</p></li>',
+            '<li><p class="fuente no">La urgencia del narrador por ver el cadáver de Mr. Parker</p></li>',
+            '<li><p class="fuente no">El objeto de metal brillante y retorcido en el sillón de Mr. Ackroyd</p></li>',
+            '<li><p class="fuente si">La llamada al narrador y la ignorancia del asesinato por parte del mayordomo</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">Bajé , impaciente, mirándome, sido, jamás</p></li>',
+            '<li><p class="fuente no">Impaciente, impasible, mirándome, personalmente, hondamente</p></li>',
+            '<li><p class="fuente no">Siempre, secamente, jamás, personalmente, hondamente</p></li>',
+            '<li><p class="fuente si">Siempre, secamente, jamás, ahogada, asesinado</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">Habitante de la ciudad de La Paz</p></li>',
+            '<li><p class="fuente no">Que carece de paz, atormentado</p></li>',
+            '<li><p class="fuente no">Sinónimo de apacible, manso o dulce</p></li>',
+            '<li><p class="fuente si">Incapaz de padecer, cualidad de imperturbable</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">la señal era muy débil y la escucha de otras emisoras impedía las trasmisiones del gobierno alemán.</p></li>',
+            '<li><p class="fuente no">gracias al alcance de la radio, podía difundir ideas a gran parte del pueblo contrarias a su línea de gobierno y llegar a generar alzamientos.</p></li>',
+            '<li><p class="fuente no">los extranjeros castigarían con prisión y con trabajos forzados a todos aquellos extranjeros que escucharan sus emisiones.</p></li>',
+            '<li><p class="fuente si">los extranjeros no deseaban que sus emisiones fuesen escuchadas por otros pueblos.</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">Es un derecho al que todos pueden acceder.</p></li>',
+            '<li><p class="fuente no">La libertad de expresión es un derecho universal. </p></li>',
+            '<li><p class="fuente no">Las radios sirven para cometer delitos.</p></li>',
+            '<li><p class="fuente si">La comunicación es un medio de propaganda.</p></li>',
+        ],
+        [
+            '<li><p class="fuente no">ya nos buscaba- Carga- descansa- Qué frío </p></li>',
+            '<li><p class="fuente no">aparecía pronto- Cuida- cocina- Qué calor</p></li>',
+            '<li><p class="fuente no">se quedaba- Busca- limpia- Qué dolor</p></li>',
+            '<li><p class="fuente si">ya vuelve- Ayuda- trabaja- Qué asco </p></li>',
+        ],
+        [
+            '<li><p class="fuente no">1, 2, 3, 6</p></li>',
+            '<li><p class="fuente no">1, 2, 4, 5</p></li>',
+            '<li><p class="fuente no">2, 4, 5, 6</p></li>',
+            '<li><p class="fuente si">2, 3, 5, 6</p></li>',
+        ],
+
+
+    ];
+    preg.sort(f_randomico);
+
+    $(".titulop").hide();
+
+
+    f_iniciar();
+
+
+    function f_iniciar() {
+
+        $(".titulop").show(500);
+        $(".principal").hide(500);
+        nn1 = (preg[cont][1]);
+        console.log(preg);
+        for (i = 0; i < resp.length; i++) {
+
+            resp[i].sort(f_randomico);
+        }
+        console.log(resp[nn1]);
+
+        $(".tnumero").html('').append(cont + 1)
+        $(".pregunta").html('').append(preg[cont][0])
+        $(".imag1").html('').append(preg[cont][2])
+        $(".op1").html('').append(resp[nn1])
+        $(".si").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarcorrecto");
+            cor++;
+            calificar_preg();
+        });
+        $(".no").bind("click", function() { //click en el boton iniciar
+            $(this).unbind("click");
+            $(".si,.no").unbind("click");
+            $(this).addClass("pintarincorrecto");
+            inc++;
+            calificar_preg();
+        });
+
+        function calificar_preg() {
+            cont++;
+            $(this).unbind("click");
+
+            var timer = setTimeout(f_condicion, 1000);
+
+            function f_condicion() {
+                if (cont == itemsT) {
+                    $('.cajaprincipal').html('<table class="table table-bordered" style="text-align:center; font-size: 30px;">' +
+                        '<tr>' +
+                        '<td colspan="2"><b>Tu Calificación es:</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td colspan="2"><b><span class="notaq1"></span>/10</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td><b style="color:  green;">Respuestas Correctas</b></td>' +
+                        '<td><b style="color:  red;">Respuestas Incorrectas</b></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td>' + cor + '</td>' +
+                        '<td>' + inc + '</td>' +
+                        '</tr>' +
+                        '</table>');
+                }
+                clearTimeout(timer);
+                Calculo_notaQ();
+            }
+
+
+        }
+
+    }
+    </script>
+</body>
+
+</html>

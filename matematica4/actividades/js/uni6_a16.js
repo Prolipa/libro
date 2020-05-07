@@ -1,4 +1,5 @@
 var titulos = "preparo";
+f_titulos();
 numero_pagina(256);
 var cor = 0;
 cont = 0,

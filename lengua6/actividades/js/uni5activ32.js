@@ -47,9 +47,9 @@
       for( var i=1; i<7; i++ ){
         if($('#rC'+i).val() == resp[i-1]){
           notaP3++;
-          $('#rC'+i).css('background-color', '#18D180');
+          $('#rC'+i).addClass('biene');
         }else{
-          $('#rC'+i).css('background-color', '#D1184A');
+          $('#rC'+i).addClass('male');
         }
       }
       notaFP3=(notaP3*2)/6;
@@ -64,9 +64,9 @@
       for( var i=1; i<5; i++ ){
         if($('#rD'+i).val() == resp[i-1]){
           notaP4++;
-          $('#rD'+i).css('background-color', '#18D180');
+          $('#rD'+i).addClass('biene');
         }else{
-          $('#rD'+i).css('background-color', '#D1184A');
+          $('#rD'+i).addClass('male');
         }
       }
       notaFP4=(notaP4*2)/4;

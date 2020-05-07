@@ -1,4 +1,5 @@
 var titulos = "aplico";
+f_titulos();
 numero_pagina(229);
 
 var tpre1 = 0;
@@ -7,17 +8,16 @@ var tpre3 = 0;
 
 
 // #region Pregunta1
-p1vec1=
-[
-'<li class="col-sm-4">20 ÷ 10 =                             <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="2"><br><br></li>',
-'<li class="col-sm-4">40 ÷ 10 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="4"><br><br></li>',
-'<li class="col-sm-4">90 ÷ 10 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="9"><br><br></li>',
-'<li class="col-sm-4">3 000 ÷ 10 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="300"><br><br></li>',
-'<li class="col-sm-4">3 000 ÷ 100 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="30"><br><br></li>',
-'<li class="col-sm-4">3 000 ÷ 1000 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="3"><br><br></li>',
-'<li class="col-sm-4">4 500 ÷ 10 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="450"><br><br></li>',
-'<li class="col-sm-4">9 000 ÷ 100 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="30"><br><br></li>',
-'<li class="col-sm-4">3 400 ÷ 10 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="340"><br><br></li>'
+p1vec1 = [
+    '<li class="col-sm-4">20 ÷ 10 =                             <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="2"><br><br></li>',
+    '<li class="col-sm-4">40 ÷ 10 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="4"><br><br></li>',
+    '<li class="col-sm-4">90 ÷ 10 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="9"><br><br></li>',
+    '<li class="col-sm-4">3 000 ÷ 10 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="300"><br><br></li>',
+    '<li class="col-sm-4">3 000 ÷ 100 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="30"><br><br></li>',
+    '<li class="col-sm-4">3 000 ÷ 1000 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="3"><br><br></li>',
+    '<li class="col-sm-4">4 500 ÷ 10 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="450"><br><br></li>',
+    '<li class="col-sm-4">9 000 ÷ 100 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="30"><br><br></li>',
+    '<li class="col-sm-4">3 400 ÷ 10 = <input maxlength="3" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas1"><input type="hidden" style="color:blue;" class="solucion1" value="340"><br><br></li>'
 ];
 p1vec1.sort(f_randomico);
 $('#li1').html(p1vec1);
@@ -49,17 +49,16 @@ function pregunta1() {
 
 // #region Pregunta2
 
-p2vec1=
-[
-'<li class="col-sm-4">4 200 ÷ <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="100"> = 42<br><br></li>',
-'<li class="col-sm-4">890 ÷ 10 = <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="89"><br><br></li>',
-'<li class="col-sm-4"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="5300"> ÷ 10 =  530<br><br></li>',
-'<li class="col-sm-4">1 700 ÷ <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="10"> = 170<br><br></li>',
-'<li class="col-sm-4"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="6300"> ÷ 100 =  63<br><br></li>',
-'<li class="col-sm-4">7 000 ÷ <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="1000"> = 7<br><br></li>',
-'<li class="col-sm-4">2 200 ÷ 10 = <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="220"><br><br></li>',
-'<li class="col-sm-4"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="3010"> ÷ 10 =  301<br><br></li>',
-'<li class="col-sm-4">5 200 ÷ <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="100"> = 52<br><br></li>'
+p2vec1 = [
+    '<li class="col-sm-4">4 200 ÷ <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="100"> = 42<br><br></li>',
+    '<li class="col-sm-4">890 ÷ 10 = <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="89"><br><br></li>',
+    '<li class="col-sm-4"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="5300"> ÷ 10 =  530<br><br></li>',
+    '<li class="col-sm-4">1 700 ÷ <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="10"> = 170<br><br></li>',
+    '<li class="col-sm-4"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="6300"> ÷ 100 =  63<br><br></li>',
+    '<li class="col-sm-4">7 000 ÷ <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="1000"> = 7<br><br></li>',
+    '<li class="col-sm-4">2 200 ÷ 10 = <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="220"><br><br></li>',
+    '<li class="col-sm-4"><input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="3010"> ÷ 10 =  301<br><br></li>',
+    '<li class="col-sm-4">5 200 ÷ <input maxlength="4" type="text" size="1" style="width:50px;text-align: center;border: solid 2px #AED4EF;" class="soloNumeros border-blue respuestas2"><input type="hidden" style="color:blue;" class="solucion2" value="100"> = 52<br><br></li>'
 ];
 p2vec1.sort(f_randomico);
 $('#li2').html(p2vec1);
@@ -118,18 +117,18 @@ function pregunta3() {
 // #region Calculo Nota Final
 function NotaFinal() {
 
-        pregunta1();
-        pregunta2();
-        pregunta3();
-        var Nf =
-            parseFloat(tpre1) +
-            parseFloat(tpre2) +
-            parseFloat(tpre3);
+    pregunta1();
+    pregunta2();
+    pregunta3();
+    var Nf =
+        parseFloat(tpre1) +
+        parseFloat(tpre2) +
+        parseFloat(tpre3);
 
-        var Vtotal = Nf.toFixed(2);
-        $("#txtNota").html(Vtotal);
-        document.getElementById("bt_comprobar").disabled = true;
-        $("input").attr('disabled','disabled');
-    }
+    var Vtotal = Nf.toFixed(2);
+    $("#txtNota").html(Vtotal);
+    document.getElementById("bt_comprobar").disabled = true;
+    $("input").attr('disabled', 'disabled');
+}
 
 // #endregion

@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link href="css/lengu2.css" rel="stylesheet">
+</head>
+<style>
+    .verde{
+    color:#328D25;
+    font-weight: bold;
+}
+.morado{
+    color:#454FB2;
+    font-weight: bold;
+}
+.naranja{
+    color:#F07017;
+    font-weight:bold;
+}
+    
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Para mostrar los contenidos de manera secuencial pulsa sobre <span class="glyphicon glyphicon-play help-ico biniciar" aria-hidden="true"></span><br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_4 btnIniciar mytooltip" data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip display-none" data-info="Calificar / Comprobar" id="bt_comprobar">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota display-none">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-comprendo" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-comprendo" style="background:#5EA7A8">
+                <span class="titulo">Comprendo para saber</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--texto de ayuda de la actividad-->
+                <!--pregunats de la actividad-->
+                <div class="col-xs-12">
+                    <div class="fondo">
+                        <div class="row anim">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <img src="img/i1_p74_act1.jpg" class="anim" style="max-width: 40%; float: right">
+                                <p class="fuente anim">Los <span class="verde">órganos</span> de los <span class="verde">sentidos</span> permiten a los seres vivos relacionarse mejor con el medio que les rodea, captar e interpretar información y reaccionar ante los cambios del entorno y del organismo.</p>
+                                <p class="fuente anim">Los seres vivos responden a diferentes señales; estas son estímulos que pueden ser captados mediante una serie de receptores sensoriales.</p>
+                                <p class="fuente anim">Los receptores sensoriales son estructuras que responden ante un estímulo (olor, sabor, sonido, luz, dolor, calor...) y generan una reacción (mover la mano, sentir sabor salado y cerrar los párpados). Todo esto es posible gracias al trabajo coordinado entre los órganos de los sentidos y los diferentes sistemas del cuerpo humano</p>
+                                <p class="fuente anim">El órgano del sentido recibe el estímulo gracias a sus receptores; estos envían la señal al sistema nervioso para que lo interprete y coordine la respuesta y los sistemas endocrino y osteomuscular elaboran y ejecutan la respuesta.</p>
+                                <p class="fuente anim">Los órganos de los sentidos nos permiten relacionarnos con nuestro entorno: ojos (<span class="verde">vista</span>) , oído (<span class="verde">audición</span>), nariz (<span class="verde">olfato</span>), lengua (<span class="verde">gusto</span>) y piel (<span class="verde">tacto</span>).</p>
+                                <p class="fuente anim morado" style="font-size:24px">La vista</p>
+                                <p class="fuente anim">El ojo es el órgano que permite observar el entorno.<br>El <span class="verde">ojo</span> es el órgano de la <span class="verde">vista</span>. Tiene forma de globo y es responsable de recibir estímulos de luz. <br> Tenemos dos ojos, ubicados en las cavidades frontales del cráneo; están sujetos por músculos que los mueven para apuntar en diferentes direcciones. </p>
+                                <p class="fuente anim naranja" style="font-size:24px">Estructura del ojo</p>
+                                <img src="img/i1_p75_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <p class="fuente anim">El sentido de la vista permite percibir luz, con la que el cerebro forma imágenes. Brinda información de forma, color, tamaño, distancia, posición y movimiento de los objetos.</p>
+                                <p class="fuente anim">El ojo actúa como una cámara fotográfica: cuando observas un objeto iluminado, como el texto que estás leyendo, sus rayos de luz atraviesan la córnea y llegan al cristalino por la pupila. La imagen pasa a la retina donde los receptores captan la luz y la envían al cerebro, por medio del nervio óptico, en donde interpreta la imagen completa; con sus características: color, tamaño, y forma.</p>
+                                <p class="fuente anim morado" style="font-size:24px">El oido</p>
+                                <p class="fuente anim">El <span class="verde">oído</span> es el órgano que permite escuchar el <span class="verde">sonido</span> del entorno, es el órgano del oído o audición.<br>
+                                    Consta de tres partes: el oído externo, formado por el pabellón auricular y el canal auditivo; el oído medio, formado por el tímpano, los huesecillos y el tubo auditivo; el oído interno, formado por el sistema vestibular y la cóclea.
+                                    <br>Tenemos dos oídos ubicados a los lados del cráneo.</p>
+                                <p class="fuente anim naranja" style="font-size:24px">Estructura del oido</p>
+                                <img src="img/i2_p76_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <p class="fuente anim naranja" style="font-size:24px">El oído: cómo escuchamos</p>
+                                <p class="fuente anim">El sentido del oído permite percibir los sonidos que se producen en nuestro entorno y también la posición en el espacio; así es posible mantenerse de pie, caminar o permanecer sentados sin perder el equilibrio. El sentido de la audición nos permite relacionarnos con nuestro entorno.</p>
+                                <p class="fuente anim">El oído humano es bastante sensible: diferencia el timbre, tono e intensidad de los sonidos. El timbre permite distinguir entre dos instrumentos musicales; el tono, entre sonidos graves y agudos y la intensidad, entre sonidos fuertes y suaves. El oído también permite calcular la distancia a la que se encuentra el objeto que produce el sonido.</p>
+                                <img src="img/i3_p76_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <p class="fuente anim morado" style="font-size:24px">El olfato</p>
+                                <p class="fuente anim">La <span class="verde">nariz</span> es el órgano que nos permite <span class="verde">oler</span>, es el órgano del olfato. Detecta olores suaves y fuertes, agradables y desagradables.<br>
+                                    Los olores son sustancias en forma de vapor que se encuentran en el aire.<br>
+                                    Consta de dos orificios denominados fosas nasales, cuyo interior está recubierto por una membrana mucosa y pequeñas vellosidades que detienen las partículas de polvo que ingresan por la nariz.<br>
+                                    En el interior de las fosas nasales el aire se calienta y humedece, y se perciben los estímulos químicos de olor.</p>
+                                <p class="fuente anim naranja " style="font-size:24px">Estructura de la nariz</p>
+                                <img src="img/i1_p77_act1.jpg" class="anim" style="max-width: 100%; float: right">
+                                <p class="fuente anim naranja" style="font-size:24px">El olfato: cómo olemos</p>
+                                <p class="fuente anim">Los olores presentes en el entorno ingresan por la cavidad u orificio nasal hacia las fosas nasales.<br>
+                                    En la parte superior de las fosas nasales hay receptores olfativos (quimiorreceptores) que detectan los estímulos de olor y los conducen hacia el bulbo olfatorio que reúne todas las partículas de olor y las lleva al cerebro por medio del nervio olfativo.</p>
+                                <p class="fuente anim morado" style="font-size:24px">El gusto</p>
+                                <p class="fuente anim">La <span class="verde">lengua</span> es el órgano del <span class="verde">gusto</span> que nos permite saborear. Es un músculo cubierto por miles de papilas gustativas, dentro de las cuales hay estructuras en forma de bolsa que contienen los receptores de sabor.</p>
+                                <p class="fuente anim">Las papilas gustativas presentan diferentes formas y ocupan zonas determinadas de la lengua. Tenemos papilas con receptores capaces de distinguir sabores dulce, salado, amargo, ácido y umami.<br>
+                                    La percepción final de los alimentos es el resultado de la acción en conjunto de todas las papilas.</p>
+                                
+                                        <img src="img/i2_p77_act1.jpg" class="anim" style="max-width: 50%; float: left;">
+                                   
+                                        <img src="img/i3_p77_act1.jpg" class="anim" style="max-width: 50%; float: right">
+                                  
+                                <p class="fuente anim morado" style="font-size:24px">El tacto</p>
+                                <p class="fuente anim">La <span class="verde">piel</span> es el órgano que nos permite percibir cambios de temperatura y dolor.</p>
+                                <p class="fuente anim">La piel es el órgano más grande del cuerpo humano, pues lo cubre entero. Es el órgano que más rápido se regenera; es decir, si la piel se lastima por alguna razón, se recupera en un corto tiempo.<br> Al cubrir todo el cuerpo, la piel es el órgano del <span class="verde">tacto</span>, pues percibe el cambio de temperatura, el dolor, la presión, la textura y la dureza de los objetos. </p>
+                                <p class="fuente anim">Hay partes del cuerpo muy sensibles, como las palmas de las manos y otras con poca sensibilidad como los codos. La sensibilidad se debe a que en la piel se encuentran terminaciones nerviosas que, al sentir un objeto, transmiten inmediatamente las sensaciones al cerebro, en donde se produce la respuesta que es transmitida por neuronas motoras nuevamente hacia la piel.</p>
+                                <p class="fuente anim naranja" style="font-size:24px">Estructura de la piel</p>
+                                <img src="img/i1_p78_act1.jpg" class="anim" style="max-width: 100%; float: left;">
+                                <p class="fuente anim naranja" style="font-size:24px">Cómo sentimos</p>
+                                <p class="fuente anim">Los receptores de la piel se localizan en partes específicas del cuerpo y son los encargados de captar diferentes tipos de estímulos. Existen receptores del dolor, de temperatura, de presión, estímulos repetidos, formas y texturas. La información recibida por los receptores cutáneos es trans- portada por nervios hasta el cerebro, donde es interpretada y se elabora una respuesta. El sistema nervioso está íntimamente relacionado con el sentido del tacto.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Guardar PDF-->
+            <div class="modal fade animated pulse" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                            <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_form" class="form-horizontal">
+                                <div class="form-group ">
+                                    <div class="col-sm-2">
+                                        <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                        <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                        <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                            <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                            Por favor ingrese el nombre. Es obligatorio</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
+            <!--generador de pdf-->
+            <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+            <script src="js/screenfull.js"></script>
+            <script src="js/helper.js"></script>
+            <script src="js/activities.js"></script>
+            <script src="js/animate.css.min.js"></script>
+            <script src="js/jquery.animate.css.js"></script>
+            <script src="js/Utilitario.js"></script>
+            <script>
+            $("#n_pagina").html("76"); //impresion de pagina
+            </script>
+</body>
+
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATEMATICA 6</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap-->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!--Animaciones-->
+        <link href="css/animate.css" rel="stylesheet">
+        <!--Css propio del proyecto-->
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <!-- copy these lines to your document head: -->
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <!-- end copy -->
+
+</head>
+<style type="text/css">
+*{
+    box-sizing: border-box;
+}
+	.actividad1{
+		background: #fff;
+	}
+    .radical {
+    position: relative;
+    font-size: 1.0em;
+    vertical-align: middle;
+    width: 5%
+    }
+    .n-root {
+       
+        margin-top: 0px;
+       width: 5%;
+        height:5%;
+    }
+    .radicand { 
+        padding: 0.5em 0.25em;
+        border-top: thin black solid;
+        width: 5%
+    } 
+    .radical2 {
+    position: relative;
+    font-size: 1.6em;
+    vertical-align: middle;
+    }
+    .n-root2 {
+        position: absolute;
+        top: -0.333em;
+        left: 0.333em;
+        font-size: 45%;
+    }
+    .radicand2 { 
+        padding: 0.25em 0.25em;
+        border-top: thin black solid;
+    }
+	.correcto{
+        color: #ffffff;
+        background-color: #8FB435;
+        font-weight: 700;
+    }
+    .incorrecto{
+        color: #ffffff;
+        background-color: #E76E80;
+        font-weight: 700;
+    }
+    .set-width{
+        max-width: 90px;
+        display: inline-block;
+    }
+    #pregunta1 .venn1{
+        border-radius: 25px;
+        display: inline-block;
+        padding: 15px;
+        letter-spacing: 10px;
+    }
+    .letra1{
+        width: 1.5cm; 
+        height: 1.5cm; 
+        border: 2px solid #a863a5; 
+        border-radius: 20%; 
+        font-size:1.5em;
+        margin-top: -5px;
+        margin-right: 15px;
+    }
+    .c_imagenes{
+        padding: 5px;
+    }
+    .bordes{
+        padding: 10px;
+        border: 2px dotted #a863a5;
+        border-radius: 10px;
+        min-height: 170px;
+    }
+    #pregunta2 img, #pregunta5 img {
+        mix-blend-mode:multiply;
+    }
+    /*PREGUNTA 3*/
+    .c_imagen{
+        position: relative;
+    }
+    #pregunta3 .c1{background-color: #CFC0DB;font-weight: bold;text-align: center;}
+    #pregunta3 .c2{background-color: #BADAEA;font-weight: bold;text-align: center;}
+    #pregunta3 .c3{background-color: #BED49D;font-weight: bold;text-align: center;}
+    #pregunta3 .c4{background-color: #BADAEA;font-weight: bold;text-align: center;}
+    #pregunta3 .c5{background-color: #CFC0DB;font-weight: bold;text-align: center;}
+    /*FIN PREGUNTA 3*/
+    /*PREGUNTA 4*/
+    #pregunta4 .c1{
+        background-color: #F9EFDF;
+        text-align: center;
+        padding: 5px;
+        border: 1px #D68500 solid;
+        font-size: 18px;
+    }
+    #pregunta4 .c2{
+        text-align: center;
+        padding: 5px;
+        border: 1px #D68500 solid;
+        font-size: 18px;
+    }
+    .input {
+        border: none;
+        border-bottom: 1px solid #0066ff;
+        padding: 6px;
+        width: 80%;
+    }
+    .color1{
+        font-weight: bold;
+        color: #BA007C;
+    }
+    
+    .color2{
+        font-weight: bold;
+        color: #009BDB;
+    }
+    .actividad1 input{
+        text-align: center;
+    }
+    .t_head{
+        background-color: #333;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 15px 15px 0 0;
+    }
+    .bg1{background-color: #D68611;}
+    .bg2{background-color: #A23589;}
+    .bg3{background-color: #5A9876;}
+    .bg4{background-color: #2F5FA4;}
+    .i_valor{
+        letter-spacing: 8px;
+        font-weight: bold;
+    }
+    /*pregunta 5*/
+    .borde_p5{
+        border: dotted 2px #444;
+        min-height: 180px;
+        min-width: 80px;
+        border-radius: 5px;
+        padding: 8px;
+    }
+    /*pregunta 6*/
+    .imagenes_p6{
+        min-height: 180px;
+        border: 2px dotted #e5e5e5;
+    }
+    /*pregunta 8*/
+    .imagen_p8{
+        display: inline-block;
+    }
+    @media (max-width: 770px) {
+      .cajas {
+        clear: left;
+      }
+    }
+
+    .mi_canvas {
+    min-width: 320px;
+  }
+  #prueba {
+    margin-top: 2rem;
+    display: block;
+    box-sizing: border-box;
+    padding: 0px;
+    transition: all .3s linear 0s;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#e5e5e5; 
+    /*background-color:rgba(212,185,186,0.2); 
+    background-image: url(imagenes/fondo.jpg);*/ /* SI SE NECESITA UNA IMAGEN DE FONDO */
+    background-size: 100% 100%;
+  }
+  #logo {
+    display: block;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    z-index: 1;
+    width: 30%;
+    height: auto;
+    max-width: 350px;
+    min-width: 100px;
+  }
+  .cajaa{
+      width: 20%;
+  }
+  .cajab{
+      width: 20%;
+  }
+  .caja1{
+      width: 20%;
+  }
+  #contenedoropciones {
+    margin-top: 2rem;
+    padding: 2px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #contenedoropciones table {
+  background-color: rgba(220,220,220,1.00);
+  border: .25rem solid rgba(188,185,185,1.00);
+  margin-bottom: .5rem;
+  border-spacing: 5px;
+  border-collapse: separate;
+  }
+  #contenedoropciones table:nth-of-type(2) {
+    border-spacing: 5px;
+  }
+  #contenedoropciones table:nth-of-type(2) td {
+    width: 1px;
+    white-space: nowrap;
+  }
+  #contenedoropciones table:nth-of-type(1) td {
+    cursor: pointer;
+  }
+  #contenedoropciones .titulotabla {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color:rgba(103,103,103,1.00)
+  }
+  #contenedoropciones table {
+    display: inline-table;
+  }
+  
+  .celdascoloresdefondo {
+    width: 20px;
+    height: 10px;
+    border: solid 1px transparent;
+  }
+  @media (max-width: 890px) {
+    /*.mi_canvas {
+      font-size: .750rem;
+    }*/
+    #contenedoropciones, #prueba {
+      width: 98%
+    }
+    #contenedoropciones {
+      margin-left: 1%;
+    }
+  }
+  @media (max-width: 450px) {
+    /*.mi_canvas {
+      font-size: .75rem;
+    }*/
+  }
+  @media (max-width: 1px) {
+    #contenedoropciones #opcionesdedibujo {
+      display: table;
+      width: 100%;
+    }
+    #contenedoropciones #opcionesdedibujo td {
+      display: block;
+      width: auto;
+      text-align: left;
+      margin-top: 5px;    
+    }
+  }
+
+</style>
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+            <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+            <b>Pregunta 1:</b> Escribe en los espacios en blanco<br>
+            <b>Pregunta 2:</b> Escribe en los recuadros en blanco<br>
+            <b>Pregunta 3:</b> Escribe en los espacios en blanco<br>
+            <b>Pregunta 4:</b> Escribe en los recuadros en blanco<br>
+            <b>Pregunta 5:</b> Escribe en los espacios en blanco<br>
+            <b>Pregunta 6:</b> Escribe en los recuadros en blanco<br>
+            <b>Pregunta 7:</b> Escribe en los recuadros en blanco<br>
+
+           
+            <span id="ayudas"></span>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span   class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span  class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li >
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span  class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li >
+                <li >
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar" >
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip"  data-info="Repetir" onclick="location.reload()" >
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="Calificar">
+                        <span  class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span  class="notificacion actividad" >
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span  class="notificacion nota" >
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota" ></span> / 10
+                    </span>
+                    <span  class="notificacion pagina" >
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág 118</i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<!--FIN DE NAVBAR QUE SE AÑADE-->
+	<div class="container espacio">
+		<div class="panel border-aplico" id="activity"> 
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico">
+                <span class="titulo"><img src="img/icoA.png" alt="Aplico para aprender"> Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno" >Alumno: </span>                    
+            </div>
+            <div class="panel-body">
+                <!--preguntas de la actividad-->
+                <button class="btn-link btn_mostrar">Mostrar Preguntas</button><br><br>
+                <div class="actividad1">
+                    <!--PREGUNTA 1-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <span class="p_abierta"></span>
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#aion" href="#pregunta1"> Pregunta 1</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    
+                                <div class="row">
+                                    <div class="col col-md-8 text-justify">
+                                        <b>Resuelve</b> el problema aplicando operaciones combinadas.
+                                        <p>Se prepara una feria arqueológica para exponer figuras de
+                                                las culturas de la costa ecuatoriana. Hay 28 vitrinas. Cada
+                                                vitrina tiene 4 compartimentos: en los 2 superiores caben
+                                                18 figuras, y en los 2 inferiores caben 7.</p>
+                                        <ol type="a">
+                                            <li><p>¿Cuántas figuras se pueden exponer en la feria?</p></li>
+                                            <p>28 × = [(2 × 18) + (2 × 7)]= <input type="number" class="cajab" id="p0"></p>
+                                            <li><p>Plantea la operación aplicando la propiedad asociativa. </p></li>  
+                                            <p>¿Es igual el resultado?</p>  
+                                            <p>28 × [2 × (18 + 7)] = <input type="number" class="cajab" id="p1"></p>                                      
+                                                    
+                                        </ol>
+                                    </div>
+                                    <div class="col col-md-4">
+                                        <img src="img/i1_p118_act102.png" class="img-responsive">
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- pregunta 2-->
+                    <div class="panel bg-danger" style="color:white;">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#aion" href="#pregunta2">Pregunta 2</a>
+                                </h4>
+                            </div>
+                            <div id="pregunta2" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="text-question" style="color:black;">
+                                        <b>Calcula</b> las multiplicaciones y divisiones.
+                                        <div class="row">
+                                            <ol type="a">
+                                            <div class="col col-md-6">
+                                                <span id="contenidoa"></span>
+                                            </div>
+                                            <div class="col col-md-6">
+                                                <span id="contenidob"></span>
+                                            </div>
+                                            </ol>
+                                        </div>
+
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <!-- pregunta 3-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta3">Pregunta 3</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta3" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    <div class="col col-md-8">
+                                        <p>En un edificio de 5 pisos deben colocar 5 alfombras del mismo
+                                        tamaño en cada piso. ¿Cuántas alfombras necesitan en total? </p>
+                                        <p><label>Se necesitan <input type="number" class="cajab" id="p2"> alfombras</label></p>
+                                    </div>
+                                    <div class="col col-md-4">
+                                        <img src="img/i2_p118_act102.png" class="img-responsive">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- pregunta 5-->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta5">Pregunta 4</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta5" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    <p><b>Calcula</b> mentalmente las potencias y <b>escribe</b> sus resultados</p>
+                                    <ol type="a">
+                                    <div class="col col-md-6">
+                                        <span id="contenidoea"></span>
+                                    </div>
+                                    <div class="col col-md-6">
+                                        <span id="contenidoeb"></span>
+                                    </div>
+                                    </ol>                                       
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--pregunta 6 -->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta6">Pregunta 5</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta6" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    <p><input type="number" class="nota-abierta"  id="nota1" min="0" max="1" step="0.1" >En una campaña por la conservación del agua, se organizó un desfile en el que participó un grupo de
+                                        bastoneras de 144 alumnas, que se distribuyeron en igual número de filas y columnas. ¿Cuántas filas y
+                                        columnas se formaron?</p>
+                                    <ol type="1">    
+                                    <div class="col col-md-5">
+                                        <div class="row">
+                                            <li><label>Comprender el problema</label></li>
+                                            <p><input type="text" class="form-control"></p>
+                                            <p><input type="text" class="form-control"></p>
+
+                                        </div>
+                                        <div class="row">
+                                            <li><label>Hacer un plan</label></li>
+                                            <p><input type="text" class="form-control"></p>
+
+                                        </div>
+                                    </div>
+                                    <div class="col col-md-1"></div>
+                                    <div class="col col-md-5">
+                                        <div class="row">
+                                            <li><label>Ejecutar el plan</label></li>
+                                            <div class="col col-md-12 my-drawing"></div>
+                                        </div>
+                                        <div class="row">
+                                            <li><label>Comprobar la respuesta</label></li>
+                                            <p><input type="number" class="form-control"></p>
+
+                                        </div>
+                                    </div>
+                                    </ol>
+                                </div>
+                        </div>
+                    </div>
+
+
+                    <!--pregunta 7 -->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta7">Pregunta 6</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta7" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    <p><b>Estima</b> los números entre los que se encuentran las raíces dadas. <b>Comprueba</b> con la calculadora.</p>
+                                    <div class="col col-md-6">
+                                        <span id="contenidoc"></span>
+                                    </div>
+                                    <div class="col col-md-6">
+                                        <span id="contenidoc"></span>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <!--pregunta 8 -->
+                    <div class="panel bg-danger" style="color:white;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#aion" href="#pregunta8">Pregunta 7</a>
+                            </h4>
+                        </div>
+                        <div id="pregunta8" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="text-question" style="color:black;">
+                                    <p><b>Observa</b> cada gráfico y <b>escribe</b> Cuadrado perfecto o Cubo perfecto, según corresponda. Luego <b>plantea</b> la
+                                        potencia y <b>resuelve.</b></p>
+                                    <ol type="a">
+                                    <div class="col col-md-4">
+                                        <li><img src="img/i1_p119_act102.png" alt=""></li>
+                                        <select id="pa0">
+                                            <option value="0">Selecciona</option>
+                                            <option value="1">Cubo perfecto</option>
+                                            <option value="2">Cuadrado perfecto</option>
+                                        </select>
+                                        <p><label>5</label><sup>3</sup>=<input type="number" class="cajaa" id="a0"></p>
+                                    </div>
+                                    <div class="col col-md-4">
+                                        <li><img src="img/i2_p119_act102.png" alt=""></li>
+                                        <select id="pa1">
+                                            <option value="0">Selecciona</option>
+                                            <option value="1">Cubo perfecto</option>
+                                            <option value="2">Cuadrado perfecto</option>
+                                        </select>
+                                        <p><label>6</label><sup>2</sup>=<input type="number" class="cajaa" id="a1"></p>
+                                    </div>
+                                    <div class="col col-md-4">
+                                        <li><img src="img/i3_p119_act102.png" alt=""></li>
+                                        <select id="pa2">
+                                            <option value="0">Selecciona</option>
+                                            <option value="1">Cubo perfecto</option>
+                                            <option value="2">Cuadrado perfecto</option>
+                                        </select>
+                                        <p><label>3</label><sup>3</sup>=<input type="number" class="cajaa" id="a2"></p>
+                                    </div>
+                                    </ol>
+
+                                  
+                                </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <p id="trace" class="alert alert-warning display-none"></p>
+        </div>
+                
+    </div>
+
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>  
+                            <div class="col-sm-10"> 
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color"  aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-su" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>        
+        </div>
+    </div>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/102.js"></script>
+        <script type="text/javascript">
+            var titulos="refuerzo";
+        </script>
+         <script>
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var lc = LC.init(
+                document.getElementsByClassName('my-drawing')[0], { imageURLPrefix: 'imgcanvas' }
+            );
+            var lc = LC.init(
+                document.getElementsByClassName('my-drawing1')[0], { imageURLPrefix: 'imgcanvas' }
+            );
+               
+            lc.respondToSizeChange();
+        </script>
+</body>
+</html>

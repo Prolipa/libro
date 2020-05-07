@@ -83,9 +83,9 @@
         
         if( re == resp[i-1] ){
           notaFinalP2++;
-          $('#rB'+i).css('background-color', '#32DE93');
+          $('#rB'+i).addClass('bien');
         }else{
-          $('#rB'+i).css('background-color', '#DE3266');
+          $('#rB'+i).addClass('mal');
         }
       }
     }
@@ -166,13 +166,13 @@
         if( $('#calificacion3').val() !='' ){
           if( $('#calificacion3').val()<=2.5 && $('#calificacion3').val()>=0 ){
             confirmar();
-            $('#calificacion3').css("background-color", "#05D576");
+            $('#calificacion3').addClass('b');
           }else{
             alert('La calificación no es valida, verifique que los puntajes ingresados no excedan lo permitido.');
           }
         }else{
             $('#calificacion3').focus();
-            $('#calificacion3').css("background-color", "#D50545");
+            $('#calificacion3').addClass('m');
         }
       });    
 

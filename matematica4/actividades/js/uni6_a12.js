@@ -1,4 +1,5 @@
 var titulos = "aplico";
+f_titulos();
 numero_pagina(249);
 
 var tpre1 = 0;
@@ -184,7 +185,7 @@ $('.10').click(function() {
 
 function pregunta1() {
     var p5cont1 = 0;
-    var p5vec3 = ['30 cl', '1 l', '4 dl', '350 ml', '1 ml', '10 l','6 ml', '1 cl', '1 l', '1 cl'];
+    var p5vec3 = ['30 cl', '1 l', '4 dl', '350 ml', '1 ml', '10 l', '6 ml', '1 cl', '1 l', '1 cl'];
     for (var i = 0; i < 10; i++) {
         var p5cim1 = $('#p5cim' + (i + 1) + ' .pinta').html();
         if (!p5cim1) {

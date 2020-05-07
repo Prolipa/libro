@@ -1,4 +1,5 @@
 var titulos = "aplico";
+f_titulos();
 numero_pagina(167);
 
 var tpre1 = 0;
@@ -160,7 +161,7 @@ function NotaFinal() {
         var Vtotal = Nf.toFixed(2);
         $("#txtNota").html(Vtotal);
         document.getElementById("bt_comprobar").disabled = true;
-        $("input").attr('disabled','disabled');
+        $("input").attr('disabled', 'disabled');
     }
 }
 // #endregion

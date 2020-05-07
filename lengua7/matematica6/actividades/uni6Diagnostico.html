@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Matemática 6</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 100%;
+    max-height: 100%;
+    border: 1px #005ca4 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    width: auto;
+    display: grid;
+}
+
+.encierra {
+    border: 5px solid #FF9D29;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.sobre {
+    padding: 4px;
+    border-style: none;
+    border-width: 2px;
+    border-radius: 15%;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-color: #1a75ff;
+    color: #1a75ff;
+}
+
+.saltos2 {
+    text-align: center;
+    border: 1px solid #C3C7C3;
+    border-bottom: 1px solid #85BCEB;
+    border-radius: 15px;
+
+
+    width: 100px;
+}
+
+
+
+.actividad1 {
+    background: #fff;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #00e600;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #ff6666;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+
+.inputPequeño {
+    text-align: center;
+    border: 0;
+    border-bottom: 1px dotted #328AF7;
+    width: 40px;
+    color: blue;
+}
+
+.cajas1 {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #ed8700 dotted;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    width: auto;
+}
+
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+
+.fraction>span {
+    display: block;
+    padding-top: 0.15em;
+}
+
+.fraction span.fdn {
+    border-top: thin solid black;
+}
+
+.fraction span.bar {
+    display: none;
+}
+
+.periodicos {
+    border-top: 2px solid #000000;
+    border-radius: 15px;
+}
+
+.inputfraccciones {
+    text-align: center;
+    border: 1px solid #D3D3D3;
+    width: 40px;
+}
+
+.subrayar {
+
+    border-bottom: 3px solid #FF8A00;
+}
+
+.circulo {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #008FFF;
+    border-radius: 100%;
+}
+
+.cuadrado {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #FFA800;
+}
+
+.vacio {}
+
+
+.letraAzul {
+    color: #005ca4;
+}
+
+.punteado {
+    border: 0;
+    border-bottom: 1px dotted #000000;
+    text-align: center;
+}
+
+.c_origen {
+    padding: 5px;
+    border: 1px solid #009BDB;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 50px;
+}
+
+.c_destinos2 {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 70px;
+    min-width: 50px;
+}
+
+.bg_palabra {
+    background-color: #F9E8B2;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+
+.subrayar {
+
+    border-bottom: 2px solid rgb(87, 53, 180);
+}
+
+.c_destino {
+    padding: 5px;
+    border: 1px solid #CCAE69;
+    border-radius: 10px;
+    min-height: 80px;
+}
+
+.c_destino1 {
+    padding: 5px;
+    border: 1px solid rgb(112, 207, 104);
+    border-radius: 10px;
+    min-height: 80px;
+}
+
+input[type=radio] {
+
+    width: 30px;
+    height: 30px;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        Lee cuidadosamente las preguntas, contesta cada una de ellas.
+        <br>
+        <b>Pregunta 3. </b>Arrastra la imagen el recuadro que pertenezca.
+        <br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro">
+                <span class="titulo"><img src="img/icoE.png" alt="">Exploro para recordar</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <img class="img-responsive" src="img/algebra_funciones.jpg"></img>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <input type="text" maxlength="4" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota1" readonly>&nbsp; <b>1. Realiza</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="col-md-12 ">
+                                    <div class="text-question">
+                                        <b>1. Realiza</b> las siguientes multiplicaciones.
+                                        <br>
+                                        <ol type="a">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <table>
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td><span id="num0act1"></span> × 100 =</td>
+                                                            <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act1num0"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td><span id="num1act1"></span> × 1000 =</td>
+                                                            <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act1num1"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <table>
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td><span id="num2act1"></span> × 1000 =</td>
+                                                            <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act1num2"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td><span id="num3act1"></span> × 100 =</td>
+                                                            <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act1num3"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <table>
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td><span id="num4act1"></span> × 10 =</td>
+                                                            <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act1num4"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td><span id="num5act1"></span> × 10 =</td>
+                                                            <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act1num5"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <input type="text" maxlength="" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota2" readonly>&nbsp;<b>2. Completa</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="text-question">
+                                        <b>2. Completa</b> el número que falta en las divisiones.
+                                        <ol type="a">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <table style="text-align: center;">
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td id="num0act2"></td>
+                                                            <td>÷</td>
+                                                            <td id="num1act2"></td>
+                                                            <td>=</td>
+                                                            <td><input class="inputfraccciones sinEspacios punteado" id="act2num0" style="width:70px;"></input></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td id="num2act2"></td>
+                                                            <td>÷</td>
+                                                            <td id="num3act2"></td>
+                                                            <td>=</td>
+                                                            <td><input class="inputfraccciones sinEspacios punteado" id="act2num1" style="width:70px;"></input></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <table style="text-align: center;">
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td id="num4act2"></td>
+                                                            <td>÷</td>
+                                                            <td><input class="inputfraccciones sinEspacios punteado" id="act2num2" style="width:70px;"></input></td>
+                                                            <td>=</td>
+                                                            <td id="num5act2"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td id="num6act2"></td>
+                                                            <td>÷</td>
+                                                            <td id="num7act2"></td>
+                                                            <td>=</td>
+                                                            <td><input class="inputfraccciones sinEspacios punteado" id="act2num3" style="width:70px;"></input></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <table style="text-align: center;">
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td><input class="inputfraccciones sinEspacios punteado" id="act2num4" style="width:70px;"></input></td>
+                                                            <td>÷</td>
+                                                            <td id="num8act2"></td>
+                                                            <td>=</td>
+                                                            <td id="num9act2"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b class="letraAzul">
+                                                                    <li></li>
+                                                                </b></td>
+                                                            <td id="num10act2"></td>
+                                                            <td>÷</td>
+                                                            <td><input class="inputfraccciones sinEspacios punteado" id="act2num5" style="width:70px;"></input></td>
+                                                            <td>=</td>
+                                                            <td id="num11act2"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="html2pdf__page-break"></div>
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <input type="text" maxlength="" size="" style="text-align:center;" class="nota-abierta" min="0" max="1" id="nota3" readonly>&nbsp;
+                                    <b>3. Une</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>3. Une</b> con líneas, según corresponda, el gráfico con la expresión fraccionaria y con su equivalente decimal. Con las letras <b>completa</b> la palabra de la parte inferior y <b>reflexiona</b> acerca de su significado.
+                                    <br>
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12" align="center">
+                                            <div class="table-responsive">
+                                                <table class="table-responsive" align="center">
+                                                    <tr>
+                                                        <td>
+                                                            <div class="textos" style="display: inline-block;"></div>
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            <div class="textos1" style="display: inline-block;"></div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="33%" class="actividad1">
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop3 p2im1"></div>
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop3 p2im2"></div>
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop3 p2im3"></div>
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop3 p2im4"></div>
+                                                        </td>
+                                                        <td width="33%" align="center">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p2cim11"></div>
+                                                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p2cim12"></div>
+                                                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p2cim13"></div>
+                                                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 c_origen p2cim14"></div>
+                                                        </td>
+                                                        <td width="33%" class="actividad2">
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop4 p2im5"></div>
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop4 p2im6"></div>
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop4 p2im7"></div>
+                                                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10 c_destinos2 drop4 p2im8"></div>
+                                                        </td>
+                                                        <td>
+                                                            <img src="img/i9_p214_uni6diagnostico.jpg" alt=""></img>
+                                                        </td>
+                                                    </tr>
+                                                </table><br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <table style="text-align: center;">
+                                        <tr>
+                                            <td rowspan="2"><b class="letraAzul">R.</b></td>
+                                            <td><input type="text" class="inputfraccciones sinEspacios punteado text-uppercase" maxlength="1"></td>
+                                            <td><input type="text" class="inputfraccciones sinEspacios punteado text-uppercase" maxlength="1"></td>
+                                            <td><input type="text" class="inputfraccciones sinEspacios punteado text-uppercase" maxlength="1"></td>
+                                            <td><input type="text" class="inputfraccciones sinEspacios punteado text-uppercase" maxlength="1"></td>
+                                            <td><input type="text" class="inputfraccciones sinEspacios punteado text-uppercase" maxlength="1"></td>
+                                            <td><input type="text" class="inputfraccciones sinEspacios punteado text-uppercase" maxlength="1" value="T" readonly></td>
+                                            <td><input type="text" class="inputfraccciones sinEspacios punteado text-uppercase" maxlength="1" value="O" readonly></td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>2</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota4" readonly>&nbsp;<b>4. Escribe</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <b>4. Escribe</b> junto a cada gráfico la fracción que representa la parte pintada y el número decimal.
+                                    <div class="row">
+                                        <div class="col-lg-4"><img src="img/i10_p214_uni6diagnostico.jpg" alt="" class="img-responsive"></img>
+                                        </div>
+                                        <div class="col-lg-4"><img src="img/i11_p214_uni6diagnostico.jpg" alt=""></img>
+                                            <div class="fraction">
+                                                <span class="fup"><input id="act4num0" type="text" class="inputfraccciones sinEspacios soloPunto"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input id="act4num1" type="text" class="inputfraccciones sinEspacios soloPunto"></span>
+                                            </div>
+                                            = <input id="act4num2" type="text" class="inputfraccciones sinEspacios soloPunto">
+                                        </div>
+                                        <div class="col-lg-4"><img src="img/i12_p214_uni6diagnostico.jpg" alt=""></img>
+                                            <div class="fraction">
+                                                <span class="fup"><input id="act4num3" type="text" class="inputfraccciones sinEspacios soloPunto"></span>
+                                                <span class="bar">/</span>
+                                                <span class="fdn"><input id="act4num4" type="text" class="inputfraccciones sinEspacios soloPunto"></span>
+                                            </div>
+                                            = <input id="act4num5" type="text" class="inputfraccciones sinEspacios soloPunto">
+                                        </div>
+                                    </div>
+                                    <b class="letraAzul">a)</b> ¿Qué gráficos sumas para que el resultado sea igual a 1? <b class="letraAzul">R. </b><input id="act4num6" type="text" class="inputfraccciones sinEspacios text-uppercase" style="width: 70px;"><br>
+                                    <b class="letraAzul">b)</b> ¿Con qué combinación de sumas y restas puedes obtener <div class="fraction">
+                                        <span class="fup">6</span>
+                                        <span class="bar">/</span>
+                                        <span class="fdn">10</span>
+                                    </div>? <b class="letraAzul">R. </b><input id="act4num7" type="text" class="inputfraccciones sinEspacios text-uppercase" style="width: 70px;"><br>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota5" readonly>&nbsp;<b>5. Completa</b> <span class="sobre">2 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <div class="text-question" align="justify">
+                                    <b>5. Completa</b> la tabla con el número, el doble y el triple del número, según se indica.
+                                    <div class="table-responsive">
+                                        <table class="table" style="text-align: center;">
+                                            <tr>
+                                                <td style="background: #c6a8ce; color: white;">Número</td>
+                                                <td style="background: #afcf7d; color: white;">Doble</td>
+                                                <td style="background: #60bfdd; color: white;">Triple</td>
+                                            </tr>
+                                            <tr>
+                                                <td><input id="act5num0" readonly style="border: 0;text-align: center;"></input></td>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num1"></td>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num2"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input id="act5num3" readonly style="border: 0;text-align: center;"></input></td>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num4"></td>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num5"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num6"></td>
+                                                <td><input id="act5num7" readonly style="border: 0;text-align: center;"></input></td>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num8"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num9"></td>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num10"></td>
+                                                <td><input id="act5num11" readonly style="border: 0;text-align: center;"></input></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num12"></td>
+                                                <td><input id="act5num13" readonly style="border: 0;text-align: center;"></input></td>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num14"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input id="act5num15" readonly style="border: 0;text-align: center;"></input></td>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num16"></td>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num17"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num18"></td>
+                                                <td><input type="text" class="inputfraccciones sinEspacios punteado" style="width: 70px;" id="act5num19"></td>
+                                                <td><input id="act5num20" readonly style="border: 0;text-align: center;"></input></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" id="headingSix">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota6" readonly>&nbsp;<b>6. Multiplica</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>6. Multiplica</b> los números, <b>ubica</b> la palabra según su resultado y <b>descubre</b> el mensaje.
+                                    <div class="row">
+                                        <div class="col-lg-3"><b class="letraAzul">a) </b>
+                                            <table>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>4</td>
+                                                    <td>7</td>
+                                                </tr>
+                                                <tr style="border-bottom: 2px solid black">
+                                                    <td>×</td>
+                                                    <td>6</td>
+                                                    <td>3</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-3"><b class="letraAzul">b) </b>
+                                            <table>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>3</td>
+                                                    <td>7</td>
+                                                    <td>0</td>
+                                                </tr>
+                                                <tr style="border-bottom: 2px solid black">
+                                                    <td>×</td>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>5</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-3"><b class="letraAzul">c) </b>
+                                            <table>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>2</td>
+                                                    <td>5</td>
+                                                    <td>2</td>
+                                                </tr>
+                                                <tr style="border-bottom: 2px solid black">
+                                                    <td>×</td>
+                                                    <td></td>
+                                                    <td>3</td>
+                                                    <td>0</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-3"><b class="letraAzul">d) </b>
+                                            <table>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>9</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr style="border-bottom: 2px solid black">
+                                                    <td>×</td>
+                                                    <td></td>
+                                                    <td>6</td>
+                                                    <td>7</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="row">
+                                        <div class="col-lg-5"><img src="img/i13_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></img></div>
+                                        <div class="col-lg-7">Mensaje:<input type="text" class="form-control" id="act6num0"></div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="img-responsive" src="img/geometria_medida.jpg"></img>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingSeven">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center" class="nota-abierta" min="0" max="1" id="nota7" readonly>&nbsp;<b>7. Marca</b> <span class="sobre">1 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>7. Marca</b> con una X en el cuadro de la respuesta correcta.
+                                    <ol type="a">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div><b class="letraAzul">
+                                                        <li></li>
+                                                    </b>
+                                                    ¿Cuál mide más de un metro?
+                                                    <table>
+                                                        <tr>
+                                                            <td><img src="img/i14_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></img></td>
+                                                            <td id="tds0"><input id="act7num0" type="radio" name="optradi"></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td><img src="img/i15_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></img></td>
+                                                            <td id="tds1"><input id="act7num1" type="radio" name="optradi"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><img src="img/i16_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></img></td>
+                                                            <td id="tds2"><input id="act7num2" type="radio" name="optradi"></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td><img src="img/i17_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></img></td>
+                                                            <td id="tds3"><input id="act7num3" type="radio" name="optradi"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div><b class="letraAzul">
+                                                        <li></li>
+                                                    </b>
+                                                    ¿Cuántos cuartos de kilo pesa el niño?
+                                                    <img src="img/i18_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></dimg></img>
+                                                    <table class="table" style="text-align: center;">
+                                                        <tr>
+                                                            <td style="background: #f6c9d0;">25</td>
+                                                            <td style="background: #fce7b6;">30</td>
+                                                            <td style="background: #f6c9d0;">100</td>
+                                                            <td style="background: #fce7b6;">5</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="tds4"><input id="act7num4" type="radio" name="optrad"></td>
+                                                            <td id="tds5"><input id="act7num5" type="radio" name="optrad"></td>
+                                                            <td id="tds6"><input id="act7num6" type="radio" name="optrad"></td>
+                                                            <td id="tds7"><input id="act7num7" type="radio" name="optrad"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div><b class="letraAzul">
+                                                        <li></li>
+                                                    </b>
+                                                    ¿Cuál mide menos de un metro?
+                                                    <table>
+                                                        <tr>
+                                                            <td><img src="img/i19_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></img></td>
+                                                            <td id="tds8"><input id="act7num8" type="radio" name="optra"></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td><img src="img/i20_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></img></td>
+                                                            <td id="tds9"><input id="act7num9" type="radio" name="optra"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><img src="img/i21_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></img></td>
+                                                            <td id="tds10"><input id="act7num10" type="radio" name="optra"></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td><img src="img/i22_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></img></td>
+                                                            <td id="tds11"><input id="act7num11" type="radio" name="optra"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div><b class="letraAzul">
+                                                        <li></li>
+                                                    </b>
+                                                    ¿Cuál es el volumen de la siguiente figura?
+                                                    <table>
+                                                        <tr>
+                                                            <td rowspan="4"><img src="img/i23_p215_uni6diagnostico.jpg" alt="" class="img-responsive"></img></td>
+                                                            <td id="tds12"><input id="act7num12" type="radio" name="optr"></td>
+                                                            <td>27 u<sup>3</sup></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="tds13"><input id="act7num13" type="radio" name="optr"></td>
+                                                            <td>108 u<sup>3</sup></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="tds14"><input id="act7num14" type="radio" name="optr"></td>
+                                                            <td>120 u<sup>3</sup></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="tds15"><input id="act7num15" type="radio" name="optr"></td>
+                                                            <td>135 u<sup>3</sup></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ol>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading" role="tab" id="headingEigth">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEigth" aria-expanded="false" aria-controls="collapseEigth">
+                                    <input type="text" maxlength="4" size="2" style="text-align:center;" readonly class="nota-abierta" min="0" max="1" id="nota8">&nbsp;<b>8. Convierte</b> <span class="sobre">2 pts</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEigth" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEigth">
+                            <div class="panel-body">
+                                <div class="text-question">
+                                    <b>8. </b>Resuelve los problemas.
+                                    <div class="row" align="justify">
+                                        <div class="col-lg-6">
+                                            <div style="background: #e9f4e3;"><b class="letraAzul">1</b>
+                                                Una bicicleta recorre 180 centímetros cada vez que las ruedas giran una vuelta. ¿Qué distancia ha recorrido si las ruedas han dado 320 vueltas?
+                                                <br><br>
+                                                <b class="letraAzul">R. </b><input id="act8num0" class="inputfraccciones sinEspacios punteado" style="width: 70px;"></input> centímetros.
+                                            </div>
+                                            <div style="background: #fcf0cc;"><b class="letraAzul">2</b>
+                                                Si se tiene una varilla de 560 cm, ¿cuántos trozos de 28 centímetros se pueden obtener? Si de ellos se utilizan 15 trozos de varilla, ¿qué porcentaje de varilla sobró?
+                                                <br><br>
+                                                <b class="letraAzul">R. </b>Se obtienen <input id="act8num1" class="inputfraccciones sinEspacios punteado"></input> trozos de 28 cm. Sobra el <input id="act8num2" class="inputfraccciones sinEspacios punteado"></input>%.
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div style="background: #e0f1f7;"><b class="letraAzul">3</b>
+                                                En una bodega de 8 metros de largo por 6 metros de ancho, se ubican cartones que tienen una base cuadrada de 0,5 metros de lado. ¿Cuántos cartones se pueden colocar en toda la superficie de la bodega?
+                                                <br><br>
+                                                <b class="letraAzul">R. </b>Se pueden ubicar <input id="act8num3" class="inputfraccciones sinEspacios punteado"></input> cartones.
+                                            </div>
+                                            <div style="background: #fbe3e5;"><b class="letraAzul">4</b>
+                                                Ernesto tiene que transportar 126 tapas de cemento con un peso de 23 kilogramos cada una. Si dispone de una camioneta que soporta un peso de 760 kilogramos, ¿cuántos viajes debe hacer?
+                                                <br><br>
+                                                <b class="letraAzul">R. </b>Ernesto debe hacer <input id="act8num4" class="inputfraccciones sinEspacios punteado"></input> viajes
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal conLevent-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span> Debes ingresar tu nombre</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script type="text/javascript">
+        var titulos = "prueba";
+
+        $("#txtNota").html("0");
+        $("#n_pagina").html("214");
+        $("#activity .panel-collapse").addClass('in');
+
+        /* $(document).ready(function() {
+             var winHeight = $(window).height();
+             var winWidth = $(window).width();
+             //var imageSize = { width: winHeight , height: winHeight };
+             var watermarkImage = new Image();
+             watermarkImage.src = 'img/i1_p129_act146.jpg';
+             var watermarkImage2 = new Image();
+             watermarkImage2.src = 'img/i2_p129_act146.jpg';
+
+             LC.init(
+                 document.getElementsByClassName('my-drawing')[0], {
+                     imageURLPrefix: 'imgcanvas',
+                     watermarkImage: watermarkImage,
+                     watermarkScale: 0.8, // you can scale it
+                     //imageSize: imageSize
+                     backgroundColor: 'white'
+
+
+                 });
+             LC.init(
+                 document.getElementsByClassName('my-drawing')[1], {
+                     imageURLPrefix: 'imgcanvas',
+                     watermarkImage: watermarkImage2,
+                     watermarkScale: 0.8, // you can scale it
+                     //imageSize: imageSize
+                     backgroundColor: 'white'
+
+
+                 });
+         });*/
+
+
+        function validarP(inputs) {
+
+            $(inputs).on('keypress', function(e) {
+                tecla = document.all ? e.keyCode : e.which;
+                if (tecla == 8) return true;
+                patron = /[,qwertyuiopñlkvjhfgdsazcxbnmQWERTYFVUIOPÑLKJHGDSAZCBNM<>;-_""]/;
+                te = String.fromCharCode(tecla);
+                if (patron.test(te)) {
+                    //alert("INGRESE V(VERDADERO) O F(FALSO) ");
+                    return false;
+                }
+
+            });
+        }
+        validarP('.soloPunto');
+
+        function soloNumeros2(e) {
+            var key = window.event ? e.which : e.keyCode;
+            if (key < 108 || key > 108) {
+                e.preventDefault();
+            }
+        }
+
+        function sinEspacios(inputs) {
+            $(inputs).on('keypress', function(e) {
+                if (e.which == 32)
+                    return false;
+            });
+        }
+        sinEspacios(".sinEspacios");
+
+        var numact1 = [100, 1000, 1000, 100, 10, 10],
+            resact1 = [];
+        for (var i = 0; i < 6; i++) {
+            var n1 = Math.floor(Math.random() * 99) + 1;
+            $('#num' + i + 'act1').html(n1);
+            resact1.push(n1 * numact1[i]);
+
+        }
+
+        function pregunta1() {
+
+            //var respact1 = [n3_2, n2_2, suce2[5], suce2[6]];
+            var cont = 0;
+            for (var i = 0; i < 6; i++) {
+                var res = $('#act1num' + [i] + '').val().toLowerCase();
+                if (resact1[i] == res) {
+                    cont = cont + 1;
+                    $('#act1num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act1num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 6;
+            $('#nota1').val(parseFloat(total).toFixed(2));
+
+        }
+        //////////////////////////pregunta2/////////////////////////////////
+        var n1umact2 = [],
+            n2umact2 = [100, 10, 1000, 100, 10, 10],
+            resact2 = [];
+        for (var i = 0; i < 6; i++) {
+            n1umact2.push((Math.floor(Math.random() * 999) + 1) * 1000);
+            resact2.push(n1umact2[i] / n2umact2[i]);
+        }
+        $('#num0act2').html(n1umact2[0]);
+        $('#num1act2').html(n2umact2[0]);
+        $('#num2act2').html(n1umact2[1]);
+        $('#num3act2').html(n2umact2[1]);
+        $('#num4act2').html(n1umact2[2]);
+        $('#num5act2').html(resact2[2]);
+        $('#num6act2').html(n1umact2[3]);
+        $('#num7act2').html(n2umact2[3]);
+        $('#num8act2').html(n2umact2[4]);
+        $('#num9act2').html(resact2[4]);
+        $('#num10act2').html(n1umact2[5]);
+        $('#num11act2').html(resact2[5]);
+        var resact2 = [resact2[0], resact2[1], n2umact2[2], resact2[3], n1umact2[4], n2umact2[5]];
+
+        function pregunta2() {
+
+
+            var cont = 0;
+            for (var i = 0; i < 6; i++) {
+                var res = $('#act2num' + [i] + '').val().toLowerCase();
+                if (resact2[i] == res) {
+                    cont = cont + 1;
+                    $('#act2num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act2num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 6;
+            $('#nota2').val(parseFloat(total).toFixed(2));
+
+        }
+        /////////////////////////pregunta3/////////////////////////////////////////
+        // #region Pregunta2
+        var pal1 = [
+            '<img class="img-responsive drag3 c1" alt="1" src="img/i1_p214_uni6diagnostico.jpg"  style="display:inline-block; mix-blend-mode:multiply;">',
+            '<img class="img-responsive drag3 c2" alt="2" src="img/i3_p214_uni6diagnostico.jpg" style="display:inline-block; mix-blend-mode:multiply;">',
+            '<img class="img-responsive drag3 c3" alt="3" src="img/i5_p214_uni6diagnostico.jpg" style="display:inline-block; mix-blend-mode:multiply;">',
+            '<img class="img-responsive drag3 c4" alt="4" src="img/i7_p214_uni6diagnostico.jpg" style="display:inline-block; mix-blend-mode:multiply;">',
+        ];
+
+        var pal10 = [
+            '<img class="img-responsive drag4 c1" alt="1" src="img/i2_p214_uni6diagnostico.jpg"  style="display:inline-block; mix-blend-mode:multiply;">',
+            '<img class="img-responsive drag4 c2" alt="2" src="img/i4_p214_uni6diagnostico.jpg" style="display:inline-block; mix-blend-mode:multiply;">',
+            '<img class="img-responsive drag4 c3" alt="3" src="img/i6_p214_uni6diagnostico.jpg" style="display:inline-block; mix-blend-mode:multiply;">',
+            '<img class="img-responsive drag4 c4" alt="4" src="img/i8_p214_uni6diagnostico.jpg" style="display:inline-block; mix-blend-mode:multiply;">'
+        ];
+
+        var pal2 = [
+            '<div class="fraction" style="background:#f6ccd2"> <span class="fup">6</span> <span class="bar">/</span> <span class="fdn">10</span> </div>',
+            '<div class="fraction" style="background:#d7e7c5"> <span class="fup">3</span> <span class="bar">/</span> <span class="fdn">10</span> </div>',
+            '<div class="fraction" style="background:#f6ccd2"> <span class="fup">10</span> <span class="bar">/</span> <span class="fdn">20</span> </div>',
+            '<div class="fraction" style="background:#d7e7c5"> <span class="fup">4</span> <span class="bar">/</span> <span class="fdn">10</span> </div>',
+        ];
+
+        pal1.sort(f_randomico);
+        pal10.sort(f_randomico);
+
+        var p2vec1 = ["1", "2", "3", "4"];
+        var p2vec10 = ["1", "2", "3", "4"];
+        var p2aux2 = [];
+        var p2aux20 = [];
+        $(".textos").append(pal1);
+        $(".textos1").append(pal10);
+        var myArray2 = ["0", "1", "2", "3"];
+        var i, j, k;
+        for (i = myArray2.length; i; i--) {
+            j = Math.floor(Math.random() * i);
+            k = myArray2[i - 1];
+            myArray2[i - 1] = myArray2[j];
+            myArray2[j] = k;
+        }
+        //aleatorio literal 1
+        for (var i = 1; i <= 4; i++) {
+            var c1 = myArray2[i - 1];
+            $(".p2cim1" + i).html(pal2[c1]);
+            p2aux2.push(p2vec1[c1]);
+            p2aux20.push(p2vec10[c1]);
+        }
+        $(".drag3").draggable({
+            revert: "invalid",
+            zIndex: 5,
+            containment: ".actividad1",
+            scroll: false
+        });
+        $(".drag4").draggable({
+            revert: "invalid",
+            zIndex: 5,
+            containment: ".actividad2",
+            scroll: false
+        });
+
+        $(".drop3").droppable({
+            accept: ".drag3",
+            drop: function(e, ui) {
+                $(ui.draggable).removeClass("drag3");
+                $(ui.draggable).removeClass("bg_palabra");
+                ui.draggable.attr("style", "mix-blend-mode:multiply;");
+                $(this).append(ui.draggable);
+            }
+        });
+        $(".drop4").droppable({
+            accept: ".drag4",
+            drop: function(e, ui) {
+                $(ui.draggable).removeClass("drag4");
+                $(ui.draggable).removeClass("bg_palabra");
+                ui.draggable.attr("style", "mix-blend-mode:multiply;");
+                $(this).append(ui.draggable);
+            }
+        });
+
+        function pregunta3() {
+            var p2im1 = $(".p2im1 > img").attr("alt");
+            var p2cont1 = 0;
+            if (p2im1 == p2aux2[0]) {
+                p2cont1++;
+                f_ok($(".p2im1"));
+            } else {
+                f_no($(".p2im1"));
+            }
+            var p2im2 = $(".p2im2 > img").attr("alt");
+            if (p2im2 == p2aux2[1]) {
+                p2cont1++;
+                f_ok($(".p2im2"));
+            } else {
+                f_no($(".p2im2"));
+            }
+            var p2im3 = $(".p2im3 > img").attr("alt");
+            if (p2im3 == p2aux2[2]) {
+                p2cont1++;
+                f_ok($(".p2im3"));
+            } else {
+                f_no($(".p2im3"));
+            }
+            var p2im4 = $(".p2im4 > img").attr("alt");
+            if (p2im4 == p2aux20[3]) {
+                p2cont1++;
+                f_ok($(".p2im4"));
+            } else {
+                f_no($(".p2im4"));
+            }
+            var p2im5 = $(".p2im5 > img").attr("alt");
+            if (p2im5 == p2aux20[0]) {
+                p2cont1++;
+                f_ok($(".p2im5"));
+            } else {
+                f_no($(".p2im5"));
+            }
+            var p2im6 = $(".p2im6 > img").attr("alt");
+            if (p2im6 == p2aux20[1]) {
+                p2cont1++;
+                f_ok($(".p2im6"));
+            } else {
+                f_no($(".p2im6"));
+            }
+            var p2im7 = $(".p2im7 > img").attr("alt");
+            if (p2im7 == p2aux20[2]) {
+                p2cont1++;
+                f_ok($(".p2im7"));
+            } else {
+                f_no($(".p2im7"));
+            }
+
+            var p2im8 = $(".p2im8 > img").attr("alt");
+            if (p2im8 == p2aux20[3]) {
+                p2cont1++;
+                f_ok($(".p2im8"));
+            } else {
+                f_no($(".p2im8"));
+            }
+
+            var total = (p2cont1 * 1) / 8;
+            tpre2 = total;
+            $("#nota3").val(parseFloat(tpre2).toFixed(2));
+        }
+
+        ///////////////////pregunta4////////////////////////////////
+        function pregunta4() {
+
+            var respact4 = ['7', '10', '0.7', '2', '10', '0.2', 'A+B', 'B+C-A', ];
+            var cont = 0;
+            for (var i = 0; i < 8; i++) {
+                var res = $('#act4num' + [i] + '').val().toUpperCase();
+                if (respact4[i] == res) {
+                    cont = cont + 1;
+                    $('#act4num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act4num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 8;
+            $('#nota4').val(parseFloat(total).toFixed(2));
+
+        }
+        //////////pregunta5///////////////////////////////////////////
+
+        var n1 = 0,
+            resact5 = [];
+        for (var i = 0; i < 7; i++) {
+            n1 = ((Math.floor(Math.random() * 99) + 1) * 10);
+            resact5.push(n1);
+            resact5.push(n1 * 2);
+            resact5.push(n1 * 3);
+        }
+        $('#act5num0').val(resact5[0]);
+        $('#act5num3').val(resact5[3]);
+        $('#act5num7').val(resact5[7]);
+        $('#act5num11').val(resact5[11]);
+        $('#act5num13').val(resact5[13]);
+        $('#act5num15').val(resact5[15]);
+        $('#act5num20').val(resact5[20]);
+
+        function pregunta5() {
+
+            //var respact4 = ['7', '10', '0.7', '2', '10', '0.2', 'A+B', 'B+C-A', ];
+            var cont = 0;
+            for (var i = 0; i < 21; i++) {
+                var res = $('#act5num' + [i] + '').val().toUpperCase();
+                if (resact5[i] == res) {
+                    cont = cont + 1;
+                    $('#act5num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act5num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 2) / 21;
+            $('#nota5').val(parseFloat(total).toFixed(2));
+
+        }
+        //////////////pregunta6//////////////
+        function pregunta6() {
+
+            var resact5_1 = ['todo niño nace libre.', ],
+                resact5_2 = ['todo niño nace libre', ];
+            var cont = 0;
+            for (var i = 0; i < 1; i++) {
+                var res = $('#act6num' + [i] + '').val().toLowerCase();
+                if ((resact5_1[i] == res) || (resact5_2[i] == res)) {
+                    cont = cont + 1;
+                    $('#act6num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act6num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 1) / 1;
+            $('#nota6').val(parseFloat(total).toFixed(2));
+
+        }
+        ///////////////pregunta7//////////////
+
+
+        function pregunta7() {
+            var buenas = 0,
+                malas = 0;
+            var resp = [];
+
+            var resp1 = ["off", "off", "on", "off", "off", "off", "on", "off", "off", "off", "off", "on", "off", "off", "off", "on"];
+
+
+            for (var i = 0; i < 16; i++) {
+
+                if ($('#act7num' + [i] + ':checked').prop('checked')) {
+                    resp.push($('#act7num' + [i] + ':checked').val());
+
+                } else {
+                    resp.push('off');
+                }
+                if ($('#act7num' + [i] + ':checked').val() == 'on') {
+                    if (resp[i] == resp1[i]) {
+                        $('#tds' + [i] + '').css("background", "#00e600");
+                        buenas = buenas + 1;
+                    } else {
+                        $('#tds' + [i] + '').css("background", "#ff6666");
+                        malas = malas + 1;
+                    }
+                }
+
+            }
+            var tbuenas = (buenas * 4) / 4;
+
+            $('#nota7').val(parseFloat(tbuenas).toFixed(2));
+
+
+
+
+        }
+        ///////////////////preguntas8/////////////
+        function pregunta8() {
+
+            var resact8 = [57600, 20, 25, 192, 4];
+            var cont = 0;
+            for (var i = 0; i < 5; i++) {
+                var res = $('#act8num' + [i] + '').val().toUpperCase();
+                if (resact8[i] == res) {
+                    cont = cont + 1;
+                    $('#act8num' + [i] + '').css("background", "#00e600");
+                } else {
+                    $('#act8num' + [i] + '').css("background", "#ff6666");
+                }
+
+            }
+            var total = (cont * 2) / 5;
+            $('#nota8').val(parseFloat(total).toFixed(2));
+
+        }
+        ////////////////////////////////////
+        function NotaFinal() {
+
+            pregunta1();
+            pregunta2();
+            pregunta3();
+            pregunta4();
+            pregunta5();
+            pregunta6();
+            pregunta7();
+            pregunta8();
+
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var nota5 = document.getElementById('nota5').value;
+            var nota6 = document.getElementById('nota6').value;
+            var nota7 = document.getElementById('nota7').value;
+            var nota8 = document.getElementById('nota8').value;
+
+            var total = parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4) + parseFloat(nota5) + parseFloat(nota6) + parseFloat(nota7) + parseFloat(nota8);
+            $('#txtNota').html(total.toFixed(2));
+            $('#bt_comprobar').attr("disabled", true);
+            $('input').attr("disabled", true);
+            $('#txtAlumno').attr("disabled", false);
+
+        }
+        </script>
+</body>
+
+</html>

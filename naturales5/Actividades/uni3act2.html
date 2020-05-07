@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+
+.bien {
+    background: #90D961;
+}
+
+.mal {
+    background: #F25F5F;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.subrayar {
+    border-bottom: solid 5px #080808;
+}
+
+input.caracter {
+    width: 40px;
+    height: 40px;
+    border: solid 2px #F07017;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.colorazul {
+    background: blue;
+}
+
+.colorrojo {
+    background: red;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Escribe en cada recuadro el número que corrresponda<br>
+        2. Selecciona correctamente.<br>
+        3. Selecciona correctamente.<br>
+        4. Responde.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro" style="background:#ADECEC">
+                <img src="img/unidad3.png" style="width:270px"> <span class="titulo"><span style="color:#000300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMA 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Órganos de los sentidos.</span></span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 table-responsive"><br>
+                    <img src="img/aplico.jpg" style="width:150px">
+                    <div class="col-lg-12">
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a" readonly="">&nbsp;
+                        <span class="enunciado" style="color: #00ADED;">1. </span><span class="enunciado"> Ordena las oraciones según la secuencia de eventos.&nbsp;&nbsp;<b>( 2.5 pts.)</b></span><br>
+                        <div class="col-lg-12">
+                            <center>
+                                <table style="border-collapse:separate;border-spacing: 10px 10px" id="p1ran">
+                                </table>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive"><br>
+                    <img src="img/Reflexiono.jpg" style="width:200px"><br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a" readonly="">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">2. </span><span class="enunciado"><b>Relaiona</b> el sentido, órgano y estímulo.&nbsp;&nbsp;<b>( 2.5 pts.)</b></span><br>
+                    <div class="col-lg-12">
+                        <center>
+                            <table style="border-collapse:separate;border-spacing: 30px 5px;width:100%">
+                                <tr>
+                                    <td style="background:#49B6D9;width:200px;height:60px;padding:10px;text-align:center;">
+                                        <div style="font-weight:bold;font-size:20px;text-align:center;color:white">Sentido</div>
+                                    </td>
+                                    <td style="background:#E79424;width:200px;height:60px;padding:10px;text-align:center;">
+                                        <div style="font-weight:bold;font-size:20px;text-align:center;color:white">Órgano</div>
+                                    </td>
+                                    <td style="background:#27C51A;width:200px;height:60px;padding:10px;text-align:center;">
+                                        <div style="font-weight:bold;font-size:20px;text-align:center;color:white">Estímulo</div>
+                                    </td>
+                                </tr>
+                                <tr class="p2ran0"></tr>
+                                <tr class="p2ran1"></tr>
+                                <tr class="p2ran2"></tr>
+                                <tr class="p2ran3"></tr>
+                                <tr class="p2ran4"></tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive">
+                    <br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a" readonly="">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">3. </span><span class="enunciado"><b>Relaciona</b> la parte del órgano del sentido con su función.&nbsp;&nbsp;<b>( 2.5 pts.)</b></span><br>
+                    <div class="col-lg-12">
+                        <center>
+                            <table style="border-collapse:separate;border-spacing: 30px 10px;width:70%">
+                                <tr>
+                                    <td style="background:#CA3A6A;width:100%;height:20%;padding:10px;text-align:center;border-radius:20px">
+                                        <div style="font-weight:bold;font-size:20px;text-align:center;color:white">Parte</div>
+                                    </td>
+                                    <td style="background:#CA523A;width:500px;height:40px;padding:10px;text-align:center;border-radius:20px">
+                                        <div style="font-weight:bold;font-size:20px;text-align:center;color:white">Función</div>
+                                    </td>
+                                </tr>
+                                <tr class="p3ran0"></tr>
+                                <tr class="p3ran1"></tr>
+                                <tr class="p3ran2"></tr>
+                                <tr class="p3ran3"></tr>
+                                <tr class="p3ran4"></tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div class="col-lg-12 table-responsive"><br>
+                    <img src="img/evaluo.jpg" style="width:300px"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">4. </span><span class="enunciado"><b>Responde:</b>&nbsp;&nbsp;<b>( 2.5 pts.)</b></span><br>
+                    <div class="col-lg-12">
+                        <span class="enunciado">¿Describo la estructura y función de cada órgano de los sentidos?</span><br>
+                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="8" placeholder="Texto"></textarea><br>
+                        <span class="enunciado">¿Explico la importancia de los órganos de los sentidos en la relación con el ambiente?</span><br>
+                        <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="6" placeholder="Texto"></textarea><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script type="text/javascript">
+    $("#n_pagina").html('79');
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+    var tpre4 = 0;
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+
+
+
+    document.getElementById("pre4a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre4a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre4a"), 2.5);
+    });
+
+
+    p1vec = [
+        '<tr><td><input class="caracter" id="p1var0" maxlength="1"></td><td style="background:#F0C9AF;padding:10px"><span class="enunciado">Los estímulos son percibidos por los receptores sensoriales.</span></td></tr>',
+
+        '<tr><td><input class="caracter" id="p1var1" maxlength="1"></td><td style="background:#F0C9AF;padding:10px"><span class="enunciado">Los estímulos entran por los órganos sensoriales.</span></td></tr>',
+
+        '<tr><td><input class="caracter" id="p1var2" maxlength="1"></td><td style="background:#F0C9AF;padding:10px"><span class="enunciado">Los nervios de cada órgano sensorial reciben la información de los receptores sensoriales.</span></td></tr>',
+
+        '<tr><td><input class="caracter" id="p1var3" maxlength="1"></td><td style="background:#F0C9AF;padding:10px"><span class="enunciado">Los receptores sensoriales envían señales a nervios de cada órgano.</span></td></tr>'
+    ];
+    p1vec.sort(f_randomico);
+    $('#p1ran').html(p1vec);
+
+
+
+    function pregunta1() {
+        var core = 0;
+        var p1var1 = ['2', '1', '4', '3'];
+
+        for (var i = 0; i < p1var1.length; i++) {
+            if (($("#p1var" + [i] + "").val()) == p1var1[i]) {
+
+                $("#p1var" + [i] + "").addClass("bien");
+                core = core + 1;
+            } else {
+
+                $("#p1var" + [i] + "").addClass("mal");
+                core;
+            }
+        }
+
+        tpre1 = ((core / 4) * 2.5);
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+
+    // random pregutna 1 
+    p2vec = [
+        '<td style="text-align:center;border:solid 2px#49B6D9"><select id="p2avar0" style="border:transparent;text-align:center;width:120px;height:40px;border-radius:10px;font-weight:bold;font-size:21px"><option value="">- - - - - -</option><option value="1">Vista</option><option value="2">Audición</option><option value="3">Olfato</option><option value="4">Gusto</option><option value="5">Tacto</option></select></td><td style="text-align:center;border:solid 2px #E79424;"><select id="p2bvar0" style="border:transparent;text-align:center;width:120px;height:40px;border-radius:10px;font-weight:bold;font-size:21px"><option value="">- - - - - -</option><option value="a">Nariz</option><option value="b">Piel</option><option value="c">Lengua</option><option value="d">Ojo</option><option value="e">Oído</option></select></td><td style="text-align:center;"><img src="img/i5_p79_act1.jpg" style="width:200px"></td>',
+        '<td style="text-align:center;border:solid 2px #49B6D9"><select id="p2avar1" style="border:transparent;text-align:center;width:120px;height:40px;border-radius:10px;font-weight:bold;font-size:21px"><option value="">- - - - - -</option><option value="1">Vista</option><option value="2">Audición</option><option value="3">Olfato</option><option value="4">Gusto</option><option value="5">Tacto</option></select></td><td style="text-align:center;border:solid 2px #E79424;"><select id="p2bvar1" style="border:transparent;text-align:center;width:120px;height:40px;border-radius:10px;font-weight:bold;font-size:21px"><option value="">- - - - - -</option><option value="a">Nariz</option><option value="b">Piel</option><option value="c">Lengua</option><option value="d">Ojo</option><option value="e">Oído</option></select></td><td style="text-align:center;"><img src="img/i2_p79_act1.jpg" style="width:200px"></td>',
+        '<td style="text-align:center;border:solid 2px #49B6D9"><select id="p2avar2" style="border:transparent;text-align:center;width:120px;height:40px;border-radius:10px;font-weight:bold;font-size:21px"><option value="">- - - - - -</option><option value="1">Vista</option><option value="2">Audición</option><option value="3">Olfato</option><option value="4">Gusto</option><option value="5">Tacto</option></select></td><td style="text-align:center;border:solid 2px #E79424;"><select id="p2bvar2" style="border:transparent;text-align:center;width:120px;height:40px;border-radius:10px;font-weight:bold;font-size:21px"><option value="">- - - - - -</option><option value="a">Nariz</option><option value="b">Piel</option><option value="c">Lengua</option><option value="d">Ojo</option><option value="e">Oído</option></select></td><td style="text-align:center;"><img src="img/i4_p79_act1.jpg" style="width:200px"></td>',
+        '<td style="text-align:center;border:solid 2px #49B6D9"><select id="p2avar3" style="border:transparent;text-align:center;width:120px;height:40px;border-radius:10px;font-weight:bold;font-size:21px"><option value="">- - - - - -</option><option value="1">Vista</option><option value="2">Audición</option><option value="3">Olfato</option><option value="4">Gusto</option><option value="5">Tacto</option></select></td><td style="text-align:center;border:solid 2px #E79424;"><select id="p2bvar3" style="border:transparent;text-align:center;width:120px;height:40px;border-radius:10px;font-weight:bold;font-size:21px"><option value="">- - - - - -</option><option value="a">Nariz</option><option value="b">Piel</option><option value="c">Lengua</option><option value="d">Ojo</option><option value="e">Oído</option></select></td><td style="text-align:center;"><img src="img/i3_p79_act1.jpg" style="width:200px"></td>',
+        '<td style="text-align:center;border:solid 2px #49B6D9"><select id="p2avar4" style="border:transparent;text-align:center;width:120px;height:40px;border-radius:10px;font-weight:bold;font-size:21px"><option value="">- - - - - -</option><option value="1">Vista</option><option value="2">Audición</option><option value="3">Olfato</option><option value="4">Gusto</option><option value="5">Tacto</option></select></td><td style="text-align:center;border:solid 2px #E79424;"><select id="p2bvar4" style="border:transparent;text-align:center;width:120px;height:40px;border-radius:10px;font-weight:bold;font-size:21px"><option value="">- - - - - -</option><option value="a">Nariz</option><option value="b">Piel</option><option value="c">Lengua</option><option value="d">Ojo</option><option value="e">Oído</option></select></td><td style="text-align:center;"><img src="img/i1_p79_act1.jpg" style="width:200px"></td>'
+
+    ]
+    p2vec.sort(f_randomico);
+    for (var i = 0; i < p2vec.length; i++) {
+        $('.p2ran' + [i] + '').html(p2vec[i]);
+    }
+    // la variable p1ran0 va dentro de una clase
+
+
+    function pregunta2() {
+        var core = 0;
+        var p2avar1 = ['1', '2', '3', '4', '5'];
+        var p2bvar1 = ['d', 'e', 'a', 'c', 'b'];
+
+        for (var i = 0; i < p2avar1.length; i++) {
+            if (($("#p2avar" + [i] + "").val()) == p2avar1[i] && ($("#p2bvar" + [i] + "").val()) == p2bvar1[i]) {
+
+                $("#p2avar" + [i] + "").addClass("bien");
+                $("#p2bvar" + [i] + "").addClass("bien");
+                core = core + 1;
+            } else {
+
+                $("#p2avar" + [i] + "").addClass("mal");
+                $("#p2bvar" + [i] + "").addClass("mal");
+                core;
+            }
+        }
+
+        tpre2 = ((core / 5) * 2.5);
+        $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    }
+
+    p3vec = [
+        '<td style="text-align:center;border:solid 2px#F09660"><div style="border:transparent;padding:5px;text-align:center;width:100%;height:auto;border-radius:10px;font-size:21px;text-align-last: center">Tímpano</div></td><td style="text-align:center;border:solid 2px #F09660;"><select id="p3var0" style="border:transparent;text-align:center;width:500px;height:40px;border-radius:10px;font-size:21px;text-align-last: center"><option value="">-------------</option><option value="a">Recibe estímulos de presión y temperatura.</option><option value="b">Reúne todas las partículas de olor.</option><option value="c">Transmite vibraciones a huesecillos.</option><option value="d">Percibe sabores.</option><option value="e">Abre y cierra la pupila.</option></select></td>',
+
+        '<td style="text-align:center;border:solid 2px#CAB83A"><div style="border:transparent;padding:5px;text-align:center;width:100%;height:auto;border-radius:10px;font-size:21px;text-align-last: center">Dermis</div></td><td style="text-align:center;border:solid 2px#CAB83A"><select id="p3var1" style="border:transparent;text-align:center;width:500px;height:40px;border-radius:10px;font-size:21px;text-align-last: center"><option value="">-------------</option><option value="a">Recibe estímulos de presión y temperatura.</option><option value="b">Reúne todas las partículas de olor.</option><option value="c">Transmite vibraciones a huesecillos.</option><option value="d">Percibe sabores.</option><option value="e">Abre y cierra la pupila.</option></select></td>',
+
+        '<td style="text-align:center;border:solid 2px#82CA3A"><div style="border:transparent;padding:5px;text-align:center;width:100%;height:auto;border-radius:10px;font-size:21px;text-align-last: center">Iris</div></td><td style="text-align:center;border:solid 2px#82CA3A"><select id="p3var2" style="border:transparent;text-align:center;width:500px;height:40px;border-radius:10px;font-size:21px;text-align-last: center"><option value="">-------------</option><option value="a">Recibe estímulos de presión y temperatura.</option><option value="b">Reúne todas las partículas de olor.</option><option value="c">Transmite vibraciones a huesecillos.</option><option value="d">Percibe sabores.</option><option value="e">Abre y cierra la pupila.</option></select></td>',
+
+        '<td style="text-align:center;border:solid 2px#3ACAA7"><div style="border:transparent;padding:5px;text-align:center;width:100%;height:auto;border-radius:10px;font-size:21px;text-align-last: center">Bulbo olfatorio</div></td><td style="text-align:center;border:solid 2px#3ACAA7"><select id="p3var3" style="border:transparent;text-align:center;width:500px;height:40px;border-radius:10px;font-size:21px;text-align-last: center"><option value="">-------------</option><option value="a">Recibe estímulos de presión y temperatura.</option><option value="b">Reúne todas las partículas de olor.</option><option value="c">Transmite vibraciones a huesecillos.</option><option value="d">Percibe sabores.</option><option value="e">Abre y cierra la pupila.</option></select></td>',
+
+        '<td style="text-align:center;border:solid 2px#CA3AB2"><div style="border:transparent;padding:5px;text-align:center;width:100%;height:auto;border-radius:10px;font-size:21px;text-align-last: center">Papila gustativa</div></td><td style="text-align:center;border:solid 2px#CA3AB2"><select id="p3var4" style="border:transparent;text-align:center;width:500px;height:40px;border-radius:10px;font-size:21px;text-align-last: center"><option value="">-------------</option><option value="a">Recibe estímulos de presión y temperatura.</option><option value="b">Reúne todas las partículas de olor.</option><option value="c">Transmite vibraciones a huesecillos.</option><option value="d">Percibe sabores.</option><option value="e">Abre y cierra la pupila.</option></select></td>'
+    ]
+    p3vec.sort(f_randomico);
+    for (var i = 0; i < p3vec.length; i++) {
+        $('.p3ran' + [i] + '').html(p3vec[i]);
+    }
+    // la variable p1ran0 va dentro de una clase
+
+
+
+
+
+    function pregunta3() {
+        var core = 0;
+        var p3var1 = ['c', 'a', 'e', 'b', 'd'];
+
+        for (var i = 0; i < p3var1.length; i++) {
+            if (($("#p3var" + [i] + "").val()) == p3var1[i]) {
+
+                $("#p3var" + [i] + "").addClass("bien");
+                core = core + 1;
+            } else {
+
+                $("#p3var" + [i] + "").addClass("mal");
+                core;
+            }
+        }
+
+        tpre3 = ((core / 5) * 2.5);
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+    }
+
+    function pregunta4() {
+        var pre4 = document.getElementById("pre4a").value;
+        tpre4 = pre4;
+        $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+    }
+
+
+
+
+    // #region Calculo Nota Final
+    function NotaFinal() {
+
+        var pre4 = document.getElementById("pre4a").value;
+        if (pre4 == "") {
+            alert("Pregunta 4: Califique la pregunta");
+        } else {
+            pregunta1();
+            pregunta2();
+            pregunta3();
+            pregunta4();
+            cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4);
+            Calculo_nota();
+            $("input").attr('disabled', 'disabled');
+        }
+    }
+    </script>
+</body>
+
+</html>

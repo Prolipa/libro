@@ -17,36 +17,36 @@
     <link href="css/estilo_canvas.css" rel="stylesheet">
 </head>
 <style type="text/css">
-.cajas {}
-
-.actividad1 {
-    background: #fff;
-}
-
-.correcto {
-    color: #ffffff;
-    background-color: #8FB435;
-    font-weight: 700;
-}
-
-.incorrecto {
-    color: #ffffff;
-    background-color: #E76E80;
-    font-weight: 700;
-}
-
-.t1,
-.r1 {
-    width: 90px;
-    align-content: center;
-    display: inline-block;
-}
-
-@media (max-width: 770px) {
-    .cajas {
-        clear: left;
+    .cajas {}
+    
+    .actividad1 {
+        background: #fff;
     }
-}
+    
+    .correcto {
+        color: #ffffff;
+        background-color: #8FB435 !important;
+        -webkit-print-color-adjust: exact;
+    }
+    
+    .incorrecto {
+        color: #ffffff;
+        background-color: #E76E80 !important;
+        -webkit-print-color-adjust: exact;
+    }
+    
+    .t1,
+    .r1 {
+        width: 90px;
+        align-content: center;
+        display: inline-block;
+    }
+    
+    @media (max-width: 770px) {
+        .cajas {
+            clear: left;
+        }
+    }
 </style>
 
 <body>
@@ -130,12 +130,13 @@
                 <div class="actividad1">
                     <div>
                         <p><img src="img/problema.png" class="img-responsive"></p>
-                            <br>
-                            <p class="text-question"><b>Ernesto, Julia, Irene y Damián organizaron una carrera de ensacados. <b>Escribe</b> los números que corresponden a la ubicación de los niños. ¿Quién está más cerca de la meta?</p>
+                        <br>
+                        <p class="text-question"><b>Ernesto, Julia, Irene y Damián organizaron una carrera de ensacados. <b>Escribe</b> los números que corresponden a la ubicación de los niños. ¿Quién está más cerca de la meta?</p>
                     </div>
                     <div>
                         <p><img src="img/i1_p61_act68.jpg" class="img img-responsive center-block"></p>
-                            <p><b>R.</b> Julia está en el <input type="text" maxlength="5" class="form-control t1"> , Damián en el <input type="text" maxlength="5" class="form-control t1">, Ernesto en el <input type="text" maxlength="5" class="form-control t1">, Irene en el <input type="text" maxlength="5" class="form-control t1">.<br> <input type="text" maxlength="6" class="form-control r1">está más cerca de la meta.</p>
+                        <p><b>R.</b> Julia está en el <input type="text" maxlength="5" class="form-control t1"> , Damián en el <input type="text" maxlength="5" class="form-control t1">, Ernesto en el <input type="text" maxlength="5" class="form-control t1">,
+                            Irene en el <input type="text" maxlength="5" class="form-control t1">.<br> <input type="text" maxlength="6" class="form-control r1">está más cerca de la meta.</p>
                     </div>
                     <br>
                     <p id="trace" class="alert alert-warning display-none"></p>
@@ -187,53 +188,53 @@
     <script src="js/activities.js"></script>
     <script src="js/Utilitario.js"></script>
     <script type="text/javascript">
-    var titulos = "aplico";
-    f_titulos();
-    $("#n_pagina").html('61');
-    var ejer = 1,
-        i, j,
-        itemsT = 5,
-        cont = 0,
-        tmp, cor = 0,
-        inc = 0,
-        calificacion = 10,
-        claseAnimada = 'animate bounceIn';
-    var resul = [930, 990, 910, 970];
+        var titulos = "aplico";
+        f_titulos();
+        $("#n_pagina").html('61');
+        var ejer = 1,
+            i, j,
+            itemsT = 5,
+            cont = 0,
+            tmp, cor = 0,
+            inc = 0,
+            calificacion = 10,
+            claseAnimada = 'animate bounceIn';
+        var resul = [930, 990, 910, 970];
 
-    f_iniciar();
+        f_iniciar();
 
-    function f_iniciar() {
-        QuitaClase(".nota", claseAnimada);
-        AgregaClase(".actividad", claseAnimada);
-        $("#trace").hide();
-        $("#n_cont").html(cont + 1);
-        $("#n_ejer").html(ejer);
-        $(".btnCalificar").bind("click", function() { //click en el boton iniciar
-            cont++;
-            $(this).unbind("click");
-            $(".t1").each(function(index) {
-                tmp = $(this);
-                if (tmp.val().trim() == resul[index]) {
-                    cor++
-                    f_ok(tmp);
-                } else {
-                    inc++
-                    f_no(tmp);
-                }
-            })
-            $(".r1").each(function(index) {
-                tmp = $(this);
-                if (tmp.val().trim() == "Damian" || tmp.val().trim() == "Damián") {
-                    cor++
-                    f_ok(tmp);
-                } else {
-                    inc++
-                    f_no(tmp);
-                }
+        function f_iniciar() {
+            QuitaClase(".nota", claseAnimada);
+            AgregaClase(".actividad", claseAnimada);
+            $("#trace").hide();
+            $("#n_cont").html(cont + 1);
+            $("#n_ejer").html(ejer);
+            $(".btnCalificar").bind("click", function() { //click en el boton iniciar
+                cont++;
+                $(this).unbind("click");
+                $(".t1").each(function(index) {
+                    tmp = $(this);
+                    if (tmp.val().trim() == resul[index]) {
+                        cor++
+                        f_ok(tmp);
+                    } else {
+                        inc++
+                        f_no(tmp);
+                    }
+                })
+                $(".r1").each(function(index) {
+                    tmp = $(this);
+                    if (tmp.val().trim() == "Damian" || tmp.val().trim() == "Damián") {
+                        cor++
+                        f_ok(tmp);
+                    } else {
+                        inc++
+                        f_no(tmp);
+                    }
+                });
+                Calculo_nota();
             });
-            Calculo_nota();
-        });
-    }
+        }
     </script>
 </body>
 

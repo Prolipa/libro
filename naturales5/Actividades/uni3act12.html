@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciencias Naturales 5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/literallycanvas.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+</head>
+<style type="text/css">
+.cajas {
+    max-width: 95%;
+    max-height: 200px;
+    border: 1px #009900 solid;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.texto {
+    width: 500px;
+    height: 160px;
+    border: solid 2px #4E9764;
+    border-radius: 5px
+}
+
+
+.actividad1 {
+    background: #fff;
+}
+
+
+.bien {
+    background: #90D961;
+}
+
+.mal {
+    background: #F25F5F;
+}
+
+.correcto {
+    color: #ffffff;
+    background-color: #8FB435;
+    font-weight: 700;
+}
+
+.subrayar {
+    border-bottom: solid 5px #080808;
+}
+
+.incorrecto {
+    color: #ffffff;
+    background-color: #E76E80;
+    font-weight: 700;
+}
+
+.colorazul {
+    background: blue;
+}
+
+.colorrojo {
+    background: red;
+}
+
+span.numeral {
+    color: #28B602;
+    font-weight: bold;
+}
+
+span.enunciado {
+    font-size: 20px;
+}
+
+.desactivar {
+    background-color: #444;
+    color: #888;
+    padding: 8px;
+}
+
+#cabecera .badge {
+    background-color: #232956;
+}
+</style>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        1. Reponde.<br>
+        2. Responde.<br>
+        3. Responde.<br>
+        4. Reponde.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="NotaFinal()">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id='n_cont'>1</span> / <span id='n_ejer'>1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota"></span> / 10
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <div class="container espacio">
+        <div class="panel border-exploro" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-exploro" style="background:#ADECEC">
+                <img src="img/unidad3.png" style="width:270px"> <span class="titulo"><span style="color:#000300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMA 6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medicina ancestral.</span></span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <!--pregunats de la actividad-->
+                <div class="col-lg-12 col-md-12 col-xs-12 table-responsive"><br>
+                    <img src="img/aplico.jpg" style="width:150px"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre1a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">1. </span><span class="enunciado"><b>Escribe</b> dos productos naturales que conozcas y sus propiedades curativas.&nbsp;&nbsp;<b>( 2.5 pts.)</b></span><br><br>
+                    <center>
+                        <table>
+                            <tr>
+                                <td style="background:#F99700;color:white;text-align:center;padding:5px"><span class="enunciado">Producto</span></td>
+                                <td style="background:#11CC01;color:white;text-align:center;padding:5px"><span class="enunciado">Propiedad</span></td>
+                            </tr>
+                            <tr>
+                                <td> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea></td>
+                                <td> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea></td>
+                                <td> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="3" placeholder="Texto"></textarea></td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+                <div class="col-lg-12 col-md-12 col-xs-12 table-responsive"><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre2a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">2. </span><span class="enunciado"><b>Menciona</b> una planta medicinal que sirva para curar alguna enfermedad de los sistemas estudiados en la unidad, y cómo lo hace.&nbsp;&nbsp;<b>( 2.5 pts.)</b></span><br><br>
+                    <center>
+                        <table>
+                            <tr>
+                                <td style="border:solid 2px #6CC9DE;background:#F99700;color:white;text-align:center;padding:5px"><span class="enunciado">Sistema</span></td>
+                                <td style="border:solid 2px #6CC9DE;background:#06C0F1;color:white;text-align:center;padding:5px"><span class="enunciado">Planta</span></td>
+                                <td style="border:solid 2px #6CC9DE;background:#11CC01;color:white;text-align:center;padding:5px"><span class="enunciado">¿Cómo lo hace?</span></td>
+                            </tr>
+                            <tr>
+                                <td style="border:solid 2px #6CC9DE;padding: 5px;background:#FFF2C5"><span class="enunciado">Digestivo</span></td>
+                                <td style="border:solid 2px #6CC9DE;"> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 2px #6CC9DE;"> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="border:solid 2px #6CC9DE;padding: 5px;background:#FFCDC5"><span class="enunciado">Respiratorio</span></td>
+                                <td style="border:solid 2px #6CC9DE;"> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 2px #6CC9DE;"> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="border:solid 2px #6CC9DE;padding: 5px;background:#FFF2C5"><span class="enunciado">Circulatorio</span></td>
+                                <td style="border:solid 2px #6CC9DE;"> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 2px #6CC9DE;"> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="border:solid 2px #6CC9DE;padding: 5px;background:#FFCDC5"><span class="enunciado">Excretor</span></td>
+                                <td style="border:solid 2px #6CC9DE;"> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea></td>
+                                <td style="border:solid 2px #6CC9DE;"> <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="2" placeholder="Texto"></textarea></td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+                <div class="col-lg-12 table-responsive"><br><br>
+                    <img src="img/practiquemos.jpg" style="width:300px">
+                    <br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre3a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">3. </span><span class="enunciado"><b>Formen</b> grupos y <b>obtengan</b> información acerca de la medicina ancestral.&nbsp;&nbsp;<b>( 2.5 pts.)</b></span><br><br>
+                    <span class="numeral enunciado">a)&nbsp;&nbsp;</span><span class="enunciado"><b>Enlisten</b> nombres de plantas medicinales.</span><br><br>
+                    <span class="numeral enunciado">b)&nbsp;&nbsp;</span><span class="enunciado"><b>Indaguen</b> en el internet y en la biblioteca de la escuela las ventajas, desventajas y principios de la medicina ancestral.</span><br><br>
+                    <span class="numeral enunciado">c)&nbsp;&nbsp;</span><span class="enunciado"><b>Indaguen</b> en el internet y en la biblioteca de la escuela diez productos naturales que utilizan los curanderos o yachacs, sus propiedades y tres prácticas en las que los utilicen.</span><br><br>
+                    <span class="numeral enunciado">d)&nbsp;&nbsp;</span><span class="enunciado"><b>Elaboren</b> una entrevista dirigida a personas que conozcan del tema para completar la información indagada.</span><br><br>
+                    <span class="numeral enunciado">e)&nbsp;&nbsp;</span><span class="enunciado"><b>Elaboren</b> un gráfico, para conocer la frecuencia del uso de los productos y de las prácticas realizadas.</span><br><br>
+                    <span class="numeral enunciado">f)&nbsp;&nbsp;</span><span class="enunciado"><b>Mencionen</b> ejemplos de remedios caseros que hayan utilizado con los productos consultados.</span><br><br>
+                    <span class="enunciado"><b>¿Cumplimos con el objetivo de la practica?</b>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="5" placeholder="Texto"></textarea>
+                </div>
+                 <div class="col-lg-12 table-responsive"><br><br>
+                    <img src="img/evaluo.jpg" style="width:300px">
+                    <br><br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta calif" min="0" max="10" id="pre4a">&nbsp;
+                    <span class="enunciado" style="color: #00ADED;">4. </span><span class="enunciado">¿Argumento sobre la importancia de nuevos medicamentos?&nbsp;&nbsp;<b>( 2.5 pts.)</b></span><br><br>
+                    <textarea class="form-control text-question no-redimensionar hvr-grow-shadow" style="box-shadow: 0px -20px 20px #e0e1e3 inset;" cols="60" rows="5" placeholder="Texto"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Modal Guardar PDF-->
+    <div class="modal fade animated pulse" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                    <h4 class="modal-title">Guarda esta actividad en tu computadora</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form" class="form-horizontal">
+                        <div class="form-group ">
+                            <div class="col-sm-2">
+                                <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                            </div>
+                            <div class="col-sm-10">
+                                <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese tu nombre">
+                                <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                    <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                    Debes ingresar tu nombre</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--generador de pdf-->
+    <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="js/screenfull.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script type="text/javascript" src="js/literallycanvas.min.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/Utilitario.js"></script>
+    <script src="js/validacionesExtras.js"></script>
+    <script src="js/anime.min.js"></script>
+    <script type="text/javascript">
+    $("#n_pagina").html('101');
+
+    var tpre1 = 0;
+    var tpre2 = 0;
+    var tpre3 = 0;
+    var tpre4 = 0;
+
+    var cor = 0;
+    cont = 1,
+        ejer = 1,
+        itemsT = 10,
+        inc = 0,
+        calificacion = 10;
+
+
+    document.getElementById("pre1a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre1a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre1a"), 2.5);
+    });
+    document.getElementById("pre2a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre2a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre2a"), 2.5);
+    });
+
+    document.getElementById("pre3a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre3a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre3a"), 2.5);
+    });
+    document.getElementById("pre4a").addEventListener("keypress", () => {
+        validNumero(0, 1, 1);
+    });
+    document.getElementById("pre4a").addEventListener("keyup", () => {
+        validMaxIngreso(document.getElementById("pre4a"), 2.5);
+    });
+
+
+
+
+    //#region pregunta1
+    function pregunta1() {
+        var pre1 = document.getElementById("pre1a").value;
+        tpre1 = pre1;
+        $("#pre1a").val(parseFloat(tpre1).toFixed(2));
+    }
+    // #endregion
+
+    //#region pregunta2
+    function pregunta2() {
+        var pre2 = document.getElementById("pre2a").value;
+        tpre2 = pre2;
+        $("#pre2a").val(parseFloat(tpre2).toFixed(2));
+    }
+    // #endregion
+
+
+    function pregunta3() {
+        var pre3 = document.getElementById("pre3a").value;
+        tpre3 = pre3;
+        $("#pre3a").val(parseFloat(tpre3).toFixed(2));
+    }
+    // #endregion
+    function pregunta4() {
+        var pre4 = document.getElementById("pre4a").value;
+        tpre4 = pre4;
+        $("#pre4a").val(parseFloat(tpre4).toFixed(2));
+    }
+    // #endregion
+
+
+
+
+    // #region Calculo Nota Final
+    function NotaFinal() {
+        var pre1 = document.getElementById("pre1a").value;
+        if (pre1 == "") {
+            alert("Pregunta 1: Califique la pregunta");
+        } else {
+            var pre2 = document.getElementById("pre2a").value;
+            if (pre2 == "") {
+                alert("Pregunta 2: Califique la pregunta");
+            } else {
+                var pre3 = document.getElementById("pre3a").value;
+                if (pre3 == "") {
+                    alert("Pregunta 3: Califique la pregunta");
+                } else {
+                    var pre4 = document.getElementById("pre4a").value;
+                    if (pre4 == "") {
+                        alert("Pregunta 4: Califique la pregunta");
+                    } else {
+                        pregunta1();
+                        pregunta2();
+                        pregunta3();
+                        pregunta4();
+                        cor = parseFloat(tpre1) + parseFloat(tpre2) + parseFloat(tpre3) + parseFloat(tpre4);
+                        Calculo_nota();
+                        $("input").attr('disabled', 'disabled');
+                    }
+                }
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>

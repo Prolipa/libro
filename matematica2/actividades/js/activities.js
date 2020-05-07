@@ -141,7 +141,8 @@ function comprobar_calificar_txt() {
     }
     desabilitar_by_class('respuestas');
     desabilitar_by_class('btnCalificar');
-    document.getElementById('txtNota').innerHTML = nota + ' / 10';
+    document.getElementById('txtNota').innerHTML = ((nota).toFixed(2)) + ' / 10';
+
 }
 
 function valor_pregunta(respuestas) {

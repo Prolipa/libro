@@ -81,9 +81,9 @@
       for(var i=1; i<4; i++){
           if( $('#rA'+i).val().toLowerCase().replace(/ |\.| /gi, "") == resp[i-1] ){
             notaFinalP1++;
-            $('#rA'+i).css("background-color", "#05D576");
+            $('#rA'+i).addClass('b');
           }else{
-            $('#rA'+i).css("background-color", "#D50545");
+            $('#rA'+i).addClass('m');
           }
       }
     }
@@ -115,10 +115,10 @@
 
             $(".i_imgKg"+i+" img").each(function(){
               if( $(this).hasClass("imgKg"+i) &&  cant[i-1] == 1 ){ /// 1 = cantidad de imgs que debe contener cada destino
-                    $('.i_imgKg'+i).css("background-color", "#1AE79C");
+                    $('.i_imgKg'+i).addClass('b');
                     notaFinalP8++;
                 }else{
-                    $('.i_imgKg'+i).css("background-color", "#E71A4E");
+                    $('.i_imgKg'+i).addClass('m');
                 }
             });
         }
@@ -172,15 +172,15 @@
           if( $('#calificacion'+i).val() !='' ){
             if( $('#calificacion'+i).val()<=punt[i-1] && $('#calificacion'+i).val()>=0 ){
               c++;
-              $('#calificacion'+i).css("background-color", "#05D576");
+              $('#calificacion'+i).addClass('b');
             }else{
               alert('La calificación no es valida, verifique que el puntaje ingresado no exceda los '+punt[i-1]+' puntos.');
               $('#calificacion'+i).focus();
-              $('#calificacion'+i).css("background-color", "#D50545");
+              $('#calificacion'+i).addClass('m');
             }
           }else{
               $('#calificacion'+i).focus();
-              $('#calificacion'+i).css("background-color", "#D50545");
+              $('#calificacion'+i).addClass('m');
           }
         }
         

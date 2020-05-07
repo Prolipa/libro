@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lengua y Literatura 8</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--Animaciones-->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--Css propio del proyecto-->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/fraccion.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/Comprendo.css" rel="stylesheet">
+    <style>
+        .s{
+            font-size: 2vw;
+        }
+        .drag1{
+            cursor: move;
+        }
+        .caja {
+width: 200px;
+height: 40px;
+padding: 10px;
+border: 1px solid #aaaaaa;
+display: inline-block;
+}
+
+.backnota{
+    background-color: #00e600 !important;
+        -webkit-print-color-adjust: exact;
+}
+    </style>
+</head>
+
+<body>
+    <div id="nota-informativa" class="nota-ayuda">
+        <button type="button" class="close" onclick="cerrar_ayuda()" aria-label="Close"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+        <!--ACA ESCRIBIR TEXTO DE LA AYUDA DE LA ACTIVIDAD-->
+        En la actividad 1 arrastra cada palabra de los elementos de la carta del lector a cada casillero según coresponda.<br>
+        En las actividades 2,3 y 4 observa con atención las preguntas y respondelas a tu criterio.<br>
+        <span id="ayudas"></span>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="btn button btnHelp mytooltip" data-info="Mostrar ayuda de la actividad" onclick="mostrar_ayuda()">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnGuardar mytooltip" data-info="Guardar en local" onclick="$('#myModal').modal('show')">
+                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_1 btnEvniar mytooltip" style="display: none !important;" data-info="Enviar a Correo">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnIniciar mytooltip" style="display: none !important;" disabled data-info="Iniciar">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_2 btnRepetir mytooltip" data-info="Repetir" onclick="location.reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_3 btnCalificar mytooltip" data-info="Calificar / Comprobar" id="bt_comprobar" onclick="total();">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn button button_5 mytooltip display-none" style="display: none !important;" data-info="Pantalla completa" onclick="full_screen_change()">
+                        <span id="full_ico" class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;margin-left: 0px; ">
+                <li><span class="notificacion actividad display-none">
+                        <span class="glyphicon glyphicon-list-alt"></span> Actividad <span id="n_cont">1</span> / <span id="n_ejer">1</span>
+                    </span>
+                    <span class="notificacion nota">
+                        <span class="glyphicon glyphicon-pencil"></span> Nota <span id="txtNota">/ 10</span>
+                    </span>
+                    <span class="notificacion pagina">
+                        <span class="glyphicon glyphicon-bookmark"></span> Pág <i id="n_pagina"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--FIN DE NAVBAR QUE SE AÑADE-->
+    <!--contenedor de la actividad-->
+    <div class="container espacio">
+        <!--div que contiene la actividad modificar el border- segun la actividad-->
+        <div class="panel border-aplico" id="activity">
+            <!--modificar el bg- segun la actividad-->
+            <div class="panel-heading bg-aplico ">
+                <span class="titulo"><img src="img/icoA.png" alt=""></span>
+                <span class="titulo">Aplico para aprender</span>
+                <span class="titulo_2 txtAlumno display-none" id="nombre_alumno">Alumno: </span>
+            </div>
+            <div class="panel-body">
+                <div class="text-question">
+                    <br>
+                    <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre1a" readonly="">&nbsp;
+                    <span>
+                        <font color="#0166b3"><b>1. </b></font><b>Escribe</b> los nombres de los siguientes elementos de la carta del lector
+                    </span><br><br>
+                    <div class="col-xs-12" id="pregunta1" style="overflow-x: auto;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-xs-12">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 act1class" id="act01Txt1" align="center" style="background-color: #ffffff; border: 7px #1c56a6 dashed; border-radius: 15px">
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 act1class" id="act01Txt2" align="center" style="background-color: #ffffff; border: 7px #1c56a6 dashed; border-radius: 15px">
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 act1class" id="act01Txt3" align="center" style="background-color: #ffffff; border: 7px #1c56a6 dashed; border-radius: 15px">
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 act1class" id="act01Txt4" align="center" style="background-color: #ffffff; border: 7px #1c56a6 dashed; border-radius: 15px">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x: auto;">
+                                    <div align="center" style="background: url('img/i3_p199_act182.jpg'); width: 1020px; height: 502px; position: relative;background-repeat: no-repeat;">
+                                        <div align="center" id="div0" style="position: absolute; left: 70px; top: 80px;" class="caja form-control pintar c1"></div>
+                                        <div align="center" id="div1" style="position: absolute; left: 70px; top: 180px;" class="caja form-control pintar c1"></div>
+                                        <div align="center" id="div2" style="position: absolute; left: 70px; top: 300px;" class="caja form-control pintar c1"></div>
+                                        <div align="center" id="div3" style="position: absolute; left: 70px; top: 395px;" class="caja form-control pintar c1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-question">
+                        <br>
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre2a">&nbsp;
+                        <span>
+                            <font color="#0166b3"><b>2. </b></font><b>Deduce</b> el tema central que trata la carta de lector "La nueva pedagogía de la televisión".
+                        </span><br><br>
+                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea>
+                    </div>
+                    <div class="text-question">
+                        <br>
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre3a">&nbsp;
+                        <span>
+                            <font color="#0166b3"><b>3. </b></font><b>Comenta</b> y<b> justifica</b>. ¿Estás de acuerdo con las opiniones del autor de la carta?
+                        </span><br><br>
+                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea>
+                    </div>
+                    <div class="text-question">
+                        <br>
+                        <input type="text" size="2" style="text-align:center" class="nota-abierta" min="0" max="10" id="pre4a">&nbsp;
+                        <span>
+                            <font color="#0166b3"><b>4. </b></font><b>Argumenta</b>. ¿Crees que las cartas de lector fomentan la libertad de expresión?
+                        </span><br><br>
+                        <textarea class="form-control text-question no-redimensionar " cols="60" rows="2" placeholder="Texto"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Guardar PDF-->
+        <div class="modal fade animated pulse" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')">&times;</button>
+                        <h4 class="modal-title">Guardar la actividad en su máquina local</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal_form" class="form-horizontal">
+                            <div class="form-group ">
+                                <div class="col-sm-2">
+                                    <label id="lbl_nombre" for="txtAlumno">Alumno: </label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--el input para ingresar el nombre del alumno debe se txt_alumno-->
+                                    <input type="text" class="form-control nombre " id="txtAlumno" placeholder="Ingrese el nombre del alumno">
+                                    <div class="alert alert-danger display-none" id="txtAlumnoAlert" role="alert">
+                                        <button type="button" class="close" onclick="o$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <span class="glyphicon glyphicon-info-sign error-color" aria-hidden="true"></span>
+                                        Por favor ingrese el nombre. Es obligatorio</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="save_open_activity_to_local('txtAlumno')">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--generador de pdf-->
+        <script src="js/html2pdf/html2pdf.bundle.min.js"></script>
+        <script src="js/screenfull.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/activities.js"></script>
+        <script src="js/animate.css.min.js"></script>
+        <script src="js/jquery.animate.css.js"></script>
+        <script src="js/Utilitario.js"></script>
+        <script src="js/validacionesExtras.js"></script>
+        <script src="js/actividad182.js"></script>
+        <script>
+        $("#n_pagina").html("199"); //impresion de pagina            
+        $(".btnCalificar").bind("click", function() {
+            CalificacionAbierta();
+        });
+
+        $(".drag1").draggable({
+            revert: "invalid",
+            zIndex: 5,
+            containment: "#pregunta1",
+            scroll: false,
+        });
+
+        $(".pintar").droppable({
+            classes: {
+                "ui-droppable-active": "ui-state-active", //color azul al arrastrar el elemento
+                "ui-droppable-hover": "ui-state-hover"
+            },
+            drop: function(e, ui) {
+                for (i = 1; i < 8; i++) { //4 elementos
+                    var nn = 'c' + i; //obtenemos la clase
+                    if ($(ui.draggable).hasClass(nn)) { //comparamos la clase del arrastre
+
+                        if ($(this).hasClass(nn)) { //con la clase del destino q tienen el mismo nombre
+                            resp2.push('ok'); //guardamos ok si esta correcta
+                        } else {
+                            resp2.push('no');
+                        }
+                        console.log(resp2);
+                    }
+
+                }
+
+                $(ui.draggable).removeClass("bg_palabra"); //quitamos clase de background
+                ui.draggable.attr("style", "");
+                $(this).append(ui.draggable);
+            }
+        });
+
+        $('#websendeos').stacktable();
+        </script>
+</body>
+
+</html>
